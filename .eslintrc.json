@@ -1,18 +1,16 @@
 {
   "env": {
     "browser": true,
-    "es6": true,
-    "jest": true
+    "es6": true
   },
   "extends": [
     "airbnb-typescript",
     "airbnb/hooks",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:jest/recommended",
     "prettier",
-    "plugin:prettier/recommended",
-    "plugin:effector/recommended"
+    "next",
+    "plugin:prettier/recommended"
   ],
   "globals": {
     "Atomics": "readonly",
@@ -34,10 +32,7 @@
   },
   "plugins": [
     "react",
-    "@typescript-eslint",
-    "jest",
-    "effector",
-    "unused-imports"
+    "@typescript-eslint"
   ],
   "rules": {
     "prettier/prettier": [
@@ -82,16 +77,7 @@
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",
     "@typescript-eslint/no-unused-vars": "off",
-    "unused-imports/no-unused-imports": "error",
-    "unused-imports/no-unused-vars": [
-      "warn",
-      {
-        "vars": "all",
-        "varsIgnorePattern": "^_",
-        "args": "after-used",
-        "argsIgnorePattern": "^_"
-      }
-    ]
+    "unused-imports/no-unused-imports": "off"
   },
   "settings": {
     "react": {
