@@ -7,13 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+    "postinstall": "keystone postinstall"
   },
   "dependencies": {
     "@emotion/cache": "11.9.3",
     "@emotion/react": "11.9.3",
     "@emotion/server": "11.4.0",
     "@emotion/styled": "11.9.3",
+    "@keystone-6/core": "^2.0.0",
+    "@keystone-6/fields-document": "^3.0.0",
     "@mui/icons-material": "5.8.4",
     "@mui/material": "latest",
     "next": "latest",
