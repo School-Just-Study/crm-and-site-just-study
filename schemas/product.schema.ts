@@ -8,6 +8,7 @@ import {
 } from "@keystone-6/core/fields";
 import { ViewStatusOptions } from "../consts/view-status-options";
 import { ViewStatus } from "../enums/view-status";
+import { Roles } from "../enums/roles.enum";
 
 export const Product = list({
   fields: {
@@ -32,5 +33,12 @@ export const Product = list({
         updatedAt: true,
       },
     }),
+  },
+  access: {
+    operation: {
+      create: ({ session }) => !!session && session.data.role !== Roles.Student,
+      update: ({ session }) => !!session && session.data.role !== Roles.Student,
+      delete: ({ session }) => !!session && session.data.role !== Roles.Student,
+    },
   },
 });
