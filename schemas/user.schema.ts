@@ -18,7 +18,9 @@ export const User = list({
       isIndexed: "unique",
       isFilterable: true,
     }),
-    password: password({ validation: { isRequired: true } }),
+    password: password({
+      validation: { isRequired: true, length: { min: 4 } },
+    }),
     role: select({
       type: "enum",
       options: RolesValues,
