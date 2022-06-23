@@ -1,6 +1,6 @@
 {
   "name": "nextjs-with-typescript",
-  "version": "5.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -14,6 +14,7 @@
     "@emotion/react": "11.9.3",
     "@emotion/server": "11.4.0",
     "@emotion/styled": "11.9.3",
+    "@keystone-6/cloudinary": "^3.0.0",
     "@keystone-6/core": "^2.0.0",
     "@keystone-6/fields-document": "^3.0.0",
     "@mui/icons-material": "5.8.4",

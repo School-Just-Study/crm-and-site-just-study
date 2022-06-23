@@ -2,7 +2,7 @@ import { InferGetStaticPropsType } from "next";
 import { query } from ".keystone/api";
 import Button from "@mui/material/Button";
 import * as React from "react";
-import Link from "../src/Link";
+import Link from "../src/shared/local-ui/Link";
 
 type Post = {
   id: string;

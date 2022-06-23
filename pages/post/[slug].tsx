@@ -1,5 +1,5 @@
 import { GetStaticPathsResult, GetStaticPropsContext } from "next";
-import Link from "../../src/Link";
+import Link from "../../src/shared/local-ui/Link";
 
 import { query } from ".keystone/api";
 

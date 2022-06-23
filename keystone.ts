@@ -1,11 +1,11 @@
 import { config } from "@keystone-6/core";
-import { Post } from "./schemas/Post";
+import { lists } from "./schemas/lists";
 
 export default config({
-  db: { provider: "sqlite", url: "file:./app.db" },
+  db: { provider: "postgresql", url: "file:./app.db" },
   experimental: {
     generateNextGraphqlAPI: true,
     generateNodeAPI: true,
   },
-  lists: { Post },
+  lists,
 });
