@@ -1,31 +1,33 @@
 import { list } from "@keystone-6/core";
-import { relationship, text, timestamp } from "@keystone-6/core/fields";
-import { filterCustomerAccess, filterCustomerAccessCreate } from "../shared";
+import { decimal, relationship, timestamp } from "@keystone-6/core/fields";
+import { filterCustomerAccess } from "../shared";
 
-export const Address = list({
+export const Cart = list({
   fields: {
-    city: text({ validation: { isRequired: true } }),
-    country: text({ validation: { isRequired: true } }),
     user: relationship({
       ref: "User",
       ui: {
         hideCreate: true,
       },
     }),
-    createdAt: timestamp({
-      defaultValue: { kind: "now" },
+    products: relationship({
+      ref: "Product",
+      many: true,
+      ui: {
+        hideCreate: true,
+      },
     }),
-    lastModification: timestamp({
+    lastModified: timestamp({
       defaultValue: { kind: "now" },
       db: {
         updatedAt: true,
       },
     }),
+    sum: decimal({ validation: { isRequired: true }, defaultValue: "0" }),
   },
   access: {
     operation: {
       query: ({ session }) => !!session,
-      create: ({ session }) => !!session,
       update: ({ session }) => !!session,
       delete: ({ session }) => !!session,
     },
@@ -34,9 +36,8 @@ export const Address = list({
       update: ({ session }) => filterCustomerAccess(session),
       delete: ({ session }) => filterCustomerAccess(session),
     },
-    item: {
-      create: ({ session, inputData }) =>
-        filterCustomerAccessCreate(session, inputData),
-    },
+  },
+  graphql: {
+    omit: ["create"],
   },
 });

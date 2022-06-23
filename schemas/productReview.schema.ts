@@ -1,10 +1,19 @@
 import { list } from "@keystone-6/core";
-import { relationship, text, timestamp } from "@keystone-6/core/fields";
+import { relationship, select, text, timestamp } from "@keystone-6/core/fields";
+import { Roles } from "../enums/roles.enum";
+import { ViewStatusOptions } from "../consts/view-status-options";
+import { ViewStatus } from "../enums/view-status";
 
 export const ProductReview = list({
   fields: {
     user: relationship({ ref: "User" }),
     products: relationship({ ref: "Product", many: true }),
+    status: select({
+      type: "enum",
+      options: ViewStatusOptions,
+      defaultValue: ViewStatus.Draft,
+      ui: { displayMode: "segmented-control" },
+    }),
     desc: text({ ui: { displayMode: "textarea" } }),
     media: text(),
     createdAt: timestamp({
@@ -16,5 +25,11 @@ export const ProductReview = list({
         updatedAt: true,
       },
     }),
+  },
+  access: {
+    operation: {
+      update: ({ session }) => !!session && session.data.role !== Roles.Student,
+      delete: ({ session }) => !!session && session.data.role !== Roles.Student,
+    },
   },
 });

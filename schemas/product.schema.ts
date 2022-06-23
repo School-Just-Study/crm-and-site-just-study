@@ -1,22 +1,28 @@
 import { list } from "@keystone-6/core";
 import {
   decimal,
-  integer,
   relationship,
+  select,
   text,
   timestamp,
 } from "@keystone-6/core/fields";
-import { document } from "@keystone-6/fields-document";
+import { ViewStatusOptions } from "../consts/view-status-options";
+import { ViewStatus } from "../enums/view-status";
 
 export const Product = list({
   fields: {
     name: text({ validation: { isRequired: true } }),
-    description: document(),
+    description: text({ ui: { displayMode: "textarea" } }),
     seoDesc: text({ ui: { displayMode: "textarea" } }),
     categories: relationship({ ref: "Category", many: true }),
+    status: select({
+      type: "enum",
+      options: ViewStatusOptions,
+      defaultValue: ViewStatus.Draft,
+      ui: { displayMode: "segmented-control" },
+    }),
     images: relationship({ ref: "ProductImage", many: true }),
-    price: decimal(),
-    stars: integer(),
+    price: decimal({ scale: 0 }),
     createdAt: timestamp({
       defaultValue: { kind: "now" },
     }),

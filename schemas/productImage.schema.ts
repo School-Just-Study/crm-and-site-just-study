@@ -1,18 +1,11 @@
 import { list } from "@keystone-6/core";
-import { text, timestamp } from "@keystone-6/core/fields";
-import { cloudinaryImage } from "@keystone-6/cloudinary";
+import { image, text, timestamp } from "@keystone-6/core/fields";
+import { Roles } from "../enums/roles.enum";
 
 export const ProductImage = list({
   fields: {
     alt: text({ validation: { isRequired: true } }),
-    image: cloudinaryImage({
-      cloudinary: {
-        cloudName: process.env.CLOUDINARY_CLOUD_NAME ?? "",
-        apiKey: process.env.CLOUDINARY_API_KEY ?? "",
-        apiSecret: process.env.CLOUDINARY_API_SECRET ?? "",
-        folder: process.env.CLOUDINARY_API_FOLDER ?? "",
-      },
-    }),
+    image: image({ storage: "local_images" }),
     createdAt: timestamp({
       defaultValue: { kind: "now" },
     }),
@@ -22,5 +15,12 @@ export const ProductImage = list({
         updatedAt: true,
       },
     }),
+  },
+  access: {
+    operation: {
+      create: ({ session }) => !!session && session.data.role !== Roles.Student,
+      update: ({ session }) => !!session && session.data.role !== Roles.Student,
+      delete: ({ session }) => !!session && session.data.role !== Roles.Student,
+    },
   },
 });

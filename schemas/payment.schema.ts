@@ -7,6 +7,7 @@ import {
   timestamp,
 } from "@keystone-6/core/fields";
 import { PaymentStatusOptions } from "../consts/payment-status-options.const";
+import { filterCustomerAccess, filterCustomerAccessCreate } from "../shared";
 
 export const Payment = list({
   fields: {
@@ -14,7 +15,11 @@ export const Payment = list({
     sum: decimal(),
     currency: text(),
     externalId: text(),
-    status: select({ type: "enum", options: PaymentStatusOptions }),
+    status: select({
+      type: "enum",
+      options: PaymentStatusOptions,
+      ui: { displayMode: "segmented-control" },
+    }),
     createdAt: timestamp({
       defaultValue: { kind: "now" },
     }),
@@ -24,5 +29,22 @@ export const Payment = list({
         updatedAt: true,
       },
     }),
+  },
+  access: {
+    operation: {
+      query: ({ session }) => !!session,
+      create: ({ session }) => !!session,
+      update: ({ session }) => !!session,
+      delete: ({ session }) => !!session,
+    },
+    filter: {
+      query: ({ session }) => filterCustomerAccess(session),
+      update: ({ session }) => filterCustomerAccess(session),
+      delete: ({ session }) => filterCustomerAccess(session),
+    },
+    item: {
+      create: ({ session, inputData }) =>
+        filterCustomerAccessCreate(session, inputData),
+    },
   },
 });
