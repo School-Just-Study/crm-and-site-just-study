@@ -9,9 +9,16 @@ import {
 import { RolesValues } from "../consts/roles.const";
 import { Roles } from "../enums/roles.enum";
 import { filterCustomerAccess, filterCustomerAccessCreate } from "../shared";
+import { LanguageOptions } from "../consts/language-options.const";
+import { Language } from "../enums/language.enum";
 
 export const User = list({
   fields: {
+    language: select({
+      options: LanguageOptions,
+      defaultValue: Language.Russian,
+      ui: { displayMode: "segmented-control" },
+    }),
     name: text({ validation: { isRequired: true } }),
     email: text({
       validation: { isRequired: true },

@@ -12,8 +12,7 @@ import { filterCustomerAccess, filterCustomerAccessCreate } from "../shared";
 export const Payment = list({
   fields: {
     order: relationship({ ref: "Order" }),
-    sum: decimal(),
-    currency: text(),
+    sum: decimal({ scale: 0 }),
     externalId: text(),
     status: select({
       type: "enum",

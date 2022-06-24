@@ -23,7 +23,11 @@ export const Cart = list({
         updatedAt: true,
       },
     }),
-    sum: decimal({ validation: { isRequired: true }, defaultValue: "0" }),
+    sum: decimal({
+      validation: { isRequired: true },
+      defaultValue: "0",
+      scale: 0,
+    }),
   },
   access: {
     operation: {

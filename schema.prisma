@@ -13,6 +13,7 @@ generator client {
 
 model Address {
   id                String    @id @default(cuid())
+  language          String?   @default("ru")
   city              String    @default("")
   country           String    @default("")
   user              User?     @relation("Address_user", fields: [userId], references: [id])
@@ -37,6 +38,7 @@ model Cart {
 
 model Category {
   id                      String     @id @default(cuid())
+  language                String?    @default("ru")
   name                    String     @default("")
   parent                  Category?  @relation("Category_parent", fields: [parentId], references: [id])
   parentId                String?    @map("parent")
@@ -73,8 +75,7 @@ model Payment {
   id                 String             @id @default(cuid())
   order              Order?             @relation("Payment_order", fields: [orderId], references: [id])
   orderId            String?            @map("order")
-  sum                Decimal?           @postgresql.Decimal(18, 4)
-  currency           String             @default("")
+  sum                Decimal?           @postgresql.Decimal(18, 0)
   externalId         String             @default("")
   status             PaymentStatusType?
   createdAt          DateTime?          @default(now())
@@ -86,6 +87,7 @@ model Payment {
 
 model Product {
   id                          String             @id @default(cuid())
+  language                    String?            @default("ru")
   name                        String             @default("")
   description                 String             @default("")
   seoDesc                     String             @default("")
@@ -115,6 +117,7 @@ model ProductImage {
 
 model ProductReview {
   id               String                   @id @default(cuid())
+  language         String?                  @default("ru")
   user             User?                    @relation("ProductReview_user", fields: [userId], references: [id])
   userId           String?                  @map("user")
   products         Product[]                @relation("ProductReview_products")
@@ -129,6 +132,7 @@ model ProductReview {
 
 model User {
   id                      String          @id @default(cuid())
+  language                String?         @default("ru")
   name                    String          @default("")
   email                   String          @unique @default("")
   password                String

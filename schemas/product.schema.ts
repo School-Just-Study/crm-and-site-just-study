@@ -9,9 +9,16 @@ import {
 import { ViewStatusOptions } from "../consts/view-status-options";
 import { ViewStatus } from "../enums/view-status";
 import { Roles } from "../enums/roles.enum";
+import { LanguageOptions } from "../consts/language-options.const";
+import { Language } from "../enums/language.enum";
 
 export const Product = list({
   fields: {
+    language: select({
+      options: LanguageOptions,
+      defaultValue: Language.Russian,
+      ui: { displayMode: "segmented-control" },
+    }),
     name: text({ validation: { isRequired: true } }),
     description: text({ ui: { displayMode: "textarea" } }),
     seoDesc: text({ ui: { displayMode: "textarea" } }),
