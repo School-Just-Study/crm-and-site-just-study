@@ -42,7 +42,7 @@ model Order {
   id                 String           @id @default(cuid())
   student            User?            @relation("Order_student", fields: [studentId], references: [id])
   studentId          String?          @map("student")
-  products           Json?
+  products           Product[]        @relation("Order_products")
   payment            Payment?         @relation("Order_payment", fields: [paymentId], references: [id])
   paymentId          String?          @map("payment")
   employee           User?            @relation("Order_employee", fields: [employeeId], references: [id])
@@ -88,7 +88,9 @@ model Product {
   lastModification            DateTime?          @default(now()) @updatedAt
   from_Cart_products          Cart[]             @relation("Cart_products")
   from_Category_products      Category[]         @relation("Category_products")
+  from_Order_products         Order[]            @relation("Order_products")
   from_ProductReview_products ProductReview[]    @relation("ProductReview_products")
+  from_Subscription_product   Subscription[]     @relation("Subscription_product")
 }
 
 model ProductReview {
@@ -130,6 +132,7 @@ model User {
   from_Order_student         Order[]               @relation("Order_student")
   from_Order_employee        Order[]               @relation("Order_employee")
   from_ProductReview_student ProductReview[]       @relation("ProductReview_student")
+  from_Subscription_student  Subscription[]        @relation("Subscription_student")
 }
 
 model SourceClient {
@@ -143,6 +146,24 @@ model SourceClient {
   from_SourceClient_parent SourceClient[] @relation("SourceClient_parent")
 
   @@index([parentId])
+}
+
+model Subscription {
+  id               String    @id @default(cuid())
+  language         String?   @default("ru")
+  name             String    @default("")
+  status           String?   @default("inactive")
+  student          User?     @relation("Subscription_student", fields: [studentId], references: [id])
+  studentId        String?   @map("student")
+  product          Product[] @relation("Subscription_product")
+  visitCount       Decimal   @default("10") @postgresql.Decimal(18, 0)
+  price            Decimal   @postgresql.Decimal(18, 0)
+  period           Decimal?  @default("45") @postgresql.Decimal(18, 0)
+  start            DateTime? @default(now())
+  createdAt        DateTime? @default(now())
+  lastModification DateTime? @default(now()) @updatedAt
+
+  @@index([studentId])
 }
 
 enum OrderStatusType {

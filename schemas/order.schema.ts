@@ -1,12 +1,12 @@
 import { list } from "@keystone-6/core";
-import { json, relationship, select, timestamp } from "@keystone-6/core/fields";
+import { relationship, select, timestamp } from "@keystone-6/core/fields";
 import { OrderStatusOptions } from "../consts/order-status-options.const";
 import { filterCustomerAccess, filterCustomerAccessCreate } from "../shared";
 
 export const Order = list({
   fields: {
     student: relationship({ ref: "User" }),
-    products: json(),
+    products: relationship({ ref: "Product", many: true }),
     payment: relationship({ ref: "Payment" }),
     employee: relationship({ ref: "User", ui: { hideCreate: true } }),
     status: select({

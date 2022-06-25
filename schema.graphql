@@ -261,7 +261,13 @@ input ProductRelateToManyForCreateInput {
 type Order {
   id: ID!
   student: User
-  products: JSON
+  products(
+    where: ProductWhereInput! = {}
+    orderBy: [ProductOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Product!]
+  productsCount(where: ProductWhereInput! = {}): Int
   payment: Payment
   employee: User
   status: OrderStatusType
@@ -286,6 +292,7 @@ input OrderWhereInput {
   NOT: [OrderWhereInput!]
   id: IDFilter
   student: UserWhereInput
+  products: ProductManyRelationFilter
   payment: PaymentWhereInput
   employee: UserWhereInput
   status: OrderStatusTypeNullableFilter
@@ -309,7 +316,7 @@ input OrderOrderByInput {
 
 input OrderUpdateInput {
   student: UserRelateToOneForUpdateInput
-  products: JSON
+  products: ProductRelateToManyForUpdateInput
   payment: PaymentRelateToOneForUpdateInput
   employee: UserRelateToOneForUpdateInput
   status: OrderStatusType
@@ -330,7 +337,7 @@ input OrderUpdateArgs {
 
 input OrderCreateInput {
   student: UserRelateToOneForCreateInput
-  products: JSON
+  products: ProductRelateToManyForCreateInput
   payment: PaymentRelateToOneForCreateInput
   employee: UserRelateToOneForCreateInput
   status: OrderStatusType
@@ -897,6 +904,95 @@ input SourceClientRelateToOneForCreateInput {
   connect: SourceClientWhereUniqueInput
 }
 
+type Subscription {
+  id: ID!
+  language: String
+  name: String
+  status: String
+  student: User
+  product(
+    where: ProductWhereInput! = {}
+    orderBy: [ProductOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Product!]
+  productCount(where: ProductWhereInput! = {}): Int
+  visitCount: Decimal
+  price: Decimal
+  period: Decimal
+  start: DateTime
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input SubscriptionWhereUniqueInput {
+  id: ID
+}
+
+input SubscriptionWhereInput {
+  AND: [SubscriptionWhereInput!]
+  OR: [SubscriptionWhereInput!]
+  NOT: [SubscriptionWhereInput!]
+  id: IDFilter
+  language: StringNullableFilter
+  name: StringFilter
+  status: StringNullableFilter
+  student: UserWhereInput
+  product: ProductManyRelationFilter
+  visitCount: DecimalFilter
+  price: DecimalFilter
+  period: DecimalNullableFilter
+  start: DateTimeNullableFilter
+  createdAt: DateTimeNullableFilter
+  lastModification: DateTimeNullableFilter
+}
+
+input SubscriptionOrderByInput {
+  id: OrderDirection
+  language: OrderDirection
+  name: OrderDirection
+  status: OrderDirection
+  visitCount: OrderDirection
+  price: OrderDirection
+  period: OrderDirection
+  start: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input SubscriptionUpdateInput {
+  language: String
+  name: String
+  status: String
+  student: UserRelateToOneForUpdateInput
+  product: ProductRelateToManyForUpdateInput
+  visitCount: Decimal
+  price: Decimal
+  period: Decimal
+  start: DateTime
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input SubscriptionUpdateArgs {
+  where: SubscriptionWhereUniqueInput!
+  data: SubscriptionUpdateInput!
+}
+
+input SubscriptionCreateInput {
+  language: String
+  name: String
+  status: String
+  student: UserRelateToOneForCreateInput
+  product: ProductRelateToManyForCreateInput
+  visitCount: Decimal
+  price: Decimal
+  period: Decimal
+  start: DateTime
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -969,6 +1065,15 @@ type Mutation {
   updateSourceClients(data: [SourceClientUpdateArgs!]!): [SourceClient]
   deleteSourceClient(where: SourceClientWhereUniqueInput!): SourceClient
   deleteSourceClients(where: [SourceClientWhereUniqueInput!]!): [SourceClient]
+  createSubscription(data: SubscriptionCreateInput!): Subscription
+  createSubscriptions(data: [SubscriptionCreateInput!]!): [Subscription]
+  updateSubscription(
+    where: SubscriptionWhereUniqueInput!
+    data: SubscriptionUpdateInput!
+  ): Subscription
+  updateSubscriptions(data: [SubscriptionUpdateArgs!]!): [Subscription]
+  deleteSubscription(where: SubscriptionWhereUniqueInput!): Subscription
+  deleteSubscriptions(where: [SubscriptionWhereUniqueInput!]!): [Subscription]
   endSession: Boolean!
   authenticateUserWithPassword(
     email: String!
@@ -1063,6 +1168,14 @@ type Query {
   ): [SourceClient!]
   sourceClient(where: SourceClientWhereUniqueInput!): SourceClient
   sourceClientsCount(where: SourceClientWhereInput! = {}): Int
+  subscriptions(
+    where: SubscriptionWhereInput! = {}
+    orderBy: [SubscriptionOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Subscription!]
+  subscription(where: SubscriptionWhereUniqueInput!): Subscription
+  subscriptionsCount(where: SubscriptionWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }
