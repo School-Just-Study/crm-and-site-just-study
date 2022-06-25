@@ -109,6 +109,11 @@ model ProductReview {
 model User {
   id                         String                @id @default(cuid())
   language                   String?               @default("ru")
+  avatar_filesize            Int?
+  avatar_extension           String?
+  avatar_width               Int?
+  avatar_height              Int?
+  avatar_id                  String?
   name                       String                @default("")
   lastName                   String                @default("")
   email                      String                @unique @default("")

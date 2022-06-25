@@ -668,6 +668,7 @@ input ProductReviewCreateInput {
 type User {
   id: ID!
   language: String
+  avatar: ImageFieldOutput
   name: String
   lastName: String
   email: String
@@ -787,6 +788,7 @@ input UserOrderByInput {
 
 input UserUpdateInput {
   language: String
+  avatar: ImageFieldInput
   name: String
   lastName: String
   email: String
@@ -815,6 +817,7 @@ input UserUpdateArgs {
 
 input UserCreateInput {
   language: String
+  avatar: ImageFieldInput
   name: String
   lastName: String
   email: String

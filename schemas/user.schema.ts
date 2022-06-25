@@ -1,5 +1,6 @@
 import { list } from "@keystone-6/core";
 import {
+  image,
   password,
   relationship,
   select,
@@ -24,6 +25,7 @@ export const User = list({
       ui: { displayMode: "segmented-control" },
       label: "Язык интерфейса",
     }),
+    avatar: image({ storage: "local_images" }),
     name: text({ validation: { isRequired: true } }),
     lastName: text(),
     email: text({
