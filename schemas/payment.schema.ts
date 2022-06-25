@@ -21,9 +21,11 @@ export const Payment = list({
     }),
     createdAt: timestamp({
       defaultValue: { kind: "now" },
+      ui: { createView: { fieldMode: "hidden" } },
     }),
     lastModification: timestamp({
       defaultValue: { kind: "now" },
+      ui: { createView: { fieldMode: "hidden" } },
       db: {
         updatedAt: true,
       },

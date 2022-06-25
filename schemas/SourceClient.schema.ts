@@ -1,19 +1,23 @@
 import { list } from "@keystone-6/core";
-import { image, text, timestamp } from "@keystone-6/core/fields";
+import { relationship, text, timestamp } from "@keystone-6/core/fields";
 import { Roles } from "../enums/roles.enum";
 
-export const ProductImage = list({
+export const SourceClient = list({
   fields: {
-    alt: text({ validation: { isRequired: true } }),
-    image: image({ storage: "local_images" }),
+    name: text({
+      validation: { isRequired: true },
+    }),
+    parent: relationship({ ref: "SourceClient" }),
     createdAt: timestamp({
       defaultValue: { kind: "now" },
+      ui: { createView: { fieldMode: "hidden" } },
     }),
     lastModification: timestamp({
       defaultValue: { kind: "now" },
       db: {
         updatedAt: true,
       },
+      ui: { createView: { fieldMode: "hidden" } },
     }),
   },
   access: {

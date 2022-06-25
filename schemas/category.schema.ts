@@ -25,9 +25,11 @@ export const Category = list({
     }),
     createdAt: timestamp({
       defaultValue: { kind: "now" },
+      ui: { createView: { fieldMode: "hidden" } },
     }),
     lastModification: timestamp({
       defaultValue: { kind: "now" },
+      ui: { createView: { fieldMode: "hidden" } },
       db: {
         updatedAt: true,
       },

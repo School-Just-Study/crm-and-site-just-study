@@ -11,6 +11,10 @@ import { Roles } from "../enums/roles.enum";
 import { filterCustomerAccess, filterCustomerAccessCreate } from "../shared";
 import { LanguageOptions } from "../consts/language-options.const";
 import { Language } from "../enums/language.enum";
+import { ClientStatusOptionsConst } from "../consts/client-status-options.const";
+import { ClientStatus } from "../enums/client-status.emum";
+import { LevelStudentOptions } from "../consts/level-student-options.const";
+import { LevelStudent } from "../enums/level-student.enum";
 
 export const User = list({
   fields: {
@@ -18,27 +22,63 @@ export const User = list({
       options: LanguageOptions,
       defaultValue: Language.Russian,
       ui: { displayMode: "segmented-control" },
+      label: "Язык интерфейса",
     }),
     name: text({ validation: { isRequired: true } }),
+    lastName: text(),
     email: text({
-      validation: { isRequired: true },
+      validation: {
+        isRequired: true,
+        match: {
+          regex: /\S+@\S+\.\S+/,
+          explanation: "Invalid email",
+        },
+      },
       isIndexed: "unique",
       isFilterable: true,
     }),
     password: password({
       validation: { isRequired: true, length: { min: 4 } },
     }),
+    phone: text({
+      validation: {
+        match: {
+          regex: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
+          explanation: "Invalid phone",
+        },
+        isRequired: true,
+      },
+    }),
+    statusClient: select({
+      type: "enum",
+      options: ClientStatusOptionsConst,
+      defaultValue: ClientStatus.New,
+      label: "Статус клиента",
+    }),
+    levelStudent: select({
+      type: "enum",
+      options: LevelStudentOptions,
+      defaultValue: LevelStudent.A1,
+      label: "Уровень подготовки",
+    }),
+    goal: text({ label: "Цель изучения" }),
+    source: relationship({
+      ref: "SourceClient",
+      label: "Источник",
+      many: true,
+    }),
     role: select({
       type: "enum",
       options: RolesValues,
       defaultValue: Roles.Student,
     }),
-    address: relationship({ ref: "Address", many: true }),
     createdAt: timestamp({
       defaultValue: { kind: "now" },
+      ui: { createView: { fieldMode: "hidden" } },
     }),
     lastModification: timestamp({
       defaultValue: { kind: "now" },
+      ui: { createView: { fieldMode: "hidden" } },
       db: {
         updatedAt: true,
       },

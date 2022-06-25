@@ -1,6 +1,7 @@
 import { list } from "@keystone-6/core";
 import {
   decimal,
+  image,
   relationship,
   select,
   text,
@@ -21,7 +22,6 @@ export const Product = list({
     }),
     name: text({ validation: { isRequired: true } }),
     description: text({ ui: { displayMode: "textarea" } }),
-    seoDesc: text({ ui: { displayMode: "textarea" } }),
     categories: relationship({ ref: "Category", many: true }),
     status: select({
       type: "enum",
@@ -29,13 +29,15 @@ export const Product = list({
       defaultValue: ViewStatus.Draft,
       ui: { displayMode: "segmented-control" },
     }),
-    images: relationship({ ref: "ProductImage", many: true }),
+    images: image({ storage: "local_images" }),
     price: decimal({ scale: 0 }),
     createdAt: timestamp({
       defaultValue: { kind: "now" },
+      ui: { createView: { fieldMode: "hidden" } },
     }),
     lastModification: timestamp({
       defaultValue: { kind: "now" },
+      ui: { createView: { fieldMode: "hidden" } },
       db: {
         updatedAt: true,
       },

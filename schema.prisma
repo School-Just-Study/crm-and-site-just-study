@@ -11,27 +11,13 @@ generator client {
   output   = "node_modules/.prisma/client"
 }
 
-model Address {
-  id                String    @id @default(cuid())
-  language          String?   @default("ru")
-  city              String    @default("")
-  country           String    @default("")
-  user              User?     @relation("Address_user", fields: [userId], references: [id])
-  userId            String?   @map("user")
-  createdAt         DateTime? @default(now())
-  lastModification  DateTime? @default(now()) @updatedAt
-  from_User_address User[]    @relation("User_address")
-
-  @@index([userId])
-}
-
 model Cart {
   id           String    @id @default(cuid())
   user         User?     @relation("Cart_user", fields: [userId], references: [id])
   userId       String?   @map("user")
   products     Product[] @relation("Cart_products")
   lastModified DateTime? @default(now()) @updatedAt
-  sum          Decimal   @default("0") @postgresql.Decimal(18, 4)
+  sum          Decimal   @default("0") @postgresql.Decimal(18, 0)
 
   @@index([userId])
 }
@@ -43,7 +29,7 @@ model Category {
   parent                  Category?  @relation("Category_parent", fields: [parentId], references: [id])
   parentId                String?    @map("parent")
   products                Product[]  @relation("Category_products")
-  status                  String?    @default("Draft")
+  status                  String?    @default("draft")
   createdAt               DateTime?  @default(now())
   lastModification        DateTime?  @default(now()) @updatedAt
   from_Category_parent    Category[] @relation("Category_parent")
@@ -54,8 +40,8 @@ model Category {
 
 model Order {
   id                 String           @id @default(cuid())
-  user               User?            @relation("Order_user", fields: [userId], references: [id])
-  userId             String?          @map("user")
+  student            User?            @relation("Order_student", fields: [studentId], references: [id])
+  studentId          String?          @map("student")
   products           Json?
   payment            Payment?         @relation("Order_payment", fields: [paymentId], references: [id])
   paymentId          String?          @map("payment")
@@ -66,7 +52,7 @@ model Order {
   lastModification   DateTime?        @default(now()) @updatedAt
   from_Payment_order Payment[]        @relation("Payment_order")
 
-  @@index([userId])
+  @@index([studentId])
   @@index([paymentId])
   @@index([employeeId])
 }
@@ -90,10 +76,13 @@ model Product {
   language                    String?            @default("ru")
   name                        String             @default("")
   description                 String             @default("")
-  seoDesc                     String             @default("")
   categories                  Category[]         @relation("Product_categories")
-  status                      ProductStatusType? @default(Draft)
-  images                      ProductImage[]     @relation("Product_images")
+  status                      ProductStatusType? @default(draft)
+  images_filesize             Int?
+  images_extension            String?
+  images_width                Int?
+  images_height               Int?
+  images_id                   String?
   price                       Decimal?           @postgresql.Decimal(18, 0)
   createdAt                   DateTime?          @default(now())
   lastModification            DateTime?          @default(now()) @updatedAt
@@ -102,76 +91,100 @@ model Product {
   from_ProductReview_products ProductReview[]    @relation("ProductReview_products")
 }
 
-model ProductImage {
-  id                  String    @id @default(cuid())
-  alt                 String    @default("")
-  image_filesize      Int?
-  image_extension     String?
-  image_width         Int?
-  image_height        Int?
-  image_id            String?
-  createdAt           DateTime? @default(now())
-  lastModification    DateTime? @default(now()) @updatedAt
-  from_Product_images Product[] @relation("Product_images")
-}
-
 model ProductReview {
   id               String                   @id @default(cuid())
   language         String?                  @default("ru")
-  user             User?                    @relation("ProductReview_user", fields: [userId], references: [id])
-  userId           String?                  @map("user")
+  student          User?                    @relation("ProductReview_student", fields: [studentId], references: [id])
+  studentId        String?                  @map("student")
   products         Product[]                @relation("ProductReview_products")
-  status           ProductReviewStatusType? @default(Draft)
+  status           ProductReviewStatusType? @default(draft)
   desc             String                   @default("")
   media            String                   @default("")
   createdAt        DateTime?                @default(now())
   lastModification DateTime?                @default(now()) @updatedAt
 
-  @@index([userId])
+  @@index([studentId])
 }
 
 model User {
-  id                      String          @id @default(cuid())
-  language                String?         @default("ru")
-  name                    String          @default("")
-  email                   String          @unique @default("")
-  password                String
-  role                    UserRoleType?   @default(student)
-  address                 Address[]       @relation("User_address")
-  createdAt               DateTime?       @default(now())
-  lastModification        DateTime?       @default(now()) @updatedAt
-  from_Address_user       Address[]       @relation("Address_user")
-  from_Cart_user          Cart[]          @relation("Cart_user")
-  from_Order_user         Order[]         @relation("Order_user")
-  from_Order_employee     Order[]         @relation("Order_employee")
-  from_ProductReview_user ProductReview[] @relation("ProductReview_user")
+  id                         String                @id @default(cuid())
+  language                   String?               @default("ru")
+  name                       String                @default("")
+  lastName                   String                @default("")
+  email                      String                @unique @default("")
+  password                   String
+  phone                      String                @default("")
+  statusClient               UserStatusClientType? @default(new)
+  levelStudent               UserLevelStudentType? @default(a1)
+  goal                       String                @default("")
+  source                     SourceClient[]        @relation("User_source")
+  role                       UserRoleType?         @default(student)
+  createdAt                  DateTime?             @default(now())
+  lastModification           DateTime?             @default(now()) @updatedAt
+  from_Cart_user             Cart[]                @relation("Cart_user")
+  from_Order_student         Order[]               @relation("Order_student")
+  from_Order_employee        Order[]               @relation("Order_employee")
+  from_ProductReview_student ProductReview[]       @relation("ProductReview_student")
+}
+
+model SourceClient {
+  id                       String         @id @default(cuid())
+  name                     String         @default("")
+  parent                   SourceClient?  @relation("SourceClient_parent", fields: [parentId], references: [id])
+  parentId                 String?        @map("parent")
+  createdAt                DateTime?      @default(now())
+  lastModification         DateTime?      @default(now()) @updatedAt
+  from_User_source         User[]         @relation("User_source")
+  from_SourceClient_parent SourceClient[] @relation("SourceClient_parent")
+
+  @@index([parentId])
 }
 
 enum OrderStatusType {
-  Created
-  Frozen
-  Processing
-  Finished
+  created
+  frozen
+  processing
+  finished
 }
 
 enum PaymentStatusType {
-  Created
-  Successfully
-  Cancelled
+  created
+  successfully
+  cancelled
 }
 
 enum ProductStatusType {
-  Draft
-  Hide
-  Show
-  Archive
+  draft
+  hide
+  show
+  archive
 }
 
 enum ProductReviewStatusType {
-  Draft
-  Hide
-  Show
-  Archive
+  draft
+  hide
+  show
+  archive
+}
+
+enum UserStatusClientType {
+  new
+  firstCall
+  recordFirstLesson
+  trialLesson
+  decisionAfterTrialLesson
+  LowQualityLead
+  client
+  disabledClient
+  rejection
+}
+
+enum UserLevelStudentType {
+  a1
+  a2
+  b1
+  b2
+  c1
 }
 
 enum UserRoleType {

@@ -19,12 +19,14 @@ export const Cart = list({
     }),
     lastModified: timestamp({
       defaultValue: { kind: "now" },
+      ui: { createView: { fieldMode: "hidden" } },
       db: {
         updatedAt: true,
       },
     }),
     sum: decimal({
       validation: { isRequired: true },
+      ui: { createView: { fieldMode: "hidden" } },
       defaultValue: "0",
       scale: 0,
     }),

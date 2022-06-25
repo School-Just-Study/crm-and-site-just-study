@@ -1,6 +1,6 @@
 export enum OrderStatus {
-  Created = "Created",
-  Frozen = "Frozen",
-  Processing = "Processing",
-  Finished = "Finished",
+  Created = "created",
+  Frozen = "frozen",
+  Processing = "processing",
+  Finished = "finished",
 }

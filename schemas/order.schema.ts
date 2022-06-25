@@ -5,7 +5,7 @@ import { filterCustomerAccess, filterCustomerAccessCreate } from "../shared";
 
 export const Order = list({
   fields: {
-    user: relationship({ ref: "User" }),
+    student: relationship({ ref: "User" }),
     products: json(),
     payment: relationship({ ref: "Payment" }),
     employee: relationship({ ref: "User", ui: { hideCreate: true } }),
@@ -16,9 +16,11 @@ export const Order = list({
     }),
     createdAt: timestamp({
       defaultValue: { kind: "now" },
+      ui: { createView: { fieldMode: "hidden" } },
     }),
     lastModification: timestamp({
       defaultValue: { kind: "now" },
+      ui: { createView: { fieldMode: "hidden" } },
       db: {
         updatedAt: true,
       },

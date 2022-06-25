@@ -13,7 +13,7 @@ export const ProductReview = list({
       defaultValue: Language.Russian,
       ui: { displayMode: "segmented-control" },
     }),
-    user: relationship({ ref: "User" }),
+    student: relationship({ ref: "User" }),
     products: relationship({ ref: "Product", many: true }),
     status: select({
       type: "enum",
@@ -25,9 +25,11 @@ export const ProductReview = list({
     media: text(),
     createdAt: timestamp({
       defaultValue: { kind: "now" },
+      ui: { createView: { fieldMode: "hidden" } },
     }),
     lastModification: timestamp({
       defaultValue: { kind: "now" },
+      ui: { createView: { fieldMode: "hidden" } },
       db: {
         updatedAt: true,
       },

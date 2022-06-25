@@ -1,6 +1,6 @@
 export enum ViewStatus {
-  Draft = "Draft",
-  Show = "Show",
-  Hide = "Hide",
-  Archive = "Archive",
+  Draft = "draft",
+  Show = "show",
+  Hide = "hide",
+  Archive = "archive",
 }
