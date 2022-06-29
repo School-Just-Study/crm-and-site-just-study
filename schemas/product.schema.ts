@@ -1,7 +1,7 @@
 import { list } from "@keystone-6/core";
 import {
-  decimal,
   image,
+  integer,
   relationship,
   select,
   text,
@@ -30,7 +30,7 @@ export const Product = list({
       ui: { displayMode: "segmented-control" },
     }),
     images: image({ storage: "local_images" }),
-    price: decimal({ scale: 0 }),
+    price: integer({ defaultValue: 0 }),
     createdAt: timestamp({
       defaultValue: { kind: "now" },
       ui: { createView: { fieldMode: "hidden" } },

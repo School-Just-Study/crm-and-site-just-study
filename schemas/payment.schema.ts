@@ -1,6 +1,6 @@
 import { list } from "@keystone-6/core";
 import {
-  decimal,
+  integer,
   relationship,
   select,
   text,
@@ -11,9 +11,10 @@ import { filterCustomerAccess, filterCustomerAccessCreate } from "../shared";
 
 export const Payment = list({
   fields: {
-    order: relationship({ ref: "Order" }),
-    sum: decimal({ scale: 0 }),
+    order: relationship({ ref: "Order.payments" }),
+    sum: integer({ defaultValue: 0 }),
     externalId: text(),
+    receiptId: text(),
     status: select({
       type: "enum",
       options: PaymentStatusOptions,

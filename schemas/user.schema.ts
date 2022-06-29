@@ -50,6 +50,7 @@ export const User = list({
         },
         isRequired: true,
       },
+      defaultValue: "+79876543210",
     }),
     statusClient: select({
       type: "enum",

@@ -1,6 +1,6 @@
 import { list } from "@keystone-6/core";
 import {
-  decimal,
+  integer,
   relationship,
   select,
   text,
@@ -9,8 +9,6 @@ import {
 import { LanguageOptions } from "../consts/language-options.const";
 import { Language } from "../enums/language.enum";
 import { Roles } from "../enums/roles.enum";
-import { StatusesOptions } from "../consts/statuses-options.const";
-import { Statuses } from "../enums/statuses.enum";
 
 export const Subscription = list({
   fields: {
@@ -20,24 +18,14 @@ export const Subscription = list({
       ui: { displayMode: "segmented-control" },
     }),
     name: text({ validation: { isRequired: true } }),
-    status: select({
-      options: StatusesOptions,
-      ui: { displayMode: "segmented-control" },
-      defaultValue: Statuses.Inactive,
+    visitCount: integer({
+      defaultValue: 10,
       validation: { isRequired: true },
     }),
-    student: relationship({ ref: "User" }),
+    price: integer({ validation: { isRequired: true } }),
+    period: integer({ defaultValue: 45 }),
     product: relationship({ ref: "Product", many: true }),
-    visitCount: decimal({
-      scale: 0,
-      defaultValue: "10",
-      validation: { isRequired: true },
-    }),
-    price: decimal({ scale: 0, validation: { isRequired: true } }),
-    period: decimal({ scale: 0, defaultValue: "45" }),
-    start: timestamp({
-      defaultValue: { kind: "now" },
-    }),
+    items: relationship({ ref: "UserSubscription.pattern", many: true }),
     createdAt: timestamp({
       defaultValue: { kind: "now" },
       ui: { createView: { fieldMode: "hidden" } },

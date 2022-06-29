@@ -17,7 +17,7 @@ model Cart {
   userId       String?   @map("user")
   products     Product[] @relation("Cart_products")
   lastModified DateTime? @default(now()) @updatedAt
-  sum          Decimal   @default("0") @postgresql.Decimal(18, 0)
+  sum          Int?      @default(0)
 
   @@index([userId])
 }
@@ -39,34 +39,31 @@ model Category {
 }
 
 model Order {
-  id                 String           @id @default(cuid())
-  student            User?            @relation("Order_student", fields: [studentId], references: [id])
-  studentId          String?          @map("student")
-  products           Product[]        @relation("Order_products")
-  payment            Payment?         @relation("Order_payment", fields: [paymentId], references: [id])
-  paymentId          String?          @map("payment")
-  employee           User?            @relation("Order_employee", fields: [employeeId], references: [id])
-  employeeId         String?          @map("employee")
-  status             OrderStatusType?
-  createdAt          DateTime?        @default(now())
-  lastModification   DateTime?        @default(now()) @updatedAt
-  from_Payment_order Payment[]        @relation("Payment_order")
+  id               String           @id @default(cuid())
+  student          User?            @relation("Order_student", fields: [studentId], references: [id])
+  studentId        String?          @map("student")
+  payments         Payment[]        @relation("Payment_order")
+  employee         User?            @relation("Order_employee", fields: [employeeId], references: [id])
+  employeeId       String?          @map("employee")
+  status           OrderStatusType?
+  amount           Int?
+  createdAt        DateTime?        @default(now())
+  lastModification DateTime?        @default(now()) @updatedAt
 
   @@index([studentId])
-  @@index([paymentId])
   @@index([employeeId])
 }
 
 model Payment {
-  id                 String             @id @default(cuid())
-  order              Order?             @relation("Payment_order", fields: [orderId], references: [id])
-  orderId            String?            @map("order")
-  sum                Decimal?           @postgresql.Decimal(18, 0)
-  externalId         String             @default("")
-  status             PaymentStatusType?
-  createdAt          DateTime?          @default(now())
-  lastModification   DateTime?          @default(now()) @updatedAt
-  from_Order_payment Order[]            @relation("Order_payment")
+  id               String             @id @default(cuid())
+  order            Order?             @relation("Payment_order", fields: [orderId], references: [id])
+  orderId          String?            @map("order")
+  sum              Int?               @default(0)
+  externalId       String             @default("")
+  receiptId        String             @default("")
+  status           PaymentStatusType?
+  createdAt        DateTime?          @default(now())
+  lastModification DateTime?          @default(now()) @updatedAt
 
   @@index([orderId])
 }
@@ -83,12 +80,11 @@ model Product {
   images_width                Int?
   images_height               Int?
   images_id                   String?
-  price                       Decimal?           @postgresql.Decimal(18, 0)
+  price                       Int?               @default(0)
   createdAt                   DateTime?          @default(now())
   lastModification            DateTime?          @default(now()) @updatedAt
   from_Cart_products          Cart[]             @relation("Cart_products")
   from_Category_products      Category[]         @relation("Category_products")
-  from_Order_products         Order[]            @relation("Order_products")
   from_ProductReview_products ProductReview[]    @relation("ProductReview_products")
   from_Subscription_product   Subscription[]     @relation("Subscription_product")
 }
@@ -109,30 +105,31 @@ model ProductReview {
 }
 
 model User {
-  id                         String                @id @default(cuid())
-  language                   String?               @default("ru")
-  avatar_filesize            Int?
-  avatar_extension           String?
-  avatar_width               Int?
-  avatar_height              Int?
-  avatar_id                  String?
-  name                       String                @default("")
-  lastName                   String                @default("")
-  email                      String                @unique @default("")
-  password                   String
-  phone                      String                @default("")
-  statusClient               UserStatusClientType? @default(new)
-  levelStudent               UserLevelStudentType? @default(a1)
-  goal                       String                @default("")
-  source                     SourceClient[]        @relation("User_source")
-  role                       UserRoleType?         @default(student)
-  createdAt                  DateTime?             @default(now())
-  lastModification           DateTime?             @default(now()) @updatedAt
-  from_Cart_user             Cart[]                @relation("Cart_user")
-  from_Order_student         Order[]               @relation("Order_student")
-  from_Order_employee        Order[]               @relation("Order_employee")
-  from_ProductReview_student ProductReview[]       @relation("ProductReview_student")
-  from_Subscription_student  Subscription[]        @relation("Subscription_student")
+  id                            String                @id @default(cuid())
+  language                      String?               @default("ru")
+  avatar_filesize               Int?
+  avatar_extension              String?
+  avatar_width                  Int?
+  avatar_height                 Int?
+  avatar_id                     String?
+  name                          String                @default("")
+  lastName                      String                @default("")
+  email                         String                @unique @default("")
+  password                      String
+  phone                         String                @default("+79876543210")
+  statusClient                  UserStatusClientType? @default(new)
+  levelStudent                  UserLevelStudentType? @default(a1)
+  goal                          String                @default("")
+  source                        SourceClient[]        @relation("User_source")
+  role                          UserRoleType?         @default(student)
+  createdAt                     DateTime?             @default(now())
+  lastModification              DateTime?             @default(now()) @updatedAt
+  from_Cart_user                Cart[]                @relation("Cart_user")
+  from_Order_student            Order[]               @relation("Order_student")
+  from_Order_employee           Order[]               @relation("Order_employee")
+  from_ProductReview_student    ProductReview[]       @relation("ProductReview_student")
+  from_UserSubscription_student UserSubscription[]    @relation("UserSubscription_student")
+  from_UserSubscription_manager UserSubscription[]    @relation("UserSubscription_manager")
 }
 
 model SourceClient {
@@ -149,21 +146,39 @@ model SourceClient {
 }
 
 model Subscription {
-  id               String    @id @default(cuid())
-  language         String?   @default("ru")
-  name             String    @default("")
-  status           String?   @default("inactive")
-  student          User?     @relation("Subscription_student", fields: [studentId], references: [id])
-  studentId        String?   @map("student")
-  product          Product[] @relation("Subscription_product")
-  visitCount       Decimal   @default("10") @postgresql.Decimal(18, 0)
-  price            Decimal   @postgresql.Decimal(18, 0)
-  period           Decimal?  @default("45") @postgresql.Decimal(18, 0)
-  start            DateTime? @default(now())
-  createdAt        DateTime? @default(now())
-  lastModification DateTime? @default(now()) @updatedAt
+  id               String             @id @default(cuid())
+  language         String?            @default("ru")
+  name             String             @default("")
+  visitCount       Int                @default(10)
+  price            Int
+  period           Int?               @default(45)
+  product          Product[]          @relation("Subscription_product")
+  items            UserSubscription[] @relation("UserSubscription_pattern")
+  createdAt        DateTime?          @default(now())
+  lastModification DateTime?          @default(now()) @updatedAt
+}
 
+model UserSubscription {
+  id               String        @id @default(cuid())
+  language         String?       @default("ru")
+  pattern          Subscription? @relation("UserSubscription_pattern", fields: [patternId], references: [id])
+  patternId        String?       @map("pattern")
+  price            Int
+  status           String        @default("inactive")
+  student          User?         @relation("UserSubscription_student", fields: [studentId], references: [id])
+  studentId        String?       @map("student")
+  beginDate        DateTime?     @default(now())
+  payed            Int?
+  totalVisited     Int?          @default(0)
+  totalBurned      Int?          @default(0)
+  manager          User?         @relation("UserSubscription_manager", fields: [managerId], references: [id])
+  managerId        String?       @map("manager")
+  createdAt        DateTime?     @default(now())
+  lastModification DateTime?     @default(now()) @updatedAt
+
+  @@index([patternId])
   @@index([studentId])
+  @@index([managerId])
 }
 
 enum OrderStatusType {
@@ -177,6 +192,7 @@ enum PaymentStatusType {
   created
   successfully
   cancelled
+  error
 }
 
 enum ProductStatusType {

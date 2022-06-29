@@ -8,6 +8,7 @@ import { ProductReview } from "./productReview.schema";
 import { Product } from "./product.schema";
 import { SourceClient } from "./SourceClient.schema";
 import { Subscription } from "./subscription.schema";
+import { UserSubscription } from "./userSubscription.schema";
 
 export const lists: Lists = {
   Cart,
@@ -19,4 +20,5 @@ export const lists: Lists = {
   User,
   SourceClient,
   Subscription,
+  UserSubscription,
 };

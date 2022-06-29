@@ -21,7 +21,7 @@ export default withAuth(
         credentials: true,
       },
     },
-    db: { provider: "postgresql", url: DATABASE_URL!, enableLogging: true },
+    db: { provider: "postgresql", url: DATABASE_URL! },
     experimental: {
       generateNextGraphqlAPI: true,
       generateNodeAPI: true,

@@ -1,19 +1,24 @@
 import { list } from "@keystone-6/core";
-import { relationship, select, timestamp } from "@keystone-6/core/fields";
+import {
+  integer,
+  relationship,
+  select,
+  timestamp,
+} from "@keystone-6/core/fields";
 import { OrderStatusOptions } from "../consts/order-status-options.const";
 import { filterCustomerAccess, filterCustomerAccessCreate } from "../shared";
 
 export const Order = list({
   fields: {
     student: relationship({ ref: "User" }),
-    products: relationship({ ref: "Product", many: true }),
-    payment: relationship({ ref: "Payment" }),
+    payments: relationship({ ref: "Payment.order", many: true }),
     employee: relationship({ ref: "User", ui: { hideCreate: true } }),
     status: select({
       type: "enum",
       options: OrderStatusOptions,
       ui: { displayMode: "segmented-control" },
     }),
+    amount: integer(),
     createdAt: timestamp({
       defaultValue: { kind: "now" },
       ui: { createView: { fieldMode: "hidden" } },

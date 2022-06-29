@@ -1,5 +1,5 @@
 import { list } from "@keystone-6/core";
-import { decimal, relationship, timestamp } from "@keystone-6/core/fields";
+import { integer, relationship, timestamp } from "@keystone-6/core/fields";
 import { filterCustomerAccess } from "../shared";
 
 export const Cart = list({
@@ -24,11 +24,9 @@ export const Cart = list({
         updatedAt: true,
       },
     }),
-    sum: decimal({
-      validation: { isRequired: true },
+    sum: integer({
       ui: { createView: { fieldMode: "hidden" } },
-      defaultValue: "0",
-      scale: 0,
+      defaultValue: 0,
     }),
   },
   access: {
