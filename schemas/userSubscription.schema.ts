@@ -11,7 +11,6 @@ import { Language } from "../enums/language.enum";
 import { Roles } from "../enums/roles.enum";
 import { StatusesOptions } from "../consts/statuses-options.const";
 import { Statuses } from "../enums/statuses.enum";
-import addDays from "date-fns/addDays";
 
 export const UserSubscription = list({
   fields: {
@@ -88,20 +87,7 @@ export const UserSubscription = list({
     beginDate: timestamp({
       defaultValue: { kind: "now" },
     }),
-    endDate: virtual({
-      field: graphql.field({
-        type: graphql.DateTime,
-        async resolve(item, arg, context) {
-          const subscription = await context.query.Subscription.findOne({
-            where: { id: `${item.patternId}` },
-            query: `period`,
-          });
-          if (subscription) {
-            return addDays(item.beginDate, subscription.period);
-          }
-        },
-      }),
-    }),
+    endDate: timestamp(),
     payed: integer(),
     totalVisited: integer({ defaultValue: 0 }),
     totalBurned: integer({ defaultValue: 0 }),

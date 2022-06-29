@@ -1056,6 +1056,7 @@ input UserSubscriptionWhereInput {
   status: StringFilter
   student: UserWhereInput
   beginDate: DateTimeNullableFilter
+  endDate: DateTimeNullableFilter
   payed: IntNullableFilter
   totalVisited: IntNullableFilter
   totalBurned: IntNullableFilter
@@ -1070,6 +1071,7 @@ input UserSubscriptionOrderByInput {
   price: OrderDirection
   status: OrderDirection
   beginDate: OrderDirection
+  endDate: OrderDirection
   payed: OrderDirection
   totalVisited: OrderDirection
   totalBurned: OrderDirection
@@ -1084,6 +1086,7 @@ input UserSubscriptionUpdateInput {
   status: String
   student: UserRelateToOneForUpdateInput
   beginDate: DateTime
+  endDate: DateTime
   payed: Int
   totalVisited: Int
   totalBurned: Int
@@ -1110,6 +1113,7 @@ input UserSubscriptionCreateInput {
   status: String
   student: UserRelateToOneForCreateInput
   beginDate: DateTime
+  endDate: DateTime
   payed: Int
   totalVisited: Int
   totalBurned: Int

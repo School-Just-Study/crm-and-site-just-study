@@ -168,6 +168,7 @@ model UserSubscription {
   student          User?         @relation("UserSubscription_student", fields: [studentId], references: [id])
   studentId        String?       @map("student")
   beginDate        DateTime?     @default(now())
+  endDate          DateTime?
   payed            Int?
   totalVisited     Int?          @default(0)
   totalBurned      Int?          @default(0)
