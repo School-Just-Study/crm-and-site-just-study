@@ -18,6 +18,20 @@ export const Order = list({
       options: OrderStatusOptions,
       ui: { displayMode: "segmented-control" },
     }),
+    subscriptions: relationship({
+      ref: "Subscription",
+      many: true,
+      ui: {
+        hideCreate: true,
+      },
+    }),
+    services: relationship({
+      ref: "Service",
+      many: true,
+      ui: {
+        hideCreate: true,
+      },
+    }),
     amount: integer(),
     createdAt: timestamp({
       defaultValue: { kind: "now" },

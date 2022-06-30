@@ -4,15 +4,21 @@
 type Cart {
   id: ID!
   user: User
-  products(
-    where: ProductWhereInput! = {}
-    orderBy: [ProductOrderByInput!]! = []
+  subscriptions(
+    where: SubscriptionWhereInput! = {}
+    orderBy: [SubscriptionOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [Product!]
-  productsCount(where: ProductWhereInput! = {}): Int
+  ): [Subscription!]
+  subscriptionsCount(where: SubscriptionWhereInput! = {}): Int
+  services(
+    where: ServiceWhereInput! = {}
+    orderBy: [ServiceOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
   lastModified: DateTime
-  sum: Int
 }
 
 scalar DateTime
@@ -28,9 +34,9 @@ input CartWhereInput {
   NOT: [CartWhereInput!]
   id: IDFilter
   user: UserWhereInput
-  products: ProductManyRelationFilter
+  subscriptions: SubscriptionManyRelationFilter
+  services: ServiceManyRelationFilter
   lastModified: DateTimeNullableFilter
-  sum: IntNullableFilter
 }
 
 input IDFilter {
@@ -44,10 +50,16 @@ input IDFilter {
   not: IDFilter
 }
 
-input ProductManyRelationFilter {
-  every: ProductWhereInput
-  some: ProductWhereInput
-  none: ProductWhereInput
+input SubscriptionManyRelationFilter {
+  every: SubscriptionWhereInput
+  some: SubscriptionWhereInput
+  none: SubscriptionWhereInput
+}
+
+input ServiceManyRelationFilter {
+  every: ServiceWhereInput
+  some: ServiceWhereInput
+  none: ServiceWhereInput
 }
 
 input DateTimeNullableFilter {
@@ -61,21 +73,9 @@ input DateTimeNullableFilter {
   not: DateTimeNullableFilter
 }
 
-input IntNullableFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: IntNullableFilter
-}
-
 input CartOrderByInput {
   id: OrderDirection
   lastModified: OrderDirection
-  sum: OrderDirection
 }
 
 enum OrderDirection {
@@ -85,9 +85,9 @@ enum OrderDirection {
 
 input CartUpdateInput {
   user: UserRelateToOneForUpdateInput
-  products: ProductRelateToManyForUpdateInput
+  subscriptions: SubscriptionRelateToManyForUpdateInput
+  services: ServiceRelateToManyForUpdateInput
   lastModified: DateTime
-  sum: Int
 }
 
 input UserRelateToOneForUpdateInput {
@@ -96,11 +96,18 @@ input UserRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input ProductRelateToManyForUpdateInput {
-  disconnect: [ProductWhereUniqueInput!]
-  set: [ProductWhereUniqueInput!]
-  create: [ProductCreateInput!]
-  connect: [ProductWhereUniqueInput!]
+input SubscriptionRelateToManyForUpdateInput {
+  disconnect: [SubscriptionWhereUniqueInput!]
+  set: [SubscriptionWhereUniqueInput!]
+  create: [SubscriptionCreateInput!]
+  connect: [SubscriptionWhereUniqueInput!]
+}
+
+input ServiceRelateToManyForUpdateInput {
+  disconnect: [ServiceWhereUniqueInput!]
+  set: [ServiceWhereUniqueInput!]
+  create: [ServiceCreateInput!]
+  connect: [ServiceWhereUniqueInput!]
 }
 
 input CartUpdateArgs {
@@ -206,6 +213,12 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
+input ProductManyRelationFilter {
+  every: ProductWhereInput
+  some: ProductWhereInput
+  none: ProductWhereInput
+}
+
 input CategoryOrderByInput {
   id: OrderDirection
   language: OrderDirection
@@ -229,6 +242,13 @@ input CategoryRelateToOneForUpdateInput {
   create: CategoryCreateInput
   connect: CategoryWhereUniqueInput
   disconnect: Boolean
+}
+
+input ProductRelateToManyForUpdateInput {
+  disconnect: [ProductWhereUniqueInput!]
+  set: [ProductWhereUniqueInput!]
+  create: [ProductCreateInput!]
+  connect: [ProductWhereUniqueInput!]
 }
 
 input CategoryUpdateArgs {
@@ -268,6 +288,20 @@ type Order {
   paymentsCount(where: PaymentWhereInput! = {}): Int
   employee: User
   status: OrderStatusType
+  subscriptions(
+    where: SubscriptionWhereInput! = {}
+    orderBy: [SubscriptionOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Subscription!]
+  subscriptionsCount(where: SubscriptionWhereInput! = {}): Int
+  services(
+    where: ServiceWhereInput! = {}
+    orderBy: [ServiceOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
   amount: Int
   createdAt: DateTime
   lastModification: DateTime
@@ -293,6 +327,8 @@ input OrderWhereInput {
   payments: PaymentManyRelationFilter
   employee: UserWhereInput
   status: OrderStatusTypeNullableFilter
+  subscriptions: SubscriptionManyRelationFilter
+  services: ServiceManyRelationFilter
   amount: IntNullableFilter
   createdAt: DateTimeNullableFilter
   lastModification: DateTimeNullableFilter
@@ -311,6 +347,17 @@ input OrderStatusTypeNullableFilter {
   not: OrderStatusTypeNullableFilter
 }
 
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntNullableFilter
+}
+
 input OrderOrderByInput {
   id: OrderDirection
   status: OrderDirection
@@ -324,6 +371,8 @@ input OrderUpdateInput {
   payments: PaymentRelateToManyForUpdateInput
   employee: UserRelateToOneForUpdateInput
   status: OrderStatusType
+  subscriptions: SubscriptionRelateToManyForUpdateInput
+  services: ServiceRelateToManyForUpdateInput
   amount: Int
   createdAt: DateTime
   lastModification: DateTime
@@ -346,6 +395,8 @@ input OrderCreateInput {
   payments: PaymentRelateToManyForCreateInput
   employee: UserRelateToOneForCreateInput
   status: OrderStatusType
+  subscriptions: SubscriptionRelateToManyForCreateInput
+  services: ServiceRelateToManyForCreateInput
   amount: Int
   createdAt: DateTime
   lastModification: DateTime
@@ -359,6 +410,16 @@ input UserRelateToOneForCreateInput {
 input PaymentRelateToManyForCreateInput {
   create: [PaymentCreateInput!]
   connect: [PaymentWhereUniqueInput!]
+}
+
+input SubscriptionRelateToManyForCreateInput {
+  create: [SubscriptionCreateInput!]
+  connect: [SubscriptionWhereUniqueInput!]
+}
+
+input ServiceRelateToManyForCreateInput {
+  create: [ServiceCreateInput!]
+  connect: [ServiceWhereUniqueInput!]
 }
 
 type Payment {
@@ -1127,6 +1188,213 @@ input SubscriptionRelateToOneForCreateInput {
   connect: SubscriptionWhereUniqueInput
 }
 
+type Service {
+  id: ID!
+  language: String
+  name: String
+  description: String
+  categories(
+    where: CategoryWhereInput! = {}
+    orderBy: [CategoryOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Category!]
+  categoriesCount(where: CategoryWhereInput! = {}): Int
+  status: ServiceStatusType
+  price: Int
+  items(
+    where: UserServiceWhereInput! = {}
+    orderBy: [UserServiceOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [UserService!]
+  itemsCount(where: UserServiceWhereInput! = {}): Int
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+enum ServiceStatusType {
+  draft
+  hide
+  show
+  archive
+}
+
+input ServiceWhereUniqueInput {
+  id: ID
+}
+
+input ServiceWhereInput {
+  AND: [ServiceWhereInput!]
+  OR: [ServiceWhereInput!]
+  NOT: [ServiceWhereInput!]
+  id: IDFilter
+  language: StringNullableFilter
+  name: StringFilter
+  description: StringFilter
+  categories: CategoryManyRelationFilter
+  status: ServiceStatusTypeNullableFilter
+  price: IntNullableFilter
+  items: UserServiceManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  lastModification: DateTimeNullableFilter
+}
+
+input ServiceStatusTypeNullableFilter {
+  equals: ServiceStatusType
+  in: [ServiceStatusType!]
+  notIn: [ServiceStatusType!]
+  not: ServiceStatusTypeNullableFilter
+}
+
+input UserServiceManyRelationFilter {
+  every: UserServiceWhereInput
+  some: UserServiceWhereInput
+  none: UserServiceWhereInput
+}
+
+input ServiceOrderByInput {
+  id: OrderDirection
+  language: OrderDirection
+  name: OrderDirection
+  description: OrderDirection
+  status: OrderDirection
+  price: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input ServiceUpdateInput {
+  language: String
+  name: String
+  description: String
+  categories: CategoryRelateToManyForUpdateInput
+  status: ServiceStatusType
+  price: Int
+  items: UserServiceRelateToManyForUpdateInput
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input UserServiceRelateToManyForUpdateInput {
+  disconnect: [UserServiceWhereUniqueInput!]
+  set: [UserServiceWhereUniqueInput!]
+  create: [UserServiceCreateInput!]
+  connect: [UserServiceWhereUniqueInput!]
+}
+
+input ServiceUpdateArgs {
+  where: ServiceWhereUniqueInput!
+  data: ServiceUpdateInput!
+}
+
+input ServiceCreateInput {
+  language: String
+  name: String
+  description: String
+  categories: CategoryRelateToManyForCreateInput
+  status: ServiceStatusType
+  price: Int
+  items: UserServiceRelateToManyForCreateInput
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input UserServiceRelateToManyForCreateInput {
+  create: [UserServiceCreateInput!]
+  connect: [UserServiceWhereUniqueInput!]
+}
+
+type UserService {
+  id: ID!
+  language: String
+  pattern: Service
+  name: String
+  originalPrice: Int
+  price: Int
+  status: String
+  student: User
+  beginDate: DateTime
+  payed: Int
+  manager: User
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input UserServiceWhereUniqueInput {
+  id: ID
+}
+
+input UserServiceWhereInput {
+  AND: [UserServiceWhereInput!]
+  OR: [UserServiceWhereInput!]
+  NOT: [UserServiceWhereInput!]
+  id: IDFilter
+  language: StringNullableFilter
+  pattern: ServiceWhereInput
+  price: IntFilter
+  status: StringFilter
+  student: UserWhereInput
+  beginDate: DateTimeNullableFilter
+  payed: IntNullableFilter
+  manager: UserWhereInput
+  createdAt: DateTimeNullableFilter
+  lastModification: DateTimeNullableFilter
+}
+
+input UserServiceOrderByInput {
+  id: OrderDirection
+  language: OrderDirection
+  price: OrderDirection
+  status: OrderDirection
+  beginDate: OrderDirection
+  payed: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input UserServiceUpdateInput {
+  language: String
+  pattern: ServiceRelateToOneForUpdateInput
+  price: Int
+  status: String
+  student: UserRelateToOneForUpdateInput
+  beginDate: DateTime
+  payed: Int
+  manager: UserRelateToOneForUpdateInput
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input ServiceRelateToOneForUpdateInput {
+  create: ServiceCreateInput
+  connect: ServiceWhereUniqueInput
+  disconnect: Boolean
+}
+
+input UserServiceUpdateArgs {
+  where: UserServiceWhereUniqueInput!
+  data: UserServiceUpdateInput!
+}
+
+input UserServiceCreateInput {
+  language: String
+  pattern: ServiceRelateToOneForCreateInput
+  price: Int
+  status: String
+  student: UserRelateToOneForCreateInput
+  beginDate: DateTime
+  payed: Int
+  manager: UserRelateToOneForCreateInput
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input ServiceRelateToOneForCreateInput {
+  create: ServiceCreateInput
+  connect: ServiceWhereUniqueInput
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -1225,6 +1493,24 @@ type Mutation {
   deleteUserSubscriptions(
     where: [UserSubscriptionWhereUniqueInput!]!
   ): [UserSubscription]
+  createService(data: ServiceCreateInput!): Service
+  createServices(data: [ServiceCreateInput!]!): [Service]
+  updateService(
+    where: ServiceWhereUniqueInput!
+    data: ServiceUpdateInput!
+  ): Service
+  updateServices(data: [ServiceUpdateArgs!]!): [Service]
+  deleteService(where: ServiceWhereUniqueInput!): Service
+  deleteServices(where: [ServiceWhereUniqueInput!]!): [Service]
+  createUserService(data: UserServiceCreateInput!): UserService
+  createUserServices(data: [UserServiceCreateInput!]!): [UserService]
+  updateUserService(
+    where: UserServiceWhereUniqueInput!
+    data: UserServiceUpdateInput!
+  ): UserService
+  updateUserServices(data: [UserServiceUpdateArgs!]!): [UserService]
+  deleteUserService(where: UserServiceWhereUniqueInput!): UserService
+  deleteUserServices(where: [UserServiceWhereUniqueInput!]!): [UserService]
   endSession: Boolean!
   authenticateUserWithPassword(
     email: String!
@@ -1335,6 +1621,22 @@ type Query {
   ): [UserSubscription!]
   userSubscription(where: UserSubscriptionWhereUniqueInput!): UserSubscription
   userSubscriptionsCount(where: UserSubscriptionWhereInput! = {}): Int
+  services(
+    where: ServiceWhereInput! = {}
+    orderBy: [ServiceOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Service!]
+  service(where: ServiceWhereUniqueInput!): Service
+  servicesCount(where: ServiceWhereInput! = {}): Int
+  userServices(
+    where: UserServiceWhereInput! = {}
+    orderBy: [UserServiceOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [UserService!]
+  userService(where: UserServiceWhereUniqueInput!): UserService
+  userServicesCount(where: UserServiceWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

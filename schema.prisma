@@ -12,12 +12,12 @@ generator client {
 }
 
 model Cart {
-  id           String    @id @default(cuid())
-  user         User?     @relation("Cart_user", fields: [userId], references: [id])
-  userId       String?   @map("user")
-  products     Product[] @relation("Cart_products")
-  lastModified DateTime? @default(now()) @updatedAt
-  sum          Int?      @default(0)
+  id            String         @id @default(cuid())
+  user          User?          @relation("Cart_user", fields: [userId], references: [id])
+  userId        String?        @map("user")
+  subscriptions Subscription[] @relation("Cart_subscriptions")
+  services      Service[]      @relation("Cart_services")
+  lastModified  DateTime?      @default(now()) @updatedAt
 
   @@index([userId])
 }
@@ -34,6 +34,7 @@ model Category {
   lastModification        DateTime?  @default(now()) @updatedAt
   from_Category_parent    Category[] @relation("Category_parent")
   from_Product_categories Product[]  @relation("Product_categories")
+  from_Service_categories Service[]  @relation("Service_categories")
 
   @@index([parentId])
 }
@@ -46,6 +47,8 @@ model Order {
   employee         User?            @relation("Order_employee", fields: [employeeId], references: [id])
   employeeId       String?          @map("employee")
   status           OrderStatusType?
+  subscriptions    Subscription[]   @relation("Order_subscriptions")
+  services         Service[]        @relation("Order_services")
   amount           Int?
   createdAt        DateTime?        @default(now())
   lastModification DateTime?        @default(now()) @updatedAt
@@ -83,7 +86,6 @@ model Product {
   price                       Int?               @default(0)
   createdAt                   DateTime?          @default(now())
   lastModification            DateTime?          @default(now()) @updatedAt
-  from_Cart_products          Cart[]             @relation("Cart_products")
   from_Category_products      Category[]         @relation("Category_products")
   from_ProductReview_products ProductReview[]    @relation("ProductReview_products")
   from_Subscription_product   Subscription[]     @relation("Subscription_product")
@@ -130,6 +132,8 @@ model User {
   from_ProductReview_student    ProductReview[]       @relation("ProductReview_student")
   from_UserSubscription_student UserSubscription[]    @relation("UserSubscription_student")
   from_UserSubscription_manager UserSubscription[]    @relation("UserSubscription_manager")
+  from_UserService_student      UserService[]         @relation("UserService_student")
+  from_UserService_manager      UserService[]         @relation("UserService_manager")
 }
 
 model SourceClient {
@@ -146,16 +150,18 @@ model SourceClient {
 }
 
 model Subscription {
-  id               String             @id @default(cuid())
-  language         String?            @default("ru")
-  name             String             @default("")
-  visitCount       Int                @default(10)
-  price            Int
-  period           Int?               @default(45)
-  product          Product[]          @relation("Subscription_product")
-  items            UserSubscription[] @relation("UserSubscription_pattern")
-  createdAt        DateTime?          @default(now())
-  lastModification DateTime?          @default(now()) @updatedAt
+  id                       String             @id @default(cuid())
+  language                 String?            @default("ru")
+  name                     String             @default("")
+  visitCount               Int                @default(10)
+  price                    Int
+  period                   Int?               @default(45)
+  product                  Product[]          @relation("Subscription_product")
+  items                    UserSubscription[] @relation("UserSubscription_pattern")
+  createdAt                DateTime?          @default(now())
+  lastModification         DateTime?          @default(now()) @updatedAt
+  from_Cart_subscriptions  Cart[]             @relation("Cart_subscriptions")
+  from_Order_subscriptions Order[]            @relation("Order_subscriptions")
 }
 
 model UserSubscription {
@@ -176,6 +182,42 @@ model UserSubscription {
   managerId        String?       @map("manager")
   createdAt        DateTime?     @default(now())
   lastModification DateTime?     @default(now()) @updatedAt
+
+  @@index([patternId])
+  @@index([studentId])
+  @@index([managerId])
+}
+
+model Service {
+  id                  String             @id @default(cuid())
+  language            String?            @default("ru")
+  name                String             @default("")
+  description         String             @default("")
+  categories          Category[]         @relation("Service_categories")
+  status              ServiceStatusType? @default(draft)
+  price               Int?               @default(0)
+  items               UserService[]      @relation("UserService_pattern")
+  createdAt           DateTime?          @default(now())
+  lastModification    DateTime?          @default(now()) @updatedAt
+  from_Cart_services  Cart[]             @relation("Cart_services")
+  from_Order_services Order[]            @relation("Order_services")
+}
+
+model UserService {
+  id               String    @id @default(cuid())
+  language         String?   @default("ru")
+  pattern          Service?  @relation("UserService_pattern", fields: [patternId], references: [id])
+  patternId        String?   @map("pattern")
+  price            Int
+  status           String    @default("inactive")
+  student          User?     @relation("UserService_student", fields: [studentId], references: [id])
+  studentId        String?   @map("student")
+  beginDate        DateTime? @default(now())
+  payed            Int?
+  manager          User?     @relation("UserService_manager", fields: [managerId], references: [id])
+  managerId        String?   @map("manager")
+  createdAt        DateTime? @default(now())
+  lastModification DateTime? @default(now()) @updatedAt
 
   @@index([patternId])
   @@index([studentId])
@@ -235,4 +277,11 @@ enum UserRoleType {
   manager
   teacher
   student
+}
+
+enum ServiceStatusType {
+  draft
+  hide
+  show
+  archive
 }

@@ -1,5 +1,5 @@
 import { list } from "@keystone-6/core";
-import { integer, relationship, timestamp } from "@keystone-6/core/fields";
+import { relationship, timestamp } from "@keystone-6/core/fields";
 import { filterCustomerAccess } from "../shared";
 
 export const Cart = list({
@@ -10,8 +10,15 @@ export const Cart = list({
         hideCreate: true,
       },
     }),
-    products: relationship({
-      ref: "Product",
+    subscriptions: relationship({
+      ref: "Subscription",
+      many: true,
+      ui: {
+        hideCreate: true,
+      },
+    }),
+    services: relationship({
+      ref: "Service",
       many: true,
       ui: {
         hideCreate: true,
@@ -23,10 +30,6 @@ export const Cart = list({
       db: {
         updatedAt: true,
       },
-    }),
-    sum: integer({
-      ui: { createView: { fieldMode: "hidden" } },
-      defaultValue: 0,
     }),
   },
   access: {
