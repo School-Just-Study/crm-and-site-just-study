@@ -16,7 +16,7 @@
     "@emotion/styled": "11.9.3",
     "@keystone-6/auth": "4.0.0",
     "@keystone-6/core": "2.1.0",
-    "@keystone-6/fields-document": "3.0.0",
+    "@keystone-6/fields-document": "4.0.0",
     "@mui/icons-material": "5.8.4",
     "@mui/material": "5.8.6",
     "date-fns": "2.28.0",
