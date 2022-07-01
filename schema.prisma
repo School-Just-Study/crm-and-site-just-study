@@ -2,8 +2,9 @@
 // Modify your Keystone config when you want to change this.
 
 datasource postgresql {
-  url      = env("DATABASE_URL")
-  provider = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  provider          = "postgresql"
 }
 
 generator client {
@@ -12,12 +13,13 @@ generator client {
 }
 
 model Cart {
-  id            String         @id @default(cuid())
-  user          User?          @relation("Cart_user", fields: [userId], references: [id])
-  userId        String?        @map("user")
-  subscriptions Subscription[] @relation("Cart_subscriptions")
-  services      Service[]      @relation("Cart_services")
-  lastModified  DateTime?      @default(now()) @updatedAt
+  id               String         @id @default(cuid())
+  user             User?          @relation("Cart_user", fields: [userId], references: [id])
+  userId           String?        @map("user")
+  subscriptions    Subscription[] @relation("Cart_subscriptions")
+  services         Service[]      @relation("Cart_services")
+  quantityPayments Int?           @default(1)
+  lastModified     DateTime?      @default(now()) @updatedAt
 
   @@index([userId])
 }
@@ -43,10 +45,11 @@ model Order {
   id               String           @id @default(cuid())
   student          User?            @relation("Order_student", fields: [studentId], references: [id])
   studentId        String?          @map("student")
+  leftPayments     Int              @default(1)
   payments         Payment[]        @relation("Payment_order")
   employee         User?            @relation("Order_employee", fields: [employeeId], references: [id])
   employeeId       String?          @map("employee")
-  status           OrderStatusType?
+  status           OrderStatusType? @default(created)
   subscriptions    Subscription[]   @relation("Order_subscriptions")
   services         Service[]        @relation("Order_services")
   amount           Int?
@@ -64,7 +67,7 @@ model Payment {
   sum              Int?               @default(0)
   externalId       String             @default("")
   receiptId        String             @default("")
-  status           PaymentStatusType?
+  status           PaymentStatusType? @default(created)
   createdAt        DateTime?          @default(now())
   lastModification DateTime?          @default(now()) @updatedAt
 
@@ -115,9 +118,8 @@ model User {
   avatar_height                 Int?
   avatar_id                     String?
   name                          String                @default("")
-  lastName                      String                @default("")
   email                         String                @unique @default("")
-  password                      String
+  password                      String?
   phone                         String                @default("+79876543210")
   statusClient                  UserStatusClientType? @default(new)
   levelStudent                  UserLevelStudentType? @default(a1)

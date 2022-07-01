@@ -18,6 +18,7 @@ type Cart {
     skip: Int! = 0
   ): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
+  quantityPayments: Int
   lastModified: DateTime
 }
 
@@ -36,6 +37,7 @@ input CartWhereInput {
   user: UserWhereInput
   subscriptions: SubscriptionManyRelationFilter
   services: ServiceManyRelationFilter
+  quantityPayments: IntNullableFilter
   lastModified: DateTimeNullableFilter
 }
 
@@ -62,6 +64,17 @@ input ServiceManyRelationFilter {
   none: ServiceWhereInput
 }
 
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntNullableFilter
+}
+
 input DateTimeNullableFilter {
   equals: DateTime
   in: [DateTime!]
@@ -75,6 +88,7 @@ input DateTimeNullableFilter {
 
 input CartOrderByInput {
   id: OrderDirection
+  quantityPayments: OrderDirection
   lastModified: OrderDirection
 }
 
@@ -87,6 +101,7 @@ input CartUpdateInput {
   user: UserRelateToOneForUpdateInput
   subscriptions: SubscriptionRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
+  quantityPayments: Int
   lastModified: DateTime
 }
 
@@ -278,7 +293,9 @@ input ProductRelateToManyForCreateInput {
 
 type Order {
   id: ID!
+  label: String
   student: User
+  leftPayments: Int
   payments(
     where: PaymentWhereInput! = {}
     orderBy: [PaymentOrderByInput!]! = []
@@ -303,6 +320,9 @@ type Order {
   ): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   amount: Int
+  payed: Int
+  dept: Int
+  nextPayment: Int
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -324,6 +344,7 @@ input OrderWhereInput {
   NOT: [OrderWhereInput!]
   id: IDFilter
   student: UserWhereInput
+  leftPayments: IntFilter
   payments: PaymentManyRelationFilter
   employee: UserWhereInput
   status: OrderStatusTypeNullableFilter
@@ -332,6 +353,17 @@ input OrderWhereInput {
   amount: IntNullableFilter
   createdAt: DateTimeNullableFilter
   lastModification: DateTimeNullableFilter
+}
+
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntFilter
 }
 
 input PaymentManyRelationFilter {
@@ -347,19 +379,9 @@ input OrderStatusTypeNullableFilter {
   not: OrderStatusTypeNullableFilter
 }
 
-input IntNullableFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: IntNullableFilter
-}
-
 input OrderOrderByInput {
   id: OrderDirection
+  leftPayments: OrderDirection
   status: OrderDirection
   amount: OrderDirection
   createdAt: OrderDirection
@@ -368,6 +390,7 @@ input OrderOrderByInput {
 
 input OrderUpdateInput {
   student: UserRelateToOneForUpdateInput
+  leftPayments: Int
   payments: PaymentRelateToManyForUpdateInput
   employee: UserRelateToOneForUpdateInput
   status: OrderStatusType
@@ -392,6 +415,7 @@ input OrderUpdateArgs {
 
 input OrderCreateInput {
   student: UserRelateToOneForCreateInput
+  leftPayments: Int
   payments: PaymentRelateToManyForCreateInput
   employee: UserRelateToOneForCreateInput
   status: OrderStatusType
@@ -739,7 +763,6 @@ type User {
   language: String
   avatar: ImageFieldOutput
   name: String
-  lastName: String
   email: String
   password: PasswordState
   phone: String
@@ -801,8 +824,8 @@ input UserWhereInput {
   id: IDFilter
   language: StringNullableFilter
   name: StringFilter
-  lastName: StringFilter
   email: StringFilter
+  password: PasswordFilter
   phone: StringFilter
   statusClient: UserStatusClientTypeNullableFilter
   levelStudent: UserLevelStudentTypeNullableFilter
@@ -811,6 +834,10 @@ input UserWhereInput {
   role: UserRoleTypeNullableFilter
   createdAt: DateTimeNullableFilter
   lastModification: DateTimeNullableFilter
+}
+
+input PasswordFilter {
+  isSet: Boolean!
 }
 
 input UserStatusClientTypeNullableFilter {
@@ -844,7 +871,6 @@ input UserOrderByInput {
   id: OrderDirection
   language: OrderDirection
   name: OrderDirection
-  lastName: OrderDirection
   email: OrderDirection
   phone: OrderDirection
   statusClient: OrderDirection
@@ -859,7 +885,6 @@ input UserUpdateInput {
   language: String
   avatar: ImageFieldInput
   name: String
-  lastName: String
   email: String
   password: String
   phone: String
@@ -888,7 +913,6 @@ input UserCreateInput {
   language: String
   avatar: ImageFieldInput
   name: String
-  lastName: String
   email: String
   password: String
   phone: String
@@ -1009,17 +1033,6 @@ input SubscriptionWhereInput {
   items: UserSubscriptionManyRelationFilter
   createdAt: DateTimeNullableFilter
   lastModification: DateTimeNullableFilter
-}
-
-input IntFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: IntFilter
 }
 
 input UserSubscriptionManyRelationFilter {
@@ -1676,6 +1689,7 @@ type KeystoneAdminUIListMeta {
 type KeystoneAdminUIFieldMeta {
   path: String!
   label: String!
+  description: String
   isOrderable: Boolean!
   isFilterable: Boolean!
   fieldMeta: JSON

@@ -27,7 +27,6 @@ export const User = list({
     }),
     avatar: image({ storage: "local_images" }),
     name: text({ validation: { isRequired: true } }),
-    lastName: text(),
     email: text({
       validation: {
         isRequired: true,
@@ -40,7 +39,7 @@ export const User = list({
       isFilterable: true,
     }),
     password: password({
-      validation: { isRequired: true, length: { min: 4 } },
+      validation: { length: { min: 4 } },
     }),
     phone: text({
       validation: {

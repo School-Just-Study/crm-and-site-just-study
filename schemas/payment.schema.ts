@@ -8,6 +8,7 @@ import {
 } from "@keystone-6/core/fields";
 import { PaymentStatusOptions } from "../consts/payment-status-options.const";
 import { filterCustomerAccess, filterCustomerAccessCreate } from "../shared";
+import { PaymentStatus } from "../enums/payment-status.enum";
 
 export const Payment = list({
   fields: {
@@ -18,6 +19,7 @@ export const Payment = list({
     status: select({
       type: "enum",
       options: PaymentStatusOptions,
+      defaultValue: PaymentStatus.Created,
       ui: { displayMode: "segmented-control" },
     }),
     createdAt: timestamp({

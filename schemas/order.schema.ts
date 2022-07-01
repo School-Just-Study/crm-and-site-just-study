@@ -1,22 +1,50 @@
-import { list } from "@keystone-6/core";
+import { graphql, list } from "@keystone-6/core";
 import {
   integer,
   relationship,
   select,
   timestamp,
+  virtual,
 } from "@keystone-6/core/fields";
 import { OrderStatusOptions } from "../consts/order-status-options.const";
 import { filterCustomerAccess, filterCustomerAccessCreate } from "../shared";
+import { Lists } from ".keystone/types";
+import { OrderStatus } from "../enums/order-status.enum";
+import { PaymentStatus } from "../enums/payment-status.enum";
+import format from "date-fns/format";
 
 export const Order = list({
   fields: {
+    label: virtual({
+      field: graphql.field({
+        type: graphql.String,
+        async resolve(item: Lists.Order.Item, arg, context) {
+          const student: Lists.User.Item = await context.query.User.findOne({
+            where: { id: item.studentId },
+            query: `name`,
+          });
+          if (student) {
+            return `Order for ${student.name} from ${format(
+              item.createdAt,
+              "dd.MM.yyyy"
+            )}`;
+          }
+          return;
+        },
+      }),
+    }),
     student: relationship({ ref: "User" }),
+    leftPayments: integer({
+      validation: { isRequired: true },
+      defaultValue: 1,
+    }),
     payments: relationship({ ref: "Payment.order", many: true }),
     employee: relationship({ ref: "User", ui: { hideCreate: true } }),
     status: select({
       type: "enum",
       options: OrderStatusOptions,
       ui: { displayMode: "segmented-control" },
+      defaultValue: OrderStatus.Created,
     }),
     subscriptions: relationship({
       ref: "Subscription",
@@ -33,6 +61,80 @@ export const Order = list({
       },
     }),
     amount: integer(),
+    payed: virtual({
+      field: graphql.field({
+        type: graphql.Int,
+        async resolve(item: Lists.Order.Item, arg, context) {
+          const payments = await context.query.Payment.findMany({
+            where: { order: { id: { equals: item.id } } },
+            query: `sum status`,
+          });
+          if (payments) {
+            const successPayed = payments.filter(
+              (item) => item.status === PaymentStatus.Successfully
+            );
+            return successPayed.reduce(
+              (tally, payment) => tally + payment.sum,
+              0
+            );
+          }
+          return;
+        },
+      }),
+    }),
+    dept: virtual({
+      field: graphql.field({
+        type: graphql.Int,
+        async resolve(item: Lists.Order.Item, arg, context) {
+          const payments = await context.query.Payment.findMany({
+            where: { order: { id: { equals: item.id } } },
+            query: `sum status`,
+          });
+          if (payments) {
+            const successPayed = payments.filter(
+              (item) => item.status === PaymentStatus.Successfully
+            );
+            const payed = successPayed.reduce(
+              (tally, payment) => tally + payment.sum,
+              0
+            );
+            if (item.amount) {
+              return item.amount - payed;
+            } else {
+              return 0;
+            }
+          }
+          return;
+        },
+      }),
+    }),
+    nextPayment: virtual({
+      field: graphql.field({
+        type: graphql.Int,
+        async resolve(item: Lists.Order.Item, arg, context) {
+          const payments = await context.query.Payment.findMany({
+            where: { order: { id: { equals: item.id } } },
+            query: `sum status`,
+          });
+          if (payments) {
+            const successPayed = payments.filter(
+              (item) => item.status === PaymentStatus.Successfully
+            );
+            const payed = successPayed.reduce(
+              (tally, payment) => tally + payment.sum,
+              0
+            );
+            if (item.amount && item.leftPayments >= 1) {
+              const dept = item.amount - payed;
+              return dept / item.leftPayments;
+            } else {
+              return 0;
+            }
+          }
+          return;
+        },
+      }),
+    }),
     createdAt: timestamp({
       defaultValue: { kind: "now" },
       ui: { createView: { fieldMode: "hidden" } },
