@@ -6,6 +6,7 @@
     "dev": "TZ='UTC' next dev",
     "build-next": "next build",
     "start-next": "next start",
+    "next": "npm run build-next && start-next",
     "lint": "next lint",
     "start-keystone": "TZ='UTC' keystone start",
     "build-keystone": "keystone build",
