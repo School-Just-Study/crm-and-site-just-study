@@ -1,6 +1,7 @@
 import { list } from "@keystone-6/core";
-import { integer, relationship, timestamp } from "@keystone-6/core/fields";
+import { integer, relationship } from "@keystone-6/core/fields";
 import { filterCustomerAccess } from "../shared";
+import { lastModification } from "../fields/lastModification";
 
 export const Cart = list({
   fields: {
@@ -25,13 +26,7 @@ export const Cart = list({
       },
     }),
     quantityPayments: integer({ defaultValue: 1 }),
-    lastModified: timestamp({
-      defaultValue: { kind: "now" },
-      ui: { createView: { fieldMode: "hidden" } },
-      db: {
-        updatedAt: true,
-      },
-    }),
+    lastModification,
   },
   access: {
     operation: {

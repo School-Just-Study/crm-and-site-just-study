@@ -3,7 +3,6 @@ import {
   integer,
   relationship,
   select,
-  timestamp,
   virtual,
 } from "@keystone-6/core/fields";
 import { OrderStatusOptions } from "../consts/order-status-options.const";
@@ -12,6 +11,8 @@ import { Lists } from ".keystone/types";
 import { OrderStatus } from "../enums/order-status.enum";
 import { PaymentStatus } from "../enums/payment-status.enum";
 import format from "date-fns/format";
+import { createdAt } from "../fields/createdAt";
+import { lastModification } from "../fields/lastModification";
 
 export const Order = list({
   fields: {
@@ -140,17 +141,8 @@ export const Order = list({
         },
       }),
     }),
-    createdAt: timestamp({
-      defaultValue: { kind: "now" },
-      ui: { createView: { fieldMode: "hidden" } },
-    }),
-    lastModification: timestamp({
-      defaultValue: { kind: "now" },
-      ui: { createView: { fieldMode: "hidden" } },
-      db: {
-        updatedAt: true,
-      },
-    }),
+    createdAt,
+    lastModification,
   },
   access: {
     operation: {

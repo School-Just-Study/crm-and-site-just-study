@@ -19,7 +19,7 @@ model Cart {
   subscriptions    Subscription[] @relation("Cart_subscriptions")
   services         Service[]      @relation("Cart_services")
   quantityPayments Int?           @default(1)
-  lastModified     DateTime?      @default(now()) @updatedAt
+  lastModification DateTime?      @default(now()) @updatedAt
 
   @@index([userId])
 }
@@ -120,12 +120,13 @@ model User {
   name                          String                @default("")
   email                         String                @unique @default("")
   password                      String?
-  phone                         String                @default("+79876543210")
+  phone                         String                @default("")
   statusClient                  UserStatusClientType? @default(new)
   levelStudent                  UserLevelStudentType? @default(a1)
   goal                          String                @default("")
   source                        SourceClient[]        @relation("User_source")
   role                          UserRoleType?         @default(student)
+  comment                       String                @default("")
   createdAt                     DateTime?             @default(now())
   lastModification              DateTime?             @default(now()) @updatedAt
   from_Cart_user                Cart[]                @relation("Cart_user")

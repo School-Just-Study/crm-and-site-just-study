@@ -19,7 +19,7 @@ type Cart {
   ): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   quantityPayments: Int
-  lastModified: DateTime
+  lastModification: DateTime
 }
 
 scalar DateTime
@@ -38,7 +38,7 @@ input CartWhereInput {
   subscriptions: SubscriptionManyRelationFilter
   services: ServiceManyRelationFilter
   quantityPayments: IntNullableFilter
-  lastModified: DateTimeNullableFilter
+  lastModification: DateTimeNullableFilter
 }
 
 input IDFilter {
@@ -89,7 +89,7 @@ input DateTimeNullableFilter {
 input CartOrderByInput {
   id: OrderDirection
   quantityPayments: OrderDirection
-  lastModified: OrderDirection
+  lastModification: OrderDirection
 }
 
 enum OrderDirection {
@@ -102,7 +102,7 @@ input CartUpdateInput {
   subscriptions: SubscriptionRelateToManyForUpdateInput
   services: ServiceRelateToManyForUpdateInput
   quantityPayments: Int
-  lastModified: DateTime
+  lastModification: DateTime
 }
 
 input UserRelateToOneForUpdateInput {
@@ -778,6 +778,7 @@ type User {
   ): [SourceClient!]
   sourceCount(where: SourceClientWhereInput! = {}): Int
   role: UserRoleType
+  comment: String
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -833,6 +834,7 @@ input UserWhereInput {
   goal: StringFilter
   source: SourceClientManyRelationFilter
   role: UserRoleTypeNullableFilter
+  comment: StringFilter
   createdAt: DateTimeNullableFilter
   lastModification: DateTimeNullableFilter
 }
@@ -878,6 +880,7 @@ input UserOrderByInput {
   levelStudent: OrderDirection
   goal: OrderDirection
   role: OrderDirection
+  comment: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -894,6 +897,7 @@ input UserUpdateInput {
   goal: String
   source: SourceClientRelateToManyForUpdateInput
   role: UserRoleType
+  comment: String
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -922,6 +926,7 @@ input UserCreateInput {
   goal: String
   source: SourceClientRelateToManyForCreateInput
   role: UserRoleType
+  comment: String
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -1552,6 +1557,8 @@ input CreateInitialUserInput {
   name: String
   email: String
   password: String
+  phone: String
+  role: UserRoleType
 }
 
 type Query {

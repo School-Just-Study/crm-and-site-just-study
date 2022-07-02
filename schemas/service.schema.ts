@@ -1,24 +1,15 @@
 import { list } from "@keystone-6/core";
-import {
-  integer,
-  relationship,
-  select,
-  text,
-  timestamp,
-} from "@keystone-6/core/fields";
+import { integer, relationship, select, text } from "@keystone-6/core/fields";
 import { ViewStatusOptions } from "../consts/view-status-options";
 import { ViewStatus } from "../enums/view-status";
 import { Roles } from "../enums/roles.enum";
-import { LanguageOptions } from "../consts/language-options.const";
-import { Language } from "../enums/language.enum";
+import { language } from "../fields/language";
+import { createdAt } from "../fields/createdAt";
+import { lastModification } from "../fields/lastModification";
 
 export const Service = list({
   fields: {
-    language: select({
-      options: LanguageOptions,
-      defaultValue: Language.Russian,
-      ui: { displayMode: "segmented-control" },
-    }),
+    language,
     name: text({ validation: { isRequired: true } }),
     description: text({ ui: { displayMode: "textarea" } }),
     categories: relationship({ ref: "Category", many: true }),
@@ -30,17 +21,8 @@ export const Service = list({
     }),
     price: integer({ defaultValue: 0 }),
     items: relationship({ ref: "UserService.pattern", many: true }),
-    createdAt: timestamp({
-      defaultValue: { kind: "now" },
-      ui: { createView: { fieldMode: "hidden" } },
-    }),
-    lastModification: timestamp({
-      defaultValue: { kind: "now" },
-      ui: { createView: { fieldMode: "hidden" } },
-      db: {
-        updatedAt: true,
-      },
-    }),
+    createdAt,
+    lastModification,
   },
   access: {
     operation: {

@@ -6,20 +6,17 @@ import {
   timestamp,
   virtual,
 } from "@keystone-6/core/fields";
-import { LanguageOptions } from "../consts/language-options.const";
-import { Language } from "../enums/language.enum";
 import { Roles } from "../enums/roles.enum";
 import { StatusesOptions } from "../consts/statuses-options.const";
 import { Statuses } from "../enums/statuses.enum";
 import { Lists } from ".keystone/types";
+import { language } from "../fields/language";
+import { createdAt } from "../fields/createdAt";
+import { lastModification } from "../fields/lastModification";
 
 export const UserService = list({
   fields: {
-    language: select({
-      options: LanguageOptions,
-      defaultValue: Language.Russian,
-      ui: { displayMode: "segmented-control" },
-    }),
+    language,
     pattern: relationship({ ref: "Service.items" }),
     name: virtual({
       // @ts-ignore
@@ -64,17 +61,8 @@ export const UserService = list({
     }),
     payed: integer(),
     manager: relationship({ ref: "User" }),
-    createdAt: timestamp({
-      defaultValue: { kind: "now" },
-      ui: { createView: { fieldMode: "hidden" } },
-    }),
-    lastModification: timestamp({
-      defaultValue: { kind: "now" },
-      ui: { createView: { fieldMode: "hidden" } },
-      db: {
-        updatedAt: true,
-      },
-    }),
+    createdAt,
+    lastModification,
   },
   access: {
     operation: {

@@ -1,6 +1,8 @@
 import { list } from "@keystone-6/core";
-import { relationship, text, timestamp } from "@keystone-6/core/fields";
+import { relationship, text } from "@keystone-6/core/fields";
 import { Roles } from "../enums/roles.enum";
+import { createdAt } from "../fields/createdAt";
+import { lastModification } from "../fields/lastModification";
 
 export const SourceClient = list({
   fields: {
@@ -8,17 +10,8 @@ export const SourceClient = list({
       validation: { isRequired: true },
     }),
     parent: relationship({ ref: "SourceClient" }),
-    createdAt: timestamp({
-      defaultValue: { kind: "now" },
-      ui: { createView: { fieldMode: "hidden" } },
-    }),
-    lastModification: timestamp({
-      defaultValue: { kind: "now" },
-      db: {
-        updatedAt: true,
-      },
-      ui: { createView: { fieldMode: "hidden" } },
-    }),
+    createdAt,
+    lastModification,
   },
   access: {
     operation: {

@@ -1,18 +1,15 @@
 import { list } from "@keystone-6/core";
-import { relationship, select, text, timestamp } from "@keystone-6/core/fields";
+import { relationship, select, text } from "@keystone-6/core/fields";
 import { Roles } from "../enums/roles.enum";
 import { ViewStatusOptions } from "../consts/view-status-options";
 import { ViewStatus } from "../enums/view-status";
-import { LanguageOptions } from "../consts/language-options.const";
-import { Language } from "../enums/language.enum";
+import { language } from "../fields/language";
+import { createdAt } from "../fields/createdAt";
+import { lastModification } from "../fields/lastModification";
 
 export const ProductReview = list({
   fields: {
-    language: select({
-      options: LanguageOptions,
-      defaultValue: Language.Russian,
-      ui: { displayMode: "segmented-control" },
-    }),
+    language,
     student: relationship({ ref: "User" }),
     products: relationship({ ref: "Product", many: true }),
     status: select({
@@ -23,17 +20,8 @@ export const ProductReview = list({
     }),
     desc: text({ ui: { displayMode: "textarea" } }),
     media: text(),
-    createdAt: timestamp({
-      defaultValue: { kind: "now" },
-      ui: { createView: { fieldMode: "hidden" } },
-    }),
-    lastModification: timestamp({
-      defaultValue: { kind: "now" },
-      ui: { createView: { fieldMode: "hidden" } },
-      db: {
-        updatedAt: true,
-      },
-    }),
+    createdAt,
+    lastModification,
   },
   access: {
     operation: {

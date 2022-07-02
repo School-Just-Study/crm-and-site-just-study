@@ -1,22 +1,13 @@
 import { list } from "@keystone-6/core";
-import {
-  integer,
-  relationship,
-  select,
-  text,
-  timestamp,
-} from "@keystone-6/core/fields";
-import { LanguageOptions } from "../consts/language-options.const";
-import { Language } from "../enums/language.enum";
+import { integer, relationship, text } from "@keystone-6/core/fields";
 import { Roles } from "../enums/roles.enum";
+import { language } from "../fields/language";
+import { createdAt } from "../fields/createdAt";
+import { lastModification } from "../fields/lastModification";
 
 export const Subscription = list({
   fields: {
-    language: select({
-      options: LanguageOptions,
-      defaultValue: Language.Russian,
-      ui: { displayMode: "segmented-control" },
-    }),
+    language,
     name: text({ validation: { isRequired: true } }),
     visitCount: integer({
       defaultValue: 10,
@@ -26,17 +17,8 @@ export const Subscription = list({
     period: integer({ defaultValue: 45 }),
     product: relationship({ ref: "Product", many: true }),
     items: relationship({ ref: "UserSubscription.pattern", many: true }),
-    createdAt: timestamp({
-      defaultValue: { kind: "now" },
-      ui: { createView: { fieldMode: "hidden" } },
-    }),
-    lastModification: timestamp({
-      defaultValue: { kind: "now" },
-      ui: { createView: { fieldMode: "hidden" } },
-      db: {
-        updatedAt: true,
-      },
-    }),
+    createdAt,
+    lastModification,
   },
   access: {
     operation: {

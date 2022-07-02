@@ -1,15 +1,11 @@
 import { list } from "@keystone-6/core";
-import {
-  integer,
-  relationship,
-  select,
-  text,
-  timestamp,
-} from "@keystone-6/core/fields";
+import { integer, relationship, select, text } from "@keystone-6/core/fields";
 import { PaymentStatusOptions } from "../consts/payment-status-options.const";
 import { filterCustomerAccessCreate } from "../shared";
 import { PaymentStatus } from "../enums/payment-status.enum";
 import { handleReceiptToNalog } from "../lib/handleReceiptToNalog";
+import { createdAt } from "../fields/createdAt";
+import { lastModification } from "../fields/lastModification";
 
 export const Payment = list({
   fields: {
@@ -23,17 +19,8 @@ export const Payment = list({
       defaultValue: PaymentStatus.Created,
       ui: { displayMode: "segmented-control" },
     }),
-    createdAt: timestamp({
-      defaultValue: { kind: "now" },
-      ui: { createView: { fieldMode: "hidden" } },
-    }),
-    lastModification: timestamp({
-      defaultValue: { kind: "now" },
-      ui: { createView: { fieldMode: "hidden" } },
-      db: {
-        updatedAt: true,
-      },
-    }),
+    createdAt,
+    lastModification,
   },
   hooks: {
     afterOperation: handleReceiptToNalog,
