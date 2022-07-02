@@ -11,6 +11,7 @@ import { Language } from "../enums/language.enum";
 import { Roles } from "../enums/roles.enum";
 import { StatusesOptions } from "../consts/statuses-options.const";
 import { Statuses } from "../enums/statuses.enum";
+import { Lists } from ".keystone/types";
 
 export const UserService = list({
   fields: {
@@ -21,9 +22,10 @@ export const UserService = list({
     }),
     pattern: relationship({ ref: "Service.items" }),
     name: virtual({
+      // @ts-ignore
       field: graphql.field({
         type: graphql.String,
-        async resolve(item, arg, context) {
+        async resolve(item: Lists.UserService.Item, arg, context) {
           const service = await context.query.Service.findOne({
             where: { id: `${item.patternId}` },
             query: `name`,
@@ -35,9 +37,10 @@ export const UserService = list({
       }),
     }),
     originalPrice: virtual({
+      // @ts-ignore
       field: graphql.field({
         type: graphql.Int,
-        async resolve(item, arg, context) {
+        async resolve(item: Lists.UserService.Item, arg, context) {
           const service = await context.query.Service.findOne({
             where: { id: `${item.patternId}` },
             query: `price`,

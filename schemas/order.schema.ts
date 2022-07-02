@@ -16,16 +16,18 @@ import format from "date-fns/format";
 export const Order = list({
   fields: {
     label: virtual({
+      // @ts-ignore
       field: graphql.field({
         type: graphql.String,
         async resolve(item: Lists.Order.Item, arg, context) {
+          // @ts-ignore
           const student: Lists.User.Item = await context.query.User.findOne({
             where: { id: item.studentId },
             query: `name`,
           });
           if (student) {
             return `Order for ${student.name} from ${format(
-              item.createdAt,
+              item.createdAt!,
               "dd.MM.yyyy"
             )}`;
           }
@@ -62,6 +64,7 @@ export const Order = list({
     }),
     amount: integer(),
     payed: virtual({
+      // @ts-ignore
       field: graphql.field({
         type: graphql.Int,
         async resolve(item: Lists.Order.Item, arg, context) {
@@ -83,6 +86,7 @@ export const Order = list({
       }),
     }),
     dept: virtual({
+      // @ts-ignore
       field: graphql.field({
         type: graphql.Int,
         async resolve(item: Lists.Order.Item, arg, context) {
@@ -109,6 +113,7 @@ export const Order = list({
       }),
     }),
     nextPayment: virtual({
+      // @ts-ignore
       field: graphql.field({
         type: graphql.Int,
         async resolve(item: Lists.Order.Item, arg, context) {

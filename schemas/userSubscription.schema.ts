@@ -11,6 +11,7 @@ import { Language } from "../enums/language.enum";
 import { Roles } from "../enums/roles.enum";
 import { StatusesOptions } from "../consts/statuses-options.const";
 import { Statuses } from "../enums/statuses.enum";
+import { Lists } from ".keystone/types";
 
 export const UserSubscription = list({
   fields: {
@@ -21,9 +22,10 @@ export const UserSubscription = list({
     }),
     pattern: relationship({ ref: "Subscription.items" }),
     name: virtual({
+      // @ts-ignore
       field: graphql.field({
         type: graphql.String,
-        async resolve(item, arg, context) {
+        async resolve(item: Lists.UserSubscription.Item, arg, context) {
           const subscription = await context.query.Subscription.findOne({
             where: { id: `${item.patternId}` },
             query: `name`,
@@ -35,9 +37,10 @@ export const UserSubscription = list({
       }),
     }),
     visitCount: virtual({
+      // @ts-ignore
       field: graphql.field({
         type: graphql.Int,
-        async resolve(item, arg, context) {
+        async resolve(item: Lists.UserSubscription.Item, arg, context) {
           const subscription = await context.query.Subscription.findOne({
             where: { id: `${item.patternId}` },
             query: `visitCount`,
@@ -49,9 +52,10 @@ export const UserSubscription = list({
       }),
     }),
     originalPrice: virtual({
+      // @ts-ignore
       field: graphql.field({
         type: graphql.Int,
-        async resolve(item, arg, context) {
+        async resolve(item: Lists.UserSubscription.Item, arg, context) {
           const subscription = await context.query.Subscription.findOne({
             where: { id: `${item.patternId}` },
             query: `price`,
@@ -64,9 +68,10 @@ export const UserSubscription = list({
     }),
     price: integer({ validation: { isRequired: true } }),
     period: virtual({
+      // @ts-ignore
       field: graphql.field({
         type: graphql.Int,
-        async resolve(item, arg, context) {
+        async resolve(item: Lists.UserSubscription.Item, arg, context) {
           const subscription = await context.query.Subscription.findOne({
             where: { id: `${item.patternId}` },
             query: `period`,
@@ -92,16 +97,17 @@ export const UserSubscription = list({
     totalVisited: integer({ defaultValue: 0 }),
     totalBurned: integer({ defaultValue: 0 }),
     lastCount: virtual({
+      // @ts-ignore
       field: graphql.field({
         type: graphql.Int,
-        async resolve(item, arg, context) {
+        async resolve(item: Lists.UserSubscription.Item, arg, context) {
           const subscription = await context.query.Subscription.findOne({
             where: { id: `${item.patternId}` },
             query: `visitCount`,
           });
           if (subscription) {
             return (
-              subscription.visitCount - item.totalVisited - item.totalBurned
+              subscription.visitCount - item.totalVisited! - item.totalBurned!
             );
           }
           return;
