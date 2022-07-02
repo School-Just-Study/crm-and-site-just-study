@@ -1,1 +1,1 @@
-web: npm next
+web: npm run next
