@@ -5,8 +5,6 @@ import { NALOG_INN, NALOG_PASSWORD } from "../config";
 
 const { NalogApi } = require("lknpd-nalog-api");
 
-const nalogApi = new NalogApi({ inn: NALOG_INN, password: NALOG_PASSWORD });
-
 /**
  * Отправляем платеж в налоговую если платеж имеет статус Successfully, и отменяем его, если статус Cancelled
  * @param operation
@@ -15,6 +13,8 @@ const nalogApi = new NalogApi({ inn: NALOG_INN, password: NALOG_PASSWORD });
  */
 export const handleReceiptToNalog: ListHooks<Lists.Payment.TypeInfo>["afterOperation"] =
   async ({ item, context }) => {
+    const nalogApi = new NalogApi({ inn: NALOG_INN, password: NALOG_PASSWORD });
+
     if (item?.status === PaymentStatus.Successfully && !item.receiptId) {
       const order = await context.query.Order.findOne({
         where: { id: `${item.orderId}` },
