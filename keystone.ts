@@ -2,9 +2,7 @@ import { config } from "@keystone-6/core";
 import { lists } from "./schemas/lists";
 import { statelessSessions } from "@keystone-6/core/session";
 import { createAuth } from "@keystone-6/auth";
-
-const { DATABASE_URL, FRONTEND_URL, PORT } = process.env;
-const port: number = +PORT! || 8000;
+import { DATABASE_URL, FRONTEND_URL, PORT } from "./config";
 
 const { withAuth } = createAuth({
   listKey: "User",
@@ -16,13 +14,13 @@ const { withAuth } = createAuth({
 export default withAuth(
   config({
     server: {
-      port,
+      port: PORT,
       cors: {
         origin: [process.env.FRONTEND_URL!],
         credentials: true,
       },
     },
-    db: { provider: "postgresql", url: DATABASE_URL! },
+    db: { provider: "postgresql", url: DATABASE_URL },
     experimental: {
       generateNextGraphqlAPI: true,
       generateNodeAPI: true,
