@@ -231,6 +231,7 @@ enum OrderStatusType {
   frozen
   processing
   finished
+  cancelled
 }
 
 enum PaymentStatusType {
