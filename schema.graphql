@@ -332,6 +332,7 @@ enum OrderStatusType {
   frozen
   processing
   finished
+  cancelled
 }
 
 input OrderWhereUniqueInput {
