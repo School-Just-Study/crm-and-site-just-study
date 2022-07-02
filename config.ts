@@ -6,6 +6,9 @@ export const DATABASE_URL =
 
 export const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
 
+export const NALOG_INN = process.env.NALOG_INN || 0;
+export const NALOG_PASSWORD = process.env.NALOG_PASSWORD || "";
+
 export const SESSION_MAX_AGE =
   parseInt(process.env.SESSION_MAX_AGE!) || 60 * 60 * 24 * 30;
 
