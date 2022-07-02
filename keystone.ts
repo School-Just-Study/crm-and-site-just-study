@@ -3,7 +3,8 @@ import { lists } from "./schemas/lists";
 import { statelessSessions } from "@keystone-6/core/session";
 import { createAuth } from "@keystone-6/auth";
 
-const { DATABASE_URL, FRONTEND_URL } = process.env;
+const { DATABASE_URL, FRONTEND_URL, PORT } = process.env;
+const port: number = +PORT! || 8000;
 
 const { withAuth } = createAuth({
   listKey: "User",
@@ -15,7 +16,7 @@ const { withAuth } = createAuth({
 export default withAuth(
   config({
     server: {
-      port: 8000,
+      port,
       cors: {
         origin: [process.env.FRONTEND_URL!],
         credentials: true,
