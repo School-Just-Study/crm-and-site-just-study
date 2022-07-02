@@ -8,7 +8,8 @@
     "start-next": "next start",
     "lint": "next lint",
     "start-keystone": "TZ='UTC' keystone start",
-    "build-keystone": "keystone build && keystone prisma migrate deploy",
+    "build-keystone": "keystone build",
+    "migrate-keystone": "keystone prisma migrate deploy",
     "postinstall": "keystone postinstall"
   },
   "dependencies": {
