@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "TZ='UTC' next dev",
     "build-next": "next build",
-    "start-next": "next start",
+    "start-next": "next start -p 5000",
     "next": "npm run build-next && start-next",
     "lint": "next lint",
     "start-keystone": "TZ='UTC' keystone start",
