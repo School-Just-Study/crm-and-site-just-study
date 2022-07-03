@@ -26,17 +26,18 @@ model Cart {
 
 model Category {
   id                      String     @id @default(cuid())
-  language                String?    @default("ru")
+  language                String     @default("ru")
   name                    String     @default("")
   parent                  Category?  @relation("Category_parent", fields: [parentId], references: [id])
   parentId                String?    @map("parent")
   products                Product[]  @relation("Category_products")
-  status                  String?    @default("draft")
+  statusView              String     @default("draft")
   createdAt               DateTime?  @default(now())
   lastModification        DateTime?  @default(now()) @updatedAt
   from_Category_parent    Category[] @relation("Category_parent")
   from_Product_categories Product[]  @relation("Product_categories")
   from_Service_categories Service[]  @relation("Service_categories")
+  from_Tag_category       Tag[]      @relation("Tag_category")
 
   @@index([parentId])
 }
@@ -75,43 +76,43 @@ model Payment {
 }
 
 model Product {
-  id                          String             @id @default(cuid())
-  language                    String?            @default("ru")
-  name                        String             @default("")
-  description                 String             @default("")
-  categories                  Category[]         @relation("Product_categories")
-  status                      ProductStatusType? @default(draft)
+  id                          String          @id @default(cuid())
+  language                    String          @default("ru")
+  statusView                  String          @default("draft")
+  name                        String          @default("")
+  description                 String          @default("")
+  categories                  Category[]      @relation("Product_categories")
   images_filesize             Int?
   images_extension            String?
   images_width                Int?
   images_height               Int?
   images_id                   String?
-  price                       Int?               @default(0)
-  createdAt                   DateTime?          @default(now())
-  lastModification            DateTime?          @default(now()) @updatedAt
-  from_Category_products      Category[]         @relation("Category_products")
-  from_ProductReview_products ProductReview[]    @relation("ProductReview_products")
-  from_Subscription_product   Subscription[]     @relation("Subscription_product")
+  price                       Int?            @default(0)
+  createdAt                   DateTime?       @default(now())
+  lastModification            DateTime?       @default(now()) @updatedAt
+  from_Category_products      Category[]      @relation("Category_products")
+  from_ProductReview_products ProductReview[] @relation("ProductReview_products")
+  from_Subscription_product   Subscription[]  @relation("Subscription_product")
 }
 
 model ProductReview {
-  id               String                   @id @default(cuid())
-  language         String?                  @default("ru")
-  student          User?                    @relation("ProductReview_student", fields: [studentId], references: [id])
-  studentId        String?                  @map("student")
-  products         Product[]                @relation("ProductReview_products")
-  status           ProductReviewStatusType? @default(draft)
-  desc             String                   @default("")
-  media            String                   @default("")
-  createdAt        DateTime?                @default(now())
-  lastModification DateTime?                @default(now()) @updatedAt
+  id               String    @id @default(cuid())
+  language         String    @default("ru")
+  statusView       String    @default("draft")
+  student          User?     @relation("ProductReview_student", fields: [studentId], references: [id])
+  studentId        String?   @map("student")
+  products         Product[] @relation("ProductReview_products")
+  desc             String    @default("")
+  media            String    @default("")
+  createdAt        DateTime? @default(now())
+  lastModification DateTime? @default(now()) @updatedAt
 
   @@index([studentId])
 }
 
 model User {
   id                            String                @id @default(cuid())
-  language                      String?               @default("ru")
+  language                      String                @default("ru")
   avatar_filesize               Int?
   avatar_extension              String?
   avatar_width                  Int?
@@ -137,6 +138,7 @@ model User {
   from_UserSubscription_manager UserSubscription[]    @relation("UserSubscription_manager")
   from_UserService_student      UserService[]         @relation("UserService_student")
   from_UserService_manager      UserService[]         @relation("UserService_manager")
+  from_Page_author              Page[]                @relation("Page_author")
 }
 
 model SourceClient {
@@ -154,7 +156,8 @@ model SourceClient {
 
 model Subscription {
   id                       String             @id @default(cuid())
-  language                 String?            @default("ru")
+  language                 String             @default("ru")
+  statusView               String             @default("draft")
   name                     String             @default("")
   visitCount               Int                @default(10)
   price                    Int
@@ -169,7 +172,7 @@ model Subscription {
 
 model UserSubscription {
   id               String        @id @default(cuid())
-  language         String?       @default("ru")
+  language         String        @default("ru")
   pattern          Subscription? @relation("UserSubscription_pattern", fields: [patternId], references: [id])
   patternId        String?       @map("pattern")
   price            Int
@@ -192,23 +195,23 @@ model UserSubscription {
 }
 
 model Service {
-  id                  String             @id @default(cuid())
-  language            String?            @default("ru")
-  name                String             @default("")
-  description         String             @default("")
-  categories          Category[]         @relation("Service_categories")
-  status              ServiceStatusType? @default(draft)
-  price               Int?               @default(0)
-  items               UserService[]      @relation("UserService_pattern")
-  createdAt           DateTime?          @default(now())
-  lastModification    DateTime?          @default(now()) @updatedAt
-  from_Cart_services  Cart[]             @relation("Cart_services")
-  from_Order_services Order[]            @relation("Order_services")
+  id                  String        @id @default(cuid())
+  language            String        @default("ru")
+  statusView          String        @default("draft")
+  name                String        @default("")
+  description         String        @default("")
+  categories          Category[]    @relation("Service_categories")
+  price               Int?          @default(0)
+  items               UserService[] @relation("UserService_pattern")
+  createdAt           DateTime?     @default(now())
+  lastModification    DateTime?     @default(now()) @updatedAt
+  from_Cart_services  Cart[]        @relation("Cart_services")
+  from_Order_services Order[]       @relation("Order_services")
 }
 
 model UserService {
   id               String    @id @default(cuid())
-  language         String?   @default("ru")
+  language         String    @default("ru")
   pattern          Service?  @relation("UserService_pattern", fields: [patternId], references: [id])
   patternId        String?   @map("pattern")
   price            Int
@@ -227,6 +230,33 @@ model UserService {
   @@index([managerId])
 }
 
+model Page {
+  id               String    @id @default(cuid())
+  language         String    @default("ru")
+  statusView       String    @default("draft")
+  title            String    @default("")
+  slug             String    @unique @default("")
+  description      String    @default("")
+  content          Json      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  tag              Tag[]     @relation("Page_tag")
+  author           User?     @relation("Page_author", fields: [authorId], references: [id])
+  authorId         String?   @map("author")
+  createdAt        DateTime? @default(now())
+  lastModification DateTime? @default(now()) @updatedAt
+
+  @@index([authorId])
+}
+
+model Tag {
+  id               String     @id @default(cuid())
+  language         String     @default("ru")
+  title            String     @default("")
+  category         Category[] @relation("Tag_category")
+  createdAt        DateTime?  @default(now())
+  lastModification DateTime?  @default(now()) @updatedAt
+  from_Page_tag    Page[]     @relation("Page_tag")
+}
+
 enum OrderStatusType {
   created
   frozen
@@ -240,20 +270,6 @@ enum PaymentStatusType {
   successfully
   cancelled
   error
-}
-
-enum ProductStatusType {
-  draft
-  hide
-  show
-  archive
-}
-
-enum ProductReviewStatusType {
-  draft
-  hide
-  show
-  archive
 }
 
 enum UserStatusClientType {
@@ -281,11 +297,4 @@ enum UserRoleType {
   manager
   teacher
   student
-}
-
-enum ServiceStatusType {
-  draft
-  hide
-  show
-  archive
 }

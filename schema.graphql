@@ -142,7 +142,7 @@ type Category {
     skip: Int! = 0
   ): [Product!]
   productsCount(where: ProductWhereInput! = {}): Int
-  status: String
+  statusView: String
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -156,47 +156,13 @@ input CategoryWhereInput {
   OR: [CategoryWhereInput!]
   NOT: [CategoryWhereInput!]
   id: IDFilter
-  language: StringNullableFilter
+  language: StringFilter
   name: StringFilter
   parent: CategoryWhereInput
   products: ProductManyRelationFilter
-  status: StringNullableFilter
+  statusView: StringFilter
   createdAt: DateTimeNullableFilter
   lastModification: DateTimeNullableFilter
-}
-
-input StringNullableFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  mode: QueryMode
-  not: NestedStringNullableFilter
-}
-
-enum QueryMode {
-  default
-  insensitive
-}
-
-input NestedStringNullableFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  not: NestedStringNullableFilter
 }
 
 input StringFilter {
@@ -212,6 +178,11 @@ input StringFilter {
   endsWith: String
   mode: QueryMode
   not: NestedStringFilter
+}
+
+enum QueryMode {
+  default
+  insensitive
 }
 
 input NestedStringFilter {
@@ -238,7 +209,7 @@ input CategoryOrderByInput {
   id: OrderDirection
   language: OrderDirection
   name: OrderDirection
-  status: OrderDirection
+  statusView: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -248,7 +219,7 @@ input CategoryUpdateInput {
   name: String
   parent: CategoryRelateToOneForUpdateInput
   products: ProductRelateToManyForUpdateInput
-  status: String
+  statusView: String
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -276,7 +247,7 @@ input CategoryCreateInput {
   name: String
   parent: CategoryRelateToOneForCreateInput
   products: ProductRelateToManyForCreateInput
-  status: String
+  statusView: String
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -539,6 +510,7 @@ input OrderRelateToOneForCreateInput {
 type Product {
   id: ID!
   language: String
+  statusView: String
   name: String
   description: String
   categories(
@@ -548,18 +520,10 @@ type Product {
     skip: Int! = 0
   ): [Category!]
   categoriesCount(where: CategoryWhereInput! = {}): Int
-  status: ProductStatusType
   images: ImageFieldOutput
   price: Int
   createdAt: DateTime
   lastModification: DateTime
-}
-
-enum ProductStatusType {
-  draft
-  hide
-  show
-  archive
 }
 
 type ImageFieldOutput {
@@ -587,11 +551,11 @@ input ProductWhereInput {
   OR: [ProductWhereInput!]
   NOT: [ProductWhereInput!]
   id: IDFilter
-  language: StringNullableFilter
+  language: StringFilter
+  statusView: StringFilter
   name: StringFilter
   description: StringFilter
   categories: CategoryManyRelationFilter
-  status: ProductStatusTypeNullableFilter
   price: IntNullableFilter
   createdAt: DateTimeNullableFilter
   lastModification: DateTimeNullableFilter
@@ -603,19 +567,12 @@ input CategoryManyRelationFilter {
   none: CategoryWhereInput
 }
 
-input ProductStatusTypeNullableFilter {
-  equals: ProductStatusType
-  in: [ProductStatusType!]
-  notIn: [ProductStatusType!]
-  not: ProductStatusTypeNullableFilter
-}
-
 input ProductOrderByInput {
   id: OrderDirection
   language: OrderDirection
+  statusView: OrderDirection
   name: OrderDirection
   description: OrderDirection
-  status: OrderDirection
   price: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
@@ -623,10 +580,10 @@ input ProductOrderByInput {
 
 input ProductUpdateInput {
   language: String
+  statusView: String
   name: String
   description: String
   categories: CategoryRelateToManyForUpdateInput
-  status: ProductStatusType
   images: ImageFieldInput
   price: Int
   createdAt: DateTime
@@ -656,10 +613,10 @@ input ProductUpdateArgs {
 
 input ProductCreateInput {
   language: String
+  statusView: String
   name: String
   description: String
   categories: CategoryRelateToManyForCreateInput
-  status: ProductStatusType
   images: ImageFieldInput
   price: Int
   createdAt: DateTime
@@ -674,6 +631,7 @@ input CategoryRelateToManyForCreateInput {
 type ProductReview {
   id: ID!
   language: String
+  statusView: String
   student: User
   products(
     where: ProductWhereInput! = {}
@@ -682,18 +640,10 @@ type ProductReview {
     skip: Int! = 0
   ): [Product!]
   productsCount(where: ProductWhereInput! = {}): Int
-  status: ProductReviewStatusType
   desc: String
   media: String
   createdAt: DateTime
   lastModification: DateTime
-}
-
-enum ProductReviewStatusType {
-  draft
-  hide
-  show
-  archive
 }
 
 input ProductReviewWhereUniqueInput {
@@ -705,27 +655,20 @@ input ProductReviewWhereInput {
   OR: [ProductReviewWhereInput!]
   NOT: [ProductReviewWhereInput!]
   id: IDFilter
-  language: StringNullableFilter
+  language: StringFilter
+  statusView: StringFilter
   student: UserWhereInput
   products: ProductManyRelationFilter
-  status: ProductReviewStatusTypeNullableFilter
   desc: StringFilter
   media: StringFilter
   createdAt: DateTimeNullableFilter
   lastModification: DateTimeNullableFilter
 }
 
-input ProductReviewStatusTypeNullableFilter {
-  equals: ProductReviewStatusType
-  in: [ProductReviewStatusType!]
-  notIn: [ProductReviewStatusType!]
-  not: ProductReviewStatusTypeNullableFilter
-}
-
 input ProductReviewOrderByInput {
   id: OrderDirection
   language: OrderDirection
-  status: OrderDirection
+  statusView: OrderDirection
   desc: OrderDirection
   media: OrderDirection
   createdAt: OrderDirection
@@ -734,9 +677,9 @@ input ProductReviewOrderByInput {
 
 input ProductReviewUpdateInput {
   language: String
+  statusView: String
   student: UserRelateToOneForUpdateInput
   products: ProductRelateToManyForUpdateInput
-  status: ProductReviewStatusType
   desc: String
   media: String
   createdAt: DateTime
@@ -750,9 +693,9 @@ input ProductReviewUpdateArgs {
 
 input ProductReviewCreateInput {
   language: String
+  statusView: String
   student: UserRelateToOneForCreateInput
   products: ProductRelateToManyForCreateInput
-  status: ProductReviewStatusType
   desc: String
   media: String
   createdAt: DateTime
@@ -824,7 +767,7 @@ input UserWhereInput {
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
   id: IDFilter
-  language: StringNullableFilter
+  language: StringFilter
   name: StringFilter
   email: StringFilter
   password: PasswordFilter
@@ -999,6 +942,7 @@ input SourceClientRelateToOneForCreateInput {
 type Subscription {
   id: ID!
   language: String
+  statusView: String
   name: String
   visitCount: Int
   price: Int
@@ -1030,7 +974,8 @@ input SubscriptionWhereInput {
   OR: [SubscriptionWhereInput!]
   NOT: [SubscriptionWhereInput!]
   id: IDFilter
-  language: StringNullableFilter
+  language: StringFilter
+  statusView: StringFilter
   name: StringFilter
   visitCount: IntFilter
   price: IntFilter
@@ -1050,6 +995,7 @@ input UserSubscriptionManyRelationFilter {
 input SubscriptionOrderByInput {
   id: OrderDirection
   language: OrderDirection
+  statusView: OrderDirection
   name: OrderDirection
   visitCount: OrderDirection
   price: OrderDirection
@@ -1060,6 +1006,7 @@ input SubscriptionOrderByInput {
 
 input SubscriptionUpdateInput {
   language: String
+  statusView: String
   name: String
   visitCount: Int
   price: Int
@@ -1084,6 +1031,7 @@ input SubscriptionUpdateArgs {
 
 input SubscriptionCreateInput {
   language: String
+  statusView: String
   name: String
   visitCount: Int
   price: Int
@@ -1130,7 +1078,7 @@ input UserSubscriptionWhereInput {
   OR: [UserSubscriptionWhereInput!]
   NOT: [UserSubscriptionWhereInput!]
   id: IDFilter
-  language: StringNullableFilter
+  language: StringFilter
   pattern: SubscriptionWhereInput
   price: IntFilter
   status: StringFilter
@@ -1210,6 +1158,7 @@ input SubscriptionRelateToOneForCreateInput {
 type Service {
   id: ID!
   language: String
+  statusView: String
   name: String
   description: String
   categories(
@@ -1219,7 +1168,6 @@ type Service {
     skip: Int! = 0
   ): [Category!]
   categoriesCount(where: CategoryWhereInput! = {}): Int
-  status: ServiceStatusType
   price: Int
   items(
     where: UserServiceWhereInput! = {}
@@ -1232,13 +1180,6 @@ type Service {
   lastModification: DateTime
 }
 
-enum ServiceStatusType {
-  draft
-  hide
-  show
-  archive
-}
-
 input ServiceWhereUniqueInput {
   id: ID
 }
@@ -1248,22 +1189,15 @@ input ServiceWhereInput {
   OR: [ServiceWhereInput!]
   NOT: [ServiceWhereInput!]
   id: IDFilter
-  language: StringNullableFilter
+  language: StringFilter
+  statusView: StringFilter
   name: StringFilter
   description: StringFilter
   categories: CategoryManyRelationFilter
-  status: ServiceStatusTypeNullableFilter
   price: IntNullableFilter
   items: UserServiceManyRelationFilter
   createdAt: DateTimeNullableFilter
   lastModification: DateTimeNullableFilter
-}
-
-input ServiceStatusTypeNullableFilter {
-  equals: ServiceStatusType
-  in: [ServiceStatusType!]
-  notIn: [ServiceStatusType!]
-  not: ServiceStatusTypeNullableFilter
 }
 
 input UserServiceManyRelationFilter {
@@ -1275,9 +1209,9 @@ input UserServiceManyRelationFilter {
 input ServiceOrderByInput {
   id: OrderDirection
   language: OrderDirection
+  statusView: OrderDirection
   name: OrderDirection
   description: OrderDirection
-  status: OrderDirection
   price: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
@@ -1285,10 +1219,10 @@ input ServiceOrderByInput {
 
 input ServiceUpdateInput {
   language: String
+  statusView: String
   name: String
   description: String
   categories: CategoryRelateToManyForUpdateInput
-  status: ServiceStatusType
   price: Int
   items: UserServiceRelateToManyForUpdateInput
   createdAt: DateTime
@@ -1309,10 +1243,10 @@ input ServiceUpdateArgs {
 
 input ServiceCreateInput {
   language: String
+  statusView: String
   name: String
   description: String
   categories: CategoryRelateToManyForCreateInput
-  status: ServiceStatusType
   price: Int
   items: UserServiceRelateToManyForCreateInput
   createdAt: DateTime
@@ -1349,7 +1283,7 @@ input UserServiceWhereInput {
   OR: [UserServiceWhereInput!]
   NOT: [UserServiceWhereInput!]
   id: IDFilter
-  language: StringNullableFilter
+  language: StringFilter
   pattern: ServiceWhereInput
   price: IntFilter
   status: StringFilter
@@ -1412,6 +1346,171 @@ input UserServiceCreateInput {
 input ServiceRelateToOneForCreateInput {
   create: ServiceCreateInput
   connect: ServiceWhereUniqueInput
+}
+
+type Page {
+  id: ID!
+  language: String
+  statusView: String
+  title: String
+  slug: String
+  description: String
+  content: Page_content_Document
+  tag(
+    where: TagWhereInput! = {}
+    orderBy: [TagOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Tag!]
+  tagCount(where: TagWhereInput! = {}): Int
+  author: User
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+type Page_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input PageWhereUniqueInput {
+  id: ID
+  slug: String
+}
+
+input PageWhereInput {
+  AND: [PageWhereInput!]
+  OR: [PageWhereInput!]
+  NOT: [PageWhereInput!]
+  id: IDFilter
+  language: StringFilter
+  statusView: StringFilter
+  title: StringFilter
+  slug: StringFilter
+  description: StringFilter
+  tag: TagManyRelationFilter
+  author: UserWhereInput
+  createdAt: DateTimeNullableFilter
+  lastModification: DateTimeNullableFilter
+}
+
+input TagManyRelationFilter {
+  every: TagWhereInput
+  some: TagWhereInput
+  none: TagWhereInput
+}
+
+input PageOrderByInput {
+  id: OrderDirection
+  language: OrderDirection
+  statusView: OrderDirection
+  title: OrderDirection
+  slug: OrderDirection
+  description: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input PageUpdateInput {
+  language: String
+  statusView: String
+  title: String
+  slug: String
+  description: String
+  content: JSON
+  tag: TagRelateToManyForUpdateInput
+  author: UserRelateToOneForUpdateInput
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input TagRelateToManyForUpdateInput {
+  disconnect: [TagWhereUniqueInput!]
+  set: [TagWhereUniqueInput!]
+  create: [TagCreateInput!]
+  connect: [TagWhereUniqueInput!]
+}
+
+input PageUpdateArgs {
+  where: PageWhereUniqueInput!
+  data: PageUpdateInput!
+}
+
+input PageCreateInput {
+  language: String
+  statusView: String
+  title: String
+  slug: String
+  description: String
+  content: JSON
+  tag: TagRelateToManyForCreateInput
+  author: UserRelateToOneForCreateInput
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input TagRelateToManyForCreateInput {
+  create: [TagCreateInput!]
+  connect: [TagWhereUniqueInput!]
+}
+
+type Tag {
+  id: ID!
+  language: String
+  title: String
+  category(
+    where: CategoryWhereInput! = {}
+    orderBy: [CategoryOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Category!]
+  categoryCount(where: CategoryWhereInput! = {}): Int
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input TagWhereUniqueInput {
+  id: ID
+}
+
+input TagWhereInput {
+  AND: [TagWhereInput!]
+  OR: [TagWhereInput!]
+  NOT: [TagWhereInput!]
+  id: IDFilter
+  language: StringFilter
+  title: StringFilter
+  category: CategoryManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  lastModification: DateTimeNullableFilter
+}
+
+input TagOrderByInput {
+  id: OrderDirection
+  language: OrderDirection
+  title: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input TagUpdateInput {
+  language: String
+  title: String
+  category: CategoryRelateToManyForUpdateInput
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input TagUpdateArgs {
+  where: TagWhereUniqueInput!
+  data: TagUpdateInput!
+}
+
+input TagCreateInput {
+  language: String
+  title: String
+  category: CategoryRelateToManyForCreateInput
+  createdAt: DateTime
+  lastModification: DateTime
 }
 
 """
@@ -1530,6 +1629,18 @@ type Mutation {
   updateUserServices(data: [UserServiceUpdateArgs!]!): [UserService]
   deleteUserService(where: UserServiceWhereUniqueInput!): UserService
   deleteUserServices(where: [UserServiceWhereUniqueInput!]!): [UserService]
+  createPage(data: PageCreateInput!): Page
+  createPages(data: [PageCreateInput!]!): [Page]
+  updatePage(where: PageWhereUniqueInput!, data: PageUpdateInput!): Page
+  updatePages(data: [PageUpdateArgs!]!): [Page]
+  deletePage(where: PageWhereUniqueInput!): Page
+  deletePages(where: [PageWhereUniqueInput!]!): [Page]
+  createTag(data: TagCreateInput!): Tag
+  createTags(data: [TagCreateInput!]!): [Tag]
+  updateTag(where: TagWhereUniqueInput!, data: TagUpdateInput!): Tag
+  updateTags(data: [TagUpdateArgs!]!): [Tag]
+  deleteTag(where: TagWhereUniqueInput!): Tag
+  deleteTags(where: [TagWhereUniqueInput!]!): [Tag]
   endSession: Boolean!
   authenticateUserWithPassword(
     email: String!
@@ -1658,6 +1769,22 @@ type Query {
   ): [UserService!]
   userService(where: UserServiceWhereUniqueInput!): UserService
   userServicesCount(where: UserServiceWhereInput! = {}): Int
+  pages(
+    where: PageWhereInput! = {}
+    orderBy: [PageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Page!]
+  page(where: PageWhereUniqueInput!): Page
+  pagesCount(where: PageWhereInput! = {}): Int
+  tags(
+    where: TagWhereInput! = {}
+    orderBy: [TagOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Tag!]
+  tag(where: TagWhereUniqueInput!): Tag
+  tagsCount(where: TagWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

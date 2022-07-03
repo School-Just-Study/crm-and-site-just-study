@@ -2,10 +2,58 @@ import { list } from "@keystone-6/core";
 import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
+import { document } from "@keystone-6/fields-document";
+import { relationship, text } from "@keystone-6/core/fields";
+import { statusView } from "../fields/statusView";
 
 export const Page = list({
   fields: {
     language,
+    statusView,
+    title: text({ validation: { isRequired: true } }),
+    slug: text({ isIndexed: "unique", validation: { isRequired: true } }),
+    description: text({
+      ui: { description: "Выделенный текст сверху страницы" },
+    }),
+    content: document({
+      formatting: {
+        inlineMarks: {
+          bold: true,
+          italic: true,
+          underline: true,
+          strikethrough: true,
+          code: true,
+          superscript: true,
+          subscript: true,
+          keyboard: true,
+        },
+        listTypes: {
+          ordered: true,
+          unordered: true,
+        },
+        alignment: {
+          center: true,
+          end: true,
+        },
+        headingLevels: [2, 3, 4, 5, 6],
+        blockTypes: {
+          blockquote: true,
+          code: true,
+        },
+        softBreaks: true,
+      },
+      dividers: true,
+      links: true,
+      layouts: [
+        [1, 1],
+        [1, 1, 1],
+        [2, 1],
+        [1, 2],
+        [1, 2, 1],
+      ],
+    }),
+    tag: relationship({ ref: "Tag", many: true }),
+    author: relationship({ ref: "User" }),
     createdAt,
     lastModification,
   },

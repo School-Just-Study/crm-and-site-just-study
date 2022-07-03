@@ -11,6 +11,8 @@ import { Subscription } from "./subscription.schema";
 import { UserSubscription } from "./userSubscription.schema";
 import { Service } from "./service.schema";
 import { UserService } from "./userService.schema";
+import { Page } from "./page";
+import { Tag } from "./tag";
 
 export const lists: Lists = {
   Cart,
@@ -25,4 +27,6 @@ export const lists: Lists = {
   UserSubscription,
   Service,
   UserService,
+  Page,
+  Tag,
 };
