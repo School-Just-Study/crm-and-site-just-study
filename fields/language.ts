@@ -7,4 +7,5 @@ export const language = select({
   defaultValue: Language.Russian,
   ui: { displayMode: "segmented-control" },
   label: "Язык интерфейса",
+  validation: { isRequired: true },
 });

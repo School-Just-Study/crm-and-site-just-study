@@ -1,11 +1,10 @@
 import { list } from "@keystone-6/core";
-import { relationship, select, text } from "@keystone-6/core/fields";
+import { relationship, text } from "@keystone-6/core/fields";
 import { Roles } from "../enums/roles.enum";
-import { ViewStatusOptions } from "../consts/view-status-options";
-import { ViewStatus } from "../enums/view-status";
 import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
+import { statusView } from "../fields/statusView";
 
 export const Category = list({
   fields: {
@@ -15,11 +14,7 @@ export const Category = list({
     }),
     parent: relationship({ ref: "Category" }),
     products: relationship({ ref: "Product", many: true }),
-    status: select({
-      options: ViewStatusOptions,
-      defaultValue: ViewStatus.Draft,
-      ui: { displayMode: "segmented-control" },
-    }),
+    statusView,
     createdAt,
     lastModification,
   },
