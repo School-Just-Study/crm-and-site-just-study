@@ -4,6 +4,15 @@ import { filterCustomerAccess } from "../shared";
 import { lastModification } from "../fields/lastModification";
 
 export const Cart = list({
+  ui: {
+    label: "Корзины",
+    labelField: "user",
+    description: "Корзина для клиентов",
+    listView: {
+      initialColumns: ["user", "subscriptions", "services", "quantityPayments"],
+      pageSize: 20,
+    },
+  },
   fields: {
     user: relationship({
       ref: "User",

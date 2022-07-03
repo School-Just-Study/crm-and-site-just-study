@@ -7,6 +7,12 @@ import { lastModification } from "../fields/lastModification";
 import { statusView } from "../fields/statusView";
 
 export const Category = list({
+  ui: {
+    label: "Категории курсов",
+    labelField: "name",
+    description: "Категория курсов",
+    listView: { initialColumns: ["name", "language", "products", "parent"] },
+  },
   fields: {
     language,
     name: text({

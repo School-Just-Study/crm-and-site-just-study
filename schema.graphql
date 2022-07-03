@@ -421,6 +421,7 @@ input ServiceRelateToManyForCreateInput {
 type Payment {
   id: ID!
   order: Order
+  student: User
   sum: Int
   externalId: String
   receiptId: String
@@ -446,6 +447,7 @@ input PaymentWhereInput {
   NOT: [PaymentWhereInput!]
   id: IDFilter
   order: OrderWhereInput
+  student: UserWhereInput
   sum: IntNullableFilter
   externalId: StringFilter
   receiptId: StringFilter
@@ -473,6 +475,7 @@ input PaymentOrderByInput {
 
 input PaymentUpdateInput {
   order: OrderRelateToOneForUpdateInput
+  student: UserRelateToOneForUpdateInput
   sum: Int
   externalId: String
   receiptId: String
@@ -494,6 +497,7 @@ input PaymentUpdateArgs {
 
 input PaymentCreateInput {
   order: OrderRelateToOneForCreateInput
+  student: UserRelateToOneForCreateInput
   sum: Int
   externalId: String
   receiptId: String
@@ -947,13 +951,6 @@ type Subscription {
   visitCount: Int
   price: Int
   period: Int
-  product(
-    where: ProductWhereInput! = {}
-    orderBy: [ProductOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Product!]
-  productCount(where: ProductWhereInput! = {}): Int
   items(
     where: UserSubscriptionWhereInput! = {}
     orderBy: [UserSubscriptionOrderByInput!]! = []
@@ -980,7 +977,6 @@ input SubscriptionWhereInput {
   visitCount: IntFilter
   price: IntFilter
   period: IntNullableFilter
-  product: ProductManyRelationFilter
   items: UserSubscriptionManyRelationFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
@@ -1011,7 +1007,6 @@ input SubscriptionUpdateInput {
   visitCount: Int
   price: Int
   period: Int
-  product: ProductRelateToManyForUpdateInput
   items: UserSubscriptionRelateToManyForUpdateInput
   createdAt: DateTime
   lastModification: DateTime
@@ -1036,7 +1031,6 @@ input SubscriptionCreateInput {
   visitCount: Int
   price: Int
   period: Int
-  product: ProductRelateToManyForCreateInput
   items: UserSubscriptionRelateToManyForCreateInput
   createdAt: DateTime
   lastModification: DateTime
@@ -1049,7 +1043,6 @@ input UserSubscriptionRelateToManyForCreateInput {
 
 type UserSubscription {
   id: ID!
-  language: String
   pattern: Subscription
   name: String
   visitCount: Int
@@ -1059,7 +1052,7 @@ type UserSubscription {
   status: String
   student: User
   beginDate: DateTime
-  endDate: DateTime
+  endDate: String
   payed: Int
   totalVisited: Int
   totalBurned: Int
@@ -1078,16 +1071,18 @@ input UserSubscriptionWhereInput {
   OR: [UserSubscriptionWhereInput!]
   NOT: [UserSubscriptionWhereInput!]
   id: IDFilter
-  language: StringFilter
   pattern: SubscriptionWhereInput
-  price: IntFilter
+  name: StringFilter
+  visitCount: IntNullableFilter
+  originalPrice: IntNullableFilter
+  price: IntNullableFilter
+  period: IntNullableFilter
   status: StringFilter
   student: UserWhereInput
   beginDate: DateTimeNullableFilter
-  endDate: DateTimeNullableFilter
   payed: IntNullableFilter
-  totalVisited: IntNullableFilter
-  totalBurned: IntNullableFilter
+  totalVisited: IntFilter
+  totalBurned: IntFilter
   manager: UserWhereInput
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
@@ -1106,11 +1101,13 @@ input DateTimeNullableFilter {
 
 input UserSubscriptionOrderByInput {
   id: OrderDirection
-  language: OrderDirection
+  name: OrderDirection
+  visitCount: OrderDirection
+  originalPrice: OrderDirection
   price: OrderDirection
+  period: OrderDirection
   status: OrderDirection
   beginDate: OrderDirection
-  endDate: OrderDirection
   payed: OrderDirection
   totalVisited: OrderDirection
   totalBurned: OrderDirection
@@ -1119,13 +1116,15 @@ input UserSubscriptionOrderByInput {
 }
 
 input UserSubscriptionUpdateInput {
-  language: String
   pattern: SubscriptionRelateToOneForUpdateInput
+  name: String
+  visitCount: Int
+  originalPrice: Int
   price: Int
+  period: Int
   status: String
   student: UserRelateToOneForUpdateInput
   beginDate: DateTime
-  endDate: DateTime
   payed: Int
   totalVisited: Int
   totalBurned: Int
@@ -1146,13 +1145,15 @@ input UserSubscriptionUpdateArgs {
 }
 
 input UserSubscriptionCreateInput {
-  language: String
   pattern: SubscriptionRelateToOneForCreateInput
+  name: String
+  visitCount: Int
+  originalPrice: Int
   price: Int
+  period: Int
   status: String
   student: UserRelateToOneForCreateInput
   beginDate: DateTime
-  endDate: DateTime
   payed: Int
   totalVisited: Int
   totalBurned: Int
@@ -1271,14 +1272,11 @@ input UserServiceRelateToManyForCreateInput {
 
 type UserService {
   id: ID!
-  language: String
   pattern: Service
   name: String
   originalPrice: Int
   price: Int
-  status: String
   student: User
-  beginDate: DateTime
   payed: Int
   manager: User
   createdAt: DateTime
@@ -1294,12 +1292,11 @@ input UserServiceWhereInput {
   OR: [UserServiceWhereInput!]
   NOT: [UserServiceWhereInput!]
   id: IDFilter
-  language: StringFilter
   pattern: ServiceWhereInput
-  price: IntFilter
-  status: StringFilter
+  name: StringFilter
+  originalPrice: IntNullableFilter
+  price: IntNullableFilter
   student: UserWhereInput
-  beginDate: DateTimeNullableFilter
   payed: IntNullableFilter
   manager: UserWhereInput
   createdAt: DateTimeFilter
@@ -1308,22 +1305,20 @@ input UserServiceWhereInput {
 
 input UserServiceOrderByInput {
   id: OrderDirection
-  language: OrderDirection
+  name: OrderDirection
+  originalPrice: OrderDirection
   price: OrderDirection
-  status: OrderDirection
-  beginDate: OrderDirection
   payed: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
 
 input UserServiceUpdateInput {
-  language: String
   pattern: ServiceRelateToOneForUpdateInput
+  name: String
+  originalPrice: Int
   price: Int
-  status: String
   student: UserRelateToOneForUpdateInput
-  beginDate: DateTime
   payed: Int
   manager: UserRelateToOneForUpdateInput
   createdAt: DateTime
@@ -1342,12 +1337,11 @@ input UserServiceUpdateArgs {
 }
 
 input UserServiceCreateInput {
-  language: String
   pattern: ServiceRelateToOneForCreateInput
+  name: String
+  originalPrice: Int
   price: Int
-  status: String
   student: UserRelateToOneForCreateInput
-  beginDate: DateTime
   payed: Int
   manager: UserRelateToOneForCreateInput
   createdAt: DateTime

@@ -7,6 +7,14 @@ import { relationship, text } from "@keystone-6/core/fields";
 import { statusView } from "../fields/statusView";
 
 export const Page = list({
+  ui: {
+    label: "Страницы",
+    labelField: "title",
+    listView: {
+      initialColumns: ["title", "language", "statusView", "tag", "author"],
+      pageSize: 20,
+    },
+  },
   fields: {
     language,
     statusView,

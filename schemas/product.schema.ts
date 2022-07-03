@@ -7,6 +7,22 @@ import { lastModification } from "../fields/lastModification";
 import { statusView } from "../fields/statusView";
 
 export const Product = list({
+  ui: {
+    label: "Курсы",
+    labelField: "name",
+    description: "Курсы, которые публикуются на сайте",
+    listView: {
+      initialColumns: [
+        "language",
+        "name",
+        "statusView",
+        "description",
+        "categories",
+        "price",
+      ],
+      pageSize: 20,
+    },
+  },
   fields: {
     language,
     statusView,

@@ -7,6 +7,13 @@ import { lastModification } from "../fields/lastModification";
 import { statusView } from "../fields/statusView";
 
 export const Service = list({
+  ui: {
+    label: "Шаблоны услуг",
+    labelField: "name",
+    listView: {
+      initialColumns: ["name", "language", "statusView", "categories", "price"],
+    },
+  },
   fields: {
     language,
     statusView,
