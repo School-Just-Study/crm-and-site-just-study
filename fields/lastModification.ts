@@ -6,4 +6,5 @@ export const lastModification = timestamp({
   db: {
     updatedAt: true,
   },
+  validation: { isRequired: true },
 });

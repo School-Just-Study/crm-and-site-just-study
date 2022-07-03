@@ -38,7 +38,7 @@ input CartWhereInput {
   subscriptions: SubscriptionManyRelationFilter
   services: ServiceManyRelationFilter
   quantityPayments: IntNullableFilter
-  lastModification: DateTimeNullableFilter
+  lastModification: DateTimeFilter
 }
 
 input IDFilter {
@@ -75,7 +75,7 @@ input IntNullableFilter {
   not: IntNullableFilter
 }
 
-input DateTimeNullableFilter {
+input DateTimeFilter {
   equals: DateTime
   in: [DateTime!]
   notIn: [DateTime!]
@@ -83,7 +83,7 @@ input DateTimeNullableFilter {
   lte: DateTime
   gt: DateTime
   gte: DateTime
-  not: DateTimeNullableFilter
+  not: DateTimeFilter
 }
 
 input CartOrderByInput {
@@ -161,8 +161,8 @@ input CategoryWhereInput {
   parent: CategoryWhereInput
   products: ProductManyRelationFilter
   statusView: StringFilter
-  createdAt: DateTimeNullableFilter
-  lastModification: DateTimeNullableFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
 }
 
 input StringFilter {
@@ -323,8 +323,8 @@ input OrderWhereInput {
   subscriptions: SubscriptionManyRelationFilter
   services: ServiceManyRelationFilter
   amount: IntNullableFilter
-  createdAt: DateTimeNullableFilter
-  lastModification: DateTimeNullableFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
 }
 
 input IntFilter {
@@ -450,8 +450,8 @@ input PaymentWhereInput {
   externalId: StringFilter
   receiptId: StringFilter
   status: PaymentStatusTypeNullableFilter
-  createdAt: DateTimeNullableFilter
-  lastModification: DateTimeNullableFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
 }
 
 input PaymentStatusTypeNullableFilter {
@@ -557,8 +557,8 @@ input ProductWhereInput {
   description: StringFilter
   categories: CategoryManyRelationFilter
   price: IntNullableFilter
-  createdAt: DateTimeNullableFilter
-  lastModification: DateTimeNullableFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
 }
 
 input CategoryManyRelationFilter {
@@ -661,8 +661,8 @@ input ProductReviewWhereInput {
   products: ProductManyRelationFilter
   desc: StringFilter
   media: StringFilter
-  createdAt: DateTimeNullableFilter
-  lastModification: DateTimeNullableFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
 }
 
 input ProductReviewOrderByInput {
@@ -778,8 +778,8 @@ input UserWhereInput {
   source: SourceClientManyRelationFilter
   role: UserRoleTypeNullableFilter
   comment: StringFilter
-  createdAt: DateTimeNullableFilter
-  lastModification: DateTimeNullableFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
 }
 
 input PasswordFilter {
@@ -898,8 +898,8 @@ input SourceClientWhereInput {
   id: IDFilter
   name: StringFilter
   parent: SourceClientWhereInput
-  createdAt: DateTimeNullableFilter
-  lastModification: DateTimeNullableFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
 }
 
 input SourceClientOrderByInput {
@@ -982,8 +982,8 @@ input SubscriptionWhereInput {
   period: IntNullableFilter
   product: ProductManyRelationFilter
   items: UserSubscriptionManyRelationFilter
-  createdAt: DateTimeNullableFilter
-  lastModification: DateTimeNullableFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
 }
 
 input UserSubscriptionManyRelationFilter {
@@ -1089,8 +1089,19 @@ input UserSubscriptionWhereInput {
   totalVisited: IntNullableFilter
   totalBurned: IntNullableFilter
   manager: UserWhereInput
-  createdAt: DateTimeNullableFilter
-  lastModification: DateTimeNullableFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeNullableFilter
 }
 
 input UserSubscriptionOrderByInput {
@@ -1196,8 +1207,8 @@ input ServiceWhereInput {
   categories: CategoryManyRelationFilter
   price: IntNullableFilter
   items: UserServiceManyRelationFilter
-  createdAt: DateTimeNullableFilter
-  lastModification: DateTimeNullableFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
 }
 
 input UserServiceManyRelationFilter {
@@ -1291,8 +1302,8 @@ input UserServiceWhereInput {
   beginDate: DateTimeNullableFilter
   payed: IntNullableFilter
   manager: UserWhereInput
-  createdAt: DateTimeNullableFilter
-  lastModification: DateTimeNullableFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
 }
 
 input UserServiceOrderByInput {
@@ -1389,8 +1400,8 @@ input PageWhereInput {
   description: StringFilter
   tag: TagManyRelationFilter
   author: UserWhereInput
-  createdAt: DateTimeNullableFilter
-  lastModification: DateTimeNullableFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
 }
 
 input TagManyRelationFilter {
@@ -1480,8 +1491,8 @@ input TagWhereInput {
   language: StringFilter
   title: StringFilter
   category: CategoryManyRelationFilter
-  createdAt: DateTimeNullableFilter
-  lastModification: DateTimeNullableFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
 }
 
 input TagOrderByInput {
