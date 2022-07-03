@@ -7,6 +7,13 @@ import { lastModification } from "../fields/lastModification";
 import { statusView } from "../fields/statusView";
 
 export const ProductReview = list({
+  ui: {
+    label: "Отзывы студентов",
+    listView: {
+      initialColumns: ["student", "statusView", "products", "desc"],
+      pageSize: 20,
+    },
+  },
   fields: {
     language,
     statusView,

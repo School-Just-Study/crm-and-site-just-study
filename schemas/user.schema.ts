@@ -18,6 +18,21 @@ import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 
 export const User = list({
+  ui: {
+    label: "Пользователи",
+    listView: {
+      initialColumns: [
+        "name",
+        "language",
+        "email",
+        "phone",
+        "statusClient",
+        "role",
+        "comment",
+      ],
+      pageSize: 20,
+    },
+  },
   fields: {
     language,
     avatar: image({ storage: "local_images" }),

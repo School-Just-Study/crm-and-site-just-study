@@ -8,8 +8,16 @@ import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 
 export const Payment = list({
+  ui: {
+    label: "Платежи",
+    listView: {
+      initialColumns: ["order", "status", "sum", "externalId", "receiptId"],
+      pageSize: 20,
+    },
+  },
   fields: {
     order: relationship({ ref: "Order.payments" }),
+    student: relationship({ ref: "User" }),
     sum: integer({ defaultValue: 0 }),
     externalId: text(),
     receiptId: text(),
@@ -18,6 +26,7 @@ export const Payment = list({
       options: PaymentStatusOptions,
       defaultValue: PaymentStatus.Created,
       ui: { displayMode: "segmented-control" },
+      validation: { isRequired: true },
     }),
     createdAt,
     lastModification,

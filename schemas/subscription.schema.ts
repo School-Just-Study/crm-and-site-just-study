@@ -7,6 +7,20 @@ import { lastModification } from "../fields/lastModification";
 import { statusView } from "../fields/statusView";
 
 export const Subscription = list({
+  ui: {
+    label: "Шаблоны абонементов",
+    labelField: "name",
+    listView: {
+      initialColumns: [
+        "name",
+        "language",
+        "statusView",
+        "visitCount",
+        "price",
+        "period",
+      ],
+    },
+  },
   fields: {
     language,
     statusView,
@@ -17,7 +31,6 @@ export const Subscription = list({
     }),
     price: integer({ validation: { isRequired: true } }),
     period: integer({ defaultValue: 45 }),
-    product: relationship({ ref: "Product", many: true }),
     items: relationship({ ref: "UserSubscription.pattern", many: true }),
     createdAt,
     lastModification,

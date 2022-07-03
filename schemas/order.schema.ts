@@ -10,19 +10,35 @@ import { filterCustomerAccess, filterCustomerAccessCreate } from "../shared";
 import { Lists } from ".keystone/types";
 import { OrderStatus } from "../enums/order-status.enum";
 import { PaymentStatus } from "../enums/payment-status.enum";
-import format from "date-fns/format";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
+import { format } from "date-fns";
 
 export const Order = list({
+  ui: {
+    label: "Заказы",
+    description: "Список заказов клиентов",
+    listView: {
+      initialColumns: [
+        "label",
+        "status",
+        "leftPayments",
+        "amount",
+        "payed",
+        "dept",
+        "nextPayment",
+        "employee",
+      ],
+      pageSize: 20,
+    },
+  },
   fields: {
     label: virtual({
       // @ts-ignore
       field: graphql.field({
         type: graphql.String,
         async resolve(item: Lists.Order.Item, arg, context) {
-          // @ts-ignore
-          const student: Lists.User.Item = await context.query.User.findOne({
+          const student = await context.query.User.findOne({
             where: { id: item.studentId },
             query: `name`,
           });
@@ -104,7 +120,7 @@ export const Order = list({
               0
             );
             if (item.amount) {
-              return item.amount - payed;
+              return Math.round(item.amount - payed);
             } else {
               return 0;
             }
@@ -132,7 +148,7 @@ export const Order = list({
             );
             if (item.amount && item.leftPayments >= 1) {
               const dept = item.amount - payed;
-              return dept / item.leftPayments;
+              return Math.round(dept / item.leftPayments);
             } else {
               return 0;
             }

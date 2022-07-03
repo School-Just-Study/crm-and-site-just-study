@@ -5,6 +5,12 @@ import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 
 export const SourceClient = list({
+  ui: {
+    label: "Источники клиентов",
+    isHidden: true,
+    labelField: "name",
+    listView: { initialColumns: ["name", "parent"] },
+  },
   fields: {
     name: text({
       validation: { isRequired: true },
