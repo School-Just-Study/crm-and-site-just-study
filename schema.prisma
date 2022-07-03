@@ -19,7 +19,7 @@ model Cart {
   subscriptions    Subscription[] @relation("Cart_subscriptions")
   services         Service[]      @relation("Cart_services")
   quantityPayments Int?           @default(1)
-  lastModification DateTime?      @default(now()) @updatedAt
+  lastModification DateTime       @default(now()) @updatedAt
 
   @@index([userId])
 }
@@ -32,8 +32,8 @@ model Category {
   parentId                String?    @map("parent")
   products                Product[]  @relation("Category_products")
   statusView              String     @default("draft")
-  createdAt               DateTime?  @default(now())
-  lastModification        DateTime?  @default(now()) @updatedAt
+  createdAt               DateTime   @default(now())
+  lastModification        DateTime   @default(now()) @updatedAt
   from_Category_parent    Category[] @relation("Category_parent")
   from_Product_categories Product[]  @relation("Product_categories")
   from_Service_categories Service[]  @relation("Service_categories")
@@ -54,8 +54,8 @@ model Order {
   subscriptions    Subscription[]   @relation("Order_subscriptions")
   services         Service[]        @relation("Order_services")
   amount           Int?
-  createdAt        DateTime?        @default(now())
-  lastModification DateTime?        @default(now()) @updatedAt
+  createdAt        DateTime         @default(now())
+  lastModification DateTime         @default(now()) @updatedAt
 
   @@index([studentId])
   @@index([employeeId])
@@ -69,8 +69,8 @@ model Payment {
   externalId       String             @default("")
   receiptId        String             @default("")
   status           PaymentStatusType? @default(created)
-  createdAt        DateTime?          @default(now())
-  lastModification DateTime?          @default(now()) @updatedAt
+  createdAt        DateTime           @default(now())
+  lastModification DateTime           @default(now()) @updatedAt
 
   @@index([orderId])
 }
@@ -88,8 +88,8 @@ model Product {
   images_height               Int?
   images_id                   String?
   price                       Int?            @default(0)
-  createdAt                   DateTime?       @default(now())
-  lastModification            DateTime?       @default(now()) @updatedAt
+  createdAt                   DateTime        @default(now())
+  lastModification            DateTime        @default(now()) @updatedAt
   from_Category_products      Category[]      @relation("Category_products")
   from_ProductReview_products ProductReview[] @relation("ProductReview_products")
   from_Subscription_product   Subscription[]  @relation("Subscription_product")
@@ -104,8 +104,8 @@ model ProductReview {
   products         Product[] @relation("ProductReview_products")
   desc             String    @default("")
   media            String    @default("")
-  createdAt        DateTime? @default(now())
-  lastModification DateTime? @default(now()) @updatedAt
+  createdAt        DateTime  @default(now())
+  lastModification DateTime  @default(now()) @updatedAt
 
   @@index([studentId])
 }
@@ -128,8 +128,8 @@ model User {
   source                        SourceClient[]        @relation("User_source")
   role                          UserRoleType?         @default(student)
   comment                       String                @default("")
-  createdAt                     DateTime?             @default(now())
-  lastModification              DateTime?             @default(now()) @updatedAt
+  createdAt                     DateTime              @default(now())
+  lastModification              DateTime              @default(now()) @updatedAt
   from_Cart_user                Cart[]                @relation("Cart_user")
   from_Order_student            Order[]               @relation("Order_student")
   from_Order_employee           Order[]               @relation("Order_employee")
@@ -146,8 +146,8 @@ model SourceClient {
   name                     String         @default("")
   parent                   SourceClient?  @relation("SourceClient_parent", fields: [parentId], references: [id])
   parentId                 String?        @map("parent")
-  createdAt                DateTime?      @default(now())
-  lastModification         DateTime?      @default(now()) @updatedAt
+  createdAt                DateTime       @default(now())
+  lastModification         DateTime       @default(now()) @updatedAt
   from_User_source         User[]         @relation("User_source")
   from_SourceClient_parent SourceClient[] @relation("SourceClient_parent")
 
@@ -164,8 +164,8 @@ model Subscription {
   period                   Int?               @default(45)
   product                  Product[]          @relation("Subscription_product")
   items                    UserSubscription[] @relation("UserSubscription_pattern")
-  createdAt                DateTime?          @default(now())
-  lastModification         DateTime?          @default(now()) @updatedAt
+  createdAt                DateTime           @default(now())
+  lastModification         DateTime           @default(now()) @updatedAt
   from_Cart_subscriptions  Cart[]             @relation("Cart_subscriptions")
   from_Order_subscriptions Order[]            @relation("Order_subscriptions")
 }
@@ -186,8 +186,8 @@ model UserSubscription {
   totalBurned      Int?          @default(0)
   manager          User?         @relation("UserSubscription_manager", fields: [managerId], references: [id])
   managerId        String?       @map("manager")
-  createdAt        DateTime?     @default(now())
-  lastModification DateTime?     @default(now()) @updatedAt
+  createdAt        DateTime      @default(now())
+  lastModification DateTime      @default(now()) @updatedAt
 
   @@index([patternId])
   @@index([studentId])
@@ -203,8 +203,8 @@ model Service {
   categories          Category[]    @relation("Service_categories")
   price               Int?          @default(0)
   items               UserService[] @relation("UserService_pattern")
-  createdAt           DateTime?     @default(now())
-  lastModification    DateTime?     @default(now()) @updatedAt
+  createdAt           DateTime      @default(now())
+  lastModification    DateTime      @default(now()) @updatedAt
   from_Cart_services  Cart[]        @relation("Cart_services")
   from_Order_services Order[]       @relation("Order_services")
 }
@@ -222,8 +222,8 @@ model UserService {
   payed            Int?
   manager          User?     @relation("UserService_manager", fields: [managerId], references: [id])
   managerId        String?   @map("manager")
-  createdAt        DateTime? @default(now())
-  lastModification DateTime? @default(now()) @updatedAt
+  createdAt        DateTime  @default(now())
+  lastModification DateTime  @default(now()) @updatedAt
 
   @@index([patternId])
   @@index([studentId])
@@ -231,18 +231,18 @@ model UserService {
 }
 
 model Page {
-  id               String    @id @default(cuid())
-  language         String    @default("ru")
-  statusView       String    @default("draft")
-  title            String    @default("")
-  slug             String    @unique @default("")
-  description      String    @default("")
-  content          Json      @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  tag              Tag[]     @relation("Page_tag")
-  author           User?     @relation("Page_author", fields: [authorId], references: [id])
-  authorId         String?   @map("author")
-  createdAt        DateTime? @default(now())
-  lastModification DateTime? @default(now()) @updatedAt
+  id               String   @id @default(cuid())
+  language         String   @default("ru")
+  statusView       String   @default("draft")
+  title            String   @default("")
+  slug             String   @unique @default("")
+  description      String   @default("")
+  content          Json     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  tag              Tag[]    @relation("Page_tag")
+  author           User?    @relation("Page_author", fields: [authorId], references: [id])
+  authorId         String?  @map("author")
+  createdAt        DateTime @default(now())
+  lastModification DateTime @default(now()) @updatedAt
 
   @@index([authorId])
 }
@@ -252,8 +252,8 @@ model Tag {
   language         String     @default("ru")
   title            String     @default("")
   category         Category[] @relation("Tag_category")
-  createdAt        DateTime?  @default(now())
-  lastModification DateTime?  @default(now()) @updatedAt
+  createdAt        DateTime   @default(now())
+  lastModification DateTime   @default(now()) @updatedAt
   from_Page_tag    Page[]     @relation("Page_tag")
 }
 

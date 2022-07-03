@@ -12,6 +12,9 @@
 # next.js
 /.next/
 /out/
+/public/*.xml
+/public/*.txt
+/public/images
 
 # production
 /build
