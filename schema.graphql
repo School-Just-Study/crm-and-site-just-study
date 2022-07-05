@@ -176,13 +176,7 @@ input StringFilter {
   contains: String
   startsWith: String
   endsWith: String
-  mode: QueryMode
   not: NestedStringFilter
-}
-
-enum QueryMode {
-  default
-  insensitive
 }
 
 input NestedStringFilter {
@@ -526,6 +520,13 @@ type Product {
   categoriesCount(where: CategoryWhereInput! = {}): Int
   images: ImageFieldOutput
   price: Int
+  tag(
+    where: TagWhereInput! = {}
+    orderBy: [TagOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Tag!]
+  tagCount(where: TagWhereInput! = {}): Int
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -561,6 +562,7 @@ input ProductWhereInput {
   description: StringFilter
   categories: CategoryManyRelationFilter
   price: IntNullableFilter
+  tag: TagManyRelationFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
@@ -569,6 +571,12 @@ input CategoryManyRelationFilter {
   every: CategoryWhereInput
   some: CategoryWhereInput
   none: CategoryWhereInput
+}
+
+input TagManyRelationFilter {
+  every: TagWhereInput
+  some: TagWhereInput
+  none: TagWhereInput
 }
 
 input ProductOrderByInput {
@@ -590,6 +598,7 @@ input ProductUpdateInput {
   categories: CategoryRelateToManyForUpdateInput
   images: ImageFieldInput
   price: Int
+  tag: TagRelateToManyForUpdateInput
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -610,6 +619,13 @@ The `Upload` scalar type represents a file upload.
 """
 scalar Upload
 
+input TagRelateToManyForUpdateInput {
+  disconnect: [TagWhereUniqueInput!]
+  set: [TagWhereUniqueInput!]
+  create: [TagCreateInput!]
+  connect: [TagWhereUniqueInput!]
+}
+
 input ProductUpdateArgs {
   where: ProductWhereUniqueInput!
   data: ProductUpdateInput!
@@ -623,6 +639,7 @@ input ProductCreateInput {
   categories: CategoryRelateToManyForCreateInput
   images: ImageFieldInput
   price: Int
+  tag: TagRelateToManyForCreateInput
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -630,6 +647,11 @@ input ProductCreateInput {
 input CategoryRelateToManyForCreateInput {
   create: [CategoryCreateInput!]
   connect: [CategoryWhereUniqueInput!]
+}
+
+input TagRelateToManyForCreateInput {
+  create: [TagCreateInput!]
+  connect: [TagWhereUniqueInput!]
 }
 
 type ProductReview {
@@ -709,7 +731,7 @@ input ProductReviewCreateInput {
 type User {
   id: ID!
   language: String
-  avatar: ImageFieldOutput
+  avatar: AvatarUser
   name: String
   email: String
   password: PasswordState
@@ -772,6 +794,7 @@ input UserWhereInput {
   NOT: [UserWhereInput!]
   id: IDFilter
   language: StringFilter
+  avatar: AvatarUserWhereInput
   name: StringFilter
   email: StringFilter
   password: PasswordFilter
@@ -834,7 +857,7 @@ input UserOrderByInput {
 
 input UserUpdateInput {
   language: String
-  avatar: ImageFieldInput
+  avatar: AvatarUserRelateToOneForUpdateInput
   name: String
   email: String
   password: String
@@ -847,6 +870,12 @@ input UserUpdateInput {
   comment: String
   createdAt: DateTime
   lastModification: DateTime
+}
+
+input AvatarUserRelateToOneForUpdateInput {
+  create: AvatarUserCreateInput
+  connect: AvatarUserWhereUniqueInput
+  disconnect: Boolean
 }
 
 input SourceClientRelateToManyForUpdateInput {
@@ -863,7 +892,7 @@ input UserUpdateArgs {
 
 input UserCreateInput {
   language: String
-  avatar: ImageFieldInput
+  avatar: AvatarUserRelateToOneForCreateInput
   name: String
   email: String
   password: String
@@ -878,9 +907,61 @@ input UserCreateInput {
   lastModification: DateTime
 }
 
+input AvatarUserRelateToOneForCreateInput {
+  create: AvatarUserCreateInput
+  connect: AvatarUserWhereUniqueInput
+}
+
 input SourceClientRelateToManyForCreateInput {
   create: [SourceClientCreateInput!]
   connect: [SourceClientWhereUniqueInput!]
+}
+
+type AvatarUser {
+  id: ID!
+  user: User
+  image: ImageFieldOutput
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input AvatarUserWhereUniqueInput {
+  id: ID
+}
+
+input AvatarUserWhereInput {
+  AND: [AvatarUserWhereInput!]
+  OR: [AvatarUserWhereInput!]
+  NOT: [AvatarUserWhereInput!]
+  id: IDFilter
+  user: UserWhereInput
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input AvatarUserOrderByInput {
+  id: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input AvatarUserUpdateInput {
+  user: UserRelateToOneForUpdateInput
+  image: ImageFieldInput
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input AvatarUserUpdateArgs {
+  where: AvatarUserWhereUniqueInput!
+  data: AvatarUserUpdateInput!
+}
+
+input AvatarUserCreateInput {
+  user: UserRelateToOneForCreateInput
+  image: ImageFieldInput
+  createdAt: DateTime
+  lastModification: DateTime
 }
 
 type SourceClient {
@@ -1398,12 +1479,6 @@ input PageWhereInput {
   lastModification: DateTimeFilter
 }
 
-input TagManyRelationFilter {
-  every: TagWhereInput
-  some: TagWhereInput
-  none: TagWhereInput
-}
-
 input PageOrderByInput {
   id: OrderDirection
   language: OrderDirection
@@ -1428,13 +1503,6 @@ input PageUpdateInput {
   lastModification: DateTime
 }
 
-input TagRelateToManyForUpdateInput {
-  disconnect: [TagWhereUniqueInput!]
-  set: [TagWhereUniqueInput!]
-  create: [TagCreateInput!]
-  connect: [TagWhereUniqueInput!]
-}
-
 input PageUpdateArgs {
   where: PageWhereUniqueInput!
   data: PageUpdateInput!
@@ -1453,22 +1521,10 @@ input PageCreateInput {
   lastModification: DateTime
 }
 
-input TagRelateToManyForCreateInput {
-  create: [TagCreateInput!]
-  connect: [TagWhereUniqueInput!]
-}
-
 type Tag {
   id: ID!
   language: String
-  title: String
-  category(
-    where: CategoryWhereInput! = {}
-    orderBy: [CategoryOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Category!]
-  categoryCount(where: CategoryWhereInput! = {}): Int
+  name: String
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -1483,8 +1539,7 @@ input TagWhereInput {
   NOT: [TagWhereInput!]
   id: IDFilter
   language: StringFilter
-  title: StringFilter
-  category: CategoryManyRelationFilter
+  name: StringFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
@@ -1492,15 +1547,14 @@ input TagWhereInput {
 input TagOrderByInput {
   id: OrderDirection
   language: OrderDirection
-  title: OrderDirection
+  name: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
 
 input TagUpdateInput {
   language: String
-  title: String
-  category: CategoryRelateToManyForUpdateInput
+  name: String
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -1512,8 +1566,7 @@ input TagUpdateArgs {
 
 input TagCreateInput {
   language: String
-  title: String
-  category: CategoryRelateToManyForCreateInput
+  name: String
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -1581,6 +1634,15 @@ type Mutation {
   updateUsers(data: [UserUpdateArgs!]!): [User]
   deleteUser(where: UserWhereUniqueInput!): User
   deleteUsers(where: [UserWhereUniqueInput!]!): [User]
+  createAvatarUser(data: AvatarUserCreateInput!): AvatarUser
+  createAvatarUsers(data: [AvatarUserCreateInput!]!): [AvatarUser]
+  updateAvatarUser(
+    where: AvatarUserWhereUniqueInput!
+    data: AvatarUserUpdateInput!
+  ): AvatarUser
+  updateAvatarUsers(data: [AvatarUserUpdateArgs!]!): [AvatarUser]
+  deleteAvatarUser(where: AvatarUserWhereUniqueInput!): AvatarUser
+  deleteAvatarUsers(where: [AvatarUserWhereUniqueInput!]!): [AvatarUser]
   createSourceClient(data: SourceClientCreateInput!): SourceClient
   createSourceClients(data: [SourceClientCreateInput!]!): [SourceClient]
   updateSourceClient(
@@ -1734,6 +1796,14 @@ type Query {
   ): [User!]
   user(where: UserWhereUniqueInput!): User
   usersCount(where: UserWhereInput! = {}): Int
+  avatarUsers(
+    where: AvatarUserWhereInput! = {}
+    orderBy: [AvatarUserOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [AvatarUser!]
+  avatarUser(where: AvatarUserWhereUniqueInput!): AvatarUser
+  avatarUsersCount(where: AvatarUserWhereInput! = {}): Int
   sourceClients(
     where: SourceClientWhereInput! = {}
     orderBy: [SourceClientOrderByInput!]! = []
@@ -1867,6 +1937,11 @@ enum KeystoneAdminUIFieldMetaItemViewFieldMode {
   edit
   read
   hidden
+}
+
+enum QueryMode {
+  default
+  insensitive
 }
 
 type KeystoneAdminUISort {

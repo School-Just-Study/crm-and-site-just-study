@@ -14,7 +14,6 @@
 /out/
 /public/*.xml
 /public/*.txt
-/public/images
 
 # production
 /build
@@ -39,3 +38,5 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+.env

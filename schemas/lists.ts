@@ -1,4 +1,3 @@
-import { Lists } from ".keystone/types";
 import { User } from "./user.schema";
 import { Cart } from "./cart.schema";
 import { Order } from "./order.schema";
@@ -13,8 +12,9 @@ import { Service } from "./service.schema";
 import { UserService } from "./userService.schema";
 import { Page } from "./page";
 import { Tag } from "./tag";
+import { AvatarUser } from "./avatarUser";
 
-export const lists: Lists = {
+export const lists = {
   Cart,
   Category,
   Order,
@@ -22,6 +22,7 @@ export const lists: Lists = {
   Product,
   ProductReview,
   User,
+  AvatarUser,
   SourceClient,
   Subscription,
   UserSubscription,

@@ -1,11 +1,5 @@
 import { list } from "@keystone-6/core";
-import {
-  image,
-  password,
-  relationship,
-  select,
-  text,
-} from "@keystone-6/core/fields";
+import { password, relationship, select, text } from "@keystone-6/core/fields";
 import { RolesValues } from "../consts/roles.const";
 import { Roles } from "../enums/roles.enum";
 import { filterCustomerAccess, filterCustomerAccessCreate } from "../shared";
@@ -35,7 +29,7 @@ export const User = list({
   },
   fields: {
     language,
-    avatar: image({ storage: "local_images" }),
+    avatar: relationship({ ref: "AvatarUser.user" }),
     name: text({ validation: { isRequired: true } }),
     email: text({
       validation: {

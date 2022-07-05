@@ -1,8 +1,7 @@
-export const PORT = parseInt(process.env.PORT!) || 8000;
+export const SERVER_PORT = parseInt(process.env.PORT!) || 8000;
 
 export const DATABASE_URL =
-  process.env.DATABASE_URL ||
-  `postgres://${process.env.USER}@localhost:5432/juststudy`;
+  process.env.DATABASE_URL || "mysql://root:root@localhost:8889/sitejuststudy";
 
 export const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
 
@@ -21,3 +20,6 @@ export const SESSION_SECRET =
     .randomBytes(32)
     .toString("base64")
     .replace(/[^a-zA-Z0-9]+/g, "");
+
+export const S3_STORAGE_KEY_ID = process.env.S3_STORAGE_KEY_ID || "";
+export const S3_STORAGE_KEY_SECRET = process.env.S3_STORAGE_KEY_SECRET || "";

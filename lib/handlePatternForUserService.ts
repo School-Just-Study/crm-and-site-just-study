@@ -13,7 +13,7 @@ export const handlePatternForUserService: ListHooks<Lists.UserService.TypeInfo>[
 
     // @ts-ignore
     const pattern: Lists.Service.Item = await context.query.Service.findOne({
-      where: { id: serviceId },
+      where: { id: `${serviceId}` },
       query: `name price`,
     });
     let newDate: Partial<Lists.UserService.Item> = {};

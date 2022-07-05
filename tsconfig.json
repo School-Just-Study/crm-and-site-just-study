@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src/",
+    "baseUrl": "./",
     "target": "es5",
     "lib": [
       "dom",
@@ -18,20 +18,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "jsxImportSource": "@emotion/react",
-    "incremental": true,
-    "paths": {
-      "@shared/*": [
-        "./shared/*"
-      ]
-    }
+    "incremental": true
   },
   "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
+    "**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "backend/node_modules"
   ]
 }
