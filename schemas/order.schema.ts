@@ -12,7 +12,7 @@ import { OrderStatus } from "../enums/order-status.enum";
 import { PaymentStatus } from "../enums/payment-status.enum";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
-import { format } from "date-fns";
+import format from "date-fns/format";
 
 export const Order = list({
   ui: {
@@ -39,12 +39,12 @@ export const Order = list({
         type: graphql.String,
         async resolve(item: Lists.Order.Item, arg, context) {
           const student = await context.query.User.findOne({
-            where: { id: item.studentId },
+            where: { id: `${item.studentId}` },
             query: `name`,
           });
           if (student) {
             return `Order for ${student.name} from ${format(
-              item.createdAt!,
+              item.createdAt,
               "dd.MM.yyyy"
             )}`;
           }

@@ -2,19 +2,18 @@ import { list } from "@keystone-6/core";
 import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
-import { relationship, text } from "@keystone-6/core/fields";
+import { text } from "@keystone-6/core/fields";
 
 export const Tag = list({
   ui: {
     label: "Теги",
     isHidden: true,
-    labelField: "title",
-    listView: { initialColumns: ["title", "language", "category"] },
+    labelField: "name",
+    listView: { initialColumns: ["name", "language"] },
   },
   fields: {
     language,
-    title: text({ validation: { isRequired: true } }),
-    category: relationship({ ref: "Category", many: true }),
+    name: text({ validation: { isRequired: true } }),
     createdAt,
     lastModification,
   },

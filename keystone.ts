@@ -1,8 +1,10 @@
+import "dotenv/config";
 import { config } from "@keystone-6/core";
 import { lists } from "./schemas/lists";
 import { statelessSessions } from "@keystone-6/core/session";
 import { createAuth } from "@keystone-6/auth";
-import { DATABASE_URL, FRONTEND_URL, PORT } from "./config";
+import { DATABASE_URL, SERVER_PORT } from "./config";
+import { storage } from "./config/storage";
 
 const { withAuth } = createAuth({
   listKey: "User",
@@ -14,33 +16,27 @@ const { withAuth } = createAuth({
 export default withAuth(
   config({
     server: {
-      port: PORT,
+      port: SERVER_PORT,
       cors: {
         origin: [process.env.FRONTEND_URL!],
         credentials: true,
       },
     },
-    db: { provider: "postgresql", url: DATABASE_URL },
+    db: {
+      provider: "mysql",
+      url: DATABASE_URL,
+      idField: { kind: "autoincrement" },
+    },
     experimental: {
+      enableNextJsGraphqlApiEndpoint: true,
       generateNextGraphqlAPI: true,
       generateNodeAPI: true,
     },
     lists,
-    storage: {
-      local_images: {
-        kind: "local",
-        type: "image",
-        generateUrl: (path) => `${FRONTEND_URL}/images${path}`,
-        serverRoute: {
-          path: "/images",
-        },
-        storagePath: `public/images`,
-      },
-    },
+    storage,
     session: statelessSessions({
       secret: "3494c9e4-49c1-4834-9f4e-6b14baabb5d3",
       maxAge: 60 * 60 * 24,
     }),
-    ui: {},
   })
 );

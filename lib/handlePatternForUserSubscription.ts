@@ -14,7 +14,7 @@ export const handlePatternForUserSubscription: ListHooks<Lists.UserSubscription.
     // @ts-ignore
     const pattern: Lists.Subscription.Item =
       await context.query.Subscription.findOne({
-        where: { id: subscriptionId },
+        where: { id: `${subscriptionId}` },
         query: `name visitCount price period`,
       });
     let newData: Partial<Lists.UserSubscription.Item> = {};
