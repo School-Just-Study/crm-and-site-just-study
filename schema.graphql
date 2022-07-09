@@ -1571,6 +1571,76 @@ input TagCreateInput {
   lastModification: DateTime
 }
 
+type Faq {
+  id: ID!
+  language: String
+  statusView: String
+  products(
+    where: ProductWhereInput! = {}
+    orderBy: [ProductOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Product!]
+  productsCount(where: ProductWhereInput! = {}): Int
+  title: String
+  desc: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input FaqWhereUniqueInput {
+  id: ID
+}
+
+input FaqWhereInput {
+  AND: [FaqWhereInput!]
+  OR: [FaqWhereInput!]
+  NOT: [FaqWhereInput!]
+  id: IDFilter
+  language: StringFilter
+  statusView: StringFilter
+  products: ProductManyRelationFilter
+  title: StringFilter
+  desc: StringFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input FaqOrderByInput {
+  id: OrderDirection
+  language: OrderDirection
+  statusView: OrderDirection
+  title: OrderDirection
+  desc: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input FaqUpdateInput {
+  language: String
+  statusView: String
+  products: ProductRelateToManyForUpdateInput
+  title: String
+  desc: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input FaqUpdateArgs {
+  where: FaqWhereUniqueInput!
+  data: FaqUpdateInput!
+}
+
+input FaqCreateInput {
+  language: String
+  statusView: String
+  products: ProductRelateToManyForCreateInput
+  title: String
+  desc: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -1708,6 +1778,12 @@ type Mutation {
   updateTags(data: [TagUpdateArgs!]!): [Tag]
   deleteTag(where: TagWhereUniqueInput!): Tag
   deleteTags(where: [TagWhereUniqueInput!]!): [Tag]
+  createFaq(data: FaqCreateInput!): Faq
+  createFaqs(data: [FaqCreateInput!]!): [Faq]
+  updateFaq(where: FaqWhereUniqueInput!, data: FaqUpdateInput!): Faq
+  updateFaqs(data: [FaqUpdateArgs!]!): [Faq]
+  deleteFaq(where: FaqWhereUniqueInput!): Faq
+  deleteFaqs(where: [FaqWhereUniqueInput!]!): [Faq]
   endSession: Boolean!
   authenticateUserWithPassword(
     email: String!
@@ -1860,6 +1936,14 @@ type Query {
   ): [Tag!]
   tag(where: TagWhereUniqueInput!): Tag
   tagsCount(where: TagWhereInput! = {}): Int
+  faqs(
+    where: FaqWhereInput! = {}
+    orderBy: [FaqOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Faq!]
+  faq(where: FaqWhereUniqueInput!): Faq
+  faqsCount(where: FaqWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

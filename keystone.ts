@@ -5,6 +5,7 @@ import { statelessSessions } from "@keystone-6/core/session";
 import { createAuth } from "@keystone-6/auth";
 import { DATABASE_URL, SERVER_PORT } from "./config";
 import { storage } from "./config/storage";
+import { insertSeedData } from "./seed-data";
 
 const { withAuth } = createAuth({
   listKey: "User",
@@ -26,6 +27,13 @@ export default withAuth(
       provider: "mysql",
       url: DATABASE_URL,
       idField: { kind: "autoincrement" },
+      async onConnect(context) {
+        if (process.argv.includes("--seed-data")) {
+          await insertSeedData(context);
+        } else {
+          return;
+        }
+      },
     },
     experimental: {
       enableNextJsGraphqlApiEndpoint: true,

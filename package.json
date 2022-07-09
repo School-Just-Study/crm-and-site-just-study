@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "TZ='UTC' keystone dev",
+    "seed-data": "keystone --seed-data",
     "start": "TZ='UTC' keystone start",
     "build": "keystone build",
-    "migrate": "keystone prisma migrate deploy",
     "postinstall": "keystone postinstall"
   },
   "dependencies": {

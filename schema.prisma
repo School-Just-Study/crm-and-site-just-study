@@ -95,6 +95,7 @@ model Product {
   lastModification            DateTime        @default(now()) @updatedAt
   from_Category_products      Category[]      @relation("Category_products")
   from_ProductReview_products ProductReview[] @relation("ProductReview_products")
+  from_Faq_products           Faq[]           @relation("Faq_products")
 }
 
 model ProductReview {
@@ -104,7 +105,7 @@ model ProductReview {
   student          User?     @relation("ProductReview_student", fields: [studentId], references: [id])
   studentId        Int?      @map("student")
   products         Product[] @relation("ProductReview_products")
-  desc             String    @default("")
+  desc             String    @default("") @mysql.VarChar(10000)
   media            String    @default("")
   createdAt        DateTime  @default(now())
   lastModification DateTime  @default(now()) @updatedAt
@@ -267,6 +268,17 @@ model Tag {
   lastModification DateTime  @default(now()) @updatedAt
   from_Product_tag Product[] @relation("Product_tag")
   from_Page_tag    Page[]    @relation("Page_tag")
+}
+
+model Faq {
+  id               Int       @id @default(autoincrement())
+  language         String    @default("ru")
+  statusView       String    @default("draft")
+  products         Product[] @relation("Faq_products")
+  title            String    @default("")
+  desc             String    @default("") @mysql.VarChar(1000)
+  createdAt        DateTime  @default(now())
+  lastModification DateTime  @default(now()) @updatedAt
 }
 
 enum OrderStatusType {
