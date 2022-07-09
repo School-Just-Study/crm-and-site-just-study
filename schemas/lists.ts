@@ -13,6 +13,7 @@ import { UserService } from "./userService.schema";
 import { Page } from "./page";
 import { Tag } from "./tag";
 import { AvatarUser } from "./avatarUser";
+import { Faq } from "./faq";
 
 export const lists = {
   Cart,
@@ -30,4 +31,5 @@ export const lists = {
   UserService,
   Page,
   Tag,
+  Faq,
 };

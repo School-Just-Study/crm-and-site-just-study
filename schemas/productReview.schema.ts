@@ -19,7 +19,10 @@ export const ProductReview = list({
     statusView,
     student: relationship({ ref: "User" }),
     products: relationship({ ref: "Product", many: true }),
-    desc: text({ ui: { displayMode: "textarea" } }),
+    desc: text({
+      ui: { displayMode: "textarea" },
+      db: { nativeType: "VarChar(10000)" },
+    }),
     media: text(),
     createdAt,
     lastModification,

@@ -32,13 +32,6 @@ export const User = list({
     avatar: relationship({ ref: "AvatarUser.user" }),
     name: text({ validation: { isRequired: true } }),
     email: text({
-      validation: {
-        isRequired: true,
-        match: {
-          regex: /\S+@\S+\.\S+/,
-          explanation: "Invalid email",
-        },
-      },
       isIndexed: "unique",
       isFilterable: true,
     }),
@@ -47,13 +40,9 @@ export const User = list({
     }),
     phone: text({
       validation: {
-        match: {
-          regex: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
-          explanation: "Invalid phone",
-        },
         isRequired: true,
       },
-      ui: { description: "Пример: +79991234567" },
+      ui: { description: "Пример: 79991234567" },
     }),
     statusClient: select({
       type: "enum",
@@ -84,12 +73,10 @@ export const User = list({
   },
   access: {
     operation: {
-      query: ({ session }) => !!session,
       update: ({ session }) => !!session,
       delete: ({ session }) => !!session,
     },
     filter: {
-      query: ({ session }) => filterCustomerAccess(session),
       update: ({ session }) => filterCustomerAccess(session),
       delete: ({ session }) => filterCustomerAccess(session),
     },
