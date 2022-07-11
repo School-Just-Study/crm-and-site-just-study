@@ -18,6 +18,14 @@ export default withAuth(
   config({
     server: {
       port: SERVER_PORT,
+      healthCheck: {
+        path: "/check",
+        data: () => ({
+          status: "healthy",
+          timestamp: Date.now(),
+          uptime: process.uptime(),
+        }),
+      },
       cors: {
         origin: [process.env.FRONTEND_URL!],
         credentials: true,
