@@ -5,6 +5,7 @@ import { lastModification } from "../fields/lastModification";
 import { document } from "@keystone-6/fields-document";
 import { relationship, text } from "@keystone-6/core/fields";
 import { statusView } from "../fields/statusView";
+import { handleSlugForPage } from "../lib/handleSlugForPage";
 
 export const Page = list({
   ui: {
@@ -19,7 +20,7 @@ export const Page = list({
     language,
     statusView,
     title: text({ validation: { isRequired: true } }),
-    slug: text({ isIndexed: "unique", validation: { isRequired: true } }),
+    slug: text({ isIndexed: "unique" }),
     description: text({
       ui: { description: "Выделенный текст сверху страницы" },
     }),
@@ -75,5 +76,8 @@ export const Page = list({
     author: relationship({ ref: "User" }),
     createdAt,
     lastModification,
+  },
+  hooks: {
+    resolveInput: handleSlugForPage,
   },
 });
