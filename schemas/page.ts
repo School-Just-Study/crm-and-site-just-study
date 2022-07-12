@@ -20,9 +20,13 @@ export const Page = list({
     language,
     statusView,
     title: text({ validation: { isRequired: true } }),
-    slug: text({ isIndexed: "unique" }),
+    slug: text({ isIndexed: true }),
     description: text({
-      ui: { description: "Выделенный текст сверху страницы" },
+      ui: {
+        displayMode: "textarea",
+        description: "Выделенный текст сверху страницы",
+      },
+      db: { nativeType: "VarChar(10000)" },
     }),
     content: document({
       formatting: {

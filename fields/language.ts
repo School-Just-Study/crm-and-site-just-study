@@ -8,4 +8,5 @@ export const language = select({
   ui: { displayMode: "segmented-control" },
   label: "Язык интерфейса",
   validation: { isRequired: true },
+  isIndexed: true,
 });
