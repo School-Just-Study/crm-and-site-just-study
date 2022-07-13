@@ -124,7 +124,7 @@ model User {
   name                          String                @default("")
   email                         String                @unique @default("")
   password                      String?
-  phone                         String                @default("")
+  phone                         Decimal               @mysql.Decimal(18, 0)
   statusClient                  UserStatusClientType? @default(new)
   levelStudent                  UserLevelStudentType? @default(a1)
   goal                          String                @default("")
@@ -143,6 +143,7 @@ model User {
   from_UserService_student      UserService[]         @relation("UserService_student")
   from_UserService_manager      UserService[]         @relation("UserService_manager")
   from_Page_author              Page[]                @relation("Page_author")
+  from_Post_author              Post[]                @relation("Post_author")
 
   @@index([language])
 }
@@ -280,6 +281,7 @@ model Tag {
   lastModification DateTime  @default(now()) @updatedAt
   from_Product_tag Product[] @relation("Product_tag")
   from_Page_tag    Page[]    @relation("Page_tag")
+  from_Post_tag    Post[]    @relation("Post_tag")
 
   @@index([language])
 }
@@ -295,6 +297,28 @@ model Faq {
   lastModification DateTime  @default(now()) @updatedAt
 
   @@index([language])
+}
+
+model Post {
+  id               Int      @id @default(autoincrement())
+  language         String   @default("ru")
+  statusView       String   @default("draft")
+  cover_filesize   Int?
+  cover_extension  String?
+  cover_width      Int?
+  cover_height     Int?
+  cover_id         String?
+  title            String   @default("")
+  description      String   @default("") @mysql.VarChar(10000)
+  content          Json     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  tag              Tag[]    @relation("Post_tag")
+  author           User?    @relation("Post_author", fields: [authorId], references: [id])
+  authorId         Int?     @map("author")
+  createdAt        DateTime @default(now())
+  lastModification DateTime @default(now()) @updatedAt
+
+  @@index([language])
+  @@index([authorId])
 }
 
 enum OrderStatusType {

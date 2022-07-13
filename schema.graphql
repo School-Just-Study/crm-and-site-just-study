@@ -735,7 +735,7 @@ type User {
   name: String
   email: String
   password: PasswordState
-  phone: String
+  phone: Decimal
   statusClient: UserStatusClientType
   levelStudent: UserLevelStudentType
   goal: String
@@ -755,6 +755,8 @@ type User {
 type PasswordState {
   isSet: Boolean!
 }
+
+scalar Decimal
 
 enum UserStatusClientType {
   new
@@ -798,7 +800,7 @@ input UserWhereInput {
   name: StringFilter
   email: StringFilter
   password: PasswordFilter
-  phone: StringFilter
+  phone: DecimalFilter
   statusClient: UserStatusClientTypeNullableFilter
   levelStudent: UserLevelStudentTypeNullableFilter
   goal: StringFilter
@@ -811,6 +813,17 @@ input UserWhereInput {
 
 input PasswordFilter {
   isSet: Boolean!
+}
+
+input DecimalFilter {
+  equals: Decimal
+  in: [Decimal!]
+  notIn: [Decimal!]
+  lt: Decimal
+  lte: Decimal
+  gt: Decimal
+  gte: Decimal
+  not: DecimalFilter
 }
 
 input UserStatusClientTypeNullableFilter {
@@ -861,7 +874,7 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
-  phone: String
+  phone: Decimal
   statusClient: UserStatusClientType
   levelStudent: UserLevelStudentType
   goal: String
@@ -896,7 +909,7 @@ input UserCreateInput {
   name: String
   email: String
   password: String
-  phone: String
+  phone: Decimal
   statusClient: UserStatusClientType
   levelStudent: UserLevelStudentType
   goal: String
@@ -1640,6 +1653,90 @@ input FaqCreateInput {
   lastModification: DateTime
 }
 
+type Post {
+  id: ID!
+  language: String
+  statusView: String
+  cover: ImageFieldOutput
+  title: String
+  description: String
+  content: Post_content_Document
+  tag(
+    where: TagWhereInput! = {}
+    orderBy: [TagOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Tag!]
+  tagCount(where: TagWhereInput! = {}): Int
+  author: User
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+type Post_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input PostWhereUniqueInput {
+  id: ID
+}
+
+input PostWhereInput {
+  AND: [PostWhereInput!]
+  OR: [PostWhereInput!]
+  NOT: [PostWhereInput!]
+  id: IDFilter
+  language: StringFilter
+  statusView: StringFilter
+  title: StringFilter
+  description: StringFilter
+  tag: TagManyRelationFilter
+  author: UserWhereInput
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input PostOrderByInput {
+  id: OrderDirection
+  language: OrderDirection
+  statusView: OrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input PostUpdateInput {
+  language: String
+  statusView: String
+  cover: ImageFieldInput
+  title: String
+  description: String
+  content: JSON
+  tag: TagRelateToManyForUpdateInput
+  author: UserRelateToOneForUpdateInput
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input PostUpdateArgs {
+  where: PostWhereUniqueInput!
+  data: PostUpdateInput!
+}
+
+input PostCreateInput {
+  language: String
+  statusView: String
+  cover: ImageFieldInput
+  title: String
+  description: String
+  content: JSON
+  tag: TagRelateToManyForCreateInput
+  author: UserRelateToOneForCreateInput
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -1783,6 +1880,12 @@ type Mutation {
   updateFaqs(data: [FaqUpdateArgs!]!): [Faq]
   deleteFaq(where: FaqWhereUniqueInput!): Faq
   deleteFaqs(where: [FaqWhereUniqueInput!]!): [Faq]
+  createPost(data: PostCreateInput!): Post
+  createPosts(data: [PostCreateInput!]!): [Post]
+  updatePost(where: PostWhereUniqueInput!, data: PostUpdateInput!): Post
+  updatePosts(data: [PostUpdateArgs!]!): [Post]
+  deletePost(where: PostWhereUniqueInput!): Post
+  deletePosts(where: [PostWhereUniqueInput!]!): [Post]
   endSession: Boolean!
   authenticateUserWithPassword(
     email: String!
@@ -1810,7 +1913,7 @@ input CreateInitialUserInput {
   name: String
   email: String
   password: String
-  phone: String
+  phone: Decimal
   role: UserRoleType
 }
 
@@ -1943,6 +2046,14 @@ type Query {
   ): [Faq!]
   faq(where: FaqWhereUniqueInput!): Faq
   faqsCount(where: FaqWhereInput! = {}): Int
+  posts(
+    where: PostWhereInput! = {}
+    orderBy: [PostOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Post!]
+  post(where: PostWhereUniqueInput!): Post
+  postsCount(where: PostWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

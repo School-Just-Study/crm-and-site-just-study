@@ -1,5 +1,11 @@
 import { list } from "@keystone-6/core";
-import { password, relationship, select, text } from "@keystone-6/core/fields";
+import {
+  decimal,
+  password,
+  relationship,
+  select,
+  text,
+} from "@keystone-6/core/fields";
 import { RolesValues } from "../consts/roles.const";
 import { Roles } from "../enums/roles.enum";
 import { filterCustomerAccess, filterCustomerAccessCreate } from "../shared";
@@ -29,7 +35,18 @@ export const User = list({
   },
   fields: {
     language,
-    avatar: relationship({ ref: "AvatarUser.user" }),
+    avatar: relationship({
+      ref: "AvatarUser.user",
+      many: false,
+      ui: {
+        displayMode: "cards",
+        cardFields: ["image"],
+        inlineEdit: { fields: ["image"] },
+        linkToItem: true,
+        inlineConnect: true,
+        inlineCreate: { fields: ["image"] },
+      },
+    }),
     name: text({ validation: { isRequired: true } }),
     email: text({
       isIndexed: "unique",
@@ -38,10 +55,11 @@ export const User = list({
     password: password({
       validation: { length: { min: 4 } },
     }),
-    phone: text({
+    phone: decimal({
       validation: {
         isRequired: true,
       },
+      scale: 0,
       ui: { description: "Пример: 79991234567" },
     }),
     statusClient: select({
