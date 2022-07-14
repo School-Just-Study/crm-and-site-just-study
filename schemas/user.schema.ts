@@ -16,6 +16,7 @@ import { LevelStudent } from "../enums/level-student.enum";
 import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
+import { notifyNewClient } from "../lib/nodemailer";
 
 export const User = list({
   ui: {
@@ -114,6 +115,11 @@ export const User = list({
           user: { connect: { id: userId } },
         },
       });
+
+      if (item.role === Roles.Student) {
+        // @ts-ignore
+        await notifyNewClient(item, context);
+      }
     },
   },
 });
