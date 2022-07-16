@@ -3,7 +3,7 @@ import { config } from "@keystone-6/core";
 import { lists } from "./schemas/lists";
 import { statelessSessions } from "@keystone-6/core/session";
 import { createAuth } from "@keystone-6/auth";
-import { DATABASE_URL, SERVER_PORT } from "./config";
+import { DATABASE_URL, FRONTEND_URL, SERVER_PORT } from "./config";
 import { storage } from "./config/storage";
 import { insertSeedData } from "./seed-data";
 
@@ -27,7 +27,7 @@ export default withAuth(
         }),
       },
       cors: {
-        origin: [process.env.FRONTEND_URL!],
+        origin: [FRONTEND_URL],
         credentials: true,
       },
     },

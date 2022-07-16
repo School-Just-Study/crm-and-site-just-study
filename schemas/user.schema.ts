@@ -1,5 +1,11 @@
 import { list } from "@keystone-6/core";
-import { password, relationship, select, text } from "@keystone-6/core/fields";
+import {
+  decimal,
+  password,
+  relationship,
+  select,
+  text,
+} from "@keystone-6/core/fields";
 import { RolesValues } from "../consts/roles.const";
 import { Roles } from "../enums/roles.enum";
 import { filterCustomerAccess, filterCustomerAccessCreate } from "../shared";
@@ -10,6 +16,7 @@ import { LevelStudent } from "../enums/level-student.enum";
 import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
+import { notifyNewClient } from "../lib/nodemailer";
 
 export const User = list({
   ui: {
@@ -29,19 +36,32 @@ export const User = list({
   },
   fields: {
     language,
-    avatar: relationship({ ref: "AvatarUser.user" }),
+    avatar: relationship({
+      ref: "AvatarUser.user",
+      many: false,
+      ui: {
+        displayMode: "cards",
+        cardFields: ["image"],
+        inlineEdit: { fields: ["image"] },
+        linkToItem: true,
+        inlineConnect: true,
+        inlineCreate: { fields: ["image"] },
+      },
+    }),
     name: text({ validation: { isRequired: true } }),
     email: text({
       isIndexed: "unique",
       isFilterable: true,
+      validation: { isRequired: true },
     }),
     password: password({
       validation: { length: { min: 4 } },
     }),
-    phone: text({
+    phone: decimal({
       validation: {
         isRequired: true,
       },
+      scale: 0,
       ui: { description: "Пример: 79991234567" },
     }),
     statusClient: select({
@@ -96,6 +116,11 @@ export const User = list({
           user: { connect: { id: userId } },
         },
       });
+
+      if (item.role === Roles.Student) {
+        // @ts-ignore
+        await notifyNewClient(item, context);
+      }
     },
   },
 });

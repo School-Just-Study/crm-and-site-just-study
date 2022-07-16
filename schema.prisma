@@ -38,6 +38,7 @@ model Category {
   from_Product_categories Product[]  @relation("Product_categories")
   from_Service_categories Service[]  @relation("Service_categories")
 
+  @@index([language])
   @@index([parentId])
 }
 
@@ -96,6 +97,8 @@ model Product {
   from_Category_products      Category[]      @relation("Category_products")
   from_ProductReview_products ProductReview[] @relation("ProductReview_products")
   from_Faq_products           Faq[]           @relation("Faq_products")
+
+  @@index([language])
 }
 
 model ProductReview {
@@ -110,6 +113,7 @@ model ProductReview {
   createdAt        DateTime  @default(now())
   lastModification DateTime  @default(now()) @updatedAt
 
+  @@index([language])
   @@index([studentId])
 }
 
@@ -120,7 +124,7 @@ model User {
   name                          String                @default("")
   email                         String                @unique @default("")
   password                      String?
-  phone                         String                @default("")
+  phone                         Decimal               @mysql.Decimal(18, 0)
   statusClient                  UserStatusClientType? @default(new)
   levelStudent                  UserLevelStudentType? @default(a1)
   goal                          String                @default("")
@@ -139,6 +143,9 @@ model User {
   from_UserService_student      UserService[]         @relation("UserService_student")
   from_UserService_manager      UserService[]         @relation("UserService_manager")
   from_Page_author              Page[]                @relation("Page_author")
+  from_Post_author              Post[]                @relation("Post_author")
+
+  @@index([language])
 }
 
 model AvatarUser {
@@ -180,6 +187,8 @@ model Subscription {
   lastModification         DateTime           @default(now()) @updatedAt
   from_Cart_subscriptions  Cart[]             @relation("Cart_subscriptions")
   from_Order_subscriptions Order[]            @relation("Order_subscriptions")
+
+  @@index([language])
 }
 
 model UserSubscription {
@@ -221,6 +230,8 @@ model Service {
   lastModification    DateTime      @default(now()) @updatedAt
   from_Cart_services  Cart[]        @relation("Cart_services")
   from_Order_services Order[]       @relation("Order_services")
+
+  @@index([language])
 }
 
 model UserService {
@@ -248,8 +259,8 @@ model Page {
   language         String   @default("ru")
   statusView       String   @default("draft")
   title            String   @default("")
-  slug             String   @unique @default("")
-  description      String   @default("")
+  slug             String   @default("")
+  description      String   @default("") @mysql.VarChar(10000)
   content          Json     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   tag              Tag[]    @relation("Page_tag")
   author           User?    @relation("Page_author", fields: [authorId], references: [id])
@@ -257,6 +268,8 @@ model Page {
   createdAt        DateTime @default(now())
   lastModification DateTime @default(now()) @updatedAt
 
+  @@index([language])
+  @@index([slug])
   @@index([authorId])
 }
 
@@ -268,6 +281,9 @@ model Tag {
   lastModification DateTime  @default(now()) @updatedAt
   from_Product_tag Product[] @relation("Product_tag")
   from_Page_tag    Page[]    @relation("Page_tag")
+  from_Post_tag    Post[]    @relation("Post_tag")
+
+  @@index([language])
 }
 
 model Faq {
@@ -279,6 +295,30 @@ model Faq {
   desc             String    @default("") @mysql.VarChar(1000)
   createdAt        DateTime  @default(now())
   lastModification DateTime  @default(now()) @updatedAt
+
+  @@index([language])
+}
+
+model Post {
+  id               Int      @id @default(autoincrement())
+  language         String   @default("ru")
+  statusView       String   @default("draft")
+  cover_filesize   Int?
+  cover_extension  String?
+  cover_width      Int?
+  cover_height     Int?
+  cover_id         String?
+  title            String   @default("")
+  description      String   @default("") @mysql.VarChar(10000)
+  content          Json     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  tag              Tag[]    @relation("Post_tag")
+  author           User?    @relation("Post_author", fields: [authorId], references: [id])
+  authorId         Int?     @map("author")
+  createdAt        DateTime @default(now())
+  lastModification DateTime @default(now()) @updatedAt
+
+  @@index([language])
+  @@index([authorId])
 }
 
 enum OrderStatusType {
