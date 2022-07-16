@@ -52,6 +52,7 @@ export const User = list({
     email: text({
       isIndexed: "unique",
       isFilterable: true,
+      validation: { isRequired: true },
     }),
     password: password({
       validation: { length: { min: 4 } },
