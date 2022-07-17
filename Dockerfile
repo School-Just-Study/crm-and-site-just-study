@@ -1,12 +1,13 @@
 FROM node:16
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm ci
+RUN npm ci --verbose --only=production
+RUN npm install typescript
 
-COPY . /app
+COPY . /usr/src/app
 
 RUN npm run build
 
