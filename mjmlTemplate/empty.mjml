@@ -1,0 +1,23 @@
+<mjml>
+  <mj-head>
+    <mj-attributes>
+      <mj-text align="center" color="#555" font-size="16px" />
+    </mj-attributes>
+  </mj-head>
+  <mj-body background-color="#E3F2FD">
+    <mj-include path="./header.mjml" />
+    <mj-wrapper background-color="#fff" border-radius="15px">
+      <mj-section padding="0">
+        <mj-column>
+          <mj-text align="left" font-size="30px" font-weight="bold" padding-bottom="20px"> {title} </mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-section background-color="#fff">
+        <mj-column>
+          <mj-text align="left">{body}</mj-text>
+        </mj-column>
+      </mj-section>
+    </mj-wrapper>
+    <mj-include path="./footer.mjml" />
+  </mj-body>
+</mjml>

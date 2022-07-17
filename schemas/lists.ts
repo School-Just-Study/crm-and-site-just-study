@@ -14,6 +14,7 @@ import { Page } from "./page";
 import { Tag } from "./tag";
 import { AvatarUser } from "./avatarUser";
 import { Faq } from "./faq";
+import { Post } from "./post";
 
 export const lists = {
   Cart,
@@ -32,4 +33,5 @@ export const lists = {
   Page,
   Tag,
   Faq,
+  Post,
 };

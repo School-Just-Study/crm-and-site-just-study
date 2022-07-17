@@ -1,15 +1,14 @@
 import { list } from "@keystone-6/core";
 import { language } from "../fields/language";
+import { statusView } from "../fields/statusView";
+import { image, relationship, text } from "@keystone-6/core/fields";
+import { content } from "../fields/document";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
-import { relationship, text } from "@keystone-6/core/fields";
-import { statusView } from "../fields/statusView";
-import { handleSlugForPage } from "../lib/handleSlugForPage";
-import { content } from "../fields/document";
 
-export const Page = list({
+export const Post = list({
   ui: {
-    label: "Страницы",
+    label: "Блог",
     labelField: "title",
     listView: {
       initialColumns: ["title", "language", "statusView", "tag", "author"],
@@ -19,9 +18,10 @@ export const Page = list({
   fields: {
     language,
     statusView,
+    cover: image({ storage: "storage_blog_image" }),
     title: text({ validation: { isRequired: true } }),
-    slug: text({ isIndexed: true, isFilterable: true }),
     description: text({
+      validation: { isRequired: true },
       ui: {
         displayMode: "textarea",
         description: "Выделенный текст сверху страницы",
@@ -32,20 +32,9 @@ export const Page = list({
     tag: relationship({
       ref: "Tag",
       many: true,
-      ui: {
-        displayMode: "cards",
-        cardFields: ["name"],
-        inlineEdit: { fields: ["name"] },
-        linkToItem: true,
-        inlineConnect: true,
-        inlineCreate: { fields: ["name"] },
-      },
     }),
     author: relationship({ ref: "User" }),
     createdAt,
     lastModification,
-  },
-  hooks: {
-    resolveInput: handleSlugForPage,
   },
 });

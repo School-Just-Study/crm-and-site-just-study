@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 .keystone
+ecosystem.config.js
 
 # testing
 /coverage
