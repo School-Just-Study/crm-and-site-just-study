@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:16
 
 WORKDIR /app
 
@@ -13,4 +13,4 @@ RUN npm run build
 ENV NODE_ENV production
 
 EXPOSE 8080
-CMD [ "npm", "start" ]
+CMD npm run start
