@@ -129,10 +129,14 @@ model User {
   levelStudent                  UserLevelStudentType? @default(a1)
   goal                          String                @default("")
   source                        SourceClient[]        @relation("User_source")
-  role                          UserRoleType?         @default(student)
-  comment                       String                @default("")
+  role                          UserRoleType          @default(student)
+  comment                       String                @default("") @mysql.VarChar(10000)
+  magicLinkToken                String                @default("")
   createdAt                     DateTime              @default(now())
   lastModification              DateTime              @default(now()) @updatedAt
+  magicAuthToken                String?
+  magicAuthIssuedAt             DateTime?
+  magicAuthRedeemedAt           DateTime?
   from_Cart_user                Cart[]                @relation("Cart_user")
   from_Order_student            Order[]               @relation("Order_student")
   from_Order_employee           Order[]               @relation("Order_employee")

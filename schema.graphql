@@ -748,8 +748,12 @@ type User {
   sourceCount(where: SourceClientWhereInput! = {}): Int
   role: UserRoleType
   comment: String
+  magicLinkToken: String
   createdAt: DateTime
   lastModification: DateTime
+  magicAuthToken: PasswordState
+  magicAuthIssuedAt: DateTime
+  magicAuthRedeemedAt: DateTime
 }
 
 type PasswordState {
@@ -807,8 +811,12 @@ input UserWhereInput {
   source: SourceClientManyRelationFilter
   role: UserRoleTypeNullableFilter
   comment: StringFilter
+  magicLinkToken: StringFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
+  magicAuthToken: PasswordFilter
+  magicAuthIssuedAt: DateTimeNullableFilter
+  magicAuthRedeemedAt: DateTimeNullableFilter
 }
 
 input PasswordFilter {
@@ -853,6 +861,17 @@ input UserRoleTypeNullableFilter {
   not: UserRoleTypeNullableFilter
 }
 
+input DateTimeNullableFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeNullableFilter
+}
+
 input UserOrderByInput {
   id: OrderDirection
   language: OrderDirection
@@ -864,8 +883,11 @@ input UserOrderByInput {
   goal: OrderDirection
   role: OrderDirection
   comment: OrderDirection
+  magicLinkToken: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
+  magicAuthIssuedAt: OrderDirection
+  magicAuthRedeemedAt: OrderDirection
 }
 
 input UserUpdateInput {
@@ -881,8 +903,12 @@ input UserUpdateInput {
   source: SourceClientRelateToManyForUpdateInput
   role: UserRoleType
   comment: String
+  magicLinkToken: String
   createdAt: DateTime
   lastModification: DateTime
+  magicAuthToken: String
+  magicAuthIssuedAt: DateTime
+  magicAuthRedeemedAt: DateTime
 }
 
 input AvatarUserRelateToOneForUpdateInput {
@@ -916,8 +942,12 @@ input UserCreateInput {
   source: SourceClientRelateToManyForCreateInput
   role: UserRoleType
   comment: String
+  magicLinkToken: String
   createdAt: DateTime
   lastModification: DateTime
+  magicAuthToken: String
+  magicAuthIssuedAt: DateTime
+  magicAuthRedeemedAt: DateTime
 }
 
 input AvatarUserRelateToOneForCreateInput {
@@ -1180,17 +1210,6 @@ input UserSubscriptionWhereInput {
   manager: UserWhereInput
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
-}
-
-input DateTimeNullableFilter {
-  equals: DateTime
-  in: [DateTime!]
-  notIn: [DateTime!]
-  lt: DateTime
-  lte: DateTime
-  gt: DateTime
-  gte: DateTime
-  not: DateTimeNullableFilter
 }
 
 input UserSubscriptionOrderByInput {
@@ -1894,6 +1913,12 @@ type Mutation {
   createInitialUser(
     data: CreateInitialUserInput!
   ): UserAuthenticationWithPasswordSuccess!
+  sendUserMagicAuthLink(email: String!): Boolean!
+  redeemUserMagicAuthToken(
+    email: String!
+    token: String!
+  ): RedeemUserMagicAuthTokenResult!
+  authWithEmail(email: String!): String
 }
 
 union UserAuthenticationWithPasswordResult =
@@ -1915,6 +1940,26 @@ input CreateInitialUserInput {
   password: String
   phone: Decimal
   role: UserRoleType
+}
+
+union RedeemUserMagicAuthTokenResult =
+    RedeemUserMagicAuthTokenSuccess
+  | RedeemUserMagicAuthTokenFailure
+
+type RedeemUserMagicAuthTokenSuccess {
+  token: String!
+  item: User!
+}
+
+type RedeemUserMagicAuthTokenFailure {
+  code: MagicLinkRedemptionErrorCode!
+  message: String!
+}
+
+enum MagicLinkRedemptionErrorCode {
+  FAILURE
+  TOKEN_EXPIRED
+  TOKEN_REDEEMED
 }
 
 type Query {
