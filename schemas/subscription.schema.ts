@@ -1,29 +1,40 @@
-import { list } from "@keystone-6/core";
-import { integer, text } from "@keystone-6/core/fields";
+import { graphql, list } from "@keystone-6/core";
+import { integer, text, virtual } from "@keystone-6/core/fields";
 import { Roles } from "../enums/roles.enum";
 import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 import { statusView } from "../fields/statusView";
 import { content } from "../fields/document";
+import { Lists } from ".keystone/types";
+import { getCurrency } from "../lib/getCurrency";
 
 export const Subscription = list({
   ui: {
     label: "Шаблоны абонементов",
-    labelField: "name",
+    labelField: "label",
     listView: {
       initialColumns: [
-        "name",
+        "label",
         "language",
         "statusView",
         "visitCount",
-        "price",
         "period",
       ],
     },
   },
   fields: {
     language,
+    label: virtual({
+      // @ts-ignore
+      field: graphql.field({
+        type: graphql.String,
+        resolve(item: Lists.Subscription.Item) {
+          if (!item) return;
+          return `${item.name} - ${item.price} ${getCurrency(item.language)}`;
+        },
+      }),
+    }),
     statusView,
     name: text({ validation: { isRequired: true } }),
     description: content,

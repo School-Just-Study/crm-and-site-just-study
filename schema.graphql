@@ -1158,6 +1158,7 @@ input SourceClientRelateToOneForCreateInput {
 type Subscription {
   id: ID!
   language: String
+  label: String
   statusView: String
   name: String
   description: Subscription_description_Document
@@ -1335,6 +1336,7 @@ input UserSubscriptionCreateInput {
 type Service {
   id: ID!
   language: String
+  label: String
   statusView: String
   name: String
   description: Service_description_Document

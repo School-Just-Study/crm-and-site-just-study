@@ -1,6 +1,7 @@
 import { graphql, list } from "@keystone-6/core";
 import { integer, relationship, virtual } from "@keystone-6/core/fields";
 import { lastModification } from "../fields/lastModification";
+import { Lists } from ".keystone/types";
 
 export const Cart = list({
   ui: {
@@ -33,14 +34,14 @@ export const Cart = list({
       },
     }),
     amount: virtual({
+      // @ts-ignore
       field: graphql.field({
         type: graphql.Int,
-        async resolve(item, arg, context) {
+        async resolve(item: Lists.Cart.Item, arg, context) {
           const cartItems = await context.query.CartItem.findMany({
             where: { cart: { id: { equals: item.id } } },
             query: `price`,
           });
-
           if (cartItems) {
             return cartItems.reduce((tally, item) => tally + item.price, 0);
           }

@@ -1,22 +1,34 @@
-import { list } from "@keystone-6/core";
-import { integer, relationship, text } from "@keystone-6/core/fields";
+import { graphql, list } from "@keystone-6/core";
+import { integer, relationship, text, virtual } from "@keystone-6/core/fields";
 import { Roles } from "../enums/roles.enum";
 import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 import { statusView } from "../fields/statusView";
 import { content } from "../fields/document";
+import { getCurrency } from "../lib/getCurrency";
+import { Lists } from ".keystone/types";
 
 export const Service = list({
   ui: {
     label: "Шаблоны услуг",
-    labelField: "name",
+    labelField: "label",
     listView: {
-      initialColumns: ["name", "language", "statusView", "categories", "price"],
+      initialColumns: ["label", "language", "statusView", "categories"],
     },
   },
   fields: {
     language,
+    label: virtual({
+      // @ts-ignore
+      field: graphql.field({
+        type: graphql.String,
+        resolve(item: Lists.Service.Item) {
+          if (!item) return;
+          return `${item.name} - ${item.price} ${getCurrency(item.language)}`;
+        },
+      }),
+    }),
     statusView,
     name: text({ validation: { isRequired: true } }),
     description: content,
