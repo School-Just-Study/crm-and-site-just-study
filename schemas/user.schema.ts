@@ -92,6 +92,7 @@ export const User = list({
       ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(10000)" },
     }),
+    cart: relationship({ ref: "Cart.user" }),
     magicLinkToken: text({
       ui: { listView: "read", itemView: "read", createView: "hidden" },
     }),

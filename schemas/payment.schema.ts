@@ -1,7 +1,6 @@
 import { list } from "@keystone-6/core";
 import { integer, relationship, select, text } from "@keystone-6/core/fields";
 import { PaymentStatusOptions } from "../consts/payment-status-options.const";
-import { filterCustomerAccessCreate } from "../shared";
 import { PaymentStatus } from "../enums/payment-status.enum";
 import { handleReceiptToNalog } from "../lib/handleReceiptToNalog";
 import { createdAt } from "../fields/createdAt";
@@ -40,10 +39,6 @@ export const Payment = list({
       create: ({ session }) => !!session,
       update: ({ session }) => !!session,
       delete: ({ session }) => !!session,
-    },
-    item: {
-      create: ({ session, inputData }) =>
-        filterCustomerAccessCreate(session, inputData),
     },
   },
 });

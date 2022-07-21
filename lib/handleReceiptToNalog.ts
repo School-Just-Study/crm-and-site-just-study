@@ -12,33 +12,40 @@ const { NalogApi } = require("lknpd-nalog-api");
  * @param context
  */
 export const handleReceiptToNalog: ListHooks<Lists.Payment.TypeInfo>["afterOperation"] =
-  async ({ item, context }) => {
-    const nalogApi = new NalogApi({ inn: NALOG_INN, password: NALOG_PASSWORD });
+  async ({ item, context, operation }) => {
+    if (operation === "update") {
+      const nalogApi = new NalogApi({
+        inn: NALOG_INN,
+        password: NALOG_PASSWORD,
+      });
 
-    if (item?.status === PaymentStatus.Successfully && !item.receiptId) {
-      const order = await context.query.Order.findOne({
-        where: { id: `${item.orderId}` },
-        query: `student {name}`,
-      });
-      const receiptId = await nalogApi.addIncome({
-        name: `Консультационные услуги для клиента ${order.student.name}`,
-        amount: item.sum,
-        quantity: 1,
-      });
-      await context.query.Payment.updateOne({
-        where: { id: `${item.id}` },
-        data: {
-          receiptId,
-        },
-      });
-    }
+      if (!nalogApi) return;
 
-    if (item?.status === PaymentStatus.Cancelled && item.receiptId) {
-      const receiptId = item.receiptId;
-      await nalogApi.cancelIncome(receiptId, "Возврат средств");
-      await context.query.Payment.updateOne({
-        where: { id: `${item.id}` },
-        data: { receiptId: "" },
-      });
+      if (item?.status === PaymentStatus.Successfully && !item.receiptId) {
+        const order = await context.query.Order.findOne({
+          where: { id: `${item.orderId}` },
+          query: `student {name}`,
+        });
+        const receiptId = await nalogApi.addIncome({
+          name: `Консультационные услуги для клиента ${order.student.name}`,
+          amount: item.sum,
+          quantity: 1,
+        });
+        await context.query.Payment.updateOne({
+          where: { id: `${item.id}` },
+          data: {
+            receiptId,
+          },
+        });
+      }
+
+      if (item?.status === PaymentStatus.Cancelled && item.receiptId) {
+        const receiptId = item.receiptId;
+        await nalogApi.cancelIncome(receiptId, "Возврат средств");
+        await context.query.Payment.updateOne({
+          where: { id: `${item.id}` },
+          data: { receiptId: "" },
+        });
+      }
     }
   };

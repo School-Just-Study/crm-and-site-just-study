@@ -5,6 +5,7 @@ import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 import { statusView } from "../fields/statusView";
+import { content } from "../fields/document";
 
 export const Service = list({
   ui: {
@@ -18,10 +19,9 @@ export const Service = list({
     language,
     statusView,
     name: text({ validation: { isRequired: true } }),
-    description: text({ ui: { displayMode: "textarea" } }),
+    description: content,
     categories: relationship({ ref: "Category", many: true }),
     price: integer({ defaultValue: 0 }),
-    items: relationship({ ref: "UserService.pattern", many: true }),
     createdAt,
     lastModification,
   },

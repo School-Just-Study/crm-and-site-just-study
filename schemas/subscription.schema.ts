@@ -1,10 +1,11 @@
 import { list } from "@keystone-6/core";
-import { integer, relationship, text } from "@keystone-6/core/fields";
+import { integer, text } from "@keystone-6/core/fields";
 import { Roles } from "../enums/roles.enum";
 import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 import { statusView } from "../fields/statusView";
+import { content } from "../fields/document";
 
 export const Subscription = list({
   ui: {
@@ -25,13 +26,13 @@ export const Subscription = list({
     language,
     statusView,
     name: text({ validation: { isRequired: true } }),
+    description: content,
     visitCount: integer({
       defaultValue: 10,
       validation: { isRequired: true },
     }),
     price: integer({ validation: { isRequired: true } }),
     period: integer({ defaultValue: 45 }),
-    items: relationship({ ref: "UserSubscription.pattern", many: true }),
     createdAt,
     lastModification,
   },
