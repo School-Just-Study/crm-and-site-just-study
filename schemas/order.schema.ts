@@ -20,6 +20,7 @@ export const Order = list({
     description: "Список заказов клиентов",
     listView: {
       initialColumns: [
+        "id",
         "label",
         "status",
         "leftPayments",

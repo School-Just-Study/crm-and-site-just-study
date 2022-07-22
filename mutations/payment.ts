@@ -9,6 +9,12 @@ interface Arguments {
   orderId: string;
 }
 
+/**
+ * Создаем платеж и получаем ссылку на оплату
+ * @param root
+ * @param orderId
+ * @param context
+ */
 export const payment = async (
   root: any,
   { orderId }: Arguments,
@@ -59,7 +65,7 @@ export const payment = async (
     return res;
   }
 
-  if (payment.currency === Currency.USB) {
+  if (payment.currency === Currency.USD) {
     const res = await paytureEnInit(paytureData);
 
     if (res) {

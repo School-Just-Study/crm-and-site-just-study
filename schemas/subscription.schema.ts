@@ -7,7 +7,7 @@ import { lastModification } from "../fields/lastModification";
 import { statusView } from "../fields/statusView";
 import { content } from "../fields/document";
 import { Lists } from ".keystone/types";
-import { getCurrency } from "../lib/getCurrency";
+import { getCurrencyForLanguage } from "../lib/getCurrency";
 
 export const Subscription = list({
   ui: {
@@ -31,7 +31,9 @@ export const Subscription = list({
         type: graphql.String,
         resolve(item: Lists.Subscription.Item) {
           if (!item) return;
-          return `${item.name} - ${item.price} ${getCurrency(item.language)}`;
+          return `${item.name} - ${item.price} ${getCurrencyForLanguage(
+            item.language
+          )}`;
         },
       }),
     }),

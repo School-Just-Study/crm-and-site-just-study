@@ -6,7 +6,7 @@ import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 import { statusView } from "../fields/statusView";
 import { content } from "../fields/document";
-import { getCurrency } from "../lib/getCurrency";
+import { getCurrencyForLanguage } from "../lib/getCurrency";
 import { Lists } from ".keystone/types";
 
 export const Service = list({
@@ -25,7 +25,9 @@ export const Service = list({
         type: graphql.String,
         resolve(item: Lists.Service.Item) {
           if (!item) return;
-          return `${item.name} - ${item.price} ${getCurrency(item.language)}`;
+          return `${item.name} - ${item.price} ${getCurrencyForLanguage(
+            item.language
+          )}`;
         },
       }),
     }),

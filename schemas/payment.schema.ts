@@ -11,7 +11,7 @@ export const Payment = list({
   ui: {
     label: "Платежи",
     listView: {
-      initialColumns: ["order", "status", "amount"],
+      initialColumns: ["id", "order", "status", "amount"],
       pageSize: 20,
     },
   },

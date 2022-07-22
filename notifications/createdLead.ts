@@ -1,20 +1,17 @@
-import { KeystoneContext } from "@keystone-6/core/dist/declarations/src/types";
-import { Roles } from "../enums/roles.enum";
-import format from "date-fns/format";
-import { MAIL_USER } from "../config";
-import { baseTemplateEmail } from "../mailTemplate/base";
-import { mailer } from "../lib/nodemailer";
-import { Lists } from ".keystone/types";
+import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
+import { Roles } from '../enums/roles.enum';
+import format from 'date-fns/format';
+import { MAIL_USER } from '../config';
+import { baseTemplateEmail } from '../mailTemplate/base';
+import { mailer } from '../lib/nodemailer';
+import { Lists } from '.keystone/types';
+import { fieldsEmail } from '../lib/fieldsEmail';
 
-export const fieldsEmail = (name: string, value: string) => {
-  return `
-      <div style='display: flex; gap: 8px'>
-        <p>${name}:</p>
-        <p>${value}</p>
-      </div>
-  `;
-};
-
+/**
+ * Уведомление для менеджера о новом лиде
+ * @param client
+ * @param ctx
+ */
 export const notifyNewClient = async (
   client: Lists.User.Item,
   ctx: KeystoneContext

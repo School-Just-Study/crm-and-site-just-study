@@ -3,11 +3,13 @@ import { graphQLSchemaExtension } from "@keystone-6/core";
 import { authWithEmail } from "./authWithEmail";
 import { checkout } from "./checkout";
 import { payment } from "./payment";
+import { againPayment } from "./againPayment";
+import { checkPayment } from "./checkPayment";
 
 export const graphql = String.raw;
 export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
   typeDefs: graphql`
-    type Checkout {
+    type PaytureResponse {
       Success: String!
       OrderId: String
       ErrCode: String
@@ -20,8 +22,13 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
 
     type Mutation {
       authWithEmail(email: String!): String
-      checkout(userId: String!): Checkout
-      payment(orderId: String!): Checkout
+      checkout(userId: String!): PaytureResponse
+      payment(orderId: String!): PaytureResponse
+    }
+
+    type Query {
+      againPayment(paymentId: String!): PaytureResponse
+      checkPayment(paymentId: String!): Payment
     }
   `,
   resolvers: {
@@ -29,6 +36,10 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
       authWithEmail,
       checkout,
       payment,
+    },
+    Query: {
+      againPayment,
+      checkPayment,
     },
   },
 });

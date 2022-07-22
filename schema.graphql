@@ -1960,8 +1960,8 @@ type Mutation {
     token: String!
   ): RedeemUserMagicAuthTokenResult!
   authWithEmail(email: String!): String
-  checkout(userId: String!): Checkout
-  payment(orderId: String!): Checkout
+  checkout(userId: String!): PaytureResponse
+  payment(orderId: String!): PaytureResponse
 }
 
 union UserAuthenticationWithPasswordResult =
@@ -2152,6 +2152,8 @@ type Query {
   postsCount(where: PostWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
+  againPayment(paymentId: String!): PaytureResponse
+  checkPayment(paymentId: String!): Payment
 }
 
 union AuthenticatedItem = User
@@ -2244,7 +2246,7 @@ enum KeystoneAdminUISortDirection {
   DESC
 }
 
-type Checkout {
+type PaytureResponse {
   Success: String!
   OrderId: String
   ErrCode: String
