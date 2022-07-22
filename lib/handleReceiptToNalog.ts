@@ -46,7 +46,11 @@ export const handleReceiptToNalog: ListHooks<Lists.Payment.TypeInfo>["afterOpera
           item.id,
           context
         );
-        await notifySuccessfulPaymentForManagers(order.student.id, context);
+        await notifySuccessfulPaymentForManagers(
+          order.student.id,
+          item.id,
+          context
+        );
       }
 
       if (item?.status === PaymentStatus.Cancelled && item.receiptId) {
