@@ -21,7 +21,7 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
     type Mutation {
       authWithEmail(email: String!): String
       checkout(userId: String!): Checkout
-      payment(orderId: String!): JSON
+      payment(orderId: String!): Checkout
     }
   `,
   resolvers: {

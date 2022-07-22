@@ -4,6 +4,7 @@
 type Cart {
   id: ID!
   user: User
+  currency: String
   items(
     where: CartItemWhereInput! = {}
     orderBy: [CartItemOrderByInput!]! = []
@@ -29,6 +30,7 @@ input CartWhereInput {
   NOT: [CartWhereInput!]
   id: IDFilter
   user: UserWhereInput
+  currency: StringFilter
   items: CartItemManyRelationFilter
   quantityPayments: IntNullableFilter
   lastModification: DateTimeFilter
@@ -43,6 +45,34 @@ input IDFilter {
   gt: ID
   gte: ID
   not: IDFilter
+}
+
+input StringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringFilter
+}
+
+input NestedStringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringFilter
 }
 
 input CartItemManyRelationFilter {
@@ -75,6 +105,7 @@ input DateTimeFilter {
 
 input CartOrderByInput {
   id: OrderDirection
+  currency: OrderDirection
   quantityPayments: OrderDirection
   lastModification: OrderDirection
 }
@@ -86,6 +117,7 @@ enum OrderDirection {
 
 input CartUpdateInput {
   user: UserRelateToOneForUpdateInput
+  currency: String
   items: CartItemRelateToManyForUpdateInput
   quantityPayments: Int
   lastModification: DateTime
@@ -223,34 +255,6 @@ input CategoryWhereInput {
   lastModification: DateTimeFilter
 }
 
-input StringFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  not: NestedStringFilter
-}
-
-input NestedStringFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  not: NestedStringFilter
-}
-
 input ProductManyRelationFilter {
   every: ProductWhereInput
   some: ProductWhereInput
@@ -319,6 +323,7 @@ type Order {
   label: String
   student: User
   leftPayments: Int
+  currency: String
   payments(
     where: PaymentWhereInput! = {}
     orderBy: [PaymentOrderByInput!]! = []
@@ -369,6 +374,7 @@ input OrderWhereInput {
   label: StringFilter
   student: UserWhereInput
   leftPayments: IntFilter
+  currency: StringFilter
   payments: PaymentManyRelationFilter
   status: OrderStatusTypeNullableFilter
   subscriptions: UserSubscriptionManyRelationFilter
@@ -418,6 +424,7 @@ input OrderOrderByInput {
   id: OrderDirection
   label: OrderDirection
   leftPayments: OrderDirection
+  currency: OrderDirection
   status: OrderDirection
   amount: OrderDirection
   createdAt: OrderDirection
@@ -428,6 +435,7 @@ input OrderUpdateInput {
   label: String
   student: UserRelateToOneForUpdateInput
   leftPayments: Int
+  currency: String
   payments: PaymentRelateToManyForUpdateInput
   status: OrderStatusType
   subscriptions: UserSubscriptionRelateToManyForUpdateInput
@@ -467,6 +475,7 @@ input OrderCreateInput {
   label: String
   student: UserRelateToOneForCreateInput
   leftPayments: Int
+  currency: String
   payments: PaymentRelateToManyForCreateInput
   status: OrderStatusType
   subscriptions: UserSubscriptionRelateToManyForCreateInput
@@ -499,9 +508,10 @@ input UserServiceRelateToManyForCreateInput {
 type Payment {
   id: ID!
   order: Order
+  currency: String
   student: User
-  sum: Int
-  externalId: String
+  amount: Int
+  sessionId: String
   receiptId: String
   status: PaymentStatusType
   createdAt: DateTime
@@ -525,9 +535,10 @@ input PaymentWhereInput {
   NOT: [PaymentWhereInput!]
   id: IDFilter
   order: OrderWhereInput
+  currency: StringFilter
   student: UserWhereInput
-  sum: IntNullableFilter
-  externalId: StringFilter
+  amount: IntNullableFilter
+  sessionId: StringFilter
   receiptId: StringFilter
   status: PaymentStatusTypeNullableFilter
   createdAt: DateTimeFilter
@@ -543,8 +554,9 @@ input PaymentStatusTypeNullableFilter {
 
 input PaymentOrderByInput {
   id: OrderDirection
-  sum: OrderDirection
-  externalId: OrderDirection
+  currency: OrderDirection
+  amount: OrderDirection
+  sessionId: OrderDirection
   receiptId: OrderDirection
   status: OrderDirection
   createdAt: OrderDirection
@@ -553,9 +565,10 @@ input PaymentOrderByInput {
 
 input PaymentUpdateInput {
   order: OrderRelateToOneForUpdateInput
+  currency: String
   student: UserRelateToOneForUpdateInput
-  sum: Int
-  externalId: String
+  amount: Int
+  sessionId: String
   receiptId: String
   status: PaymentStatusType
   createdAt: DateTime
@@ -575,9 +588,10 @@ input PaymentUpdateArgs {
 
 input PaymentCreateInput {
   order: OrderRelateToOneForCreateInput
+  currency: String
   student: UserRelateToOneForCreateInput
-  sum: Int
-  externalId: String
+  amount: Int
+  sessionId: String
   receiptId: String
   status: PaymentStatusType
   createdAt: DateTime
@@ -1947,7 +1961,7 @@ type Mutation {
   ): RedeemUserMagicAuthTokenResult!
   authWithEmail(email: String!): String
   checkout(userId: String!): Checkout
-  payment(orderId: String!): JSON
+  payment(orderId: String!): Checkout
 }
 
 union UserAuthenticationWithPasswordResult =

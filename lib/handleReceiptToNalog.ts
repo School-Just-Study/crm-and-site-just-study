@@ -28,7 +28,7 @@ export const handleReceiptToNalog: ListHooks<Lists.Payment.TypeInfo>["afterOpera
         });
         const receiptId = await nalogApi.addIncome({
           name: `Консультационные услуги для клиента ${order.student.name}`,
-          amount: item.sum,
+          amount: item.amount,
           quantity: 1,
         });
         await context.query.Payment.updateOne({

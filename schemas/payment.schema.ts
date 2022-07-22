@@ -5,20 +5,22 @@ import { PaymentStatus } from "../enums/payment-status.enum";
 import { handleReceiptToNalog } from "../lib/handleReceiptToNalog";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
+import { currency } from "../fields/currency";
 
 export const Payment = list({
   ui: {
     label: "Платежи",
     listView: {
-      initialColumns: ["order", "status", "sum", "externalId", "receiptId"],
+      initialColumns: ["order", "status", "amount"],
       pageSize: 20,
     },
   },
   fields: {
     order: relationship({ ref: "Order.payments" }),
+    currency,
     student: relationship({ ref: "User" }),
-    sum: integer({ defaultValue: 0 }),
-    externalId: text(),
+    amount: integer({ defaultValue: 0 }),
+    sessionId: text(),
     receiptId: text(),
     status: select({
       type: "enum",

@@ -1,6 +1,5 @@
 import { KeystoneContext } from "@keystone-6/core/dist/declarations/src/types";
-
-const { paytureRuInit, paytureRuStatus } = require("../utils/paytureRu");
+import { graphql } from "./index";
 
 interface Arguments {
   userId: string;
@@ -23,7 +22,7 @@ export const checkout = async (
 
   const cart = await context.query.Cart.findOne({
     where: { id: user.cart.id },
-    query: `id items { id subscription { id name } service { id name } price } quantityPayments amount`,
+    query: `id currency items { id subscription { id name } service { id name } price } quantityPayments amount`,
   });
 
   const subscriptionsIds = cart.items
@@ -51,6 +50,7 @@ export const checkout = async (
   const order = await context.query.Order.createOne({
     data: {
       label: orderText,
+      currency: cart.currency,
       student: { connect: { id: userId } },
       leftPayments: cart.quantityPayments,
       amount: cart.amount,
@@ -130,32 +130,23 @@ export const checkout = async (
     data: { quantityPayments: 1 },
   });
 
-  // TODO: перейти в оплату
+  const res = await context.graphql.raw({
+    variables: { orderId: order.id },
+    query: graphql`
+      mutation ($orderId: String!) {
+        payment(orderId: $orderId) {
+          Success
+          OrderId
+          ErrCode
+          RedirectUrl
+          Amount
+          SessionLifeTime
+          AttemptsCount
+          SessionId
+        }
+      }
+    `,
+  });
 
-  // СОздаем заказ и сразу оплату
-
-  //
-  // const payment = await context.query.Payment.createOne({
-  //   data: {
-  //     order: { connect: { id: order.id } },
-  //     student: { connect: { id: userId } },
-  //     sum: order.nextPayment,
-  //   },
-  //   query: `id`,
-  // });
-
-  // const paytureData = {
-  //   OrderId: "test8",
-  //   Amount: cart.amount * 100,
-  //   SessionType: "Pay",
-  //   Url: `${FRONTEND_URL}/result?orderid={orderid}&result={success}&payment=123`,
-  //   Product: orderText,
-  //   Total: cart.amount,
-  // };
-  //
-  // const res = await paytureRuInit(paytureData);
-  //
-  // console.log(res);
-  //
-  // return res;
+  return res.data?.payment;
 };

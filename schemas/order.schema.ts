@@ -12,6 +12,7 @@ import { OrderStatus } from "../enums/order-status.enum";
 import { PaymentStatus } from "../enums/payment-status.enum";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
+import { currency } from "../fields/currency";
 
 export const Order = list({
   ui: {
@@ -38,6 +39,7 @@ export const Order = list({
       defaultValue: 1,
       ui: { description: "Осталось платежей" },
     }),
+    currency,
     payments: relationship({ ref: "Payment.order", many: true }),
     status: select({
       type: "enum",
@@ -61,14 +63,14 @@ export const Order = list({
         async resolve(item: Lists.Order.Item, arg, context) {
           const payments = await context.query.Payment.findMany({
             where: { order: { id: { equals: item.id } } },
-            query: `sum status`,
+            query: `amount status`,
           });
           if (payments) {
             const successPayed = payments.filter(
               (item) => item.status === PaymentStatus.Successfully
             );
             return successPayed.reduce(
-              (tally, payment) => tally + payment.sum,
+              (tally, payment) => tally + payment.amount,
               0
             );
           }
@@ -83,14 +85,14 @@ export const Order = list({
         async resolve(item: Lists.Order.Item, arg, context) {
           const payments = await context.query.Payment.findMany({
             where: { order: { id: { equals: item.id } } },
-            query: `sum status`,
+            query: `amount status`,
           });
           if (payments) {
             const successPayed = payments.filter(
               (item) => item.status === PaymentStatus.Successfully
             );
             const payed = successPayed.reduce(
-              (tally, payment) => tally + payment.sum,
+              (tally, payment) => tally + payment.amount,
               0
             );
             if (item.amount) {
@@ -110,14 +112,14 @@ export const Order = list({
         async resolve(item: Lists.Order.Item, arg, context) {
           const payments = await context.query.Payment.findMany({
             where: { order: { id: { equals: item.id } } },
-            query: `sum status`,
+            query: `amount status`,
           });
           if (payments) {
             const successPayed = payments.filter(
               (item) => item.status === PaymentStatus.Successfully
             );
             const payed = successPayed.reduce(
-              (tally, payment) => tally + payment.sum,
+              (tally, payment) => tally + payment.amount,
               0
             );
             if (item.amount && item.leftPayments >= 1) {

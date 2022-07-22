@@ -2,6 +2,7 @@ import { graphql, list } from "@keystone-6/core";
 import { integer, relationship, virtual } from "@keystone-6/core/fields";
 import { lastModification } from "../fields/lastModification";
 import { Lists } from ".keystone/types";
+import { currency } from "../fields/currency";
 
 export const Cart = list({
   ui: {
@@ -19,6 +20,7 @@ export const Cart = list({
         hideCreate: true,
       },
     }),
+    currency,
     items: relationship({
       ref: "CartItem.cart",
       many: true,
