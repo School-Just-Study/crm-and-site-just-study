@@ -6,8 +6,11 @@ import {
   notifySuccessfulPaymentForClient,
   notifySuccessfulPaymentForManagers,
 } from "../notifications/successfulPayment";
+import { Currency } from "../enums/currency.enum";
 
 const { NalogApi } = require("lknpd-nalog-api");
+const { paytureRuRefund } = require("../utils/paytureRu");
+const { paytureEnRefund } = require("../utils/paytureEn");
 
 /**
  * Отправляем платеж в налоговую если платеж имеет статус Successfully, и отменяем его, если статус Cancelled
@@ -53,12 +56,22 @@ export const handleReceiptToNalog: ListHooks<Lists.Payment.TypeInfo>["afterOpera
         );
       }
 
-      if (item?.status === PaymentStatus.Cancelled && item.receiptId) {
-        const receiptId = item.receiptId;
-        await nalogApi.cancelIncome(receiptId, "Платеж отменен");
+      if (item?.status === PaymentStatus.Cancelled) {
+        if (item.receiptId) {
+          const receiptId = item.receiptId;
+          await nalogApi.cancelIncome(receiptId, "Платеж отменен");
+        }
+        if (item.currency === Currency.RUB) {
+          console.log(item.id);
+          const res = await paytureRuRefund(item.id);
+          console.log(res);
+        }
+        if (item.currency === Currency.USD) {
+          await paytureEnRefund(item.id);
+        }
         await context.query.Payment.updateOne({
           where: { id: `${item.id}` },
-          data: { receiptId: "" },
+          data: { receiptId: "", sessionId: "" },
         });
       }
     }

@@ -60,7 +60,7 @@ model Order {
   label            String             @default("")
   student          User?              @relation("Order_student", fields: [studentId], references: [id])
   studentId        Int?               @map("student")
-  leftPayments     Int                @default(1)
+  quantityPayments Int                @default(1)
   currency         String             @default("RUB")
   payments         Payment[]          @relation("Payment_order")
   status           OrderStatusType?   @default(created)

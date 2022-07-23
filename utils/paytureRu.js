@@ -31,6 +31,18 @@ exports.paytureRuStatus = (orderId) =>
     );
   });
 
+exports.paytureRuRefund = (orderId) =>
+  new Promise((resolve, reject) => {
+    inPayRu.refund(
+      { OrderId: orderId },
+      function (error, response, body, responseObject) {
+        if (error) reject(error);
+
+        resolve(responseObject);
+      }
+    );
+  });
+
 exports.paytureRuPay = (sessionId) =>
   new Promise((resolve, reject) => {
     inPayRu.pay(sessionId, function (error, response, body, responseObject) {

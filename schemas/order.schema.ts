@@ -13,6 +13,7 @@ import { PaymentStatus } from "../enums/payment-status.enum";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 import { currency } from "../fields/currency";
+import { handleOrderStatus } from "../lib/handleOrderStatus";
 
 export const Order = list({
   ui: {
@@ -35,10 +36,30 @@ export const Order = list({
   fields: {
     label: text(),
     student: relationship({ ref: "User" }),
-    leftPayments: integer({
+    quantityPayments: integer({
       validation: { isRequired: true },
       defaultValue: 1,
+      ui: { description: "Всего платежей" },
+    }),
+    leftPayments: virtual({
       ui: { description: "Осталось платежей" },
+      // @ts-ignore
+      field: graphql.field({
+        type: graphql.Int,
+        async resolve(item: Lists.Order.Item, arg, context) {
+          const payments = await context.query.Payment.findMany({
+            where: { order: { id: { equals: item.id } } },
+            query: `amount status`,
+          });
+          if (payments) {
+            const successPayed = payments.filter(
+              (item) => item.status === PaymentStatus.Successfully
+            );
+            return item.quantityPayments - successPayed.length;
+          }
+          return;
+        },
+      }),
     }),
     currency,
     payments: relationship({ ref: "Payment.order", many: true }),
@@ -111,6 +132,10 @@ export const Order = list({
       field: graphql.field({
         type: graphql.Int,
         async resolve(item: Lists.Order.Item, arg, context) {
+          const order = await context.query.Order.findOne({
+            where: { id: `${item.id}` },
+            query: `leftPayments`,
+          });
           const payments = await context.query.Payment.findMany({
             where: { order: { id: { equals: item.id } } },
             query: `amount status`,
@@ -123,9 +148,9 @@ export const Order = list({
               (tally, payment) => tally + payment.amount,
               0
             );
-            if (item.amount && item.leftPayments >= 1) {
+            if (item.amount && order.leftPayments >= 1) {
               const dept = item.amount - payed;
-              return Math.round(dept / item.leftPayments);
+              return Math.round(dept / order.leftPayments);
             } else {
               return 0;
             }
@@ -136,6 +161,9 @@ export const Order = list({
     }),
     createdAt,
     lastModification,
+  },
+  hooks: {
+    afterOperation: handleOrderStatus,
   },
   access: {
     operation: {

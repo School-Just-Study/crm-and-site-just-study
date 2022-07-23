@@ -322,6 +322,7 @@ type Order {
   id: ID!
   label: String
   student: User
+  quantityPayments: Int
   leftPayments: Int
   currency: String
   payments(
@@ -373,7 +374,7 @@ input OrderWhereInput {
   id: IDFilter
   label: StringFilter
   student: UserWhereInput
-  leftPayments: IntFilter
+  quantityPayments: IntFilter
   currency: StringFilter
   payments: PaymentManyRelationFilter
   status: OrderStatusTypeNullableFilter
@@ -423,7 +424,7 @@ input UserServiceManyRelationFilter {
 input OrderOrderByInput {
   id: OrderDirection
   label: OrderDirection
-  leftPayments: OrderDirection
+  quantityPayments: OrderDirection
   currency: OrderDirection
   status: OrderDirection
   amount: OrderDirection
@@ -434,7 +435,7 @@ input OrderOrderByInput {
 input OrderUpdateInput {
   label: String
   student: UserRelateToOneForUpdateInput
-  leftPayments: Int
+  quantityPayments: Int
   currency: String
   payments: PaymentRelateToManyForUpdateInput
   status: OrderStatusType
@@ -474,7 +475,7 @@ input OrderUpdateArgs {
 input OrderCreateInput {
   label: String
   student: UserRelateToOneForCreateInput
-  leftPayments: Int
+  quantityPayments: Int
   currency: String
   payments: PaymentRelateToManyForCreateInput
   status: OrderStatusType

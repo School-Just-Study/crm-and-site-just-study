@@ -31,6 +31,18 @@ exports.paytureEnStatus = (orderId) =>
     );
   });
 
+exports.paytureEnRefund = (orderId) =>
+  new Promise((resolve, reject) => {
+    inPayEn.refund(
+      { OrderId: orderId },
+      function (error, response, body, responseObject) {
+        if (error) reject(error);
+
+        resolve(responseObject);
+      }
+    );
+  });
+
 exports.paytureEnPay = (sessionId) =>
   new Promise((resolve, reject) => {
     inPayEn.pay(sessionId, function (error, response, body, responseObject) {

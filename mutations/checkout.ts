@@ -53,7 +53,7 @@ export const checkout = async (
       label: orderText,
       currency,
       student: { connect: { id: userId } },
-      leftPayments: cart.quantityPayments,
+      quantityPayments: cart.quantityPayments,
       amount: cart.amount,
     },
     query: `id`,
