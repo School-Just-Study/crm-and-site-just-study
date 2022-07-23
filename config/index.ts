@@ -34,3 +34,5 @@ export const PAYTURE_TERMINAL_USD =
   process.env.PAYTURE_TERMINAL_USD || "MerchantJustStudyUSD";
 export const PAYTURE_TERMINAL_PASSWORD =
   process.env.PAYTURE_TERMINAL_PASSWORD || "123";
+
+export const SENTRY_DNS = process.env.SENTRY_DNS || "";

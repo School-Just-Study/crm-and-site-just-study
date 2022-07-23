@@ -1,11 +1,11 @@
 import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
 import { Roles } from '../enums/roles.enum';
 import format from 'date-fns/format';
-import { MAIL_USER } from '../config';
 import { baseTemplateEmail } from '../mailTemplate/base';
 import { mailer } from '../lib/nodemailer';
 import { Lists } from '.keystone/types';
 import { fieldsEmail } from '../lib/fieldsEmail';
+import { from } from './index';
 
 /**
  * Уведомление для менеджера о новом лиде
@@ -41,7 +41,7 @@ export const notifyNewClient = async (
 
   await mailer.sendMail({
     to: managersEmail,
-    from: MAIL_USER,
+    from,
     subject: "У вас новый лид",
     html: baseTemplateEmail("Новый лид", clientInfo),
   });

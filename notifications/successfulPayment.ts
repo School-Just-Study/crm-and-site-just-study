@@ -1,10 +1,10 @@
 import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
 import { mailer } from '../lib/nodemailer';
-import { MAIL_USER } from '../config';
 import { baseTemplateEmail } from '../mailTemplate/base';
 import { Roles } from '../enums/roles.enum';
 import { fieldsEmail } from '../lib/fieldsEmail';
 import { getTextCurrency } from '../lib/getCurrency';
+import { from } from './index';
 
 /**
  * Уведомление для студента об успешном платеже
@@ -43,7 +43,7 @@ export const notifySuccessfulPaymentForClient = async (
 
   await mailer.sendMail({
     to: client.email,
-    from: MAIL_USER,
+    from,
     subject: "Ваше обучение успешко оплачено",
     html: baseTemplateEmail("Уведомление об платеже", emailInfo),
   });
@@ -87,7 +87,7 @@ export const notifySuccessfulPaymentForManagers = async (
 
   await mailer.sendMail({
     to: managersEmail,
-    from: MAIL_USER,
+    from,
     subject: "Новая оплата 💃🕺",
     html: baseTemplateEmail("Уведомление об платеже", emailInfo),
   });
