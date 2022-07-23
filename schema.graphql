@@ -1960,8 +1960,9 @@ type Mutation {
     token: String!
   ): RedeemUserMagicAuthTokenResult!
   authWithEmail(email: String!): String
-  checkout(userId: String!): PaytureResponse
+  checkout(userId: String!, currency: String!): PaytureResponse
   payment(orderId: String!): PaytureResponse
+  cart(data: CartData!): PaytureResponse
 }
 
 union UserAuthenticationWithPasswordResult =
@@ -2255,4 +2256,13 @@ type PaytureResponse {
   SessionLifeTime: String
   AttemptsCount: String
   SessionId: String
+}
+
+input CartData {
+  firstName: String!
+  secondName: String!
+  phone: Decimal!
+  email: String!
+  currency: String!
+  language: String!
 }

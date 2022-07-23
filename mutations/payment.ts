@@ -1,6 +1,7 @@
 import { KeystoneContext } from "@keystone-6/core/dist/declarations/src/types";
 import { FRONTEND_URL } from "../config";
 import { Currency } from "../enums/currency.enum";
+import { OrderStatus } from "../enums/order-status.enum";
 
 const { paytureRuInit } = require("../utils/paytureRu");
 const { paytureEnInit } = require("../utils/paytureEn");
@@ -22,10 +23,13 @@ export const payment = async (
 ) => {
   const order = await context.query.Order.findOne({
     where: { id: orderId },
-    query: `label currency amount nextPayment student { id }`,
+    query: `label currency amount nextPayment status student { id }`,
   });
   if (!order) {
     throw new Error("Sorry! The order does not exist!");
+  }
+  if (order.status === OrderStatus.Finished) {
+    throw new Error("Sorry! The order is finished");
   }
 
   const payment = await context.query.Payment.createOne({
@@ -46,7 +50,7 @@ export const payment = async (
     OrderId: payment.id,
     Amount: payment.amount * 100,
     SessionType: "Pay",
-    Url: `${FRONTEND_URL}/result?orderid={orderid}&result={success}`,
+    Url: `${FRONTEND_URL}/checkout/result?orderid={orderid}&result={success}`,
     Product: order.label,
     Total: order.nextPayment,
   };

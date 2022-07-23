@@ -15,6 +15,7 @@ export const Subscription = list({
     labelField: "label",
     listView: {
       initialColumns: [
+        "id",
         "label",
         "language",
         "statusView",

@@ -37,9 +37,6 @@ export const Payment = list({
   },
   access: {
     operation: {
-      query: ({ session }) => !!session,
-      create: ({ session }) => !!session,
-      update: ({ session }) => !!session,
       delete: ({ session }) => !!session,
     },
   },

@@ -25,22 +25,14 @@ export const checkPayment = async (
   let res = { Success: "False" };
 
   if (payment.currency === Currency.RUB) {
-    console.log("test ru");
     res = await paytureRuStatus(payment.id);
   }
 
   if (payment.currency === Currency.USD) {
-    console.log("test usd");
     res = await paytureEnStatus(payment.id);
   }
 
   if (res.Success === "True") {
-    await context.query.Order.updateOne({
-      where: { id: payment.order.id },
-      data: {
-        leftPayments: payment.order.leftPayments - 1,
-      },
-    });
     return await context.query.Payment.updateOne({
       where: { id: paymentId },
       data: { status: PaymentStatus.Successfully },

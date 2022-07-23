@@ -11,6 +11,7 @@ export const UserService = list({
     label: "Студенты: услуги",
     listView: {
       initialColumns: [
+        "id",
         "name",
         "originalPrice",
         "price",

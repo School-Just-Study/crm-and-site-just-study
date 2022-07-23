@@ -14,7 +14,7 @@ export const Service = list({
     label: "Шаблоны услуг",
     labelField: "label",
     listView: {
-      initialColumns: ["label", "language", "statusView", "categories"],
+      initialColumns: ["id", "label", "language", "statusView", "categories"],
     },
   },
   fields: {

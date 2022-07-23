@@ -23,6 +23,7 @@ export const UserSubscription = list({
     labelField: "name",
     listView: {
       initialColumns: [
+        "id",
         "name",
         "visitCount",
         "price",

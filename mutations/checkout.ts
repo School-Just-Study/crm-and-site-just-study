@@ -3,11 +3,12 @@ import { graphql } from "./index";
 
 interface Arguments {
   userId: string;
+  currency: string;
 }
 
 export const checkout = async (
   root: any,
-  { userId }: Arguments,
+  { userId, currency }: Arguments,
   context: KeystoneContext
 ) => {
   let user = await context.query.User.findOne({
@@ -22,7 +23,7 @@ export const checkout = async (
 
   const cart = await context.query.Cart.findOne({
     where: { id: user.cart.id },
-    query: `id currency items { id subscription { id name } service { id name } price } quantityPayments amount`,
+    query: `id items { id subscription { id name } service { id name } price } quantityPayments amount`,
   });
 
   const subscriptionsIds = cart.items
@@ -50,7 +51,7 @@ export const checkout = async (
   const order = await context.query.Order.createOne({
     data: {
       label: orderText,
-      currency: cart.currency,
+      currency,
       student: { connect: { id: userId } },
       leftPayments: cart.quantityPayments,
       amount: cart.amount,
@@ -148,5 +149,9 @@ export const checkout = async (
     `,
   });
 
-  return res.data?.payment;
+  if (res.data?.payment) {
+    return res.data?.payment;
+  } else {
+    res.errors;
+  }
 };
