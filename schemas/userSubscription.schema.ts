@@ -13,10 +13,9 @@ import { Statuses } from "../enums/statuses.enum";
 import { Lists } from ".keystone/types";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
-import { handlePatternForUserSubscription } from "../lib/handlePatternForUserSubscription";
 import { addDays } from "date-fns";
-import { handleStatusUserSubscription } from "../lib/handleStatusUserSubscription";
 import format from "date-fns/format";
+import { handleStatusUserSubscription } from "../lib/handleStatusUserSubscription";
 
 export const UserSubscription = list({
   ui: {
@@ -24,6 +23,7 @@ export const UserSubscription = list({
     labelField: "name",
     listView: {
       initialColumns: [
+        "id",
         "name",
         "visitCount",
         "price",
@@ -40,7 +40,6 @@ export const UserSubscription = list({
     },
   },
   fields: {
-    pattern: relationship({ ref: "Subscription.items" }),
     name: text(),
     visitCount: integer(),
     originalPrice: integer(),
@@ -97,13 +96,10 @@ export const UserSubscription = list({
     lastModification,
   },
   hooks: {
-    resolveInput: handlePatternForUserSubscription,
     afterOperation: handleStatusUserSubscription,
   },
   access: {
     operation: {
-      create: ({ session }) => !!session && session.data.role !== Roles.Student,
-      update: ({ session }) => !!session && session.data.role !== Roles.Student,
       delete: ({ session }) => !!session && session.data.role !== Roles.Student,
     },
   },
