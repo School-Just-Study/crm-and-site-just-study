@@ -331,6 +331,27 @@ model Post {
   @@index([authorId])
 }
 
+model Marketing {
+  id               Int      @id @default(autoincrement())
+  language         String   @default("ru")
+  statusView       String   @default("draft")
+  slug             String   @unique @default("")
+  image_filesize   Int?
+  image_extension  String?
+  image_width      Int?
+  image_height     Int?
+  image_id         String?
+  title            String   @default("")
+  description      String   @default("") @mysql.VarChar(10000)
+  aboutGeorge      Boolean  @default(true)
+  advantages       Boolean  @default(true)
+  reviews          Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  lastModification DateTime @default(now()) @updatedAt
+
+  @@index([language])
+}
+
 enum OrderStatusType {
   created
   frozen

@@ -1789,6 +1789,95 @@ input PostCreateInput {
   lastModification: DateTime
 }
 
+type Marketing {
+  id: ID!
+  language: String
+  statusView: String
+  slug: String
+  image: ImageFieldOutput
+  title: String
+  description: String
+  aboutGeorge: Boolean!
+  advantages: Boolean!
+  reviews: Boolean!
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input MarketingWhereUniqueInput {
+  id: ID
+  slug: String
+}
+
+input MarketingWhereInput {
+  AND: [MarketingWhereInput!]
+  OR: [MarketingWhereInput!]
+  NOT: [MarketingWhereInput!]
+  id: IDFilter
+  language: StringFilter
+  statusView: StringFilter
+  slug: StringFilter
+  title: StringFilter
+  description: StringFilter
+  aboutGeorge: BooleanFilter
+  advantages: BooleanFilter
+  reviews: BooleanFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
+input MarketingOrderByInput {
+  id: OrderDirection
+  language: OrderDirection
+  statusView: OrderDirection
+  slug: OrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  aboutGeorge: OrderDirection
+  advantages: OrderDirection
+  reviews: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input MarketingUpdateInput {
+  language: String
+  statusView: String
+  slug: String
+  image: ImageFieldInput
+  title: String
+  description: String
+  aboutGeorge: Boolean
+  advantages: Boolean
+  reviews: Boolean
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input MarketingUpdateArgs {
+  where: MarketingWhereUniqueInput!
+  data: MarketingUpdateInput!
+}
+
+input MarketingCreateInput {
+  language: String
+  statusView: String
+  slug: String
+  image: ImageFieldInput
+  title: String
+  description: String
+  aboutGeorge: Boolean! = true
+  advantages: Boolean! = true
+  reviews: Boolean! = true
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -1947,6 +2036,15 @@ type Mutation {
   updatePosts(data: [PostUpdateArgs!]!): [Post]
   deletePost(where: PostWhereUniqueInput!): Post
   deletePosts(where: [PostWhereUniqueInput!]!): [Post]
+  createMarketing(data: MarketingCreateInput!): Marketing
+  createMarketings(data: [MarketingCreateInput!]!): [Marketing]
+  updateMarketing(
+    where: MarketingWhereUniqueInput!
+    data: MarketingUpdateInput!
+  ): Marketing
+  updateMarketings(data: [MarketingUpdateArgs!]!): [Marketing]
+  deleteMarketing(where: MarketingWhereUniqueInput!): Marketing
+  deleteMarketings(where: [MarketingWhereUniqueInput!]!): [Marketing]
   endSession: Boolean!
   authenticateUserWithPassword(
     email: String!
@@ -2152,6 +2250,14 @@ type Query {
   ): [Post!]
   post(where: PostWhereUniqueInput!): Post
   postsCount(where: PostWhereInput! = {}): Int
+  marketings(
+    where: MarketingWhereInput! = {}
+    orderBy: [MarketingOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Marketing!]
+  marketing(where: MarketingWhereUniqueInput!): Marketing
+  marketingsCount(where: MarketingWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
   againPayment(paymentId: String!): PaytureResponse

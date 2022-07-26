@@ -16,6 +16,7 @@ import { AvatarUser } from "./avatarUser";
 import { Faq } from "./faq";
 import { Post } from "./post";
 import { CartItem } from "./cartItem";
+import { Marketing } from "./marketing";
 
 export const lists = {
   Cart,
@@ -36,4 +37,5 @@ export const lists = {
   Tag,
   Faq,
   Post,
+  Marketing,
 };
