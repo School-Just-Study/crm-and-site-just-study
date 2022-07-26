@@ -34,8 +34,20 @@ const storage_blog_image: StorageConfig = {
   endpoint: "https://storage.yandexcloud.net",
 };
 
+const storage_marketing_image: StorageConfig = {
+  kind: "s3",
+  type: "image",
+  bucketName: "sitejuststudy",
+  accessKeyId: S3_STORAGE_KEY_ID,
+  secretAccessKey: S3_STORAGE_KEY_SECRET,
+  region: "ru-central1",
+  pathPrefix: "marketing-",
+  endpoint: "https://storage.yandexcloud.net",
+};
+
 export const storage: Record<string, StorageConfig> = {
   storage_image_avatars,
   storage_product_image,
   storage_blog_image,
+  storage_marketing_image,
 };

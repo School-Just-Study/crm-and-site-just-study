@@ -2,25 +2,30 @@ import { list } from "@keystone-6/core";
 import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
-import { relationship, text } from "@keystone-6/core/fields";
+import { image, text } from "@keystone-6/core/fields";
 import { statusView } from "../fields/statusView";
-import { handleSlugForPage } from "../lib/handleSlugForPage";
-import { content } from "../fields/document";
+import { checkboxField } from "../fields/checkbox";
 
-export const Page = list({
+export const Marketing = list({
   ui: {
-    label: "Страницы",
+    label: "Лендинги",
     labelField: "title",
     listView: {
-      initialColumns: ["title", "language", "statusView", "tag", "author"],
-      pageSize: 20,
+      initialColumns: [
+        "language",
+        "title",
+        "statusView",
+        "slug",
+        "description",
+      ],
     },
   },
   fields: {
     language,
     statusView,
+    slug: text({ validation: { isRequired: true }, isIndexed: "unique" }),
+    image: image({ storage: "storage_marketing_image" }),
     title: text({ validation: { isRequired: true } }),
-    slug: text({ isIndexed: true, isFilterable: true }),
     description: text({
       ui: {
         displayMode: "textarea",
@@ -28,25 +33,11 @@ export const Page = list({
       },
       db: { nativeType: "VarChar(10000)" },
     }),
-    content,
-    tag: relationship({
-      ref: "Tag",
-      many: true,
-      ui: {
-        displayMode: "cards",
-        cardFields: ["name"],
-        inlineEdit: { fields: ["name"] },
-        linkToItem: true,
-        inlineConnect: true,
-        inlineCreate: { fields: ["name"] },
-      },
-    }),
-    author: relationship({ ref: "User" }),
+    aboutGeorge: checkboxField("Об основателе"),
+    advantages: checkboxField("Чем мы отличаемся?"),
+    reviews: checkboxField("Отзывы учеников"),
     createdAt,
     lastModification,
-  },
-  hooks: {
-    resolveInput: handleSlugForPage,
   },
   access: {
     operation: {

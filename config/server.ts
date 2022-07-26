@@ -3,7 +3,6 @@ import { FRONTEND_URL, SENTRY_DNS, SERVER_PORT } from "./index";
 import configProject from "../package.json";
 import * as Sentry from "@sentry/node";
 import * as Tracing from "@sentry/tracing";
-import { limiter } from "../middlewares/rateLimit";
 
 export const server: KeystoneConfig["server"] = {
   port: SERVER_PORT,
@@ -20,7 +19,6 @@ export const server: KeystoneConfig["server"] = {
     credentials: true,
   },
   extendExpressApp: (app) => {
-    app.use(limiter);
     Sentry.init({
       dsn: SENTRY_DNS,
       tracesSampleRate: 1.0,
