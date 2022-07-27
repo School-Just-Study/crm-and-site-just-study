@@ -1,11 +1,10 @@
 import { graphql, list } from "@keystone-6/core";
-import { integer, text, virtual } from "@keystone-6/core/fields";
+import { integer, relationship, text, virtual } from "@keystone-6/core/fields";
 import { Roles } from "../enums/roles.enum";
 import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 import { statusView } from "../fields/statusView";
-import { content } from "../fields/document";
 import { Lists } from ".keystone/types";
 import { getCurrencyForLanguage } from "../lib/getCurrency";
 
@@ -40,13 +39,13 @@ export const Subscription = list({
     }),
     statusView,
     name: text({ validation: { isRequired: true } }),
-    description: content,
     visitCount: integer({
       defaultValue: 10,
       validation: { isRequired: true },
     }),
     price: integer({ validation: { isRequired: true } }),
     period: integer({ defaultValue: 45 }),
+    product: relationship({ ref: "Product.subscriptions" }),
     createdAt,
     lastModification,
   },

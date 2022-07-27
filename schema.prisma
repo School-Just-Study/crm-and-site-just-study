@@ -38,21 +38,60 @@ model CartItem {
 }
 
 model Category {
-  id                      Int        @id @default(autoincrement())
-  language                String     @default("ru")
-  name                    String     @default("")
-  parent                  Category?  @relation("Category_parent", fields: [parentId], references: [id])
-  parentId                Int?       @map("parent")
-  products                Product[]  @relation("Category_products")
-  statusView              String     @default("draft")
-  createdAt               DateTime   @default(now())
-  lastModification        DateTime   @default(now()) @updatedAt
-  from_Category_parent    Category[] @relation("Category_parent")
-  from_Product_categories Product[]  @relation("Product_categories")
-  from_Service_categories Service[]  @relation("Service_categories")
+  id                      Int       @id @default(autoincrement())
+  language                String    @default("ru")
+  statusView              String    @default("draft")
+  name                    String    @default("")
+  products                Product[] @relation("Category_products")
+  createdAt               DateTime  @default(now())
+  lastModification        DateTime  @default(now()) @updatedAt
+  from_Product_category   Product[] @relation("Product_category")
+  from_Service_categories Service[] @relation("Service_categories")
 
   @@index([language])
-  @@index([parentId])
+}
+
+model Direction {
+  id               Int               @id @default(autoincrement())
+  language         String            @default("ru")
+  statusView       String            @default("draft")
+  name             String            @default("")
+  description      String            @default("") @mysql.VarChar(10000)
+  images_filesize  Int?
+  images_extension String?
+  images_width     Int?
+  images_height    Int?
+  images_id        String?
+  goals            DirectionGoal[]   @relation("Direction_goals")
+  results          DirectionResult[] @relation("Direction_results")
+  products         Product[]         @relation("Direction_products")
+  createdAt        DateTime          @default(now())
+  lastModification DateTime          @default(now()) @updatedAt
+
+  @@index([language])
+}
+
+model DirectionGoal {
+  id                   Int         @id @default(autoincrement())
+  statusView           String      @default("draft")
+  name                 String      @default("")
+  image_filesize       Int?
+  image_extension      String?
+  image_width          Int?
+  image_height         Int?
+  image_id             String?
+  createdAt            DateTime    @default(now())
+  lastModification     DateTime    @default(now()) @updatedAt
+  from_Direction_goals Direction[] @relation("Direction_goals")
+}
+
+model DirectionResult {
+  id                     Int         @id @default(autoincrement())
+  statusView             String      @default("draft")
+  name                   String      @default("")
+  createdAt              DateTime    @default(now())
+  lastModification       DateTime    @default(now()) @updatedAt
+  from_Direction_results Direction[] @relation("Direction_results")
 }
 
 model Order {
@@ -97,21 +136,25 @@ model Product {
   statusView                  String          @default("draft")
   name                        String          @default("")
   description                 String          @default("")
-  categories                  Category[]      @relation("Product_categories")
-  images_filesize             Int?
-  images_extension            String?
-  images_width                Int?
-  images_height               Int?
-  images_id                   String?
+  category                    Category?       @relation("Product_category", fields: [categoryId], references: [id])
+  categoryId                  Int?            @map("category")
+  image_filesize              Int?
+  image_extension             String?
+  image_width                 Int?
+  image_height                Int?
+  image_id                    String?
   price                       Int?            @default(0)
   tag                         Tag[]           @relation("Product_tag")
+  subscriptions               Subscription[]  @relation("Subscription_product")
   createdAt                   DateTime        @default(now())
   lastModification            DateTime        @default(now()) @updatedAt
   from_Category_products      Category[]      @relation("Category_products")
+  from_Direction_products     Direction[]     @relation("Direction_products")
   from_ProductReview_products ProductReview[] @relation("ProductReview_products")
   from_Faq_products           Faq[]           @relation("Faq_products")
 
   @@index([language])
+  @@index([categoryId])
 }
 
 model ProductReview {
@@ -195,15 +238,17 @@ model Subscription {
   language                   String     @default("ru")
   statusView                 String     @default("draft")
   name                       String     @default("")
-  description                Json       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   visitCount                 Int        @default(10)
   price                      Int
   period                     Int?       @default(45)
+  product                    Product?   @relation("Subscription_product", fields: [productId], references: [id])
+  productId                  Int?       @map("product")
   createdAt                  DateTime   @default(now())
   lastModification           DateTime   @default(now()) @updatedAt
   from_CartItem_subscription CartItem[] @relation("CartItem_subscription")
 
   @@index([language])
+  @@index([productId])
 }
 
 model UserSubscription {
