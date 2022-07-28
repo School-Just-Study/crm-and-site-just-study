@@ -223,7 +223,6 @@ input ServiceRelateToOneForCreateInput {
 type Category {
   id: ID!
   language: String
-  statusView: String
   name: String
   products(
     where: ProductWhereInput! = {}
@@ -246,7 +245,6 @@ input CategoryWhereInput {
   NOT: [CategoryWhereInput!]
   id: IDFilter
   language: StringFilter
-  statusView: StringFilter
   name: StringFilter
   products: ProductManyRelationFilter
   createdAt: DateTimeFilter
@@ -262,7 +260,6 @@ input ProductManyRelationFilter {
 input CategoryOrderByInput {
   id: OrderDirection
   language: OrderDirection
-  statusView: OrderDirection
   name: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
@@ -270,7 +267,6 @@ input CategoryOrderByInput {
 
 input CategoryUpdateInput {
   language: String
-  statusView: String
   name: String
   products: ProductRelateToManyForUpdateInput
   createdAt: DateTime
@@ -291,7 +287,6 @@ input CategoryUpdateArgs {
 
 input CategoryCreateInput {
   language: String
-  statusView: String
   name: String
   products: ProductRelateToManyForCreateInput
   createdAt: DateTime
@@ -307,9 +302,10 @@ type Direction {
   id: ID!
   language: String
   statusView: String
+  slug: String
   name: String
   description: String
-  images: ImageFieldOutput
+  image: ImageFieldOutput
   goals(
     where: DirectionGoalWhereInput! = {}
     orderBy: [DirectionGoalOrderByInput!]! = []
@@ -362,6 +358,7 @@ input DirectionWhereInput {
   id: IDFilter
   language: StringFilter
   statusView: StringFilter
+  slug: StringFilter
   name: StringFilter
   description: StringFilter
   goals: DirectionGoalManyRelationFilter
@@ -387,6 +384,7 @@ input DirectionOrderByInput {
   id: OrderDirection
   language: OrderDirection
   statusView: OrderDirection
+  slug: OrderDirection
   name: OrderDirection
   description: OrderDirection
   createdAt: OrderDirection
@@ -396,9 +394,10 @@ input DirectionOrderByInput {
 input DirectionUpdateInput {
   language: String
   statusView: String
+  slug: String
   name: String
   description: String
-  images: ImageFieldInput
+  image: ImageFieldInput
   goals: DirectionGoalRelateToManyForUpdateInput
   results: DirectionResultRelateToManyForUpdateInput
   products: ProductRelateToManyForUpdateInput
@@ -437,9 +436,10 @@ input DirectionUpdateArgs {
 input DirectionCreateInput {
   language: String
   statusView: String
+  slug: String
   name: String
   description: String
-  images: ImageFieldInput
+  image: ImageFieldInput
   goals: DirectionGoalRelateToManyForCreateInput
   results: DirectionResultRelateToManyForCreateInput
   products: ProductRelateToManyForCreateInput
@@ -851,17 +851,16 @@ type Product {
   language: String
   statusView: String
   name: String
-  description: String
+  desc: Product_desc_Document
   category: Category
   image: ImageFieldOutput
-  price: Int
-  tag(
+  tags(
     where: TagWhereInput! = {}
     orderBy: [TagOrderByInput!]! = []
     take: Int
     skip: Int! = 0
   ): [Tag!]
-  tagCount(where: TagWhereInput! = {}): Int
+  tagsCount(where: TagWhereInput! = {}): Int
   subscriptions(
     where: SubscriptionWhereInput! = {}
     orderBy: [SubscriptionOrderByInput!]! = []
@@ -871,6 +870,10 @@ type Product {
   subscriptionsCount(where: SubscriptionWhereInput! = {}): Int
   createdAt: DateTime
   lastModification: DateTime
+}
+
+type Product_desc_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
 }
 
 input ProductWhereUniqueInput {
@@ -885,10 +888,8 @@ input ProductWhereInput {
   language: StringFilter
   statusView: StringFilter
   name: StringFilter
-  description: StringFilter
   category: CategoryWhereInput
-  price: IntNullableFilter
-  tag: TagManyRelationFilter
+  tags: TagManyRelationFilter
   subscriptions: SubscriptionManyRelationFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
@@ -911,8 +912,6 @@ input ProductOrderByInput {
   language: OrderDirection
   statusView: OrderDirection
   name: OrderDirection
-  description: OrderDirection
-  price: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -921,11 +920,10 @@ input ProductUpdateInput {
   language: String
   statusView: String
   name: String
-  description: String
+  desc: JSON
   category: CategoryRelateToOneForUpdateInput
   image: ImageFieldInput
-  price: Int
-  tag: TagRelateToManyForUpdateInput
+  tags: TagRelateToManyForUpdateInput
   subscriptions: SubscriptionRelateToManyForUpdateInput
   createdAt: DateTime
   lastModification: DateTime
@@ -960,11 +958,10 @@ input ProductCreateInput {
   language: String
   statusView: String
   name: String
-  description: String
+  desc: JSON
   category: CategoryRelateToOneForCreateInput
   image: ImageFieldInput
-  price: Int
-  tag: TagRelateToManyForCreateInput
+  tags: TagRelateToManyForCreateInput
   subscriptions: SubscriptionRelateToManyForCreateInput
   createdAt: DateTime
   lastModification: DateTime

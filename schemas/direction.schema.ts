@@ -16,6 +16,12 @@ export const Direction = list({
   fields: {
     language,
     statusView,
+    slug: text({
+      validation: { isRequired: true },
+      isIndexed: true,
+      isFilterable: true,
+      ui: { description: "Путь к странице" },
+    }),
     name: text({
       validation: { isRequired: true },
     }),
@@ -23,7 +29,7 @@ export const Direction = list({
       ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(10000)" },
     }),
-    images: image({ storage: "storage_product_image" }),
+    image: image({ storage: "storage_product_image" }),
     goals: relationship({
       ref: "DirectionGoal",
       many: true,

@@ -4,7 +4,6 @@ import { Roles } from "../enums/roles.enum";
 import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
-import { statusView } from "../fields/statusView";
 
 export const Category = list({
   ui: {
@@ -15,7 +14,6 @@ export const Category = list({
   },
   fields: {
     language,
-    statusView,
     name: text({
       validation: { isRequired: true },
     }),
