@@ -37,4 +37,11 @@ export const Post = list({
     createdAt,
     lastModification,
   },
+  access: {
+    operation: {
+      create: ({ session }) => !!session,
+      update: ({ session }) => !!session,
+      delete: ({ session }) => !!session,
+    },
+  },
 });

@@ -17,4 +17,11 @@ export const Tag = list({
     createdAt,
     lastModification,
   },
+  access: {
+    operation: {
+      create: ({ session }) => !!session,
+      update: ({ session }) => !!session,
+      delete: ({ session }) => !!session,
+    },
+  },
 });

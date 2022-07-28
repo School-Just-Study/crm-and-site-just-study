@@ -1,23 +1,22 @@
 import { list } from "@keystone-6/core";
-import { relationship, text } from "@keystone-6/core/fields";
-import { Roles } from "../enums/roles.enum";
-import { language } from "../fields/language";
+import { statusView } from "../fields/statusView";
+import { text } from "@keystone-6/core/fields";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
+import { Roles } from "../enums/roles.enum";
 
-export const Category = list({
+export const DirectionResult = list({
   ui: {
-    label: "Категории курсов",
+    label: "Результат направления",
+    description: "Блок: Чему вы научитесь",
+    isHidden: true,
     labelField: "name",
-    description: "Категория курсов",
-    listView: { initialColumns: ["id", "name", "language", "products"] },
   },
   fields: {
-    language,
+    statusView,
     name: text({
       validation: { isRequired: true },
     }),
-    products: relationship({ ref: "Product", many: true }),
     createdAt,
     lastModification,
   },

@@ -224,7 +224,6 @@ type Category {
   id: ID!
   language: String
   name: String
-  parent: Category
   products(
     where: ProductWhereInput! = {}
     orderBy: [ProductOrderByInput!]! = []
@@ -232,7 +231,6 @@ type Category {
     skip: Int! = 0
   ): [Product!]
   productsCount(where: ProductWhereInput! = {}): Int
-  statusView: String
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -248,9 +246,7 @@ input CategoryWhereInput {
   id: IDFilter
   language: StringFilter
   name: StringFilter
-  parent: CategoryWhereInput
   products: ProductManyRelationFilter
-  statusView: StringFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
@@ -265,7 +261,6 @@ input CategoryOrderByInput {
   id: OrderDirection
   language: OrderDirection
   name: OrderDirection
-  statusView: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -273,17 +268,9 @@ input CategoryOrderByInput {
 input CategoryUpdateInput {
   language: String
   name: String
-  parent: CategoryRelateToOneForUpdateInput
   products: ProductRelateToManyForUpdateInput
-  statusView: String
   createdAt: DateTime
   lastModification: DateTime
-}
-
-input CategoryRelateToOneForUpdateInput {
-  create: CategoryCreateInput
-  connect: CategoryWhereUniqueInput
-  disconnect: Boolean
 }
 
 input ProductRelateToManyForUpdateInput {
@@ -301,21 +288,276 @@ input CategoryUpdateArgs {
 input CategoryCreateInput {
   language: String
   name: String
-  parent: CategoryRelateToOneForCreateInput
   products: ProductRelateToManyForCreateInput
-  statusView: String
   createdAt: DateTime
   lastModification: DateTime
-}
-
-input CategoryRelateToOneForCreateInput {
-  create: CategoryCreateInput
-  connect: CategoryWhereUniqueInput
 }
 
 input ProductRelateToManyForCreateInput {
   create: [ProductCreateInput!]
   connect: [ProductWhereUniqueInput!]
+}
+
+type Direction {
+  id: ID!
+  language: String
+  statusView: String
+  slug: String
+  name: String
+  description: String
+  image: ImageFieldOutput
+  goals(
+    where: DirectionGoalWhereInput! = {}
+    orderBy: [DirectionGoalOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [DirectionGoal!]
+  goalsCount(where: DirectionGoalWhereInput! = {}): Int
+  results(
+    where: DirectionResultWhereInput! = {}
+    orderBy: [DirectionResultOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [DirectionResult!]
+  resultsCount(where: DirectionResultWhereInput! = {}): Int
+  products(
+    where: ProductWhereInput! = {}
+    orderBy: [ProductOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Product!]
+  productsCount(where: ProductWhereInput! = {}): Int
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+type ImageFieldOutput {
+  id: ID!
+  filesize: Int!
+  width: Int!
+  height: Int!
+  extension: ImageExtension!
+  url: String!
+}
+
+enum ImageExtension {
+  jpg
+  png
+  webp
+  gif
+}
+
+input DirectionWhereUniqueInput {
+  id: ID
+}
+
+input DirectionWhereInput {
+  AND: [DirectionWhereInput!]
+  OR: [DirectionWhereInput!]
+  NOT: [DirectionWhereInput!]
+  id: IDFilter
+  language: StringFilter
+  statusView: StringFilter
+  slug: StringFilter
+  name: StringFilter
+  description: StringFilter
+  goals: DirectionGoalManyRelationFilter
+  results: DirectionResultManyRelationFilter
+  products: ProductManyRelationFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input DirectionGoalManyRelationFilter {
+  every: DirectionGoalWhereInput
+  some: DirectionGoalWhereInput
+  none: DirectionGoalWhereInput
+}
+
+input DirectionResultManyRelationFilter {
+  every: DirectionResultWhereInput
+  some: DirectionResultWhereInput
+  none: DirectionResultWhereInput
+}
+
+input DirectionOrderByInput {
+  id: OrderDirection
+  language: OrderDirection
+  statusView: OrderDirection
+  slug: OrderDirection
+  name: OrderDirection
+  description: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input DirectionUpdateInput {
+  language: String
+  statusView: String
+  slug: String
+  name: String
+  description: String
+  image: ImageFieldInput
+  goals: DirectionGoalRelateToManyForUpdateInput
+  results: DirectionResultRelateToManyForUpdateInput
+  products: ProductRelateToManyForUpdateInput
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input ImageFieldInput {
+  upload: Upload!
+}
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
+
+input DirectionGoalRelateToManyForUpdateInput {
+  disconnect: [DirectionGoalWhereUniqueInput!]
+  set: [DirectionGoalWhereUniqueInput!]
+  create: [DirectionGoalCreateInput!]
+  connect: [DirectionGoalWhereUniqueInput!]
+}
+
+input DirectionResultRelateToManyForUpdateInput {
+  disconnect: [DirectionResultWhereUniqueInput!]
+  set: [DirectionResultWhereUniqueInput!]
+  create: [DirectionResultCreateInput!]
+  connect: [DirectionResultWhereUniqueInput!]
+}
+
+input DirectionUpdateArgs {
+  where: DirectionWhereUniqueInput!
+  data: DirectionUpdateInput!
+}
+
+input DirectionCreateInput {
+  language: String
+  statusView: String
+  slug: String
+  name: String
+  description: String
+  image: ImageFieldInput
+  goals: DirectionGoalRelateToManyForCreateInput
+  results: DirectionResultRelateToManyForCreateInput
+  products: ProductRelateToManyForCreateInput
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input DirectionGoalRelateToManyForCreateInput {
+  create: [DirectionGoalCreateInput!]
+  connect: [DirectionGoalWhereUniqueInput!]
+}
+
+input DirectionResultRelateToManyForCreateInput {
+  create: [DirectionResultCreateInput!]
+  connect: [DirectionResultWhereUniqueInput!]
+}
+
+type DirectionGoal {
+  id: ID!
+  statusView: String
+  name: String
+  image: ImageFieldOutput
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input DirectionGoalWhereUniqueInput {
+  id: ID
+}
+
+input DirectionGoalWhereInput {
+  AND: [DirectionGoalWhereInput!]
+  OR: [DirectionGoalWhereInput!]
+  NOT: [DirectionGoalWhereInput!]
+  id: IDFilter
+  statusView: StringFilter
+  name: StringFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input DirectionGoalOrderByInput {
+  id: OrderDirection
+  statusView: OrderDirection
+  name: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input DirectionGoalUpdateInput {
+  statusView: String
+  name: String
+  image: ImageFieldInput
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input DirectionGoalUpdateArgs {
+  where: DirectionGoalWhereUniqueInput!
+  data: DirectionGoalUpdateInput!
+}
+
+input DirectionGoalCreateInput {
+  statusView: String
+  name: String
+  image: ImageFieldInput
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+type DirectionResult {
+  id: ID!
+  statusView: String
+  name: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input DirectionResultWhereUniqueInput {
+  id: ID
+}
+
+input DirectionResultWhereInput {
+  AND: [DirectionResultWhereInput!]
+  OR: [DirectionResultWhereInput!]
+  NOT: [DirectionResultWhereInput!]
+  id: IDFilter
+  statusView: StringFilter
+  name: StringFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input DirectionResultOrderByInput {
+  id: OrderDirection
+  statusView: OrderDirection
+  name: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input DirectionResultUpdateInput {
+  statusView: String
+  name: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input DirectionResultUpdateArgs {
+  where: DirectionResultWhereUniqueInput!
+  data: DirectionResultUpdateInput!
+}
+
+input DirectionResultCreateInput {
+  statusView: String
+  name: String
+  createdAt: DateTime
+  lastModification: DateTime
 }
 
 type Order {
@@ -609,41 +851,29 @@ type Product {
   language: String
   statusView: String
   name: String
-  description: String
-  categories(
-    where: CategoryWhereInput! = {}
-    orderBy: [CategoryOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Category!]
-  categoriesCount(where: CategoryWhereInput! = {}): Int
-  images: ImageFieldOutput
-  price: Int
-  tag(
+  desc: Product_desc_Document
+  category: Category
+  image: ImageFieldOutput
+  tags(
     where: TagWhereInput! = {}
     orderBy: [TagOrderByInput!]! = []
     take: Int
     skip: Int! = 0
   ): [Tag!]
-  tagCount(where: TagWhereInput! = {}): Int
+  tagsCount(where: TagWhereInput! = {}): Int
+  subscriptions(
+    where: SubscriptionWhereInput! = {}
+    orderBy: [SubscriptionOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Subscription!]
+  subscriptionsCount(where: SubscriptionWhereInput! = {}): Int
   createdAt: DateTime
   lastModification: DateTime
 }
 
-type ImageFieldOutput {
-  id: ID!
-  filesize: Int!
-  width: Int!
-  height: Int!
-  extension: ImageExtension!
-  url: String!
-}
-
-enum ImageExtension {
-  jpg
-  png
-  webp
-  gif
+type Product_desc_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
 }
 
 input ProductWhereUniqueInput {
@@ -658,18 +888,11 @@ input ProductWhereInput {
   language: StringFilter
   statusView: StringFilter
   name: StringFilter
-  description: StringFilter
-  categories: CategoryManyRelationFilter
-  price: IntNullableFilter
-  tag: TagManyRelationFilter
+  category: CategoryWhereInput
+  tags: TagManyRelationFilter
+  subscriptions: SubscriptionManyRelationFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
-}
-
-input CategoryManyRelationFilter {
-  every: CategoryWhereInput
-  some: CategoryWhereInput
-  none: CategoryWhereInput
 }
 
 input TagManyRelationFilter {
@@ -678,13 +901,17 @@ input TagManyRelationFilter {
   none: TagWhereInput
 }
 
+input SubscriptionManyRelationFilter {
+  every: SubscriptionWhereInput
+  some: SubscriptionWhereInput
+  none: SubscriptionWhereInput
+}
+
 input ProductOrderByInput {
   id: OrderDirection
   language: OrderDirection
   statusView: OrderDirection
   name: OrderDirection
-  description: OrderDirection
-  price: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -693,36 +920,33 @@ input ProductUpdateInput {
   language: String
   statusView: String
   name: String
-  description: String
-  categories: CategoryRelateToManyForUpdateInput
-  images: ImageFieldInput
-  price: Int
-  tag: TagRelateToManyForUpdateInput
+  desc: JSON
+  category: CategoryRelateToOneForUpdateInput
+  image: ImageFieldInput
+  tags: TagRelateToManyForUpdateInput
+  subscriptions: SubscriptionRelateToManyForUpdateInput
   createdAt: DateTime
   lastModification: DateTime
 }
 
-input CategoryRelateToManyForUpdateInput {
-  disconnect: [CategoryWhereUniqueInput!]
-  set: [CategoryWhereUniqueInput!]
-  create: [CategoryCreateInput!]
-  connect: [CategoryWhereUniqueInput!]
+input CategoryRelateToOneForUpdateInput {
+  create: CategoryCreateInput
+  connect: CategoryWhereUniqueInput
+  disconnect: Boolean
 }
-
-input ImageFieldInput {
-  upload: Upload!
-}
-
-"""
-The `Upload` scalar type represents a file upload.
-"""
-scalar Upload
 
 input TagRelateToManyForUpdateInput {
   disconnect: [TagWhereUniqueInput!]
   set: [TagWhereUniqueInput!]
   create: [TagCreateInput!]
   connect: [TagWhereUniqueInput!]
+}
+
+input SubscriptionRelateToManyForUpdateInput {
+  disconnect: [SubscriptionWhereUniqueInput!]
+  set: [SubscriptionWhereUniqueInput!]
+  create: [SubscriptionCreateInput!]
+  connect: [SubscriptionWhereUniqueInput!]
 }
 
 input ProductUpdateArgs {
@@ -734,23 +958,28 @@ input ProductCreateInput {
   language: String
   statusView: String
   name: String
-  description: String
-  categories: CategoryRelateToManyForCreateInput
-  images: ImageFieldInput
-  price: Int
-  tag: TagRelateToManyForCreateInput
+  desc: JSON
+  category: CategoryRelateToOneForCreateInput
+  image: ImageFieldInput
+  tags: TagRelateToManyForCreateInput
+  subscriptions: SubscriptionRelateToManyForCreateInput
   createdAt: DateTime
   lastModification: DateTime
 }
 
-input CategoryRelateToManyForCreateInput {
-  create: [CategoryCreateInput!]
-  connect: [CategoryWhereUniqueInput!]
+input CategoryRelateToOneForCreateInput {
+  create: CategoryCreateInput
+  connect: CategoryWhereUniqueInput
 }
 
 input TagRelateToManyForCreateInput {
   create: [TagCreateInput!]
   connect: [TagWhereUniqueInput!]
+}
+
+input SubscriptionRelateToManyForCreateInput {
+  create: [SubscriptionCreateInput!]
+  connect: [SubscriptionWhereUniqueInput!]
 }
 
 type ProductReview {
@@ -1176,16 +1405,12 @@ type Subscription {
   label: String
   statusView: String
   name: String
-  description: Subscription_description_Document
   visitCount: Int
   price: Int
   period: Int
+  product: Product
   createdAt: DateTime
   lastModification: DateTime
-}
-
-type Subscription_description_Document {
-  document(hydrateRelationships: Boolean! = false): JSON!
 }
 
 input SubscriptionWhereUniqueInput {
@@ -1203,6 +1428,7 @@ input SubscriptionWhereInput {
   visitCount: IntFilter
   price: IntFilter
   period: IntNullableFilter
+  product: ProductWhereInput
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
@@ -1223,12 +1449,18 @@ input SubscriptionUpdateInput {
   language: String
   statusView: String
   name: String
-  description: JSON
   visitCount: Int
   price: Int
   period: Int
+  product: ProductRelateToOneForUpdateInput
   createdAt: DateTime
   lastModification: DateTime
+}
+
+input ProductRelateToOneForUpdateInput {
+  create: ProductCreateInput
+  connect: ProductWhereUniqueInput
+  disconnect: Boolean
 }
 
 input SubscriptionUpdateArgs {
@@ -1240,12 +1472,17 @@ input SubscriptionCreateInput {
   language: String
   statusView: String
   name: String
-  description: JSON
   visitCount: Int
   price: Int
   period: Int
+  product: ProductRelateToOneForCreateInput
   createdAt: DateTime
   lastModification: DateTime
+}
+
+input ProductRelateToOneForCreateInput {
+  create: ProductCreateInput
+  connect: ProductWhereUniqueInput
 }
 
 type UserSubscription {
@@ -1389,6 +1626,12 @@ input ServiceWhereInput {
   lastModification: DateTimeFilter
 }
 
+input CategoryManyRelationFilter {
+  every: CategoryWhereInput
+  some: CategoryWhereInput
+  none: CategoryWhereInput
+}
+
 input ServiceOrderByInput {
   id: OrderDirection
   language: OrderDirection
@@ -1410,6 +1653,13 @@ input ServiceUpdateInput {
   lastModification: DateTime
 }
 
+input CategoryRelateToManyForUpdateInput {
+  disconnect: [CategoryWhereUniqueInput!]
+  set: [CategoryWhereUniqueInput!]
+  create: [CategoryCreateInput!]
+  connect: [CategoryWhereUniqueInput!]
+}
+
 input ServiceUpdateArgs {
   where: ServiceWhereUniqueInput!
   data: ServiceUpdateInput!
@@ -1424,6 +1674,11 @@ input ServiceCreateInput {
   price: Int
   createdAt: DateTime
   lastModification: DateTime
+}
+
+input CategoryRelateToManyForCreateInput {
+  create: [CategoryCreateInput!]
+  connect: [CategoryWhereUniqueInput!]
 }
 
 type UserService {
@@ -1909,6 +2164,41 @@ type Mutation {
   updateCategories(data: [CategoryUpdateArgs!]!): [Category]
   deleteCategory(where: CategoryWhereUniqueInput!): Category
   deleteCategories(where: [CategoryWhereUniqueInput!]!): [Category]
+  createDirection(data: DirectionCreateInput!): Direction
+  createDirections(data: [DirectionCreateInput!]!): [Direction]
+  updateDirection(
+    where: DirectionWhereUniqueInput!
+    data: DirectionUpdateInput!
+  ): Direction
+  updateDirections(data: [DirectionUpdateArgs!]!): [Direction]
+  deleteDirection(where: DirectionWhereUniqueInput!): Direction
+  deleteDirections(where: [DirectionWhereUniqueInput!]!): [Direction]
+  createDirectionGoal(data: DirectionGoalCreateInput!): DirectionGoal
+  createDirectionGoals(data: [DirectionGoalCreateInput!]!): [DirectionGoal]
+  updateDirectionGoal(
+    where: DirectionGoalWhereUniqueInput!
+    data: DirectionGoalUpdateInput!
+  ): DirectionGoal
+  updateDirectionGoals(data: [DirectionGoalUpdateArgs!]!): [DirectionGoal]
+  deleteDirectionGoal(where: DirectionGoalWhereUniqueInput!): DirectionGoal
+  deleteDirectionGoals(
+    where: [DirectionGoalWhereUniqueInput!]!
+  ): [DirectionGoal]
+  createDirectionResult(data: DirectionResultCreateInput!): DirectionResult
+  createDirectionResults(
+    data: [DirectionResultCreateInput!]!
+  ): [DirectionResult]
+  updateDirectionResult(
+    where: DirectionResultWhereUniqueInput!
+    data: DirectionResultUpdateInput!
+  ): DirectionResult
+  updateDirectionResults(data: [DirectionResultUpdateArgs!]!): [DirectionResult]
+  deleteDirectionResult(
+    where: DirectionResultWhereUniqueInput!
+  ): DirectionResult
+  deleteDirectionResults(
+    where: [DirectionResultWhereUniqueInput!]!
+  ): [DirectionResult]
   createOrder(data: OrderCreateInput!): Order
   createOrders(data: [OrderCreateInput!]!): [Order]
   updateOrder(where: OrderWhereUniqueInput!, data: OrderUpdateInput!): Order
@@ -2130,6 +2420,30 @@ type Query {
   ): [Category!]
   category(where: CategoryWhereUniqueInput!): Category
   categoriesCount(where: CategoryWhereInput! = {}): Int
+  directions(
+    where: DirectionWhereInput! = {}
+    orderBy: [DirectionOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Direction!]
+  direction(where: DirectionWhereUniqueInput!): Direction
+  directionsCount(where: DirectionWhereInput! = {}): Int
+  directionGoals(
+    where: DirectionGoalWhereInput! = {}
+    orderBy: [DirectionGoalOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [DirectionGoal!]
+  directionGoal(where: DirectionGoalWhereUniqueInput!): DirectionGoal
+  directionGoalsCount(where: DirectionGoalWhereInput! = {}): Int
+  directionResults(
+    where: DirectionResultWhereInput! = {}
+    orderBy: [DirectionResultOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [DirectionResult!]
+  directionResult(where: DirectionResultWhereUniqueInput!): DirectionResult
+  directionResultsCount(where: DirectionResultWhereInput! = {}): Int
   orders(
     where: OrderWhereInput! = {}
     orderBy: [OrderOrderByInput!]! = []

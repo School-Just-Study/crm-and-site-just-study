@@ -5,23 +5,29 @@ import { Payment } from "./payment.schema";
 import { Category } from "./category.schema";
 import { ProductReview } from "./productReview.schema";
 import { Product } from "./product.schema";
-import { SourceClient } from "./SourceClient.schema";
+import { SourceClient } from "./sourceClient.schema";
 import { Subscription } from "./subscription.schema";
 import { UserSubscription } from "./userSubscription.schema";
 import { Service } from "./service.schema";
 import { UserService } from "./userService.schema";
-import { Page } from "./page";
-import { Tag } from "./tag";
-import { AvatarUser } from "./avatarUser";
-import { Faq } from "./faq";
-import { Post } from "./post";
-import { CartItem } from "./cartItem";
-import { Marketing } from "./marketing";
+import { Page } from "./page.schema";
+import { Tag } from "./tag.schema";
+import { AvatarUser } from "./avatarUser.schema";
+import { Faq } from "./faq.schema";
+import { Post } from "./post.schema";
+import { CartItem } from "./cartItem.schema";
+import { Marketing } from "./marketing.schema";
+import { DirectionGoal } from "./directionGoal.schema";
+import { Direction } from "./direction.schema";
+import { DirectionResult } from "./directionResult.schema";
 
 export const lists = {
   Cart,
   CartItem,
   Category,
+  Direction,
+  DirectionGoal,
+  DirectionResult,
   Order,
   Payment,
   Product,

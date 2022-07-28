@@ -1,10 +1,11 @@
 import { list } from "@keystone-6/core";
-import { image, integer, relationship, text } from "@keystone-6/core/fields";
+import { image, relationship, text } from "@keystone-6/core/fields";
 import { Roles } from "../enums/roles.enum";
 import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 import { statusView } from "../fields/statusView";
+import { content } from "../fields/document";
 
 export const Product = list({
   ui: {
@@ -12,14 +13,7 @@ export const Product = list({
     labelField: "name",
     description: "Курсы, которые публикуются на сайте",
     listView: {
-      initialColumns: [
-        "language",
-        "name",
-        "statusView",
-        "description",
-        "categories",
-        "price",
-      ],
+      initialColumns: ["language", "name", "statusView", "desc", "category"],
       pageSize: 20,
     },
   },
@@ -27,22 +21,32 @@ export const Product = list({
     language,
     statusView,
     name: text({ validation: { isRequired: true } }),
-    description: text({ ui: { displayMode: "textarea" } }),
-    categories: relationship({ ref: "Category", many: true }),
-    images: image({ storage: "storage_product_image" }),
-    price: integer({ defaultValue: 0 }),
-    tag: relationship({
+    desc: content,
+    category: relationship({
+      ref: "Category",
+      ui: {
+        displayMode: "cards",
+        cardFields: ["language", "name"],
+        inlineEdit: { fields: ["language", "name"] },
+        linkToItem: true,
+        inlineConnect: true,
+        inlineCreate: { fields: ["language", "name"] },
+      },
+    }),
+    image: image({ storage: "storage_product_image" }),
+    tags: relationship({
       ref: "Tag",
       many: true,
       ui: {
         displayMode: "cards",
-        cardFields: ["name"],
-        inlineEdit: { fields: ["name"] },
+        cardFields: ["language", "name"],
+        inlineEdit: { fields: ["language", "name"] },
         linkToItem: true,
         inlineConnect: true,
-        inlineCreate: { fields: ["name"] },
+        inlineCreate: { fields: ["language", "name"] },
       },
     }),
+    subscriptions: relationship({ ref: "Subscription.product", many: true }),
     createdAt,
     lastModification,
   },
