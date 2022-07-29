@@ -33,7 +33,7 @@ export const Payment = list({
     lastModification,
   },
   hooks: {
-    afterOperation: handleReceiptToNalog,
+    resolveInput: handleReceiptToNalog,
   },
   access: {
     operation: {

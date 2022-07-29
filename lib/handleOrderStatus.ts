@@ -31,4 +31,5 @@ export const handleOrderStatus: ListHooks<Lists.Order.TypeInfo>["resolveInput"] 
         status: status(),
       };
     }
+    return resolvedData;
   };

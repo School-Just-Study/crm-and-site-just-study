@@ -17,10 +17,13 @@ const { paytureEnRefund } = require("../utils/paytureEn");
  * @param operation
  * @param item
  * @param context
+ * @param resolvedData
  */
-export const handleReceiptToNalog: ListHooks<Lists.Payment.TypeInfo>["afterOperation"] =
-  async ({ item, context, operation }) => {
+export const handleReceiptToNalog: ListHooks<Lists.Payment.TypeInfo>["resolveInput"] =
+  async ({ item, context, operation, resolvedData }) => {
     if (operation === "update") {
+      if (resolvedData.status) return resolvedData;
+
       const nalogApi = new NalogApi({
         inn: NALOG_INN,
         password: NALOG_PASSWORD,
@@ -38,12 +41,6 @@ export const handleReceiptToNalog: ListHooks<Lists.Payment.TypeInfo>["afterOpera
           amount: item.amount,
           quantity: 1,
         });
-        await context.query.Payment.updateOne({
-          where: { id: `${item.id}` },
-          data: {
-            receiptId,
-          },
-        });
         await notifySuccessfulPaymentForClient(
           order.student.id,
           item.id,
@@ -54,6 +51,11 @@ export const handleReceiptToNalog: ListHooks<Lists.Payment.TypeInfo>["afterOpera
           item.id,
           context
         );
+
+        return {
+          ...resolvedData,
+          receiptId,
+        };
       }
 
       if (item?.status === PaymentStatus.Cancelled) {
@@ -62,17 +64,18 @@ export const handleReceiptToNalog: ListHooks<Lists.Payment.TypeInfo>["afterOpera
           await nalogApi.cancelIncome(receiptId, "Платеж отменен");
         }
         if (item.currency === Currency.RUB) {
-          console.log(item.id);
-          const res = await paytureRuRefund(item.id);
-          console.log(res);
+          await paytureRuRefund(item.id);
         }
         if (item.currency === Currency.USD) {
           await paytureEnRefund(item.id);
         }
-        await context.query.Payment.updateOne({
-          where: { id: `${item.id}` },
-          data: { receiptId: "", sessionId: "" },
-        });
+
+        return {
+          ...resolvedData,
+          receiptId: "",
+          sessionId: "",
+        };
       }
     }
+    return resolvedData;
   };
