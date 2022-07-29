@@ -46,7 +46,7 @@ export const Product = list({
         inlineCreate: { fields: ["language", "name"] },
       },
     }),
-    subscriptions: relationship({ ref: "Subscription.product", many: true }),
+    subscriptions: relationship({ ref: "Subscription", many: true }),
     trial: checkbox({
       defaultValue: false,
       ui: { description: "Пробный урок" },

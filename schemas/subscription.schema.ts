@@ -1,5 +1,5 @@
 import { graphql, list } from "@keystone-6/core";
-import { integer, relationship, text, virtual } from "@keystone-6/core/fields";
+import { integer, text, virtual } from "@keystone-6/core/fields";
 import { Roles } from "../enums/roles.enum";
 import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
@@ -7,6 +7,7 @@ import { lastModification } from "../fields/lastModification";
 import { statusView } from "../fields/statusView";
 import { Lists } from ".keystone/types";
 import { getCurrencyForLanguage } from "../lib/getCurrency";
+import { content } from "../fields/document";
 
 export const Subscription = list({
   ui: {
@@ -45,7 +46,7 @@ export const Subscription = list({
     }),
     price: integer({ validation: { isRequired: true } }),
     period: integer({ defaultValue: 45 }),
-    product: relationship({ ref: "Product.subscriptions" }),
+    desc: content,
     createdAt,
     lastModification,
   },

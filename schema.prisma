@@ -145,7 +145,7 @@ model Product {
   image_height                Int?
   image_id                    String?
   tags                        Tag[]           @relation("Product_tags")
-  subscriptions               Subscription[]  @relation("Subscription_product")
+  subscriptions               Subscription[]  @relation("Product_subscriptions")
   trial                       Boolean         @default(false)
   createdAt                   DateTime        @default(now())
   lastModification            DateTime        @default(now()) @updatedAt
@@ -242,14 +242,13 @@ model Subscription {
   visitCount                 Int        @default(10)
   price                      Int
   period                     Int?       @default(45)
-  product                    Product?   @relation("Subscription_product", fields: [productId], references: [id])
-  productId                  Int?       @map("product")
+  desc                       Json       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   createdAt                  DateTime   @default(now())
   lastModification           DateTime   @default(now()) @updatedAt
   from_CartItem_subscription CartItem[] @relation("CartItem_subscription")
+  from_Product_subscriptions Product[]  @relation("Product_subscriptions")
 
   @@index([language])
-  @@index([productId])
 }
 
 model UserSubscription {

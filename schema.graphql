@@ -1419,9 +1419,13 @@ type Subscription {
   visitCount: Int
   price: Int
   period: Int
-  product: Product
+  desc: Subscription_desc_Document
   createdAt: DateTime
   lastModification: DateTime
+}
+
+type Subscription_desc_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
 }
 
 input SubscriptionWhereUniqueInput {
@@ -1439,7 +1443,6 @@ input SubscriptionWhereInput {
   visitCount: IntFilter
   price: IntFilter
   period: IntNullableFilter
-  product: ProductWhereInput
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
@@ -1463,15 +1466,9 @@ input SubscriptionUpdateInput {
   visitCount: Int
   price: Int
   period: Int
-  product: ProductRelateToOneForUpdateInput
+  desc: JSON
   createdAt: DateTime
   lastModification: DateTime
-}
-
-input ProductRelateToOneForUpdateInput {
-  create: ProductCreateInput
-  connect: ProductWhereUniqueInput
-  disconnect: Boolean
 }
 
 input SubscriptionUpdateArgs {
@@ -1486,14 +1483,9 @@ input SubscriptionCreateInput {
   visitCount: Int
   price: Int
   period: Int
-  product: ProductRelateToOneForCreateInput
+  desc: JSON
   createdAt: DateTime
   lastModification: DateTime
-}
-
-input ProductRelateToOneForCreateInput {
-  create: ProductCreateInput
-  connect: ProductWhereUniqueInput
 }
 
 type UserSubscription {
