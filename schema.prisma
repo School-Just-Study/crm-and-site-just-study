@@ -146,6 +146,7 @@ model Product {
   image_id                    String?
   tags                        Tag[]           @relation("Product_tags")
   subscriptions               Subscription[]  @relation("Subscription_product")
+  trial                       Boolean         @default(false)
   createdAt                   DateTime        @default(now())
   lastModification            DateTime        @default(now()) @updatedAt
   from_Category_products      Category[]      @relation("Category_products")

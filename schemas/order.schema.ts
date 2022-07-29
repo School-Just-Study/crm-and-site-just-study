@@ -163,7 +163,7 @@ export const Order = list({
     lastModification,
   },
   hooks: {
-    afterOperation: handleOrderStatus,
+    resolveInput: handleOrderStatus,
   },
   access: {
     operation: {

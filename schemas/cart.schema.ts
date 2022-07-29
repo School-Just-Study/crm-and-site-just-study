@@ -3,6 +3,7 @@ import { integer, relationship, virtual } from "@keystone-6/core/fields";
 import { lastModification } from "../fields/lastModification";
 import { Lists } from ".keystone/types";
 import { currency } from "../fields/currency";
+import { FRONTEND_URL } from "../config";
 
 export const Cart = list({
   ui: {
@@ -19,6 +20,19 @@ export const Cart = list({
       ui: {
         hideCreate: true,
       },
+    }),
+    linkForUser: virtual({
+      // @ts-ignore
+      field: graphql.field({
+        type: graphql.String,
+        async resolve(item: Lists.Cart.Item, arg, context) {
+          const user = await context.query.User.findOne({
+            where: { id: `${item.userId}` },
+            query: "email language",
+          });
+          return `${FRONTEND_URL}/${user.language}/checkout?setEmail=${user.email}`;
+        },
+      }),
     }),
     currency,
     items: relationship({

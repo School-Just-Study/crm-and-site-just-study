@@ -1,0 +1,25 @@
+<mjml>
+  <mj-body>
+    <mj-wrapper background-color="#fff" border-radius="15px">
+      <mj-section padding="0">
+        <mj-column>
+          <mj-text align="left" font-size="30px" font-weight="bold" padding-bottom="20px"> Welcome to&#160;Just&#160;Study 🇬🇧&#160;+&#160;❤️ </mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-section background-color="#fff" padding="0">
+        <mj-column background-color="#ccf1db">
+          <mj-text align="left" padding="20px 20px"> 🎉 Вася, поздравляем с началом нового этапа в вашей жизни! </mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-section background-color="#fff">
+        <mj-column>
+          <mj-text align="left"> Для входа на образовательную платформу воспользуйтесь: </mj-text>
+          <mj-text padding-top="25px" align="left">Логин: {login} </mj-text>
+          <mj-text align="left">Пароль: {password}</mj-text>
+          <mj-text padding-top="25px" align="left">Рекомендуем сохранить данное письмо 📨</mj-text>
+          <mj-button padding="15px 0 0" href="https://edu.just-study.ru/" background-color="#0c51c4" text-transform="uppercase">Перейти на сайт</mj-button>
+        </mj-column>
+      </mj-section>
+    </mj-wrapper>
+  </mj-body>
+</mjml>

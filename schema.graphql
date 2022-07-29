@@ -4,6 +4,7 @@
 type Cart {
   id: ID!
   user: User
+  linkForUser: String
   currency: String
   items(
     where: CartItemWhereInput! = {}
@@ -868,6 +869,7 @@ type Product {
     skip: Int! = 0
   ): [Subscription!]
   subscriptionsCount(where: SubscriptionWhereInput! = {}): Int
+  trial: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -891,6 +893,7 @@ input ProductWhereInput {
   category: CategoryWhereInput
   tags: TagManyRelationFilter
   subscriptions: SubscriptionManyRelationFilter
+  trial: BooleanFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
@@ -907,11 +910,17 @@ input SubscriptionManyRelationFilter {
   none: SubscriptionWhereInput
 }
 
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
 input ProductOrderByInput {
   id: OrderDirection
   language: OrderDirection
   statusView: OrderDirection
   name: OrderDirection
+  trial: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -925,6 +934,7 @@ input ProductUpdateInput {
   image: ImageFieldInput
   tags: TagRelateToManyForUpdateInput
   subscriptions: SubscriptionRelateToManyForUpdateInput
+  trial: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -963,6 +973,7 @@ input ProductCreateInput {
   image: ImageFieldInput
   tags: TagRelateToManyForCreateInput
   subscriptions: SubscriptionRelateToManyForCreateInput
+  trial: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -2079,11 +2090,6 @@ input MarketingWhereInput {
   reviews: BooleanFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
-}
-
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
 }
 
 input MarketingOrderByInput {
