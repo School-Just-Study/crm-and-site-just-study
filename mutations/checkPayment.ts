@@ -39,6 +39,6 @@ export const checkPayment = async (
       query: `id order { id } currency student { id } amount sessionId receiptId status createdAt lastModification`,
     });
   } else {
-    throw new Error("Sorry! The payment does not successful.");
+    return payment;
   }
 };

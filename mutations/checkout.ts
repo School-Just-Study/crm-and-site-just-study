@@ -1,5 +1,6 @@
 import { KeystoneContext } from "@keystone-6/core/dist/declarations/src/types";
 import { graphql } from "./index";
+import { convertMoney } from "../lib/convertMoney";
 
 interface Arguments {
   userId: string;
@@ -54,7 +55,7 @@ export const checkout = async (
       currency,
       student: { connect: { id: userId } },
       quantityPayments: cart.quantityPayments,
-      amount: cart.amount,
+      amount: convertMoney(cart.amount, currency),
     },
     query: `id`,
   });

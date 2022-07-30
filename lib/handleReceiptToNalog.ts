@@ -7,6 +7,8 @@ import {
   notifySuccessfulPaymentForManagers,
 } from "../notifications/successfulPayment";
 import { Currency } from "../enums/currency.enum";
+import { reConvertMoney } from "./convertMoney";
+import { OrderStatus } from "../enums/order-status.enum";
 
 const { NalogApi } = require("lknpd-nalog-api");
 const { paytureRuRefund } = require("../utils/paytureRu");
@@ -22,34 +24,37 @@ const { paytureEnRefund } = require("../utils/paytureEn");
 export const handleReceiptToNalog: ListHooks<Lists.Payment.TypeInfo>["resolveInput"] =
   async ({ item, context, operation, resolvedData }) => {
     if (operation === "update") {
-      if (resolvedData.status) return resolvedData;
-
       const nalogApi = new NalogApi({
         inn: NALOG_INN,
         password: NALOG_PASSWORD,
       });
 
-      if (!nalogApi) return;
+      const status = resolvedData?.status || item?.status;
 
-      if (item?.status === PaymentStatus.Successfully && !item.receiptId) {
-        const order = await context.query.Order.findOne({
-          where: { id: `${item.orderId}` },
-          query: `student { id name }`,
-        });
-        const receiptId = await nalogApi.addIncome({
-          name: `Консультационные услуги для клиента ${order.student.name}`,
-          amount: item.amount,
-          quantity: 1,
-        });
-        await notifySuccessfulPaymentForClient(
-          order.student.id,
+      if (status === PaymentStatus.Successfully && !item.receiptId) {
+        if (item.orderId) {
+          await context.query.Order.updateOne({
+            where: { id: `${item.orderId}` },
+            data: { status: OrderStatus.Processing },
+          });
+        }
+
+        await notifySuccessfulPaymentForManagers(
+          item.studentId as unknown as string,
           item.id,
           context
         );
-        await notifySuccessfulPaymentForManagers(
-          order.student.id,
+        const amount = reConvertMoney(item.amount || 0, item.currency);
+        const receiptId = await nalogApi.addIncome({
+          name: `Консультационные услуги`,
+          amount,
+          quantity: 1,
+        });
+        await notifySuccessfulPaymentForClient(
+          item.studentId as unknown as string,
           item.id,
-          context
+          context,
+          receiptId
         );
 
         return {
@@ -58,16 +63,16 @@ export const handleReceiptToNalog: ListHooks<Lists.Payment.TypeInfo>["resolveInp
         };
       }
 
-      if (item?.status === PaymentStatus.Cancelled) {
-        if (item.receiptId) {
-          const receiptId = item.receiptId;
-          await nalogApi.cancelIncome(receiptId, "Платеж отменен");
-        }
+      if (status === PaymentStatus.Cancelled) {
         if (item.currency === Currency.RUB) {
           await paytureRuRefund(item.id);
         }
         if (item.currency === Currency.USD) {
           await paytureEnRefund(item.id);
+        }
+        if (item.receiptId) {
+          const receiptId = item.receiptId;
+          await nalogApi.cancelIncome(receiptId, "Платеж отменен");
         }
 
         return {

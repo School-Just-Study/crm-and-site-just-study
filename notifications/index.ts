@@ -1,1 +1,3 @@
-export const from = `Just Study <no-reply@just-study.ru>`;
+import { MAIL_USER } from "../config";
+
+export const from = `Just Study <${MAIL_USER}>`;
