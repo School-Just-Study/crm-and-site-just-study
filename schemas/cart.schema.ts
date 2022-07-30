@@ -4,6 +4,7 @@ import { lastModification } from "../fields/lastModification";
 import { Lists } from ".keystone/types";
 import { currency } from "../fields/currency";
 import { FRONTEND_URL } from "../config";
+import { convertMoney } from "../lib/convertMoney";
 
 export const Cart = list({
   ui: {
@@ -59,8 +60,13 @@ export const Cart = list({
             query: `price`,
           });
           if (cartItems) {
-            return cartItems.reduce((tally, item) => tally + item.price, 0);
+            const amount = cartItems.reduce(
+              (tally, item) => tally + item.price,
+              0
+            );
+            return convertMoney(amount, item.currency);
           }
+          return;
         },
       }),
     }),

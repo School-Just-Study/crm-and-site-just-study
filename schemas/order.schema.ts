@@ -26,6 +26,7 @@ export const Order = list({
         "status",
         "leftPayments",
         "amount",
+        "currency",
         "payed",
         "dept",
         "nextPayment",
@@ -167,9 +168,6 @@ export const Order = list({
   },
   access: {
     operation: {
-      query: ({ session }) => !!session,
-      create: ({ session }) => !!session,
-      update: ({ session }) => !!session,
       delete: ({ session }) => !!session,
     },
   },

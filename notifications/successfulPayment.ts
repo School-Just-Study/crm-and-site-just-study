@@ -10,12 +10,14 @@ import { from } from './index';
  * Уведомление для студента об успешном платеже
  * @param clientId
  * @param paymentId
+ * @param receiptId
  * @param ctx
  */
 export const notifySuccessfulPaymentForClient = async (
   clientId: string,
   paymentId: number,
-  ctx: KeystoneContext
+  ctx: KeystoneContext,
+  receiptId?: number
 ) => {
   const client = await ctx.query.User.findOne({
     where: { id: clientId },
@@ -23,7 +25,7 @@ export const notifySuccessfulPaymentForClient = async (
   });
   const payment = await ctx.query.Payment.findOne({
     where: { id: `${paymentId}` },
-    query: `receiptId amount currency`,
+    query: `amount currency`,
   });
 
   const amountText = `${payment.amount} ${getTextCurrency(payment.currency)}`;
@@ -34,11 +36,9 @@ export const notifySuccessfulPaymentForClient = async (
     ${fieldsEmail("Сумма платежа", amountText)}
     <div style='display:flex; flex-direction: column; width: 100%; align-items: center'>
       <p>Ваш чек:</p>
-      <img src='https://lknpd.nalog.ru/api/v1/receipt/710303226683/${
-        payment.receiptId
-      }/print' alt='чек'>
-</div>
-</div>
+      <img src='https://lknpd.nalog.ru/api/v1/receipt/710303226683/${receiptId}/print' alt='чек'>
+    </div>
+    </div>
   `;
 
   await mailer.sendMail({
