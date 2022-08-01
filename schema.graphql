@@ -852,6 +852,7 @@ type Product {
   language: String
   statusView: String
   name: String
+  description: String
   desc: Product_desc_Document
   category: Category
   image: ImageFieldOutput
@@ -890,6 +891,7 @@ input ProductWhereInput {
   language: StringFilter
   statusView: StringFilter
   name: StringFilter
+  description: StringFilter
   category: CategoryWhereInput
   tags: TagManyRelationFilter
   subscriptions: SubscriptionManyRelationFilter
@@ -920,6 +922,7 @@ input ProductOrderByInput {
   language: OrderDirection
   statusView: OrderDirection
   name: OrderDirection
+  description: OrderDirection
   trial: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
@@ -929,6 +932,7 @@ input ProductUpdateInput {
   language: String
   statusView: String
   name: String
+  description: String
   desc: JSON
   category: CategoryRelateToOneForUpdateInput
   image: ImageFieldInput
@@ -968,6 +972,7 @@ input ProductCreateInput {
   language: String
   statusView: String
   name: String
+  description: String
   desc: JSON
   category: CategoryRelateToOneForCreateInput
   image: ImageFieldInput
@@ -2131,6 +2136,57 @@ input MarketingCreateInput {
   lastModification: DateTime
 }
 
+type Link {
+  id: ID!
+  label: String
+  status: String
+  link: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input LinkWhereUniqueInput {
+  id: ID
+}
+
+input LinkWhereInput {
+  AND: [LinkWhereInput!]
+  OR: [LinkWhereInput!]
+  NOT: [LinkWhereInput!]
+  id: IDFilter
+  status: StringFilter
+  link: StringFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input LinkOrderByInput {
+  id: OrderDirection
+  status: OrderDirection
+  link: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input LinkUpdateInput {
+  status: String
+  link: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input LinkUpdateArgs {
+  where: LinkWhereUniqueInput!
+  data: LinkUpdateInput!
+}
+
+input LinkCreateInput {
+  status: String
+  link: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -2333,6 +2389,12 @@ type Mutation {
   updateMarketings(data: [MarketingUpdateArgs!]!): [Marketing]
   deleteMarketing(where: MarketingWhereUniqueInput!): Marketing
   deleteMarketings(where: [MarketingWhereUniqueInput!]!): [Marketing]
+  createLink(data: LinkCreateInput!): Link
+  createLinks(data: [LinkCreateInput!]!): [Link]
+  updateLink(where: LinkWhereUniqueInput!, data: LinkUpdateInput!): Link
+  updateLinks(data: [LinkUpdateArgs!]!): [Link]
+  deleteLink(where: LinkWhereUniqueInput!): Link
+  deleteLinks(where: [LinkWhereUniqueInput!]!): [Link]
   endSession: Boolean!
   authenticateUserWithPassword(
     email: String!
@@ -2570,6 +2632,14 @@ type Query {
   ): [Marketing!]
   marketing(where: MarketingWhereUniqueInput!): Marketing
   marketingsCount(where: MarketingWhereInput! = {}): Int
+  links(
+    where: LinkWhereInput! = {}
+    orderBy: [LinkOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Link!]
+  link(where: LinkWhereUniqueInput!): Link
+  linksCount(where: LinkWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
   againPayment(paymentId: String!): PaytureResponse

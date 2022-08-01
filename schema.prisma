@@ -136,6 +136,7 @@ model Product {
   language                    String          @default("ru")
   statusView                  String          @default("draft")
   name                        String          @default("")
+  description                 String          @default("") @mysql.VarChar(10000)
   desc                        Json            @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   category                    Category?       @relation("Product_category", fields: [categoryId], references: [id])
   categoryId                  Int?            @map("category")
@@ -395,6 +396,14 @@ model Marketing {
   lastModification DateTime @default(now()) @updatedAt
 
   @@index([language])
+}
+
+model Link {
+  id               String   @id @default(cuid())
+  status           String   @default("active")
+  link             String   @default("")
+  createdAt        DateTime @default(now())
+  lastModification DateTime @default(now()) @updatedAt
 }
 
 enum OrderStatusType {

@@ -21,6 +21,10 @@ export const Product = list({
     language,
     statusView,
     name: text({ validation: { isRequired: true } }),
+    description: text({
+      ui: { displayMode: "textarea", description: "Краткое описание" },
+      db: { nativeType: "VarChar(10000)" },
+    }),
     desc: content,
     category: relationship({
       ref: "Category",

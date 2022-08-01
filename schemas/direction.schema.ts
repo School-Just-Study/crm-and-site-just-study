@@ -11,7 +11,9 @@ export const Direction = list({
     label: "Направления курсов",
     labelField: "name",
     description: "Направления курсов",
-    listView: { initialColumns: ["id", "name", "description", "language"] },
+    listView: {
+      initialColumns: ["id", "name", "description", "statusView", "language"],
+    },
   },
   fields: {
     language,
