@@ -1,5 +1,5 @@
 import { list } from "@keystone-6/core";
-import { checkbox, image, relationship, text } from "@keystone-6/core/fields";
+import { image, relationship, text } from "@keystone-6/core/fields";
 import { Roles } from "../enums/roles.enum";
 import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
@@ -51,10 +51,6 @@ export const Product = list({
       },
     }),
     subscriptions: relationship({ ref: "Subscription", many: true }),
-    trial: checkbox({
-      defaultValue: false,
-      ui: { description: "Пробный урок" },
-    }),
     createdAt,
     lastModification,
   },

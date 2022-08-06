@@ -147,7 +147,6 @@ model Product {
   image_id                    String?
   tags                        Tag[]           @relation("Product_tags")
   subscriptions               Subscription[]  @relation("Product_subscriptions")
-  trial                       Boolean         @default(false)
   createdAt                   DateTime        @default(now())
   lastModification            DateTime        @default(now()) @updatedAt
   from_Category_products      Category[]      @relation("Category_products")
@@ -182,12 +181,13 @@ model User {
   name                          String                @default("")
   email                         String                @unique @default("")
   password                      String?
-  phone                         Decimal               @mysql.Decimal(18, 0)
+  phone                         Decimal?              @mysql.Decimal(18, 0)
   statusClient                  UserStatusClientType? @default(new)
   levelStudent                  UserLevelStudentType? @default(a1)
+  profession                    String                @default("")
   goal                          String                @default("")
   source                        SourceClient[]        @relation("User_source")
-  role                          UserRoleType          @default(student)
+  role                          UserRoleType?         @default(student)
   comment                       String                @default("") @mysql.VarChar(10000)
   cart                          Cart?                 @relation("Cart_user")
   magicLinkToken                String                @default("")
@@ -244,6 +244,7 @@ model Subscription {
   price                      Int
   period                     Int?       @default(45)
   desc                       Json       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  trial                      Boolean    @default(false)
   createdAt                  DateTime   @default(now())
   lastModification           DateTime   @default(now()) @updatedAt
   from_CartItem_subscription CartItem[] @relation("CartItem_subscription")
@@ -266,6 +267,7 @@ model UserSubscription {
   payed                    Int?
   totalVisited             Int       @default(0)
   totalBurned              Int       @default(0)
+  trial                    Boolean   @default(false)
   manager                  User?     @relation("UserSubscription_manager", fields: [managerId], references: [id])
   managerId                Int?      @map("manager")
   createdAt                DateTime  @default(now())

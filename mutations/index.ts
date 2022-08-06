@@ -6,6 +6,7 @@ import { payment } from "./payment";
 import { againPayment } from "./againPayment";
 import { checkPayment } from "./checkPayment";
 import { cart } from "./cart";
+import { authCart } from "./authCart";
 
 export const graphql = String.raw;
 export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
@@ -30,11 +31,20 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
       language: String!
     }
 
+    input AuthCartData {
+      firstName: String!
+      secondName: String!
+      phone: Decimal!
+      email: String!
+      language: String
+    }
+
     type Mutation {
       authWithEmail(email: String!): String
       checkout(userId: String!, currency: String!): PaytureResponse
       payment(orderId: String!): PaytureResponse
       cart(data: CartData!): PaytureResponse
+      authCart(data: AuthCartData!): User
     }
 
     type Query {
@@ -48,6 +58,7 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
       checkout,
       payment,
       cart,
+      authCart,
     },
     Query: {
       againPayment,

@@ -14,7 +14,7 @@ export const checkout = async (
 ) => {
   let user = await context.query.User.findOne({
     where: { id: userId },
-    query: `id name cart {id}`,
+    query: `id name cart { id }`,
   });
   if (!user) {
     throw new Error("Sorry! The user does not exist!");
@@ -65,7 +65,7 @@ export const checkout = async (
       async ({ id, price }: { id: string; price: number }) => {
         const subscriptionTemplate = await context.query.Subscription.findOne({
           where: { id },
-          query: `name visitCount price period`,
+          query: `name visitCount price period trial`,
         });
 
         const userSubscription = await context.query.UserSubscription.createOne(
@@ -76,6 +76,7 @@ export const checkout = async (
               originalPrice: subscriptionTemplate.price,
               price,
               period: subscriptionTemplate.period,
+              trial: subscriptionTemplate.trial,
               student: { connect: { id: userId } },
             },
             query: `id`,

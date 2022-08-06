@@ -8,7 +8,6 @@ import {
 } from "@keystone-6/core/fields";
 import { RolesValues } from "../consts/roles.const";
 import { Roles } from "../enums/roles.enum";
-import { filterCustomerAccess } from "../shared";
 import { ClientStatusOptionsConst } from "../consts/client-status-options.const";
 import { ClientStatus } from "../enums/client-status.emum";
 import { LevelStudentOptions } from "../consts/level-student-options.const";
@@ -48,7 +47,7 @@ export const User = list({
         inlineCreate: { fields: ["image"] },
       },
     }),
-    name: text({ validation: { isRequired: true } }),
+    name: text(),
     email: text({
       isIndexed: "unique",
       isFilterable: true,
@@ -58,9 +57,6 @@ export const User = list({
       validation: { length: { min: 4 } },
     }),
     phone: decimal({
-      validation: {
-        isRequired: true,
-      },
       scale: 0,
       ui: { description: "Пример: 79991234567" },
     }),
@@ -76,6 +72,7 @@ export const User = list({
       defaultValue: LevelStudent.A1,
       label: "Уровень подготовки",
     }),
+    profession: text(),
     goal: text({ label: "Цель изучения" }),
     source: relationship({
       ref: "SourceClient",
@@ -86,7 +83,6 @@ export const User = list({
       type: "enum",
       options: RolesValues,
       defaultValue: Roles.Student,
-      validation: { isRequired: true },
     }),
     comment: text({
       ui: { displayMode: "textarea" },
@@ -102,9 +98,6 @@ export const User = list({
   access: {
     operation: {
       delete: ({ session }) => !!session,
-    },
-    filter: {
-      delete: ({ session }) => filterCustomerAccess(session),
     },
   },
   hooks: {

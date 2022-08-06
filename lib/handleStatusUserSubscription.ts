@@ -7,9 +7,10 @@ import { Statuses } from '../enums/statuses.enum';
  * @param context
  * @param item
  * @param operation
+ * @param resolvedData
  */
-export const handleStatusUserSubscription: ListHooks<Lists.UserSubscription.TypeInfo>["afterOperation"] =
-  async ({ context, item, operation }) => {
+export const handleStatusUserSubscription: ListHooks<Lists.UserSubscription.TypeInfo>["resolveInput"] =
+  async ({ context, item, operation, resolvedData }) => {
     if (operation === "update") {
       const subscription = await context.query.UserSubscription.findOne({
         where: { id: `${item?.id}` },
@@ -19,18 +20,18 @@ export const handleStatusUserSubscription: ListHooks<Lists.UserSubscription.Type
       if (!subscription) return;
 
       if (subscription.lastCount === 0) {
-        await context.query.UserSubscription.updateOne({
-          where: { id: `${item?.id}` },
-          data: { status: Statuses.Finished },
-        });
+        return {
+          ...resolvedData,
+          status: Statuses.Finished,
+        };
       }
 
       if (subscription.lastCount >= 1) {
-        await context.query.UserSubscription.updateOne({
-          where: { id: `${item?.id}` },
-          data: { status: Statuses.Active },
-        });
+        return {
+          ...resolvedData,
+          status: Statuses.Active,
+        };
       }
     }
-    return;
+    return resolvedData;
   };

@@ -1,5 +1,5 @@
 import { graphql, list } from "@keystone-6/core";
-import { integer, text, virtual } from "@keystone-6/core/fields";
+import { checkbox, integer, text, virtual } from "@keystone-6/core/fields";
 import { Roles } from "../enums/roles.enum";
 import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
@@ -47,6 +47,10 @@ export const Subscription = list({
     price: integer({ validation: { isRequired: true } }),
     period: integer({ defaultValue: 45 }),
     desc: content,
+    trial: checkbox({
+      defaultValue: false,
+      ui: { description: "Пробный урок" },
+    }),
     createdAt,
     lastModification,
   },

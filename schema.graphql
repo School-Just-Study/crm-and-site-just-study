@@ -870,7 +870,6 @@ type Product {
     skip: Int! = 0
   ): [Subscription!]
   subscriptionsCount(where: SubscriptionWhereInput! = {}): Int
-  trial: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -895,7 +894,6 @@ input ProductWhereInput {
   category: CategoryWhereInput
   tags: TagManyRelationFilter
   subscriptions: SubscriptionManyRelationFilter
-  trial: BooleanFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
@@ -912,18 +910,12 @@ input SubscriptionManyRelationFilter {
   none: SubscriptionWhereInput
 }
 
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
-}
-
 input ProductOrderByInput {
   id: OrderDirection
   language: OrderDirection
   statusView: OrderDirection
   name: OrderDirection
   description: OrderDirection
-  trial: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -938,7 +930,6 @@ input ProductUpdateInput {
   image: ImageFieldInput
   tags: TagRelateToManyForUpdateInput
   subscriptions: SubscriptionRelateToManyForUpdateInput
-  trial: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -978,7 +969,6 @@ input ProductCreateInput {
   image: ImageFieldInput
   tags: TagRelateToManyForCreateInput
   subscriptions: SubscriptionRelateToManyForCreateInput
-  trial: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -1082,6 +1072,7 @@ type User {
   phone: Decimal
   statusClient: UserStatusClientType
   levelStudent: UserLevelStudentType
+  profession: String
   goal: String
   source(
     where: SourceClientWhereInput! = {}
@@ -1149,9 +1140,10 @@ input UserWhereInput {
   name: StringFilter
   email: StringFilter
   password: PasswordFilter
-  phone: DecimalFilter
+  phone: DecimalNullableFilter
   statusClient: UserStatusClientTypeNullableFilter
   levelStudent: UserLevelStudentTypeNullableFilter
+  profession: StringFilter
   goal: StringFilter
   source: SourceClientManyRelationFilter
   role: UserRoleTypeNullableFilter
@@ -1169,7 +1161,7 @@ input PasswordFilter {
   isSet: Boolean!
 }
 
-input DecimalFilter {
+input DecimalNullableFilter {
   equals: Decimal
   in: [Decimal!]
   notIn: [Decimal!]
@@ -1177,7 +1169,7 @@ input DecimalFilter {
   lte: Decimal
   gt: Decimal
   gte: Decimal
-  not: DecimalFilter
+  not: DecimalNullableFilter
 }
 
 input UserStatusClientTypeNullableFilter {
@@ -1226,6 +1218,7 @@ input UserOrderByInput {
   phone: OrderDirection
   statusClient: OrderDirection
   levelStudent: OrderDirection
+  profession: OrderDirection
   goal: OrderDirection
   role: OrderDirection
   comment: OrderDirection
@@ -1245,6 +1238,7 @@ input UserUpdateInput {
   phone: Decimal
   statusClient: UserStatusClientType
   levelStudent: UserLevelStudentType
+  profession: String
   goal: String
   source: SourceClientRelateToManyForUpdateInput
   role: UserRoleType
@@ -1285,6 +1279,7 @@ input UserCreateInput {
   phone: Decimal
   statusClient: UserStatusClientType
   levelStudent: UserLevelStudentType
+  profession: String
   goal: String
   source: SourceClientRelateToManyForCreateInput
   role: UserRoleType
@@ -1425,6 +1420,7 @@ type Subscription {
   price: Int
   period: Int
   desc: Subscription_desc_Document
+  trial: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -1448,8 +1444,14 @@ input SubscriptionWhereInput {
   visitCount: IntFilter
   price: IntFilter
   period: IntNullableFilter
+  trial: BooleanFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
 }
 
 input SubscriptionOrderByInput {
@@ -1460,6 +1462,7 @@ input SubscriptionOrderByInput {
   visitCount: OrderDirection
   price: OrderDirection
   period: OrderDirection
+  trial: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -1472,6 +1475,7 @@ input SubscriptionUpdateInput {
   price: Int
   period: Int
   desc: JSON
+  trial: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -1489,6 +1493,7 @@ input SubscriptionCreateInput {
   price: Int
   period: Int
   desc: JSON
+  trial: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -1508,6 +1513,7 @@ type UserSubscription {
   totalVisited: Int
   totalBurned: Int
   lastCount: Int
+  trial: Boolean
   manager: User
   createdAt: DateTime
   lastModification: DateTime
@@ -1533,6 +1539,7 @@ input UserSubscriptionWhereInput {
   payed: IntNullableFilter
   totalVisited: IntFilter
   totalBurned: IntFilter
+  trial: BooleanFilter
   manager: UserWhereInput
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
@@ -1550,6 +1557,7 @@ input UserSubscriptionOrderByInput {
   payed: OrderDirection
   totalVisited: OrderDirection
   totalBurned: OrderDirection
+  trial: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -1566,6 +1574,7 @@ input UserSubscriptionUpdateInput {
   payed: Int
   totalVisited: Int
   totalBurned: Int
+  trial: Boolean
   manager: UserRelateToOneForUpdateInput
   createdAt: DateTime
   lastModification: DateTime
@@ -1588,6 +1597,7 @@ input UserSubscriptionCreateInput {
   payed: Int
   totalVisited: Int
   totalBurned: Int
+  trial: Boolean
   manager: UserRelateToOneForCreateInput
   createdAt: DateTime
   lastModification: DateTime
@@ -2412,6 +2422,7 @@ type Mutation {
   checkout(userId: String!, currency: String!): PaytureResponse
   payment(orderId: String!): PaytureResponse
   cart(data: CartData!): PaytureResponse
+  authCart(data: AuthCartData!): User
 }
 
 union UserAuthenticationWithPasswordResult =
@@ -2754,4 +2765,12 @@ input CartData {
   email: String!
   currency: String!
   language: String!
+}
+
+input AuthCartData {
+  firstName: String!
+  secondName: String!
+  phone: Decimal!
+  email: String!
+  language: String
 }

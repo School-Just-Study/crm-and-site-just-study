@@ -1,5 +1,6 @@
 import { graphql, list } from "@keystone-6/core";
 import {
+  checkbox,
   integer,
   relationship,
   select,
@@ -91,12 +92,16 @@ export const UserSubscription = list({
         },
       }),
     }),
+    trial: checkbox({
+      defaultValue: false,
+      ui: { description: "Пробный урок" },
+    }),
     manager: relationship({ ref: "User" }),
     createdAt,
     lastModification,
   },
   hooks: {
-    afterOperation: handleStatusUserSubscription,
+    resolveInput: handleStatusUserSubscription,
   },
   access: {
     operation: {
