@@ -44,7 +44,7 @@ export const notifySuccessfulPaymentForClient = async (
   await mailer.sendMail({
     to: client.email,
     from,
-    subject: "Ваше обучение успешко оплачено",
+    subject: "Ваше обучение успешно оплачено",
     html: baseTemplateEmail("Уведомление об платеже", emailInfo),
   });
 };

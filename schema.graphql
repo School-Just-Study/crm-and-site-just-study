@@ -2066,6 +2066,7 @@ type Marketing {
   id: ID!
   language: String
   statusView: String
+  link: String
   slug: String
   image: ImageFieldOutput
   title: String

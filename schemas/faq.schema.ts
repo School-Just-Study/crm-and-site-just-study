@@ -7,9 +7,9 @@ import { lastModification } from "../fields/lastModification";
 
 export const Faq = list({
   ui: {
-    label: "Вопросы и ответы",
+    label: "FAQ",
     listView: {
-      initialColumns: ["language", "title", "desc", "statusView"],
+      initialColumns: ["id", "title", "desc", "statusView", "language"],
     },
   },
   fields: {
