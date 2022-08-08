@@ -1,6 +1,6 @@
 import { Currency } from "../enums/currency.enum";
 
-export const USD_COURSE = 55;
+export const USD_COURSE = 50;
 
 export const convertMoney = (
   amount: number,

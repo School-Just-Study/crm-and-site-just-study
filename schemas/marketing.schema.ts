@@ -1,10 +1,13 @@
-import { list } from "@keystone-6/core";
+import { graphql, list } from "@keystone-6/core";
 import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
-import { image, text } from "@keystone-6/core/fields";
+import { image, text, virtual } from "@keystone-6/core/fields";
 import { statusView } from "../fields/statusView";
 import { checkboxField } from "../fields/checkbox";
+import { ViewStatus } from "../enums/view-status";
+import { FRONTEND_URL } from "../config";
+import { Lists } from ".keystone/types";
 
 export const Marketing = list({
   ui: {
@@ -23,6 +26,19 @@ export const Marketing = list({
   fields: {
     language,
     statusView,
+    link: virtual({
+      // @ts-ignore
+      field: graphql.field({
+        type: graphql.String,
+        resolve(item: Lists.Marketing.Item) {
+          console.log(item);
+          if (item.statusView === ViewStatus.Show) {
+            return `${FRONTEND_URL}/${item.language}/marketing/${item.slug}`;
+          }
+          return "Ссылка не доступна до публикации";
+        },
+      }),
+    }),
     slug: text({ validation: { isRequired: true }, isIndexed: "unique" }),
     image: image({ storage: "storage_marketing_image" }),
     title: text({ validation: { isRequired: true } }),
