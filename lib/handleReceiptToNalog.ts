@@ -1,7 +1,6 @@
 import { PaymentStatus } from "../enums/payment-status.enum";
 import { ListHooks } from "@keystone-6/core/dist/declarations/src/types/config/hooks";
 import { Lists } from ".keystone/types";
-import { NALOG_INN, NALOG_PASSWORD } from "../config";
 import {
   notifySuccessfulPaymentForClient,
   notifySuccessfulPaymentForManagers,
@@ -9,9 +8,11 @@ import {
 import { Currency } from "../enums/currency.enum";
 import { reConvertMoney } from "./convertMoney";
 import { OrderStatus } from "../enums/order-status.enum";
+import { ICreateRefund } from "@a2seven/yoo-checkout";
+import { yooKassa } from "../utils/yookassa";
+import { v4 as uuid } from "uuid";
+import { addRecent, cancelRecent } from "../utils/nalogApi";
 
-const { NalogApi } = require("lknpd-nalog-api");
-const { paytureRuRefund } = require("../utils/paytureRu");
 const { paytureEnRefund } = require("../utils/paytureEn");
 
 /**
@@ -24,32 +25,18 @@ const { paytureEnRefund } = require("../utils/paytureEn");
 export const handleReceiptToNalog: ListHooks<Lists.Payment.TypeInfo>["resolveInput"] =
   async ({ item, context, operation, resolvedData }) => {
     if (operation === "update") {
-      const nalogApi = new NalogApi({
-        inn: NALOG_INN,
-        password: NALOG_PASSWORD,
-      });
-
-      const status = resolvedData?.status || item?.status;
+      const status = resolvedData.status || item.status;
 
       if (status === PaymentStatus.Successfully && !item.receiptId) {
-        if (item.orderId) {
-          await context.query.Order.updateOne({
-            where: { id: `${item.orderId}` },
-            data: { status: OrderStatus.Processing },
-          });
-        }
-
         await notifySuccessfulPaymentForManagers(
           item.studentId as unknown as string,
           item.id,
           context
         );
         const amount = reConvertMoney(item.amount || 0, item.currency);
-        const receiptId = await nalogApi.addIncome({
-          name: `Консультационные услуги`,
-          amount,
-          quantity: 1,
-        });
+
+        const receiptId = (await addRecent(amount)) || "";
+
         await notifySuccessfulPaymentForClient(
           item.studentId as unknown as string,
           item.id,
@@ -63,16 +50,29 @@ export const handleReceiptToNalog: ListHooks<Lists.Payment.TypeInfo>["resolveInp
         };
       }
 
+      await context.query.Order.updateOne({
+        where: { id: `${item.orderId}` },
+        data: { status: OrderStatus.Processing },
+      });
+
       if (status === PaymentStatus.Cancelled) {
-        if (item.currency === Currency.RUB) {
-          await paytureRuRefund(item.id);
+        if (item.currency === Currency.RUB && item.sessionId) {
+          const createRefundPayload: ICreateRefund = {
+            payment_id: item.sessionId,
+            amount: {
+              value: `${item.amount}.00`,
+              currency: "RUB",
+            },
+          };
+          const idempotenceKey = uuid();
+          await yooKassa.createRefund(createRefundPayload, idempotenceKey);
         }
         if (item.currency === Currency.USD) {
           await paytureEnRefund(item.id);
         }
+
         if (item.receiptId) {
-          const receiptId = item.receiptId;
-          await nalogApi.cancelIncome(receiptId, "Платеж отменен");
+          cancelRecent(item.receiptId);
         }
 
         return {

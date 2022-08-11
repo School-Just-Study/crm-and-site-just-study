@@ -50,14 +50,8 @@ export const cart = async (
     query: graphql`
       mutation ($userId: String!, $currency: String!) {
         checkout(userId: $userId, currency: $currency) {
-          Success
-          OrderId
-          ErrCode
-          RedirectUrl
-          Amount
-          SessionLifeTime
-          AttemptsCount
-          SessionId
+          status
+          redirectUrl
         }
       }
     `,

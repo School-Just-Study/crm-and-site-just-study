@@ -14,7 +14,7 @@ export const handleOrderStatus: ListHooks<Lists.Order.TypeInfo>["resolveInput"] 
         if (order.leftPayments === 0) {
           return OrderStatus.Finished;
         }
-        if (order.payed > 0) {
+        if (order.leftPayments > 0) {
           return OrderStatus.Processing;
         }
       };

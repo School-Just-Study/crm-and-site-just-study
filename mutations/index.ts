@@ -3,7 +3,6 @@ import { graphQLSchemaExtension } from "@keystone-6/core";
 import { authWithEmail } from "./authWithEmail";
 import { checkout } from "./checkout";
 import { payment } from "./payment";
-import { againPayment } from "./againPayment";
 import { checkPayment } from "./checkPayment";
 import { cart } from "./cart";
 import { authCart } from "./authCart";
@@ -11,15 +10,9 @@ import { authCart } from "./authCart";
 export const graphql = String.raw;
 export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
   typeDefs: graphql`
-    type PaytureResponse {
-      Success: String!
-      OrderId: String
-      ErrCode: String
-      RedirectUrl: String!
-      Amount: String
-      SessionLifeTime: String
-      AttemptsCount: String
-      SessionId: String
+    type PaymentResponse {
+      status: Boolean!
+      redirectUrl: String!
     }
 
     input CartData {
@@ -41,14 +34,13 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
 
     type Mutation {
       authWithEmail(email: String!): String
-      checkout(userId: String!, currency: String!): PaytureResponse
-      payment(orderId: String!): PaytureResponse
-      cart(data: CartData!): PaytureResponse
+      checkout(userId: String!, currency: String!): PaymentResponse
+      payment(orderId: String!): PaymentResponse
+      cart(data: CartData!): PaymentResponse
       authCart(data: AuthCartData!): User
     }
 
     type Query {
-      againPayment(paymentId: String!): PaytureResponse
       checkPayment(paymentId: String!): Payment
     }
   `,
@@ -61,7 +53,6 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
       authCart,
     },
     Query: {
-      againPayment,
       checkPayment,
     },
   },

@@ -2420,9 +2420,9 @@ type Mutation {
     token: String!
   ): RedeemUserMagicAuthTokenResult!
   authWithEmail(email: String!): String
-  checkout(userId: String!, currency: String!): PaytureResponse
-  payment(orderId: String!): PaytureResponse
-  cart(data: CartData!): PaytureResponse
+  checkout(userId: String!, currency: String!): PaymentResponse
+  payment(orderId: String!): PaymentResponse
+  cart(data: CartData!): PaymentResponse
   authCart(data: AuthCartData!): User
 }
 
@@ -2654,7 +2654,6 @@ type Query {
   linksCount(where: LinkWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
-  againPayment(paymentId: String!): PaytureResponse
   checkPayment(paymentId: String!): Payment
 }
 
@@ -2748,15 +2747,9 @@ enum KeystoneAdminUISortDirection {
   DESC
 }
 
-type PaytureResponse {
-  Success: String!
-  OrderId: String
-  ErrCode: String
-  RedirectUrl: String!
-  Amount: String
-  SessionLifeTime: String
-  AttemptsCount: String
-  SessionId: String
+type PaymentResponse {
+  status: Boolean!
+  redirectUrl: String!
 }
 
 input CartData {
