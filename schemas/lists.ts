@@ -21,6 +21,7 @@ import { DirectionGoal } from "./directionGoal.schema";
 import { Direction } from "./direction.schema";
 import { DirectionResult } from "./directionResult.schema";
 import { Link } from "./link.schema";
+import { Client } from "./client";
 
 export const lists = {
   Cart,
@@ -46,4 +47,5 @@ export const lists = {
   Post,
   Marketing,
   Link,
+  Client,
 };

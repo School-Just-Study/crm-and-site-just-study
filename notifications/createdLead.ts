@@ -13,7 +13,7 @@ import { from } from './index';
  * @param ctx
  */
 export const notifyNewClient = async (
-  client: Lists.User.Item,
+  client: Lists.Client.Item,
   ctx: KeystoneContext
 ) => {
   const managers = await ctx.query.User.findMany({

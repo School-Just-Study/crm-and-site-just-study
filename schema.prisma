@@ -175,38 +175,35 @@ model ProductReview {
 }
 
 model User {
-  id                            Int                   @id @default(autoincrement())
-  language                      String                @default("ru")
-  avatar                        AvatarUser?           @relation("AvatarUser_user")
-  name                          String                @default("")
-  email                         String                @unique @default("")
+  id                            Int                @id @default(autoincrement())
+  language                      String             @default("ru")
+  avatar                        AvatarUser?        @relation("AvatarUser_user")
+  name                          String             @default("")
+  email                         String             @unique @default("")
   password                      String?
-  phone                         Decimal?              @mysql.Decimal(18, 0)
-  statusClient                  UserStatusClientType? @default(new)
-  levelStudent                  UserLevelStudentType? @default(a1)
-  profession                    String                @default("")
-  goal                          String                @default("")
-  source                        SourceClient[]        @relation("User_source")
-  role                          UserRoleType?         @default(student)
-  comment                       String                @default("") @mysql.VarChar(10000)
-  cart                          Cart?                 @relation("Cart_user")
-  magicLinkToken                String                @default("")
-  createdAt                     DateTime              @default(now())
-  lastModification              DateTime              @default(now()) @updatedAt
+  role                          UserRoleType?      @default(student)
+  comment                       String             @default("") @mysql.VarChar(10000)
+  client                        Client?            @relation("User_client", fields: [clientId], references: [id])
+  clientId                      Int?               @map("client")
+  cart                          Cart?              @relation("Cart_user")
+  magicLinkToken                String             @default("")
+  createdAt                     DateTime           @default(now())
+  lastModification              DateTime           @default(now()) @updatedAt
   magicAuthToken                String?
   magicAuthIssuedAt             DateTime?
   magicAuthRedeemedAt           DateTime?
-  from_Order_student            Order[]               @relation("Order_student")
-  from_Payment_student          Payment[]             @relation("Payment_student")
-  from_ProductReview_student    ProductReview[]       @relation("ProductReview_student")
-  from_UserSubscription_student UserSubscription[]    @relation("UserSubscription_student")
-  from_UserSubscription_manager UserSubscription[]    @relation("UserSubscription_manager")
-  from_UserService_student      UserService[]         @relation("UserService_student")
-  from_UserService_manager      UserService[]         @relation("UserService_manager")
-  from_Page_author              Page[]                @relation("Page_author")
-  from_Post_author              Post[]                @relation("Post_author")
+  from_Order_student            Order[]            @relation("Order_student")
+  from_Payment_student          Payment[]          @relation("Payment_student")
+  from_ProductReview_student    ProductReview[]    @relation("ProductReview_student")
+  from_UserSubscription_student UserSubscription[] @relation("UserSubscription_student")
+  from_UserSubscription_manager UserSubscription[] @relation("UserSubscription_manager")
+  from_UserService_student      UserService[]      @relation("UserService_student")
+  from_UserService_manager      UserService[]      @relation("UserService_manager")
+  from_Page_author              Page[]             @relation("Page_author")
+  from_Post_author              Post[]             @relation("Post_author")
 
   @@index([language])
+  @@index([clientId])
 }
 
 model AvatarUser {
@@ -229,8 +226,8 @@ model SourceClient {
   parentId                 Int?           @map("parent")
   createdAt                DateTime       @default(now())
   lastModification         DateTime       @default(now()) @updatedAt
-  from_User_source         User[]         @relation("User_source")
   from_SourceClient_parent SourceClient[] @relation("SourceClient_parent")
+  from_Client_source       Client[]       @relation("Client_source")
 
   @@index([parentId])
 }
@@ -408,6 +405,25 @@ model Link {
   lastModification DateTime @default(now()) @updatedAt
 }
 
+model Client {
+  id               Int                     @id @default(autoincrement())
+  language         String                  @default("ru")
+  name             String                  @default("")
+  email            String                  @default("")
+  phone            Decimal?                @mysql.Decimal(18, 0)
+  statusClient     ClientStatusClientType? @default(new)
+  levelStudent     ClientLevelStudentType? @default(a1)
+  profession       String                  @default("")
+  goal             String                  @default("")
+  source           SourceClient[]          @relation("Client_source")
+  comment          String                  @default("") @mysql.VarChar(10000)
+  createdAt        DateTime                @default(now())
+  lastModification DateTime                @default(now()) @updatedAt
+  from_User_client User[]                  @relation("User_client")
+
+  @@index([language])
+}
+
 enum OrderStatusType {
   created
   frozen
@@ -423,7 +439,14 @@ enum PaymentStatusType {
   error
 }
 
-enum UserStatusClientType {
+enum UserRoleType {
+  admin
+  manager
+  teacher
+  student
+}
+
+enum ClientStatusClientType {
   new
   firstCall
   recordFirstLesson
@@ -435,17 +458,10 @@ enum UserStatusClientType {
   rejection
 }
 
-enum UserLevelStudentType {
+enum ClientLevelStudentType {
   a1
   a2
   b1
   b2
   c1
-}
-
-enum UserRoleType {
-  admin
-  manager
-  teacher
-  student
 }
