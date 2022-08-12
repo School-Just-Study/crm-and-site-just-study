@@ -30,6 +30,10 @@ export const User = list({
         "role",
         "comment",
       ],
+      initialSort: {
+        field: "createdAt",
+        direction: "DESC",
+      },
       pageSize: 20,
     },
   },

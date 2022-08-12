@@ -2,8 +2,10 @@ import { KeystoneContext } from "@keystone-6/core/dist/declarations/src/types";
 import { FRONTEND_URL } from "../config";
 import { Currency } from "../enums/currency.enum";
 import { OrderStatus } from "../enums/order-status.enum";
+import { ICreatePayment } from "@a2seven/yoo-checkout";
+import { yooKassa } from "../utils/yookassa";
+import { v4 as uuid } from "uuid";
 
-const { paytureRuInit } = require("../utils/paytureRu");
 const { paytureEnInit } = require("../utils/paytureEn");
 
 interface Arguments {
@@ -23,7 +25,7 @@ export const payment = async (
 ) => {
   const order = await context.query.Order.findOne({
     where: { id: orderId },
-    query: `label currency amount nextPayment status student { id }`,
+    query: `label currency amount nextPayment status student { id name email }`,
   });
   if (!order) {
     throw new Error("Sorry! The order does not exist!");
@@ -46,30 +48,57 @@ export const payment = async (
     throw new Error("Sorry! The payment does not exist!");
   }
 
-  const paytureData = {
-    OrderId: payment.id,
-    Amount: payment.amount * 100,
-    SessionType: "Pay",
-    Url: `${FRONTEND_URL}/checkout/result?orderid={orderid}&result={success}`,
-    Product: order.label,
-    Total: order.nextPayment,
-  };
-
   if (payment.currency === Currency.RUB) {
-    const res = await paytureRuInit(paytureData);
+    const createPayload: ICreatePayment = {
+      amount: {
+        value: `${payment.amount}.00`,
+        currency: "RUB",
+      },
+      description: order.label,
+      confirmation: {
+        type: "redirect",
+        return_url: `${FRONTEND_URL}/checkout/result?orderid=${payment.id}`,
+      },
+      capture: "true",
+      metadata: {
+        orderId,
+        paymentId: payment.id,
+      },
+      // @ts-ignore
+      merchant_customer_id: order.student.id,
+    };
+
+    const idempotenceKey = uuid();
+
+    const res = await yooKassa.createPayment(createPayload, idempotenceKey);
 
     if (res) {
       await context.query.Payment.updateOne({
         where: { id: payment.id },
         data: {
-          sessionId: res.SessionId,
+          sessionId: res.id,
         },
       });
     }
-    return res;
+
+    const status = res.status === "pending";
+
+    return {
+      status,
+      redirectUrl: res.confirmation.confirmation_url,
+    };
   }
 
   if (payment.currency === Currency.USD) {
+    const paytureData = {
+      OrderId: payment.id,
+      Amount: payment.amount * 100,
+      SessionType: "Pay",
+      Url: `${FRONTEND_URL}/checkout/result?orderid={orderid}&result={success}`,
+      Product: order.label,
+      Total: order.nextPayment,
+    };
+
     const res = await paytureEnInit(paytureData);
 
     if (res) {
@@ -80,6 +109,9 @@ export const payment = async (
         },
       });
     }
-    return res;
+
+    const status = res.Success === "True";
+
+    return { status, redirectUrl: res.RedirectUrl };
   }
 };

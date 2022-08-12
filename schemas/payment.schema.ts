@@ -6,6 +6,7 @@ import { handleReceiptToNalog } from "../lib/handleReceiptToNalog";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 import { currency } from "../fields/currency";
+import { handleOrderStatusAfterPayment } from "../lib/handleOrderStatusAfterPayment";
 
 export const Payment = list({
   ui: {
@@ -34,6 +35,7 @@ export const Payment = list({
   },
   hooks: {
     resolveInput: handleReceiptToNalog,
+    afterOperation: handleOrderStatusAfterPayment,
   },
   access: {
     operation: {

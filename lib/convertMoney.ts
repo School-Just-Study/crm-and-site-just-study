@@ -6,7 +6,7 @@ export const convertMoney = (
   amount: number,
   currency: Currency | string
 ): number => {
-  return currency === Currency.RUB ? amount : Math.floor(amount / USD_COURSE);
+  return currency === Currency.RUB ? amount : Math.ceil(amount / USD_COURSE);
 };
 
 export const reConvertMoney = (

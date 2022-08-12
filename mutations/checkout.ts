@@ -138,14 +138,8 @@ export const checkout = async (
     query: graphql`
       mutation ($orderId: String!) {
         payment(orderId: $orderId) {
-          Success
-          OrderId
-          ErrCode
-          RedirectUrl
-          Amount
-          SessionLifeTime
-          AttemptsCount
-          SessionId
+          status
+          redirectUrl
         }
       }
     `,

@@ -1,8 +1,8 @@
 import { KeystoneContext } from "@keystone-6/core/dist/declarations/src/types";
 import { Currency } from "../enums/currency.enum";
 import { PaymentStatus } from "../enums/payment-status.enum";
+import { yooKassa } from "../utils/yookassa";
 
-const { paytureRuStatus } = require("../utils/paytureRu");
 const { paytureEnStatus } = require("../utils/paytureEn");
 
 interface Arguments {
@@ -16,23 +16,25 @@ export const checkPayment = async (
 ) => {
   let payment = await context.query.Payment.findOne({
     where: { id: paymentId },
-    query: `id currency order { id leftPayments }`,
+    query: `id sessionId currency order { id leftPayments }`,
   });
   if (!payment) {
     throw new Error("Sorry! The payment does not exist!");
   }
 
-  let res = { Success: "False" };
+  let res = { status: false };
 
   if (payment.currency === Currency.RUB) {
-    res = await paytureRuStatus(payment.id);
+    const pay = await yooKassa.getPayment(payment.sessionId);
+    res = { status: pay.status === "succeeded" };
   }
 
   if (payment.currency === Currency.USD) {
-    res = await paytureEnStatus(payment.id);
+    const pay = await paytureEnStatus(payment.id);
+    res = { status: pay.Success === "True" };
   }
 
-  if (res.Success === "True") {
+  if (res.status) {
     return await context.query.Payment.updateOne({
       where: { id: paymentId },
       data: { status: PaymentStatus.Successfully },

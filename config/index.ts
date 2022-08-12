@@ -36,3 +36,8 @@ export const PAYTURE_TERMINAL_PASSWORD =
   process.env.PAYTURE_TERMINAL_PASSWORD || "123";
 
 export const SENTRY_DNS = process.env.SENTRY_DNS || "";
+
+export const YOOKASSA_SHOPID = process.env.YOOKASSA_ID || "933369";
+export const YOOKASSA_SECRET =
+  process.env.YOOKASSA_SECRET ||
+  "test_Wg58Q3yezKSNYZLwcj5wg0otQq4yi0_yCVgUdbM3sB0";

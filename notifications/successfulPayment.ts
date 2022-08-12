@@ -17,7 +17,7 @@ export const notifySuccessfulPaymentForClient = async (
   clientId: string,
   paymentId: number,
   ctx: KeystoneContext,
-  receiptId?: number
+  receiptId?: string
 ) => {
   const client = await ctx.query.User.findOne({
     where: { id: clientId },
@@ -34,10 +34,13 @@ export const notifySuccessfulPaymentForClient = async (
     <div style='display:flex; flex-direction: column; gap: 8px'>
     <p>${client.name}, ваше обучение успешно оплачено ✨</p>
     ${fieldsEmail("Сумма платежа", amountText)}
-    <div style='display:flex; flex-direction: column; width: 100%; align-items: center'>
+    ${
+      receiptId &&
+      `<div style='display:flex; flex-direction: column; width: 100%; align-items: center'>
       <p>Ваш чек:</p>
       <img src='https://lknpd.nalog.ru/api/v1/receipt/710303226683/${receiptId}/print' alt='чек'>
-    </div>
+    </div>`
+    }
     </div>
   `;
 
