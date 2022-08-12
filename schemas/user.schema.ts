@@ -1,35 +1,16 @@
 import { list } from "@keystone-6/core";
-import {
-  decimal,
-  password,
-  relationship,
-  select,
-  text,
-} from "@keystone-6/core/fields";
+import { password, relationship, select, text } from "@keystone-6/core/fields";
 import { RolesValues } from "../consts/roles.const";
 import { Roles } from "../enums/roles.enum";
-import { ClientStatusOptionsConst } from "../consts/client-status-options.const";
-import { ClientStatus } from "../enums/client-status.emum";
-import { LevelStudentOptions } from "../consts/level-student-options.const";
-import { LevelStudent } from "../enums/level-student.enum";
 import { language } from "../fields/language";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
-import { notifyNewClient } from "../notifications/createdLead";
 
 export const User = list({
   ui: {
     label: "Пользователи",
     listView: {
-      initialColumns: [
-        "name",
-        "language",
-        "email",
-        "phone",
-        "statusClient",
-        "role",
-        "comment",
-      ],
+      initialColumns: ["name", "language", "email", "role", "comment"],
       initialSort: {
         field: "createdAt",
         direction: "DESC",
@@ -60,29 +41,6 @@ export const User = list({
     password: password({
       validation: { length: { min: 4 } },
     }),
-    phone: decimal({
-      scale: 0,
-      ui: { description: "Пример: 79991234567" },
-    }),
-    statusClient: select({
-      type: "enum",
-      options: ClientStatusOptionsConst,
-      defaultValue: ClientStatus.New,
-      label: "Статус клиента",
-    }),
-    levelStudent: select({
-      type: "enum",
-      options: LevelStudentOptions,
-      defaultValue: LevelStudent.A1,
-      label: "Уровень подготовки",
-    }),
-    profession: text(),
-    goal: text({ label: "Цель изучения" }),
-    source: relationship({
-      ref: "SourceClient",
-      label: "Источник",
-      many: true,
-    }),
     role: select({
       type: "enum",
       options: RolesValues,
@@ -92,6 +50,7 @@ export const User = list({
       ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(10000)" },
     }),
+    client: relationship({ ref: "Client" }),
     cart: relationship({ ref: "Cart.user" }),
     magicLinkToken: text({
       ui: { listView: "read", itemView: "read", createView: "hidden" },
@@ -115,11 +74,6 @@ export const User = list({
           user: { connect: { id: userId } },
         },
       });
-
-      if (item.role === Roles.Student) {
-        // @ts-ignore
-        await notifyNewClient(item, context);
-      }
     },
   },
 });

@@ -54,6 +54,8 @@ export const server: KeystoneConfig["server"] = {
     app.use(bodyParser.json());
 
     app.post("/api/yookassa", async (req, res) => {
+      console.log("/api/yookassa", req.body);
+
       const context = await createContext(req, res);
 
       const paymentYooKassa: Payment = req.body.object;
@@ -74,7 +76,6 @@ export const server: KeystoneConfig["server"] = {
         });
       }
 
-      console.log("/api/yookassa", req.body);
       res.sendStatus(200);
     });
   },

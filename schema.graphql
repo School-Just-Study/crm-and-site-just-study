@@ -1069,20 +1069,9 @@ type User {
   name: String
   email: String
   password: PasswordState
-  phone: Decimal
-  statusClient: UserStatusClientType
-  levelStudent: UserLevelStudentType
-  profession: String
-  goal: String
-  source(
-    where: SourceClientWhereInput! = {}
-    orderBy: [SourceClientOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [SourceClient!]
-  sourceCount(where: SourceClientWhereInput! = {}): Int
   role: UserRoleType
   comment: String
+  client: Client
   cart: Cart
   magicLinkToken: String
   createdAt: DateTime
@@ -1094,28 +1083,6 @@ type User {
 
 type PasswordState {
   isSet: Boolean!
-}
-
-scalar Decimal
-
-enum UserStatusClientType {
-  new
-  firstCall
-  recordFirstLesson
-  trialLesson
-  decisionAfterTrialLesson
-  LowQualityLead
-  client
-  disabledClient
-  rejection
-}
-
-enum UserLevelStudentType {
-  a1
-  a2
-  b1
-  b2
-  c1
 }
 
 enum UserRoleType {
@@ -1140,14 +1107,9 @@ input UserWhereInput {
   name: StringFilter
   email: StringFilter
   password: PasswordFilter
-  phone: DecimalNullableFilter
-  statusClient: UserStatusClientTypeNullableFilter
-  levelStudent: UserLevelStudentTypeNullableFilter
-  profession: StringFilter
-  goal: StringFilter
-  source: SourceClientManyRelationFilter
   role: UserRoleTypeNullableFilter
   comment: StringFilter
+  client: ClientWhereInput
   cart: CartWhereInput
   magicLinkToken: StringFilter
   createdAt: DateTimeFilter
@@ -1159,37 +1121,6 @@ input UserWhereInput {
 
 input PasswordFilter {
   isSet: Boolean!
-}
-
-input DecimalNullableFilter {
-  equals: Decimal
-  in: [Decimal!]
-  notIn: [Decimal!]
-  lt: Decimal
-  lte: Decimal
-  gt: Decimal
-  gte: Decimal
-  not: DecimalNullableFilter
-}
-
-input UserStatusClientTypeNullableFilter {
-  equals: UserStatusClientType
-  in: [UserStatusClientType!]
-  notIn: [UserStatusClientType!]
-  not: UserStatusClientTypeNullableFilter
-}
-
-input UserLevelStudentTypeNullableFilter {
-  equals: UserLevelStudentType
-  in: [UserLevelStudentType!]
-  notIn: [UserLevelStudentType!]
-  not: UserLevelStudentTypeNullableFilter
-}
-
-input SourceClientManyRelationFilter {
-  every: SourceClientWhereInput
-  some: SourceClientWhereInput
-  none: SourceClientWhereInput
 }
 
 input UserRoleTypeNullableFilter {
@@ -1215,11 +1146,6 @@ input UserOrderByInput {
   language: OrderDirection
   name: OrderDirection
   email: OrderDirection
-  phone: OrderDirection
-  statusClient: OrderDirection
-  levelStudent: OrderDirection
-  profession: OrderDirection
-  goal: OrderDirection
   role: OrderDirection
   comment: OrderDirection
   magicLinkToken: OrderDirection
@@ -1235,14 +1161,9 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
-  phone: Decimal
-  statusClient: UserStatusClientType
-  levelStudent: UserLevelStudentType
-  profession: String
-  goal: String
-  source: SourceClientRelateToManyForUpdateInput
   role: UserRoleType
   comment: String
+  client: ClientRelateToOneForUpdateInput
   cart: CartRelateToOneForUpdateInput
   magicLinkToken: String
   createdAt: DateTime
@@ -1258,11 +1179,10 @@ input AvatarUserRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input SourceClientRelateToManyForUpdateInput {
-  disconnect: [SourceClientWhereUniqueInput!]
-  set: [SourceClientWhereUniqueInput!]
-  create: [SourceClientCreateInput!]
-  connect: [SourceClientWhereUniqueInput!]
+input ClientRelateToOneForUpdateInput {
+  create: ClientCreateInput
+  connect: ClientWhereUniqueInput
+  disconnect: Boolean
 }
 
 input UserUpdateArgs {
@@ -1276,14 +1196,9 @@ input UserCreateInput {
   name: String
   email: String
   password: String
-  phone: Decimal
-  statusClient: UserStatusClientType
-  levelStudent: UserLevelStudentType
-  profession: String
-  goal: String
-  source: SourceClientRelateToManyForCreateInput
   role: UserRoleType
   comment: String
+  client: ClientRelateToOneForCreateInput
   cart: CartRelateToOneForCreateInput
   magicLinkToken: String
   createdAt: DateTime
@@ -1298,9 +1213,9 @@ input AvatarUserRelateToOneForCreateInput {
   connect: AvatarUserWhereUniqueInput
 }
 
-input SourceClientRelateToManyForCreateInput {
-  create: [SourceClientCreateInput!]
-  connect: [SourceClientWhereUniqueInput!]
+input ClientRelateToOneForCreateInput {
+  create: ClientCreateInput
+  connect: ClientWhereUniqueInput
 }
 
 type AvatarUser {
@@ -2198,6 +2113,166 @@ input LinkCreateInput {
   lastModification: DateTime
 }
 
+type Client {
+  id: ID!
+  language: String
+  name: String
+  email: String
+  phone: Decimal
+  statusClient: ClientStatusClientType
+  levelStudent: ClientLevelStudentType
+  profession: String
+  goal: String
+  source(
+    where: SourceClientWhereInput! = {}
+    orderBy: [SourceClientOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [SourceClient!]
+  sourceCount(where: SourceClientWhereInput! = {}): Int
+  comment: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+scalar Decimal
+
+enum ClientStatusClientType {
+  new
+  firstCall
+  recordFirstLesson
+  trialLesson
+  decisionAfterTrialLesson
+  LowQualityLead
+  client
+  disabledClient
+  rejection
+}
+
+enum ClientLevelStudentType {
+  a1
+  a2
+  b1
+  b2
+  c1
+}
+
+input ClientWhereUniqueInput {
+  id: ID
+}
+
+input ClientWhereInput {
+  AND: [ClientWhereInput!]
+  OR: [ClientWhereInput!]
+  NOT: [ClientWhereInput!]
+  id: IDFilter
+  language: StringFilter
+  name: StringFilter
+  email: StringFilter
+  phone: DecimalNullableFilter
+  statusClient: ClientStatusClientTypeNullableFilter
+  levelStudent: ClientLevelStudentTypeNullableFilter
+  profession: StringFilter
+  goal: StringFilter
+  source: SourceClientManyRelationFilter
+  comment: StringFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input DecimalNullableFilter {
+  equals: Decimal
+  in: [Decimal!]
+  notIn: [Decimal!]
+  lt: Decimal
+  lte: Decimal
+  gt: Decimal
+  gte: Decimal
+  not: DecimalNullableFilter
+}
+
+input ClientStatusClientTypeNullableFilter {
+  equals: ClientStatusClientType
+  in: [ClientStatusClientType!]
+  notIn: [ClientStatusClientType!]
+  not: ClientStatusClientTypeNullableFilter
+}
+
+input ClientLevelStudentTypeNullableFilter {
+  equals: ClientLevelStudentType
+  in: [ClientLevelStudentType!]
+  notIn: [ClientLevelStudentType!]
+  not: ClientLevelStudentTypeNullableFilter
+}
+
+input SourceClientManyRelationFilter {
+  every: SourceClientWhereInput
+  some: SourceClientWhereInput
+  none: SourceClientWhereInput
+}
+
+input ClientOrderByInput {
+  id: OrderDirection
+  language: OrderDirection
+  name: OrderDirection
+  email: OrderDirection
+  phone: OrderDirection
+  statusClient: OrderDirection
+  levelStudent: OrderDirection
+  profession: OrderDirection
+  goal: OrderDirection
+  comment: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input ClientUpdateInput {
+  language: String
+  name: String
+  email: String
+  phone: Decimal
+  statusClient: ClientStatusClientType
+  levelStudent: ClientLevelStudentType
+  profession: String
+  goal: String
+  source: SourceClientRelateToManyForUpdateInput
+  comment: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input SourceClientRelateToManyForUpdateInput {
+  disconnect: [SourceClientWhereUniqueInput!]
+  set: [SourceClientWhereUniqueInput!]
+  create: [SourceClientCreateInput!]
+  connect: [SourceClientWhereUniqueInput!]
+}
+
+input ClientUpdateArgs {
+  where: ClientWhereUniqueInput!
+  data: ClientUpdateInput!
+}
+
+input ClientCreateInput {
+  language: String
+  name: String
+  email: String
+  phone: Decimal
+  statusClient: ClientStatusClientType
+  levelStudent: ClientLevelStudentType
+  profession: String
+  goal: String
+  source: SourceClientRelateToManyForCreateInput
+  comment: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input SourceClientRelateToManyForCreateInput {
+  create: [SourceClientCreateInput!]
+  connect: [SourceClientWhereUniqueInput!]
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -2406,6 +2481,12 @@ type Mutation {
   updateLinks(data: [LinkUpdateArgs!]!): [Link]
   deleteLink(where: LinkWhereUniqueInput!): Link
   deleteLinks(where: [LinkWhereUniqueInput!]!): [Link]
+  createClient(data: ClientCreateInput!): Client
+  createClients(data: [ClientCreateInput!]!): [Client]
+  updateClient(where: ClientWhereUniqueInput!, data: ClientUpdateInput!): Client
+  updateClients(data: [ClientUpdateArgs!]!): [Client]
+  deleteClient(where: ClientWhereUniqueInput!): Client
+  deleteClients(where: [ClientWhereUniqueInput!]!): [Client]
   endSession: Boolean!
   authenticateUserWithPassword(
     email: String!
@@ -2423,7 +2504,7 @@ type Mutation {
   checkout(userId: String!, currency: String!): PaymentResponse
   payment(orderId: String!): PaymentResponse
   cart(data: CartData!): PaymentResponse
-  authCart(data: AuthCartData!): User
+  authCart(data: AuthCartData!): Client
 }
 
 union UserAuthenticationWithPasswordResult =
@@ -2443,7 +2524,6 @@ input CreateInitialUserInput {
   name: String
   email: String
   password: String
-  phone: Decimal
   role: UserRoleType
 }
 
@@ -2652,6 +2732,14 @@ type Query {
   ): [Link!]
   link(where: LinkWhereUniqueInput!): Link
   linksCount(where: LinkWhereInput! = {}): Int
+  clients(
+    where: ClientWhereInput! = {}
+    orderBy: [ClientOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Client!]
+  client(where: ClientWhereUniqueInput!): Client
+  clientsCount(where: ClientWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
   checkPayment(paymentId: String!): Payment

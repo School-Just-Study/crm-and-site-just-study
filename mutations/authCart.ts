@@ -14,15 +14,15 @@ export const authCart = async (
   context: KeystoneContext
 ) => {
   const { firstName, secondName, phone, email, language } = data;
-  let user = await context.query.User.findOne({
+  let client = await context.query.User.findOne({
     where: { email },
     query: `id email`,
   });
 
   const name = `${firstName} ${secondName}`;
 
-  if (!user) {
-    user = await context.query.User.createOne({
+  if (!client) {
+    client = await context.query.Client.createOne({
       data: {
         name,
         phone,
@@ -32,7 +32,7 @@ export const authCart = async (
       query: `id email`,
     });
   } else {
-    user = await context.query.User.updateOne({
+    client = await context.query.Client.updateOne({
       where: { email },
       data: {
         name,
@@ -43,5 +43,5 @@ export const authCart = async (
     });
   }
 
-  return user;
+  return client;
 };

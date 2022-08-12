@@ -37,7 +37,7 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
       checkout(userId: String!, currency: String!): PaymentResponse
       payment(orderId: String!): PaymentResponse
       cart(data: CartData!): PaymentResponse
-      authCart(data: AuthCartData!): User
+      authCart(data: AuthCartData!): Client
     }
 
     type Query {
