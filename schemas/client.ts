@@ -14,6 +14,7 @@ export const Client = list({
     label: "Клиенты",
     listView: {
       initialColumns: [
+        "id",
         "name",
         "language",
         "email",

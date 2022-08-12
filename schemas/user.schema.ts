@@ -10,7 +10,7 @@ export const User = list({
   ui: {
     label: "Пользователи",
     listView: {
-      initialColumns: ["name", "language", "email", "role", "comment"],
+      initialColumns: ["id", "name", "language", "email", "role", "comment"],
       initialSort: {
         field: "createdAt",
         direction: "DESC",
