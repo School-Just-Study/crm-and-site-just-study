@@ -185,6 +185,8 @@ model User {
   comment                       String             @default("") @mysql.VarChar(10000)
   client                        Client?            @relation("User_client", fields: [clientId], references: [id])
   clientId                      Int?               @map("client")
+  manager                       Manager?           @relation("User_manager", fields: [managerId], references: [id])
+  managerId                     Int?               @map("manager")
   cart                          Cart?              @relation("Cart_user")
   magicLinkToken                String             @default("")
   createdAt                     DateTime           @default(now())
@@ -204,6 +206,7 @@ model User {
 
   @@index([language])
   @@index([clientId])
+  @@index([managerId])
 }
 
 model AvatarUser {
@@ -406,22 +409,87 @@ model Link {
 }
 
 model Client {
-  id               Int                     @id @default(autoincrement())
-  language         String                  @default("ru")
-  name             String                  @default("")
-  email            String                  @default("")
-  phone            Decimal?                @mysql.Decimal(18, 0)
-  statusClient     ClientStatusClientType? @default(new)
-  levelStudent     ClientLevelStudentType? @default(a1)
-  profession       String                  @default("")
-  goal             String                  @default("")
-  source           SourceClient[]          @relation("Client_source")
-  comment          String                  @default("") @mysql.VarChar(10000)
-  createdAt        DateTime                @default(now())
-  lastModification DateTime                @default(now()) @updatedAt
-  from_User_client User[]                  @relation("User_client")
+  id                  Int                     @id @default(autoincrement())
+  language            String                  @default("ru")
+  name                String                  @default("")
+  email               String                  @default("")
+  phone               Decimal?                @mysql.Decimal(18, 0)
+  statusClient        ClientStatusClientType? @default(new)
+  levelStudent        ClientLevelStudentType? @default(a1)
+  profession          String                  @default("")
+  goal                String                  @default("")
+  source              SourceClient[]          @relation("Client_source")
+  teacher             Manager[]               @relation("Client_teacher")
+  comment             String                  @default("") @mysql.VarChar(10000)
+  createdAt           DateTime                @default(now())
+  lastModification    DateTime                @default(now()) @updatedAt
+  from_User_client    User[]                  @relation("User_client")
+  from_Lesson_student Lesson[]                @relation("Lesson_student")
 
   @@index([language])
+}
+
+model Manager {
+  id                  Int              @id @default(autoincrement())
+  language            String           @default("ru")
+  name                String           @default("")
+  email               String           @default("")
+  phone               Decimal?         @mysql.Decimal(18, 0)
+  work                Boolean          @default(true)
+  teacher             Boolean          @default(true)
+  linkOnlineLesson    String           @default("")
+  workTime            WorkTime[]       @relation("WorkTime_manager")
+  cutoff              WorkTimeCutoff[] @relation("WorkTimeCutoff_manager")
+  comment             String           @default("") @mysql.VarChar(10000)
+  createdAt           DateTime         @default(now())
+  lastModification    DateTime         @default(now()) @updatedAt
+  from_User_manager   User[]           @relation("User_manager")
+  from_Client_teacher Client[]         @relation("Client_teacher")
+  from_Lesson_teacher Lesson[]         @relation("Lesson_teacher")
+
+  @@index([language])
+}
+
+model WorkTime {
+  id               Int      @id @default(autoincrement())
+  manager          Manager? @relation("WorkTime_manager", fields: [managerId], references: [id])
+  managerId        Int?     @map("manager")
+  dayOfWeek        Int
+  isDayOff         Boolean  @default(false)
+  startTime        String   @default("09:00")
+  endTime          String   @default("22:00")
+  createdAt        DateTime @default(now())
+  lastModification DateTime @default(now()) @updatedAt
+
+  @@index([managerId])
+}
+
+model WorkTimeCutoff {
+  id               Int      @id @default(autoincrement())
+  statusView       String   @default("draft")
+  manager          Manager? @relation("WorkTimeCutoff_manager", fields: [managerId], references: [id])
+  managerId        Int?     @map("manager")
+  startPeriod      DateTime
+  endPeriod        DateTime
+  createdAt        DateTime @default(now())
+  lastModification DateTime @default(now()) @updatedAt
+
+  @@index([managerId])
+}
+
+model Lesson {
+  id               Int       @id @default(autoincrement())
+  title            String    @default("")
+  description      String    @default("")
+  date             DateTime
+  startTime        String    @default("09:00")
+  endTime          String    @default("10:00")
+  status           Boolean   @default(false)
+  student          Client[]  @relation("Lesson_student")
+  teacher          Manager[] @relation("Lesson_teacher")
+  comment          String    @default("") @mysql.VarChar(10000)
+  createdAt        DateTime  @default(now())
+  lastModification DateTime  @default(now()) @updatedAt
 }
 
 enum OrderStatusType {

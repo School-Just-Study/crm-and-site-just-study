@@ -21,7 +21,11 @@ import { DirectionGoal } from "./directionGoal.schema";
 import { Direction } from "./direction.schema";
 import { DirectionResult } from "./directionResult.schema";
 import { Link } from "./link.schema";
-import { Client } from "./client";
+import { Client } from "./client.schema";
+import { Manager } from "./manager.schema";
+import { WorkTimeCutoff } from "./workTimeCutoff.schema";
+import { WorkTime } from "./workTime.schema";
+import { Lesson } from "./lesson.schema";
 
 export const lists = {
   Cart,
@@ -48,4 +52,8 @@ export const lists = {
   Marketing,
   Link,
   Client,
+  Manager,
+  WorkTime,
+  WorkTimeCutoff,
+  Lesson,
 };

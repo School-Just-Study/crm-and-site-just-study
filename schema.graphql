@@ -1072,6 +1072,7 @@ type User {
   role: UserRoleType
   comment: String
   client: Client
+  manager: Manager
   cart: Cart
   magicLinkToken: String
   createdAt: DateTime
@@ -1110,6 +1111,7 @@ input UserWhereInput {
   role: UserRoleTypeNullableFilter
   comment: StringFilter
   client: ClientWhereInput
+  manager: ManagerWhereInput
   cart: CartWhereInput
   magicLinkToken: StringFilter
   createdAt: DateTimeFilter
@@ -1164,6 +1166,7 @@ input UserUpdateInput {
   role: UserRoleType
   comment: String
   client: ClientRelateToOneForUpdateInput
+  manager: ManagerRelateToOneForUpdateInput
   cart: CartRelateToOneForUpdateInput
   magicLinkToken: String
   createdAt: DateTime
@@ -1185,6 +1188,12 @@ input ClientRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input ManagerRelateToOneForUpdateInput {
+  create: ManagerCreateInput
+  connect: ManagerWhereUniqueInput
+  disconnect: Boolean
+}
+
 input UserUpdateArgs {
   where: UserWhereUniqueInput!
   data: UserUpdateInput!
@@ -1199,6 +1208,7 @@ input UserCreateInput {
   role: UserRoleType
   comment: String
   client: ClientRelateToOneForCreateInput
+  manager: ManagerRelateToOneForCreateInput
   cart: CartRelateToOneForCreateInput
   magicLinkToken: String
   createdAt: DateTime
@@ -1216,6 +1226,11 @@ input AvatarUserRelateToOneForCreateInput {
 input ClientRelateToOneForCreateInput {
   create: ClientCreateInput
   connect: ClientWhereUniqueInput
+}
+
+input ManagerRelateToOneForCreateInput {
+  create: ManagerCreateInput
+  connect: ManagerWhereUniqueInput
 }
 
 type AvatarUser {
@@ -2130,6 +2145,13 @@ type Client {
     skip: Int! = 0
   ): [SourceClient!]
   sourceCount(where: SourceClientWhereInput! = {}): Int
+  teacher(
+    where: ManagerWhereInput! = {}
+    orderBy: [ManagerOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Manager!]
+  teacherCount(where: ManagerWhereInput! = {}): Int
   comment: String
   createdAt: DateTime
   lastModification: DateTime
@@ -2175,6 +2197,7 @@ input ClientWhereInput {
   profession: StringFilter
   goal: StringFilter
   source: SourceClientManyRelationFilter
+  teacher: ManagerManyRelationFilter
   comment: StringFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
@@ -2211,6 +2234,12 @@ input SourceClientManyRelationFilter {
   none: SourceClientWhereInput
 }
 
+input ManagerManyRelationFilter {
+  every: ManagerWhereInput
+  some: ManagerWhereInput
+  none: ManagerWhereInput
+}
+
 input ClientOrderByInput {
   id: OrderDirection
   language: OrderDirection
@@ -2236,6 +2265,7 @@ input ClientUpdateInput {
   profession: String
   goal: String
   source: SourceClientRelateToManyForUpdateInput
+  teacher: ManagerRelateToManyForUpdateInput
   comment: String
   createdAt: DateTime
   lastModification: DateTime
@@ -2246,6 +2276,13 @@ input SourceClientRelateToManyForUpdateInput {
   set: [SourceClientWhereUniqueInput!]
   create: [SourceClientCreateInput!]
   connect: [SourceClientWhereUniqueInput!]
+}
+
+input ManagerRelateToManyForUpdateInput {
+  disconnect: [ManagerWhereUniqueInput!]
+  set: [ManagerWhereUniqueInput!]
+  create: [ManagerCreateInput!]
+  connect: [ManagerWhereUniqueInput!]
 }
 
 input ClientUpdateArgs {
@@ -2263,6 +2300,7 @@ input ClientCreateInput {
   profession: String
   goal: String
   source: SourceClientRelateToManyForCreateInput
+  teacher: ManagerRelateToManyForCreateInput
   comment: String
   createdAt: DateTime
   lastModification: DateTime
@@ -2271,6 +2309,383 @@ input ClientCreateInput {
 input SourceClientRelateToManyForCreateInput {
   create: [SourceClientCreateInput!]
   connect: [SourceClientWhereUniqueInput!]
+}
+
+input ManagerRelateToManyForCreateInput {
+  create: [ManagerCreateInput!]
+  connect: [ManagerWhereUniqueInput!]
+}
+
+type Manager {
+  id: ID!
+  language: String
+  name: String
+  email: String
+  phone: Decimal
+  work: Boolean
+  teacher: Boolean
+  linkOnlineLesson: String
+  workTime(
+    where: WorkTimeWhereInput! = {}
+    orderBy: [WorkTimeOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [WorkTime!]
+  workTimeCount(where: WorkTimeWhereInput! = {}): Int
+  cutoff(
+    where: WorkTimeCutoffWhereInput! = {}
+    orderBy: [WorkTimeCutoffOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [WorkTimeCutoff!]
+  cutoffCount(where: WorkTimeCutoffWhereInput! = {}): Int
+  comment: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input ManagerWhereUniqueInput {
+  id: ID
+}
+
+input ManagerWhereInput {
+  AND: [ManagerWhereInput!]
+  OR: [ManagerWhereInput!]
+  NOT: [ManagerWhereInput!]
+  id: IDFilter
+  language: StringFilter
+  name: StringFilter
+  email: StringFilter
+  phone: DecimalNullableFilter
+  work: BooleanFilter
+  teacher: BooleanFilter
+  linkOnlineLesson: StringFilter
+  workTime: WorkTimeManyRelationFilter
+  cutoff: WorkTimeCutoffManyRelationFilter
+  comment: StringFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input WorkTimeManyRelationFilter {
+  every: WorkTimeWhereInput
+  some: WorkTimeWhereInput
+  none: WorkTimeWhereInput
+}
+
+input WorkTimeCutoffManyRelationFilter {
+  every: WorkTimeCutoffWhereInput
+  some: WorkTimeCutoffWhereInput
+  none: WorkTimeCutoffWhereInput
+}
+
+input ManagerOrderByInput {
+  id: OrderDirection
+  language: OrderDirection
+  name: OrderDirection
+  email: OrderDirection
+  phone: OrderDirection
+  work: OrderDirection
+  teacher: OrderDirection
+  linkOnlineLesson: OrderDirection
+  comment: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input ManagerUpdateInput {
+  language: String
+  name: String
+  email: String
+  phone: Decimal
+  work: Boolean
+  teacher: Boolean
+  linkOnlineLesson: String
+  workTime: WorkTimeRelateToManyForUpdateInput
+  cutoff: WorkTimeCutoffRelateToManyForUpdateInput
+  comment: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input WorkTimeRelateToManyForUpdateInput {
+  disconnect: [WorkTimeWhereUniqueInput!]
+  set: [WorkTimeWhereUniqueInput!]
+  create: [WorkTimeCreateInput!]
+  connect: [WorkTimeWhereUniqueInput!]
+}
+
+input WorkTimeCutoffRelateToManyForUpdateInput {
+  disconnect: [WorkTimeCutoffWhereUniqueInput!]
+  set: [WorkTimeCutoffWhereUniqueInput!]
+  create: [WorkTimeCutoffCreateInput!]
+  connect: [WorkTimeCutoffWhereUniqueInput!]
+}
+
+input ManagerUpdateArgs {
+  where: ManagerWhereUniqueInput!
+  data: ManagerUpdateInput!
+}
+
+input ManagerCreateInput {
+  language: String
+  name: String
+  email: String
+  phone: Decimal
+  work: Boolean
+  teacher: Boolean
+  linkOnlineLesson: String
+  workTime: WorkTimeRelateToManyForCreateInput
+  cutoff: WorkTimeCutoffRelateToManyForCreateInput
+  comment: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input WorkTimeRelateToManyForCreateInput {
+  create: [WorkTimeCreateInput!]
+  connect: [WorkTimeWhereUniqueInput!]
+}
+
+input WorkTimeCutoffRelateToManyForCreateInput {
+  create: [WorkTimeCutoffCreateInput!]
+  connect: [WorkTimeCutoffWhereUniqueInput!]
+}
+
+type WorkTime {
+  id: ID!
+  manager: Manager
+  dayOfWeek: Int
+  isDayOff: Boolean
+  startTime: String
+  endTime: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input WorkTimeWhereUniqueInput {
+  id: ID
+}
+
+input WorkTimeWhereInput {
+  AND: [WorkTimeWhereInput!]
+  OR: [WorkTimeWhereInput!]
+  NOT: [WorkTimeWhereInput!]
+  id: IDFilter
+  manager: ManagerWhereInput
+  dayOfWeek: IntFilter
+  isDayOff: BooleanFilter
+  startTime: StringFilter
+  endTime: StringFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input WorkTimeOrderByInput {
+  id: OrderDirection
+  dayOfWeek: OrderDirection
+  isDayOff: OrderDirection
+  startTime: OrderDirection
+  endTime: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input WorkTimeUpdateInput {
+  manager: ManagerRelateToOneForUpdateInput
+  dayOfWeek: Int
+  isDayOff: Boolean
+  startTime: String
+  endTime: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input WorkTimeUpdateArgs {
+  where: WorkTimeWhereUniqueInput!
+  data: WorkTimeUpdateInput!
+}
+
+input WorkTimeCreateInput {
+  manager: ManagerRelateToOneForCreateInput
+  dayOfWeek: Int
+  isDayOff: Boolean
+  startTime: String
+  endTime: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+type WorkTimeCutoff {
+  id: ID!
+  statusView: String
+  manager: Manager
+  startPeriod: DateTime
+  endPeriod: DateTime
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input WorkTimeCutoffWhereUniqueInput {
+  id: ID
+}
+
+input WorkTimeCutoffWhereInput {
+  AND: [WorkTimeCutoffWhereInput!]
+  OR: [WorkTimeCutoffWhereInput!]
+  NOT: [WorkTimeCutoffWhereInput!]
+  id: IDFilter
+  statusView: StringFilter
+  manager: ManagerWhereInput
+  startPeriod: DateTimeFilter
+  endPeriod: DateTimeFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input WorkTimeCutoffOrderByInput {
+  id: OrderDirection
+  statusView: OrderDirection
+  startPeriod: OrderDirection
+  endPeriod: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input WorkTimeCutoffUpdateInput {
+  statusView: String
+  manager: ManagerRelateToOneForUpdateInput
+  startPeriod: DateTime
+  endPeriod: DateTime
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input WorkTimeCutoffUpdateArgs {
+  where: WorkTimeCutoffWhereUniqueInput!
+  data: WorkTimeCutoffUpdateInput!
+}
+
+input WorkTimeCutoffCreateInput {
+  statusView: String
+  manager: ManagerRelateToOneForCreateInput
+  startPeriod: DateTime
+  endPeriod: DateTime
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+type Lesson {
+  id: ID!
+  title: String
+  description: String
+  date: DateTime
+  startTime: String
+  endTime: String
+  status: Boolean
+  student(
+    where: ClientWhereInput! = {}
+    orderBy: [ClientOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Client!]
+  studentCount(where: ClientWhereInput! = {}): Int
+  teacher(
+    where: ManagerWhereInput! = {}
+    orderBy: [ManagerOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Manager!]
+  teacherCount(where: ManagerWhereInput! = {}): Int
+  comment: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input LessonWhereUniqueInput {
+  id: ID
+}
+
+input LessonWhereInput {
+  AND: [LessonWhereInput!]
+  OR: [LessonWhereInput!]
+  NOT: [LessonWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  date: DateTimeFilter
+  startTime: StringFilter
+  endTime: StringFilter
+  status: BooleanFilter
+  student: ClientManyRelationFilter
+  teacher: ManagerManyRelationFilter
+  comment: StringFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input ClientManyRelationFilter {
+  every: ClientWhereInput
+  some: ClientWhereInput
+  none: ClientWhereInput
+}
+
+input LessonOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  date: OrderDirection
+  startTime: OrderDirection
+  endTime: OrderDirection
+  status: OrderDirection
+  comment: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input LessonUpdateInput {
+  title: String
+  description: String
+  date: DateTime
+  startTime: String
+  endTime: String
+  status: Boolean
+  student: ClientRelateToManyForUpdateInput
+  teacher: ManagerRelateToManyForUpdateInput
+  comment: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input ClientRelateToManyForUpdateInput {
+  disconnect: [ClientWhereUniqueInput!]
+  set: [ClientWhereUniqueInput!]
+  create: [ClientCreateInput!]
+  connect: [ClientWhereUniqueInput!]
+}
+
+input LessonUpdateArgs {
+  where: LessonWhereUniqueInput!
+  data: LessonUpdateInput!
+}
+
+input LessonCreateInput {
+  title: String
+  description: String
+  date: DateTime
+  startTime: String
+  endTime: String
+  status: Boolean
+  student: ClientRelateToManyForCreateInput
+  teacher: ManagerRelateToManyForCreateInput
+  comment: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input ClientRelateToManyForCreateInput {
+  create: [ClientCreateInput!]
+  connect: [ClientWhereUniqueInput!]
 }
 
 """
@@ -2487,6 +2902,41 @@ type Mutation {
   updateClients(data: [ClientUpdateArgs!]!): [Client]
   deleteClient(where: ClientWhereUniqueInput!): Client
   deleteClients(where: [ClientWhereUniqueInput!]!): [Client]
+  createManager(data: ManagerCreateInput!): Manager
+  createManagers(data: [ManagerCreateInput!]!): [Manager]
+  updateManager(
+    where: ManagerWhereUniqueInput!
+    data: ManagerUpdateInput!
+  ): Manager
+  updateManagers(data: [ManagerUpdateArgs!]!): [Manager]
+  deleteManager(where: ManagerWhereUniqueInput!): Manager
+  deleteManagers(where: [ManagerWhereUniqueInput!]!): [Manager]
+  createWorkTime(data: WorkTimeCreateInput!): WorkTime
+  createWorkTimes(data: [WorkTimeCreateInput!]!): [WorkTime]
+  updateWorkTime(
+    where: WorkTimeWhereUniqueInput!
+    data: WorkTimeUpdateInput!
+  ): WorkTime
+  updateWorkTimes(data: [WorkTimeUpdateArgs!]!): [WorkTime]
+  deleteWorkTime(where: WorkTimeWhereUniqueInput!): WorkTime
+  deleteWorkTimes(where: [WorkTimeWhereUniqueInput!]!): [WorkTime]
+  createWorkTimeCutoff(data: WorkTimeCutoffCreateInput!): WorkTimeCutoff
+  createWorkTimeCutoffs(data: [WorkTimeCutoffCreateInput!]!): [WorkTimeCutoff]
+  updateWorkTimeCutoff(
+    where: WorkTimeCutoffWhereUniqueInput!
+    data: WorkTimeCutoffUpdateInput!
+  ): WorkTimeCutoff
+  updateWorkTimeCutoffs(data: [WorkTimeCutoffUpdateArgs!]!): [WorkTimeCutoff]
+  deleteWorkTimeCutoff(where: WorkTimeCutoffWhereUniqueInput!): WorkTimeCutoff
+  deleteWorkTimeCutoffs(
+    where: [WorkTimeCutoffWhereUniqueInput!]!
+  ): [WorkTimeCutoff]
+  createLesson(data: LessonCreateInput!): Lesson
+  createLessons(data: [LessonCreateInput!]!): [Lesson]
+  updateLesson(where: LessonWhereUniqueInput!, data: LessonUpdateInput!): Lesson
+  updateLessons(data: [LessonUpdateArgs!]!): [Lesson]
+  deleteLesson(where: LessonWhereUniqueInput!): Lesson
+  deleteLessons(where: [LessonWhereUniqueInput!]!): [Lesson]
   endSession: Boolean!
   authenticateUserWithPassword(
     email: String!
@@ -2740,6 +3190,38 @@ type Query {
   ): [Client!]
   client(where: ClientWhereUniqueInput!): Client
   clientsCount(where: ClientWhereInput! = {}): Int
+  managers(
+    where: ManagerWhereInput! = {}
+    orderBy: [ManagerOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Manager!]
+  manager(where: ManagerWhereUniqueInput!): Manager
+  managersCount(where: ManagerWhereInput! = {}): Int
+  workTimes(
+    where: WorkTimeWhereInput! = {}
+    orderBy: [WorkTimeOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [WorkTime!]
+  workTime(where: WorkTimeWhereUniqueInput!): WorkTime
+  workTimesCount(where: WorkTimeWhereInput! = {}): Int
+  workTimeCutoffs(
+    where: WorkTimeCutoffWhereInput! = {}
+    orderBy: [WorkTimeCutoffOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [WorkTimeCutoff!]
+  workTimeCutoff(where: WorkTimeCutoffWhereUniqueInput!): WorkTimeCutoff
+  workTimeCutoffsCount(where: WorkTimeCutoffWhereInput! = {}): Int
+  lessons(
+    where: LessonWhereInput! = {}
+    orderBy: [LessonOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Lesson!]
+  lesson(where: LessonWhereUniqueInput!): Lesson
+  lessonsCount(where: LessonWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
   checkPayment(paymentId: String!): Payment

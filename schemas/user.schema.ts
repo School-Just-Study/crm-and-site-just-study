@@ -51,6 +51,7 @@ export const User = list({
       db: { nativeType: "VarChar(10000)" },
     }),
     client: relationship({ ref: "Client" }),
+    manager: relationship({ ref: "Manager" }),
     cart: relationship({ ref: "Cart.user" }),
     magicLinkToken: text({
       ui: { listView: "read", itemView: "read", createView: "hidden" },
