@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@a2seven/yoo-checkout@^1.1.2":
+"@a2seven/yoo-checkout@1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@a2seven/yoo-checkout/-/yoo-checkout-1.1.2.tgz#604fede598ae09304620cfa7bea2323939842c43"
   integrity sha512-9eGd5c58QiNaLC0gsHamSQziE6vkCiOjnGDGD4v727uGpZhBSknrzhv/ocmzRGydNC8mIBhyxUbw+JzhZImDNQ==
@@ -3659,7 +3659,7 @@ bl@^5.0.0:
     inherits "^2.0.4"
     readable-stream "^3.4.0"
 
-body-parser@1.20.0, body-parser@^1.19.0, body-parser@^1.20.0:
+body-parser@1.20.0, body-parser@^1.19.0:
   version "1.20.0"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.20.0.tgz#3de69bd89011c11573d7bfee6a64f11b6bd27cc5"
   integrity sha512-DfJ+q6EPcGKZD1QWUjSpqp+Q7bDQTsQIF4zfUAtZ6qk+H/3/QRhg9CEp39ss+/T2vw0+HaidC0ecJj/DRLIaKg==
