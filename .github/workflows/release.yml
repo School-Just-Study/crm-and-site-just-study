@@ -16,7 +16,7 @@ jobs:
         with:
           cache: npm
           node-version: 16
-      - run: npm ci
+      - run: yarn install --frozen-lockfile
       - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
