@@ -1,12 +1,9 @@
 import { ListHooks } from "@keystone-6/core/dist/declarations/src/types/config/hooks";
 import { Lists } from ".keystone/types";
-import { notifyNewClient } from "../notifications/createdLead";
+import { Roles } from "../enums/roles.enum";
 
-export const handleCreateUserWithEmail: ListHooks<Lists.Client.TypeInfo>["afterOperation"] =
+export const handleCreateUserWithEmailManager: ListHooks<Lists.Client.TypeInfo>["afterOperation"] =
   async ({ context, item, operation }) => {
-    if (operation === "create") {
-      await notifyNewClient(item, context);
-    }
     if (operation !== "delete") {
       if (item && item.email) {
         let user = await context.query.User.findOne({
@@ -23,6 +20,7 @@ export const handleCreateUserWithEmail: ListHooks<Lists.Client.TypeInfo>["afterO
               email,
               client: { connect: { id: `${item.id}` } },
               language,
+              role: Roles.Teacher,
             },
             query: `id`,
           });

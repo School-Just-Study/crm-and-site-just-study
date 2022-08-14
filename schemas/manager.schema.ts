@@ -3,6 +3,7 @@ import { language } from "../fields/language";
 import { checkbox, decimal, relationship, text } from "@keystone-6/core/fields";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
+import { handleCreateUserWithEmailManager } from "../lib/handleCreateUserWithEmailManager";
 
 export const Manager = list({
   ui: {
@@ -64,5 +65,8 @@ export const Manager = list({
     operation: {
       delete: ({ session }) => !!session,
     },
+  },
+  hooks: {
+    afterOperation: handleCreateUserWithEmailManager,
   },
 });

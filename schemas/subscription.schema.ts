@@ -44,6 +44,10 @@ export const Subscription = list({
       defaultValue: 10,
       validation: { isRequired: true },
     }),
+    unlimited: checkbox({
+      defaultValue: false,
+      ui: { description: "Безлимитное количество занятий" },
+    }),
     price: integer({ validation: { isRequired: true } }),
     period: integer({ defaultValue: 45 }),
     desc: content,

@@ -241,6 +241,7 @@ model Subscription {
   statusView                 String     @default("draft")
   name                       String     @default("")
   visitCount                 Int        @default(10)
+  unlimited                  Boolean    @default(false)
   price                      Int
   period                     Int?       @default(45)
   desc                       Json       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
@@ -257,6 +258,7 @@ model UserSubscription {
   id                       Int       @id @default(autoincrement())
   name                     String    @default("")
   visitCount               Int?
+  unlimited                Boolean   @default(false)
   originalPrice            Int?
   price                    Int?
   period                   Int?
@@ -264,9 +266,7 @@ model UserSubscription {
   student                  User?     @relation("UserSubscription_student", fields: [studentId], references: [id])
   studentId                Int?      @map("student")
   beginDate                DateTime? @default(now())
-  payed                    Int?
   totalVisited             Int       @default(0)
-  totalBurned              Int       @default(0)
   trial                    Boolean   @default(false)
   manager                  User?     @relation("UserSubscription_manager", fields: [managerId], references: [id])
   managerId                Int?      @map("manager")
@@ -421,6 +421,7 @@ model Client {
   source              SourceClient[]          @relation("Client_source")
   teacher             Manager[]               @relation("Client_teacher")
   comment             String                  @default("") @mysql.VarChar(10000)
+  ymClientId          String                  @default("")
   createdAt           DateTime                @default(now())
   lastModification    DateTime                @default(now()) @updatedAt
   from_User_client    User[]                  @relation("User_client")

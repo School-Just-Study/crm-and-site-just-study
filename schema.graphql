@@ -1347,6 +1347,7 @@ type Subscription {
   statusView: String
   name: String
   visitCount: Int
+  unlimited: Boolean
   price: Int
   period: Int
   desc: Subscription_desc_Document
@@ -1372,6 +1373,7 @@ input SubscriptionWhereInput {
   statusView: StringFilter
   name: StringFilter
   visitCount: IntFilter
+  unlimited: BooleanFilter
   price: IntFilter
   period: IntNullableFilter
   trial: BooleanFilter
@@ -1390,6 +1392,7 @@ input SubscriptionOrderByInput {
   statusView: OrderDirection
   name: OrderDirection
   visitCount: OrderDirection
+  unlimited: OrderDirection
   price: OrderDirection
   period: OrderDirection
   trial: OrderDirection
@@ -1402,6 +1405,7 @@ input SubscriptionUpdateInput {
   statusView: String
   name: String
   visitCount: Int
+  unlimited: Boolean
   price: Int
   period: Int
   desc: JSON
@@ -1420,6 +1424,7 @@ input SubscriptionCreateInput {
   statusView: String
   name: String
   visitCount: Int
+  unlimited: Boolean
   price: Int
   period: Int
   desc: JSON
@@ -1432,6 +1437,7 @@ type UserSubscription {
   id: ID!
   name: String
   visitCount: Int
+  unlimited: Boolean
   originalPrice: Int
   price: Int
   period: Int
@@ -1439,9 +1445,7 @@ type UserSubscription {
   student: User
   beginDate: DateTime
   endDate: String
-  payed: Int
   totalVisited: Int
-  totalBurned: Int
   lastCount: Int
   trial: Boolean
   manager: User
@@ -1460,15 +1464,14 @@ input UserSubscriptionWhereInput {
   id: IDFilter
   name: StringFilter
   visitCount: IntNullableFilter
+  unlimited: BooleanFilter
   originalPrice: IntNullableFilter
   price: IntNullableFilter
   period: IntNullableFilter
   status: StringFilter
   student: UserWhereInput
   beginDate: DateTimeNullableFilter
-  payed: IntNullableFilter
   totalVisited: IntFilter
-  totalBurned: IntFilter
   trial: BooleanFilter
   manager: UserWhereInput
   createdAt: DateTimeFilter
@@ -1479,14 +1482,13 @@ input UserSubscriptionOrderByInput {
   id: OrderDirection
   name: OrderDirection
   visitCount: OrderDirection
+  unlimited: OrderDirection
   originalPrice: OrderDirection
   price: OrderDirection
   period: OrderDirection
   status: OrderDirection
   beginDate: OrderDirection
-  payed: OrderDirection
   totalVisited: OrderDirection
-  totalBurned: OrderDirection
   trial: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
@@ -1495,15 +1497,14 @@ input UserSubscriptionOrderByInput {
 input UserSubscriptionUpdateInput {
   name: String
   visitCount: Int
+  unlimited: Boolean
   originalPrice: Int
   price: Int
   period: Int
   status: String
   student: UserRelateToOneForUpdateInput
   beginDate: DateTime
-  payed: Int
   totalVisited: Int
-  totalBurned: Int
   trial: Boolean
   manager: UserRelateToOneForUpdateInput
   createdAt: DateTime
@@ -1518,15 +1519,14 @@ input UserSubscriptionUpdateArgs {
 input UserSubscriptionCreateInput {
   name: String
   visitCount: Int
+  unlimited: Boolean
   originalPrice: Int
   price: Int
   period: Int
   status: String
   student: UserRelateToOneForCreateInput
   beginDate: DateTime
-  payed: Int
   totalVisited: Int
-  totalBurned: Int
   trial: Boolean
   manager: UserRelateToOneForCreateInput
   createdAt: DateTime
@@ -2153,6 +2153,7 @@ type Client {
   ): [Manager!]
   teacherCount(where: ManagerWhereInput! = {}): Int
   comment: String
+  ymClientId: String
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -2199,6 +2200,7 @@ input ClientWhereInput {
   source: SourceClientManyRelationFilter
   teacher: ManagerManyRelationFilter
   comment: StringFilter
+  ymClientId: StringFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
@@ -2251,6 +2253,7 @@ input ClientOrderByInput {
   profession: OrderDirection
   goal: OrderDirection
   comment: OrderDirection
+  ymClientId: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -2267,6 +2270,7 @@ input ClientUpdateInput {
   source: SourceClientRelateToManyForUpdateInput
   teacher: ManagerRelateToManyForUpdateInput
   comment: String
+  ymClientId: String
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -2302,6 +2306,7 @@ input ClientCreateInput {
   source: SourceClientRelateToManyForCreateInput
   teacher: ManagerRelateToManyForCreateInput
   comment: String
+  ymClientId: String
   createdAt: DateTime
   lastModification: DateTime
 }

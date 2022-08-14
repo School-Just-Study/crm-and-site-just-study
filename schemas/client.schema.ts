@@ -7,7 +7,7 @@ import { LevelStudentOptions } from "../consts/level-student-options.const";
 import { LevelStudent } from "../enums/level-student.enum";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
-import { handleCreateUserWithEmail } from "../lib/handleCreateUserWithEmail";
+import { handleCreateUserWithEmailClient } from "../lib/handleCreateUserWithEmailClient";
 
 export const Client = list({
   ui: {
@@ -61,6 +61,7 @@ export const Client = list({
       ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(10000)" },
     }),
+    ymClientId: text(),
     createdAt,
     lastModification,
   },
@@ -70,6 +71,6 @@ export const Client = list({
     },
   },
   hooks: {
-    afterOperation: handleCreateUserWithEmail,
+    afterOperation: handleCreateUserWithEmailClient,
   },
 });

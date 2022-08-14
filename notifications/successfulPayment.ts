@@ -19,6 +19,8 @@ export const notifySuccessfulPaymentForClient = async (
   ctx: KeystoneContext,
   receiptId?: string
 ) => {
+  if (process.env.NODE_ENV === "development") return;
+
   const client = await ctx.query.User.findOne({
     where: { id: clientId },
     query: `email name`,
@@ -63,6 +65,8 @@ export const notifySuccessfulPaymentForManagers = async (
   paymentId: number,
   ctx: KeystoneContext
 ) => {
+  if (process.env.NODE_ENV === "development") return;
+
   const client = await ctx.query.User.findOne({
     where: { id: clientId },
     query: `email name`,

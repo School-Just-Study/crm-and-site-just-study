@@ -33,7 +33,6 @@ export const UserSubscription = list({
         "student",
         "beginDate",
         "endDate",
-        "payed",
         "lastCount",
         "manager",
       ],
@@ -43,6 +42,10 @@ export const UserSubscription = list({
   fields: {
     name: text(),
     visitCount: integer(),
+    unlimited: checkbox({
+      defaultValue: false,
+      ui: { description: "Безлимитное количество занятий" },
+    }),
     originalPrice: integer(),
     price: integer(),
     period: integer({
@@ -74,18 +77,16 @@ export const UserSubscription = list({
         description: "Рассчитывается автоматически от длительности периода",
       },
     }),
-    payed: integer(),
     totalVisited: integer({
       defaultValue: 0,
       validation: { isRequired: true },
     }),
-    totalBurned: integer({ defaultValue: 0, validation: { isRequired: true } }),
     lastCount: virtual({
       field: graphql.field({
         type: graphql.Int,
         async resolve(item: Lists.UserSubscription.Item) {
           if (item.visitCount) {
-            return item.visitCount - item.totalVisited - item.totalBurned;
+            return item.visitCount - item.totalVisited;
           } else {
             return;
           }
