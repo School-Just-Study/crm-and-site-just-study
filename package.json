@@ -14,7 +14,7 @@
     "@a2seven/yoo-checkout": "1.1.2",
     "@keystone-6/auth": "4.0.0",
     "@keystone-6/core": "2.1.0",
-    "@keystone-6/fields-document": "4.0.1",
+    "@keystone-6/fields-document": "4.1.0",
     "@semantic-release/npm": "9.0.1",
     "body-parser": "1.20.0",
     "date-fns": "2.29.1",
