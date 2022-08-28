@@ -1,8 +1,5 @@
 import { KeystoneConfig } from "@keystone-6/core/dist/declarations/src/types/config";
-import { FRONTEND_URL, SENTRY_DNS, SERVER_PORT } from "./index";
-import configProject from "../package.json";
-import * as Sentry from "@sentry/node";
-import * as Tracing from "@sentry/tracing";
+import { FRONTEND_URL, SERVER_PORT } from "./index";
 import bodyParser from "body-parser";
 import { Payment } from "@a2seven/yoo-checkout/lib/models/payment";
 import { PaymentStatus } from "../enums/payment-status.enum";
