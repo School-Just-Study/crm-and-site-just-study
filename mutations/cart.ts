@@ -27,7 +27,6 @@ export const cart = async (
     user = await context.query.User.createOne({
       data: {
         name,
-        phone,
         email,
         language,
       },
@@ -38,7 +37,6 @@ export const cart = async (
       where: { email },
       data: {
         name,
-        phone,
         email,
       },
       query: `id`,
