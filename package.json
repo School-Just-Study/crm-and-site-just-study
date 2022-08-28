@@ -7,7 +7,7 @@
     "seed-data": "keystone --seed-data",
     "start": "TZ='UTC' keystone start",
     "build": "keystone build",
-    "postinstall": "keystone postinstall",
+    "postinstall": "keystone postinstall --fix",
     "deploy-config": "scp -r ./ecosystem.config.js juststudy@51.250.90.183:/home/juststudy/just-study-crm"
   },
   "dependencies": {

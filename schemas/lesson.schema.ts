@@ -28,6 +28,10 @@ export const Lesson = list({
       defaultValue: false,
     }),
     student: relationship({ ref: "Client", many: true }),
+    subscriptions: relationship({
+      ref: "UserSubscription.lessons",
+      many: true,
+    }),
     teacher: relationship({ ref: "Manager", many: true }),
     comment: text({
       ui: { displayMode: "textarea" },

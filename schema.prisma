@@ -267,6 +267,7 @@ model UserSubscription {
   studentId                Int?      @map("student")
   beginDate                DateTime? @default(now())
   totalVisited             Int       @default(0)
+  lessons                  Lesson[]  @relation("Lesson_subscriptions")
   trial                    Boolean   @default(false)
   manager                  User?     @relation("UserSubscription_manager", fields: [managerId], references: [id])
   managerId                Int?      @map("manager")
@@ -479,18 +480,19 @@ model WorkTimeCutoff {
 }
 
 model Lesson {
-  id               Int       @id @default(autoincrement())
-  title            String    @default("")
-  description      String    @default("")
+  id               Int                @id @default(autoincrement())
+  title            String             @default("")
+  description      String             @default("")
   date             DateTime
-  startTime        String    @default("09:00")
-  endTime          String    @default("10:00")
-  status           Boolean   @default(false)
-  student          Client[]  @relation("Lesson_student")
-  teacher          Manager[] @relation("Lesson_teacher")
-  comment          String    @default("") @mysql.VarChar(10000)
-  createdAt        DateTime  @default(now())
-  lastModification DateTime  @default(now()) @updatedAt
+  startTime        String             @default("09:00")
+  endTime          String             @default("10:00")
+  status           Boolean            @default(false)
+  student          Client[]           @relation("Lesson_student")
+  subscriptions    UserSubscription[] @relation("Lesson_subscriptions")
+  teacher          Manager[]          @relation("Lesson_teacher")
+  comment          String             @default("") @mysql.VarChar(10000)
+  createdAt        DateTime           @default(now())
+  lastModification DateTime           @default(now()) @updatedAt
 }
 
 enum OrderStatusType {

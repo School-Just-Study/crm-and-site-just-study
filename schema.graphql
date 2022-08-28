@@ -1447,6 +1447,13 @@ type UserSubscription {
   endDate: String
   totalVisited: Int
   lastCount: Int
+  lessons(
+    where: LessonWhereInput! = {}
+    orderBy: [LessonOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Lesson!]
+  lessonsCount(where: LessonWhereInput! = {}): Int
   trial: Boolean
   manager: User
   createdAt: DateTime
@@ -1472,10 +1479,17 @@ input UserSubscriptionWhereInput {
   student: UserWhereInput
   beginDate: DateTimeNullableFilter
   totalVisited: IntFilter
+  lessons: LessonManyRelationFilter
   trial: BooleanFilter
   manager: UserWhereInput
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
+}
+
+input LessonManyRelationFilter {
+  every: LessonWhereInput
+  some: LessonWhereInput
+  none: LessonWhereInput
 }
 
 input UserSubscriptionOrderByInput {
@@ -1505,10 +1519,18 @@ input UserSubscriptionUpdateInput {
   student: UserRelateToOneForUpdateInput
   beginDate: DateTime
   totalVisited: Int
+  lessons: LessonRelateToManyForUpdateInput
   trial: Boolean
   manager: UserRelateToOneForUpdateInput
   createdAt: DateTime
   lastModification: DateTime
+}
+
+input LessonRelateToManyForUpdateInput {
+  disconnect: [LessonWhereUniqueInput!]
+  set: [LessonWhereUniqueInput!]
+  create: [LessonCreateInput!]
+  connect: [LessonWhereUniqueInput!]
 }
 
 input UserSubscriptionUpdateArgs {
@@ -1527,10 +1549,16 @@ input UserSubscriptionCreateInput {
   student: UserRelateToOneForCreateInput
   beginDate: DateTime
   totalVisited: Int
+  lessons: LessonRelateToManyForCreateInput
   trial: Boolean
   manager: UserRelateToOneForCreateInput
   createdAt: DateTime
   lastModification: DateTime
+}
+
+input LessonRelateToManyForCreateInput {
+  create: [LessonCreateInput!]
+  connect: [LessonWhereUniqueInput!]
 }
 
 type Service {
@@ -2595,6 +2623,13 @@ type Lesson {
     skip: Int! = 0
   ): [Client!]
   studentCount(where: ClientWhereInput! = {}): Int
+  subscriptions(
+    where: UserSubscriptionWhereInput! = {}
+    orderBy: [UserSubscriptionOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [UserSubscription!]
+  subscriptionsCount(where: UserSubscriptionWhereInput! = {}): Int
   teacher(
     where: ManagerWhereInput! = {}
     orderBy: [ManagerOrderByInput!]! = []
@@ -2623,6 +2658,7 @@ input LessonWhereInput {
   endTime: StringFilter
   status: BooleanFilter
   student: ClientManyRelationFilter
+  subscriptions: UserSubscriptionManyRelationFilter
   teacher: ManagerManyRelationFilter
   comment: StringFilter
   createdAt: DateTimeFilter
@@ -2656,6 +2692,7 @@ input LessonUpdateInput {
   endTime: String
   status: Boolean
   student: ClientRelateToManyForUpdateInput
+  subscriptions: UserSubscriptionRelateToManyForUpdateInput
   teacher: ManagerRelateToManyForUpdateInput
   comment: String
   createdAt: DateTime
@@ -2682,6 +2719,7 @@ input LessonCreateInput {
   endTime: String
   status: Boolean
   student: ClientRelateToManyForCreateInput
+  subscriptions: UserSubscriptionRelateToManyForCreateInput
   teacher: ManagerRelateToManyForCreateInput
   comment: String
   createdAt: DateTime

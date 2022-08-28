@@ -32,9 +32,7 @@ export const Subscription = list({
         type: graphql.String,
         resolve(item: Lists.Subscription.Item) {
           if (!item) return;
-          return `${item.name} - ${item.price} ${getCurrencyForLanguage(
-            item.language
-          )}`;
+          return `${item.name} - ${item.price} ${getCurrencyForLanguage("ru")}`;
         },
       }),
     }),
