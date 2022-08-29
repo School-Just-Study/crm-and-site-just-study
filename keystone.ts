@@ -7,6 +7,7 @@ import { db } from "./config/db";
 import { server } from "./config/server";
 import { session } from "./config/session";
 import { extendGraphqlSchema } from "./mutations";
+import { ui } from "./config/ui";
 
 const { withAuth } = createAuth({
   listKey: "User",
@@ -32,5 +33,6 @@ export default withAuth(
     storage,
     session,
     extendGraphqlSchema,
+    ui,
   })
 );
