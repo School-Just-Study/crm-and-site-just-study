@@ -1,6 +1,6 @@
 {
   "name": "nextjs-with-typescript",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "private": true,
   "scripts": {
     "dev": "TZ='UTC' keystone dev",
@@ -11,30 +11,30 @@
     "deploy-config": "scp -r ./ecosystem.config.js juststudy@51.250.90.183:/home/juststudy/just-study-crm"
   },
   "dependencies": {
-    "@a2seven/yoo-checkout": "1.1.2",
+    "@a2seven/yoo-checkout": "1.1.4",
     "@keystone-6/auth": "4.0.1",
-    "@keystone-6/core": "2.2.0",
-    "@keystone-6/fields-document": "4.1.0",
+    "@keystone-6/core": "2.3.0",
+    "@keystone-6/fields-document": "4.1.1",
     "@semantic-release/npm": "9.0.1",
     "body-parser": "1.20.0",
-    "date-fns": "2.29.2",
-    "date-fns-tz": "1.3.6",
+    "date-fns": "2.29.3",
+    "date-fns-tz": "1.3.7",
     "lknpd-nalog-api": "1.0.1",
     "lru_map": "0.4.1",
     "nodemailer": "6.7.8",
     "payture-official": "0.0.6",
-    "uuid": "8.3.2"
+    "uuid": "9.0.0"
   },
   "devDependencies": {
     "@semantic-release/commit-analyzer": "9.0.2",
     "@semantic-release/git": "10.0.1",
     "@semantic-release/release-notes-generator": "10.0.3",
     "@types/node": "18.0.0",
-    "@types/nodemailer": "6.4.5",
-    "eslint": "8.22.0",
+    "@types/nodemailer": "6.4.6",
+    "eslint": "8.23.1",
     "prettier": "2.7.1",
-    "semantic-release": "19.0.3",
-    "typescript": "4.7.4"
+    "semantic-release": "19.0.5",
+    "typescript": "4.8.3"
   },
   "engines": {
     "node": "16.x",
