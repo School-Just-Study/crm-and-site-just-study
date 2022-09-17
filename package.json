@@ -11,7 +11,7 @@
     "deploy-config": "scp -r ./ecosystem.config.js juststudy@51.250.90.183:/home/juststudy/just-study-crm"
   },
   "dependencies": {
-    "@a2seven/yoo-checkout": "1.1.2",
+    "@a2seven/yoo-checkout": "1.1.4",
     "@keystone-6/auth": "4.0.1",
     "@keystone-6/core": "2.3.0",
     "@keystone-6/fields-document": "4.1.1",
