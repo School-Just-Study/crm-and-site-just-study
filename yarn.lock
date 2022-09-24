@@ -1880,10 +1880,10 @@
   resolved "https://registry.yarnpkg.com/@keystone-6/document-renderer/-/document-renderer-1.1.1.tgz#cece98bf38ec38953d7bcb8d0e3799aba2af0568"
   integrity sha512-OziNXEaZwSUWQuA04lbUPzUDyBqc1zxtmw2VAHt51adT6PvTihB58fWhBQ9H17Mytk4Egup4xI3bs7KpG98TOw==
 
-"@keystone-6/fields-document@4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@keystone-6/fields-document/-/fields-document-4.1.1.tgz#ae8212ad64d9b3d340b55d7416f2bc4539becef0"
-  integrity sha512-gsxaHNbTCzF8OQIAV6Hgu1VsayzZogkxXKK4BgW5Atf5iWWkkLMo2Qega3LT0+DwtpPaEeupk2U1CLM/6dURnA==
+"@keystone-6/fields-document@4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@keystone-6/fields-document/-/fields-document-4.1.2.tgz#33e9bc35fe2e8117aa23057d84623ce45a0c31aa"
+  integrity sha512-gR6OmTut1ZDovnTcG5NNMLD7HzSnr8BLdVGcckuxqcrYLgyaRFIYyniTcLR8em7F6mBOCYI7cD9DUG86LFuNjg==
   dependencies:
     "@babel/runtime" "^7.16.3"
     "@braintree/sanitize-url" "^6.0.0"
