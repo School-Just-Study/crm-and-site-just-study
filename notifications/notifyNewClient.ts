@@ -24,7 +24,7 @@ export const notifyNewClient = async (
   const managersEmail = managers.map((user) => user.email);
 
   const clientInfo = `
-    <div style='display:flex; flex-direction: column; gap: 8px'>
+    <div style='display:flex; flex-direction: column'>
     ${fieldsEmail("Имя", client.name)}
     ${fieldsEmail("Телефон", `${client.phone}`)}
     ${fieldsEmail(

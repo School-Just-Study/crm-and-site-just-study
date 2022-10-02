@@ -203,7 +203,7 @@ model User {
   from_UserService_manager      UserService[]      @relation("UserService_manager")
   from_Page_author              Page[]             @relation("Page_author")
   from_Post_author              Post[]             @relation("Post_author")
-  from_Lesson_student           Lesson[]           @relation("Lesson_student")
+  from_Lesson_students          Lesson[]           @relation("Lesson_students")
 
   @@index([language])
   @@index([clientId])
@@ -432,22 +432,23 @@ model Client {
 }
 
 model Manager {
-  id                  Int              @id @default(autoincrement())
-  language            String           @default("ru")
-  name                String           @default("")
-  email               String           @default("")
-  phone               Decimal?         @mysql.Decimal(18, 0)
-  work                Boolean          @default(true)
-  teacher             Boolean          @default(true)
-  linkOnlineLesson    String           @default("")
-  workTime            WorkTime[]       @relation("WorkTime_manager")
-  cutoff              WorkTimeCutoff[] @relation("WorkTimeCutoff_manager")
-  comment             String           @default("") @mysql.VarChar(10000)
-  createdAt           DateTime         @default(now())
-  lastModification    DateTime         @default(now()) @updatedAt
-  from_User_manager   User[]           @relation("User_manager")
-  from_Client_teacher Client[]         @relation("Client_teacher")
-  from_Lesson_teacher Lesson[]         @relation("Lesson_teacher")
+  id                   Int              @id @default(autoincrement())
+  language             String           @default("ru")
+  name                 String           @default("")
+  email                String           @default("")
+  phone                Decimal?         @mysql.Decimal(18, 0)
+  work                 Boolean          @default(true)
+  teacher              Boolean          @default(true)
+  linkOnlineLesson     String           @default("")
+  workTime             WorkTime[]       @relation("WorkTime_manager")
+  cutoff               WorkTimeCutoff[] @relation("WorkTimeCutoff_manager")
+  timeZone             String?
+  comment              String           @default("") @mysql.VarChar(10000)
+  createdAt            DateTime         @default(now())
+  lastModification     DateTime         @default(now()) @updatedAt
+  from_User_manager    User[]           @relation("User_manager")
+  from_Client_teacher  Client[]         @relation("Client_teacher")
+  from_Lesson_teachers Lesson[]         @relation("Lesson_teachers")
 
   @@index([language])
 }
@@ -487,11 +488,13 @@ model Lesson {
   startTime        DateTime
   endTime          DateTime
   trial            Boolean           @default(false)
-  student          User[]            @relation("Lesson_student")
+  students         User[]            @relation("Lesson_students")
   subscriptions    UserSubscription? @relation("Lesson_subscriptions", fields: [subscriptionsId], references: [id])
   subscriptionsId  Int?              @map("subscriptions")
-  teacher          Manager[]         @relation("Lesson_teacher")
+  teachers         Manager[]         @relation("Lesson_teachers")
   comment          String            @default("") @mysql.VarChar(10000)
+  timeZone         String            @default("")
+  notified         Boolean           @default(false)
   createdAt        DateTime          @default(now())
   lastModification DateTime          @default(now()) @updatedAt
 

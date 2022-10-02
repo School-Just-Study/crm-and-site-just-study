@@ -8,6 +8,7 @@ import {
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 import { statusLesson } from "../fields/statusLesson";
+import { handleNotificationStudentAndTeacherLesson } from "../lib/handleNotificationStudentAndTeacherLesson";
 
 export const Lesson = list({
   ui: {
@@ -21,7 +22,7 @@ export const Lesson = list({
         "endTime",
         "statusLesson",
         "trial",
-        "student",
+        "students",
       ],
     },
   },
@@ -41,16 +42,21 @@ export const Lesson = list({
       label: "Пробный урок",
       defaultValue: false,
     }),
-    student: relationship({ ref: "User", many: true }),
+    students: relationship({ ref: "User", many: true }),
     subscriptions: relationship({
       ref: "UserSubscription.lessons",
     }),
-    teacher: relationship({ ref: "Manager", many: true }),
+    teachers: relationship({ ref: "Manager", many: true }),
     comment: text({
       ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(10000)" },
     }),
+    timeZone: text(),
+    notified: checkbox(),
     createdAt,
     lastModification,
+  },
+  hooks: {
+    afterOperation: handleNotificationStudentAndTeacherLesson,
   },
 });

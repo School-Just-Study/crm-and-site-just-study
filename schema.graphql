@@ -2372,6 +2372,7 @@ type Manager {
     skip: Int! = 0
   ): [WorkTimeCutoff!]
   cutoffCount(where: WorkTimeCutoffWhereInput! = {}): Int
+  timeZone: String
   comment: String
   createdAt: DateTime
   lastModification: DateTime
@@ -2395,6 +2396,7 @@ input ManagerWhereInput {
   linkOnlineLesson: StringFilter
   workTime: WorkTimeManyRelationFilter
   cutoff: WorkTimeCutoffManyRelationFilter
+  timeZone: StringNullableFilter
   comment: StringFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
@@ -2412,6 +2414,34 @@ input WorkTimeCutoffManyRelationFilter {
   none: WorkTimeCutoffWhereInput
 }
 
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
+input NestedStringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
 input ManagerOrderByInput {
   id: OrderDirection
   language: OrderDirection
@@ -2421,6 +2451,7 @@ input ManagerOrderByInput {
   work: OrderDirection
   teacher: OrderDirection
   linkOnlineLesson: OrderDirection
+  timeZone: OrderDirection
   comment: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
@@ -2436,6 +2467,7 @@ input ManagerUpdateInput {
   linkOnlineLesson: String
   workTime: WorkTimeRelateToManyForUpdateInput
   cutoff: WorkTimeCutoffRelateToManyForUpdateInput
+  timeZone: String
   comment: String
   createdAt: DateTime
   lastModification: DateTime
@@ -2470,6 +2502,7 @@ input ManagerCreateInput {
   linkOnlineLesson: String
   workTime: WorkTimeRelateToManyForCreateInput
   cutoff: WorkTimeCutoffRelateToManyForCreateInput
+  timeZone: String
   comment: String
   createdAt: DateTime
   lastModification: DateTime
@@ -2616,22 +2649,24 @@ type Lesson {
   startTime: DateTime
   endTime: DateTime
   trial: Boolean
-  student(
+  students(
     where: UserWhereInput! = {}
     orderBy: [UserOrderByInput!]! = []
     take: Int
     skip: Int! = 0
   ): [User!]
-  studentCount(where: UserWhereInput! = {}): Int
+  studentsCount(where: UserWhereInput! = {}): Int
   subscriptions: UserSubscription
-  teacher(
+  teachers(
     where: ManagerWhereInput! = {}
     orderBy: [ManagerOrderByInput!]! = []
     take: Int
     skip: Int! = 0
   ): [Manager!]
-  teacherCount(where: ManagerWhereInput! = {}): Int
+  teachersCount(where: ManagerWhereInput! = {}): Int
   comment: String
+  timeZone: String
+  notified: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -2651,10 +2686,12 @@ input LessonWhereInput {
   startTime: DateTimeFilter
   endTime: DateTimeFilter
   trial: BooleanFilter
-  student: UserManyRelationFilter
+  students: UserManyRelationFilter
   subscriptions: UserSubscriptionWhereInput
-  teacher: ManagerManyRelationFilter
+  teachers: ManagerManyRelationFilter
   comment: StringFilter
+  timeZone: StringFilter
+  notified: BooleanFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
@@ -2674,6 +2711,8 @@ input LessonOrderByInput {
   endTime: OrderDirection
   trial: OrderDirection
   comment: OrderDirection
+  timeZone: OrderDirection
+  notified: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -2685,10 +2724,12 @@ input LessonUpdateInput {
   startTime: DateTime
   endTime: DateTime
   trial: Boolean
-  student: UserRelateToManyForUpdateInput
+  students: UserRelateToManyForUpdateInput
   subscriptions: UserSubscriptionRelateToOneForUpdateInput
-  teacher: ManagerRelateToManyForUpdateInput
+  teachers: ManagerRelateToManyForUpdateInput
   comment: String
+  timeZone: String
+  notified: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -2718,10 +2759,12 @@ input LessonCreateInput {
   startTime: DateTime
   endTime: DateTime
   trial: Boolean
-  student: UserRelateToManyForCreateInput
+  students: UserRelateToManyForCreateInput
   subscriptions: UserSubscriptionRelateToOneForCreateInput
-  teacher: ManagerRelateToManyForCreateInput
+  teachers: ManagerRelateToManyForCreateInput
   comment: String
+  timeZone: String
+  notified: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }

@@ -19,7 +19,7 @@ export const unavailableTimesForRecordLesson = async (
   const lessons = await context.query.Lesson.findMany({
     where: {
       statusLesson: { equals: LessonStatus.Created },
-      teacher: { every: { id: { equals: teacherId } } },
+      teachers: { every: { id: { equals: teacherId } } },
     },
     query: `startTime endTime`,
   });

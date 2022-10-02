@@ -1,9 +1,16 @@
 import { list } from "@keystone-6/core";
 import { language } from "../fields/language";
-import { checkbox, decimal, relationship, text } from "@keystone-6/core/fields";
+import {
+  checkbox,
+  decimal,
+  relationship,
+  select,
+  text,
+} from "@keystone-6/core/fields";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 import { handleCreateUserWithEmailManager } from "../lib/handleCreateUserWithEmailManager";
+import { TimezoneOptionsConst } from "../consts/timezone-options.const";
 
 export const Manager = list({
   ui: {
@@ -54,6 +61,7 @@ export const Manager = list({
       many: true,
       label: "Часы неработы",
     }),
+    timeZone: select({ options: TimezoneOptionsConst, type: "string" }),
     comment: text({
       ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(10000)" },

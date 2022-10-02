@@ -17,7 +17,7 @@ export const handleStatusUserSubscription: ListHooks<Lists.UserSubscription.Type
         query: `lastCount`,
       });
 
-      if (!subscription) return;
+      if (!subscription) return resolvedData;
 
       if (subscription.lastCount === 0) {
         return {

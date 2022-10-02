@@ -1,6 +1,6 @@
 import { ListHooks } from "@keystone-6/core/dist/declarations/src/types/config/hooks";
 import { Lists } from ".keystone/types";
-import { notifyNewClient } from "../notifications/createdLead";
+import { notifyNewClient } from "../notifications/notifyNewClient";
 
 export const handleCreateUserWithEmailClient: ListHooks<Lists.Client.TypeInfo>["afterOperation"] =
   async ({ context, item, operation }) => {

@@ -1,6 +1,6 @@
 export const baseTemplateEmail = (title: string, body: string) => {
   return `
-  <!doctype html>
+<!doctype html>
 <html xmlns='http://www.w3.org/1999/xhtml' xmlns:v='urn:schemas-microsoft-com:vml' xmlns:o='urn:schemas-microsoft-com:office:office'>
 
 <head>
@@ -112,7 +112,7 @@ export const baseTemplateEmail = (title: string, body: string) => {
                           <tbody>
                             <tr>
                               <td style='width:150px;'>
-                                <img height='auto' src='https://just-study.ru/wp-content/uploads/2021/11/resurs-5-4x.png' style='border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;' width='150' />
+                                <img height='auto' src='https://storage.yandexcloud.net/sitejuststudy/full-logo.png' style='border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;' width='150' />
                               </td>
                             </tr>
                           </tbody>
@@ -145,8 +145,8 @@ export const baseTemplateEmail = (title: string, body: string) => {
                           <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='vertical-align:top;' width='100%'>
                             <tbody>
                               <tr>
-                                <td align='left' style='font-size:0px;padding:10px 25px;padding-bottom:20px;word-break:break-word;'>
-                                  <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:30px;font-weight:bold;line-height:1;text-align:left;color:#555555;'>${title}</div>
+                                <td align='left' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
+                                  <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:30px;font-weight:bold;line-height:150%;text-align:left;color:#555555;'>${title}</div>
                                 </td>
                               </tr>
                             </tbody>
@@ -170,7 +170,7 @@ export const baseTemplateEmail = (title: string, body: string) => {
                             <tbody>
                               <tr>
                                 <td align='left' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
-                                  <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:left;color:#555555;'>${body}</div>
+                                  <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:150%;text-align:left;color:#555555;'>${body}</div>
                                 </td>
                               </tr>
                             </tbody>
