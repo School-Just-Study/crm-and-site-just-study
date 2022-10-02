@@ -55,7 +55,9 @@ export const cart = async (
     `,
   });
 
+  // @ts-ignore
   if (res.data?.checkout) {
+    // @ts-ignore
     return res.data.checkout;
   } else {
     return res.errors;

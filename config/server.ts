@@ -1,9 +1,8 @@
 import { KeystoneConfig } from "@keystone-6/core/dist/declarations/src/types/config";
 import { FRONTEND_URL, SERVER_PORT } from "./index";
 import bodyParser from "body-parser";
-import { Payment } from "@a2seven/yoo-checkout/lib/models/payment";
 import { PaymentStatus } from "../enums/payment-status.enum";
-import { IPaymentStatus } from "@a2seven/yoo-checkout/lib/types";
+import { IPaymentStatus, Payment } from "@a2seven/yoo-checkout";
 
 const statusPayment = (status: IPaymentStatus) => {
   switch (status) {

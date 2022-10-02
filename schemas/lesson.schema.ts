@@ -7,30 +7,43 @@ import {
 } from "@keystone-6/core/fields";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
+import { statusLesson } from "../fields/statusLesson";
 
 export const Lesson = list({
+  ui: {
+    label: "Уроки",
+    listView: {
+      initialColumns: [
+        "id",
+        "title",
+        "description",
+        "startTime",
+        "endTime",
+        "statusLesson",
+        "trial",
+        "student",
+      ],
+    },
+  },
   fields: {
+    statusLesson,
     title: text(),
     description: text(),
-    date: timestamp({ validation: { isRequired: true } }),
-    startTime: text({
+    startTime: timestamp({
       validation: { isRequired: true },
-      ui: { description: "Начало урока" },
-      defaultValue: "09:00",
+      label: "Начало урока",
     }),
-    endTime: text({
+    endTime: timestamp({
       validation: { isRequired: true },
-      ui: { description: "Окончание урока" },
-      defaultValue: "10:00",
+      label: "Окончание урока",
     }),
-    status: checkbox({
-      ui: { description: "Проведен ли урок?" },
+    trial: checkbox({
+      label: "Пробный урок",
       defaultValue: false,
     }),
-    student: relationship({ ref: "Client", many: true }),
+    student: relationship({ ref: "User", many: true }),
     subscriptions: relationship({
       ref: "UserSubscription.lessons",
-      many: true,
     }),
     teacher: relationship({ ref: "Manager", many: true }),
     comment: text({

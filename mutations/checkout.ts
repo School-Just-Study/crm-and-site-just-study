@@ -146,7 +146,9 @@ export const checkout = async (
     `,
   });
 
+  // @ts-ignore
   if (res.data?.payment) {
+    // @ts-ignore
     return res.data?.payment;
   } else {
     res.errors;

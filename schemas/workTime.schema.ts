@@ -1,5 +1,10 @@
 import { list } from "@keystone-6/core";
-import { checkbox, relationship, select, text } from "@keystone-6/core/fields";
+import {
+  checkbox,
+  relationship,
+  select,
+  timestamp,
+} from "@keystone-6/core/fields";
 import { DayOfWeekOptionsConst } from "../consts/dayOfWeek-options.const";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
@@ -23,15 +28,11 @@ export const WorkTime = list({
       defaultValue: false,
       ui: { description: "Это выходной день?" },
     }),
-    startTime: text({
-      validation: { isRequired: true },
-      ui: { description: "Начало работы" },
-      defaultValue: "09:00",
+    startTime: timestamp({
+      label: "Начало работы",
     }),
-    endTime: text({
-      validation: { isRequired: true },
-      ui: { description: "Окончание работы" },
-      defaultValue: "22:00",
+    endTime: timestamp({
+      label: "Окончание работы",
     }),
     createdAt,
     lastModification,

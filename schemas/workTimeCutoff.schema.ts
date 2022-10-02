@@ -7,15 +7,17 @@ import { statusView } from "../fields/statusView";
 export const WorkTimeCutoff = list({
   ui: {
     isHidden: true,
+    label: "Часы неработы",
+    labelField: "startTime",
     listView: {
-      initialColumns: ["id", "statusView", "startPeriod", "endPeriod"],
+      initialColumns: ["id", "statusView", "startTime", "endTime"],
     },
   },
   fields: {
     statusView,
     manager: relationship({ ref: "Manager.cutoff" }),
-    startPeriod: timestamp({ validation: { isRequired: true } }),
-    endPeriod: timestamp({ validation: { isRequired: true } }),
+    startTime: timestamp({ validation: { isRequired: true } }),
+    endTime: timestamp({ validation: { isRequired: true } }),
     createdAt,
     lastModification,
   },

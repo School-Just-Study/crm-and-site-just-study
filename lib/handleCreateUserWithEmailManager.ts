@@ -4,7 +4,7 @@ import { Roles } from "../enums/roles.enum";
 
 export const handleCreateUserWithEmailManager: ListHooks<Lists.Client.TypeInfo>["afterOperation"] =
   async ({ context, item, operation }) => {
-    if (operation !== "delete") {
+    if (operation === "update") {
       if (item && item.email) {
         let user = await context.query.User.findOne({
           where: { email: item.email },
@@ -18,7 +18,7 @@ export const handleCreateUserWithEmailManager: ListHooks<Lists.Client.TypeInfo>[
             data: {
               name,
               email,
-              client: { connect: { id: `${item.id}` } },
+              manager: { connect: { id: `${item.id}` } },
               language,
               role: Roles.Teacher,
             },
@@ -30,7 +30,7 @@ export const handleCreateUserWithEmailManager: ListHooks<Lists.Client.TypeInfo>[
             data: {
               name,
               email,
-              client: { connect: { id: `${item.id}` } },
+              manager: { connect: { id: `${item.id}` } },
             },
             query: `id`,
           });

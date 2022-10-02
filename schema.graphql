@@ -2490,8 +2490,8 @@ type WorkTime {
   manager: Manager
   dayOfWeek: Int
   isDayOff: Boolean
-  startTime: String
-  endTime: String
+  startTime: DateTime
+  endTime: DateTime
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -2508,8 +2508,8 @@ input WorkTimeWhereInput {
   manager: ManagerWhereInput
   dayOfWeek: IntFilter
   isDayOff: BooleanFilter
-  startTime: StringFilter
-  endTime: StringFilter
+  startTime: DateTimeNullableFilter
+  endTime: DateTimeNullableFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
@@ -2528,8 +2528,8 @@ input WorkTimeUpdateInput {
   manager: ManagerRelateToOneForUpdateInput
   dayOfWeek: Int
   isDayOff: Boolean
-  startTime: String
-  endTime: String
+  startTime: DateTime
+  endTime: DateTime
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -2543,8 +2543,8 @@ input WorkTimeCreateInput {
   manager: ManagerRelateToOneForCreateInput
   dayOfWeek: Int
   isDayOff: Boolean
-  startTime: String
-  endTime: String
+  startTime: DateTime
+  endTime: DateTime
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -2553,8 +2553,8 @@ type WorkTimeCutoff {
   id: ID!
   statusView: String
   manager: Manager
-  startPeriod: DateTime
-  endPeriod: DateTime
+  startTime: DateTime
+  endTime: DateTime
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -2570,8 +2570,8 @@ input WorkTimeCutoffWhereInput {
   id: IDFilter
   statusView: StringFilter
   manager: ManagerWhereInput
-  startPeriod: DateTimeFilter
-  endPeriod: DateTimeFilter
+  startTime: DateTimeFilter
+  endTime: DateTimeFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
@@ -2579,8 +2579,8 @@ input WorkTimeCutoffWhereInput {
 input WorkTimeCutoffOrderByInput {
   id: OrderDirection
   statusView: OrderDirection
-  startPeriod: OrderDirection
-  endPeriod: OrderDirection
+  startTime: OrderDirection
+  endTime: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -2588,8 +2588,8 @@ input WorkTimeCutoffOrderByInput {
 input WorkTimeCutoffUpdateInput {
   statusView: String
   manager: ManagerRelateToOneForUpdateInput
-  startPeriod: DateTime
-  endPeriod: DateTime
+  startTime: DateTime
+  endTime: DateTime
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -2602,34 +2602,28 @@ input WorkTimeCutoffUpdateArgs {
 input WorkTimeCutoffCreateInput {
   statusView: String
   manager: ManagerRelateToOneForCreateInput
-  startPeriod: DateTime
-  endPeriod: DateTime
+  startTime: DateTime
+  endTime: DateTime
   createdAt: DateTime
   lastModification: DateTime
 }
 
 type Lesson {
   id: ID!
+  statusLesson: String
   title: String
   description: String
-  date: DateTime
-  startTime: String
-  endTime: String
-  status: Boolean
+  startTime: DateTime
+  endTime: DateTime
+  trial: Boolean
   student(
-    where: ClientWhereInput! = {}
-    orderBy: [ClientOrderByInput!]! = []
+    where: UserWhereInput! = {}
+    orderBy: [UserOrderByInput!]! = []
     take: Int
     skip: Int! = 0
-  ): [Client!]
-  studentCount(where: ClientWhereInput! = {}): Int
-  subscriptions(
-    where: UserSubscriptionWhereInput! = {}
-    orderBy: [UserSubscriptionOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [UserSubscription!]
-  subscriptionsCount(where: UserSubscriptionWhereInput! = {}): Int
+  ): [User!]
+  studentCount(where: UserWhereInput! = {}): Int
+  subscriptions: UserSubscription
   teacher(
     where: ManagerWhereInput! = {}
     orderBy: [ManagerOrderByInput!]! = []
@@ -2651,59 +2645,65 @@ input LessonWhereInput {
   OR: [LessonWhereInput!]
   NOT: [LessonWhereInput!]
   id: IDFilter
+  statusLesson: StringFilter
   title: StringFilter
   description: StringFilter
-  date: DateTimeFilter
-  startTime: StringFilter
-  endTime: StringFilter
-  status: BooleanFilter
-  student: ClientManyRelationFilter
-  subscriptions: UserSubscriptionManyRelationFilter
+  startTime: DateTimeFilter
+  endTime: DateTimeFilter
+  trial: BooleanFilter
+  student: UserManyRelationFilter
+  subscriptions: UserSubscriptionWhereInput
   teacher: ManagerManyRelationFilter
   comment: StringFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
 
-input ClientManyRelationFilter {
-  every: ClientWhereInput
-  some: ClientWhereInput
-  none: ClientWhereInput
+input UserManyRelationFilter {
+  every: UserWhereInput
+  some: UserWhereInput
+  none: UserWhereInput
 }
 
 input LessonOrderByInput {
   id: OrderDirection
+  statusLesson: OrderDirection
   title: OrderDirection
   description: OrderDirection
-  date: OrderDirection
   startTime: OrderDirection
   endTime: OrderDirection
-  status: OrderDirection
+  trial: OrderDirection
   comment: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
 
 input LessonUpdateInput {
+  statusLesson: String
   title: String
   description: String
-  date: DateTime
-  startTime: String
-  endTime: String
-  status: Boolean
-  student: ClientRelateToManyForUpdateInput
-  subscriptions: UserSubscriptionRelateToManyForUpdateInput
+  startTime: DateTime
+  endTime: DateTime
+  trial: Boolean
+  student: UserRelateToManyForUpdateInput
+  subscriptions: UserSubscriptionRelateToOneForUpdateInput
   teacher: ManagerRelateToManyForUpdateInput
   comment: String
   createdAt: DateTime
   lastModification: DateTime
 }
 
-input ClientRelateToManyForUpdateInput {
-  disconnect: [ClientWhereUniqueInput!]
-  set: [ClientWhereUniqueInput!]
-  create: [ClientCreateInput!]
-  connect: [ClientWhereUniqueInput!]
+input UserRelateToManyForUpdateInput {
+  disconnect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserSubscriptionRelateToOneForUpdateInput {
+  create: UserSubscriptionCreateInput
+  connect: UserSubscriptionWhereUniqueInput
+  disconnect: Boolean
 }
 
 input LessonUpdateArgs {
@@ -2712,23 +2712,28 @@ input LessonUpdateArgs {
 }
 
 input LessonCreateInput {
+  statusLesson: String
   title: String
   description: String
-  date: DateTime
-  startTime: String
-  endTime: String
-  status: Boolean
-  student: ClientRelateToManyForCreateInput
-  subscriptions: UserSubscriptionRelateToManyForCreateInput
+  startTime: DateTime
+  endTime: DateTime
+  trial: Boolean
+  student: UserRelateToManyForCreateInput
+  subscriptions: UserSubscriptionRelateToOneForCreateInput
   teacher: ManagerRelateToManyForCreateInput
   comment: String
   createdAt: DateTime
   lastModification: DateTime
 }
 
-input ClientRelateToManyForCreateInput {
-  create: [ClientCreateInput!]
-  connect: [ClientWhereUniqueInput!]
+input UserRelateToManyForCreateInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserSubscriptionRelateToOneForCreateInput {
+  create: UserSubscriptionCreateInput
+  connect: UserSubscriptionWhereUniqueInput
 }
 
 """
@@ -3268,6 +3273,9 @@ type Query {
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
   checkPayment(paymentId: String!): Payment
+  unavailableTimesForRecordLesson(
+    data: UnavailableTimesForRecordLessonData!
+  ): [UnavailableTimesForRecordLessonResponse]
 }
 
 union AuthenticatedItem = User
@@ -3380,4 +3388,14 @@ input AuthCartData {
   phone: Decimal!
   email: String!
   language: String
+}
+
+input UnavailableTimesForRecordLessonData {
+  date: String!
+  teacherId: ID!
+}
+
+type UnavailableTimesForRecordLessonResponse {
+  startTime: String!
+  endTime: String!
 }

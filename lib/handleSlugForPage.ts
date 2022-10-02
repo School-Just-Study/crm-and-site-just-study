@@ -7,7 +7,7 @@ export const handleSlugForPage: ListHooks<Lists.Page.TypeInfo>["resolveInput"] =
     const title = item?.title || resolvedData?.title;
 
     if (!item?.slug) {
-      let slug = transliteration(title!);
+      let slug = transliteration(title as string);
       return {
         ...resolvedData,
         slug,

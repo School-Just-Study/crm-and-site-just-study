@@ -6,6 +6,7 @@ import { payment } from "./payment";
 import { checkPayment } from "./checkPayment";
 import { cart } from "./cart";
 import { authCart } from "./authCart";
+import { unavailableTimesForRecordLesson } from "./unavailableTimesForRecordLesson";
 
 export const graphql = String.raw;
 export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
@@ -32,6 +33,15 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
       language: String
     }
 
+    input UnavailableTimesForRecordLessonData {
+      date: String!
+      teacherId: ID!
+    }
+    type UnavailableTimesForRecordLessonResponse {
+      startTime: String!
+      endTime: String!
+    }
+
     type Mutation {
       authWithEmail(email: String!): String
       checkout(userId: String!, currency: String!): PaymentResponse
@@ -42,6 +52,9 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
 
     type Query {
       checkPayment(paymentId: String!): Payment
+      unavailableTimesForRecordLesson(
+        data: UnavailableTimesForRecordLessonData!
+      ): [UnavailableTimesForRecordLessonResponse]
     }
   `,
   resolvers: {
@@ -54,6 +67,7 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
     },
     Query: {
       checkPayment,
+      unavailableTimesForRecordLesson,
     },
   },
 });

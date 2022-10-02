@@ -203,6 +203,7 @@ model User {
   from_UserService_manager      UserService[]      @relation("UserService_manager")
   from_Page_author              Page[]             @relation("Page_author")
   from_Post_author              Post[]             @relation("Post_author")
+  from_Lesson_student           Lesson[]           @relation("Lesson_student")
 
   @@index([language])
   @@index([clientId])
@@ -410,23 +411,22 @@ model Link {
 }
 
 model Client {
-  id                  Int                     @id @default(autoincrement())
-  language            String                  @default("ru")
-  name                String                  @default("")
-  email               String                  @default("")
-  phone               Decimal?                @mysql.Decimal(18, 0)
-  statusClient        ClientStatusClientType? @default(new)
-  levelStudent        ClientLevelStudentType? @default(a1)
-  profession          String                  @default("")
-  goal                String                  @default("")
-  source              SourceClient[]          @relation("Client_source")
-  teacher             Manager[]               @relation("Client_teacher")
-  comment             String                  @default("") @mysql.VarChar(10000)
-  ymClientId          String                  @default("")
-  createdAt           DateTime                @default(now())
-  lastModification    DateTime                @default(now()) @updatedAt
-  from_User_client    User[]                  @relation("User_client")
-  from_Lesson_student Lesson[]                @relation("Lesson_student")
+  id               Int                     @id @default(autoincrement())
+  language         String                  @default("ru")
+  name             String                  @default("")
+  email            String                  @default("")
+  phone            Decimal?                @mysql.Decimal(18, 0)
+  statusClient     ClientStatusClientType? @default(new)
+  levelStudent     ClientLevelStudentType? @default(a1)
+  profession       String                  @default("")
+  goal             String                  @default("")
+  source           SourceClient[]          @relation("Client_source")
+  teacher          Manager[]               @relation("Client_teacher")
+  comment          String                  @default("") @mysql.VarChar(10000)
+  ymClientId       String                  @default("")
+  createdAt        DateTime                @default(now())
+  lastModification DateTime                @default(now()) @updatedAt
+  from_User_client User[]                  @relation("User_client")
 
   @@index([language])
 }
@@ -453,15 +453,15 @@ model Manager {
 }
 
 model WorkTime {
-  id               Int      @id @default(autoincrement())
-  manager          Manager? @relation("WorkTime_manager", fields: [managerId], references: [id])
-  managerId        Int?     @map("manager")
+  id               Int       @id @default(autoincrement())
+  manager          Manager?  @relation("WorkTime_manager", fields: [managerId], references: [id])
+  managerId        Int?      @map("manager")
   dayOfWeek        Int
-  isDayOff         Boolean  @default(false)
-  startTime        String   @default("09:00")
-  endTime          String   @default("22:00")
-  createdAt        DateTime @default(now())
-  lastModification DateTime @default(now()) @updatedAt
+  isDayOff         Boolean   @default(false)
+  startTime        DateTime?
+  endTime          DateTime?
+  createdAt        DateTime  @default(now())
+  lastModification DateTime  @default(now()) @updatedAt
 
   @@index([managerId])
 }
@@ -471,8 +471,8 @@ model WorkTimeCutoff {
   statusView       String   @default("draft")
   manager          Manager? @relation("WorkTimeCutoff_manager", fields: [managerId], references: [id])
   managerId        Int?     @map("manager")
-  startPeriod      DateTime
-  endPeriod        DateTime
+  startTime        DateTime
+  endTime          DateTime
   createdAt        DateTime @default(now())
   lastModification DateTime @default(now()) @updatedAt
 
@@ -480,19 +480,22 @@ model WorkTimeCutoff {
 }
 
 model Lesson {
-  id               Int                @id @default(autoincrement())
-  title            String             @default("")
-  description      String             @default("")
-  date             DateTime
-  startTime        String             @default("09:00")
-  endTime          String             @default("10:00")
-  status           Boolean            @default(false)
-  student          Client[]           @relation("Lesson_student")
-  subscriptions    UserSubscription[] @relation("Lesson_subscriptions")
-  teacher          Manager[]          @relation("Lesson_teacher")
-  comment          String             @default("") @mysql.VarChar(10000)
-  createdAt        DateTime           @default(now())
-  lastModification DateTime           @default(now()) @updatedAt
+  id               Int               @id @default(autoincrement())
+  statusLesson     String            @default("created")
+  title            String            @default("")
+  description      String            @default("")
+  startTime        DateTime
+  endTime          DateTime
+  trial            Boolean           @default(false)
+  student          User[]            @relation("Lesson_student")
+  subscriptions    UserSubscription? @relation("Lesson_subscriptions", fields: [subscriptionsId], references: [id])
+  subscriptionsId  Int?              @map("subscriptions")
+  teacher          Manager[]         @relation("Lesson_teacher")
+  comment          String            @default("") @mysql.VarChar(10000)
+  createdAt        DateTime          @default(now())
+  lastModification DateTime          @default(now()) @updatedAt
+
+  @@index([subscriptionsId])
 }
 
 enum OrderStatusType {

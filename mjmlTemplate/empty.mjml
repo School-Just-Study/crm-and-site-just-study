@@ -9,12 +9,12 @@
     <mj-wrapper background-color="#fff" border-radius="15px">
       <mj-section padding="0">
         <mj-column>
-          <mj-text align="left" font-size="30px" font-weight="bold" padding-bottom="20px"> {title} </mj-text>
+          <mj-text align="left" font-size="30px" line-height="150%" font-weight="bold" padding-bottom="20px">{{{subject}}}</mj-text>
         </mj-column>
       </mj-section>
       <mj-section background-color="#fff">
         <mj-column>
-          <mj-text align="left">{body}</mj-text>
+          <mj-text align="left" line-height="150%">{{{body}}}</mj-text>
         </mj-column>
       </mj-section>
     </mj-wrapper>
