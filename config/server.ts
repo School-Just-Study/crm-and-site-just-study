@@ -1,20 +1,9 @@
 import { KeystoneConfig } from "@keystone-6/core/dist/declarations/src/types/config";
 import { FRONTEND_URL, SERVER_PORT } from "./index";
 import bodyParser from "body-parser";
-import { PaymentStatus } from "../enums/payment-status.enum";
-import { IPaymentStatus, Payment } from "@a2seven/yoo-checkout";
-
-const statusPayment = (status: IPaymentStatus) => {
-  switch (status) {
-    case "canceled":
-      return PaymentStatus.Cancelled;
-    case "pending":
-    case "waiting_for_capture":
-      return PaymentStatus.Created;
-    case "succeeded":
-      return PaymentStatus.Successfully;
-  }
-};
+import { handleYooKassa } from "../utils/handleYooKassa";
+import { handleStudentCalendar } from "../utils/handleStudentCalendar";
+import { handleTeacherCalendar } from "../utils/handleTeacherCalendar";
 
 export const server: KeystoneConfig["server"] = {
   port: SERVER_PORT,
@@ -33,30 +22,8 @@ export const server: KeystoneConfig["server"] = {
   extendExpressApp: (app, createContext) => {
     app.use(bodyParser.json());
 
-    app.post("/api/yookassa", async (req, res) => {
-      console.log("/api/yookassa", req.body);
-
-      const context = await createContext(req, res);
-
-      const paymentYooKassa: Payment = req.body.object;
-      const paymentId = paymentYooKassa.metadata.paymentId;
-      const statusYooKassa = paymentYooKassa.status;
-
-      const payment = await context.query.Payment.findOne({
-        where: { id: paymentId },
-        query: "id",
-      });
-
-      if (payment) {
-        await context.query.Payment.updateOne({
-          where: { id: paymentId },
-          data: {
-            status: statusPayment(statusYooKassa),
-          },
-        });
-      }
-
-      res.sendStatus(200);
-    });
+    handleYooKassa!(app, createContext);
+    handleStudentCalendar!(app, createContext);
+    handleTeacherCalendar!(app, createContext);
   },
 };

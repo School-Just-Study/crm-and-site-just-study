@@ -93,7 +93,7 @@ export const UserSubscription = list({
         },
       }),
     }),
-    lessons: relationship({ ref: "Lesson.subscriptions", many: true }),
+    lessons: relationship({ ref: "Lesson.subscription", many: true }),
     trial: checkbox({
       defaultValue: false,
       ui: { description: "Пробный урок" },

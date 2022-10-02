@@ -268,7 +268,7 @@ model UserSubscription {
   studentId                Int?      @map("student")
   beginDate                DateTime? @default(now())
   totalVisited             Int       @default(0)
-  lessons                  Lesson[]  @relation("Lesson_subscriptions")
+  lessons                  Lesson[]  @relation("Lesson_subscription")
   trial                    Boolean   @default(false)
   manager                  User?     @relation("UserSubscription_manager", fields: [managerId], references: [id])
   managerId                Int?      @map("manager")
@@ -489,8 +489,8 @@ model Lesson {
   endTime          DateTime
   trial            Boolean           @default(false)
   students         User[]            @relation("Lesson_students")
-  subscriptions    UserSubscription? @relation("Lesson_subscriptions", fields: [subscriptionsId], references: [id])
-  subscriptionsId  Int?              @map("subscriptions")
+  subscription     UserSubscription? @relation("Lesson_subscription", fields: [subscriptionId], references: [id])
+  subscriptionId   Int?              @map("subscription")
   teachers         Manager[]         @relation("Lesson_teachers")
   comment          String            @default("") @mysql.VarChar(10000)
   timeZone         String            @default("")
@@ -498,7 +498,7 @@ model Lesson {
   createdAt        DateTime          @default(now())
   lastModification DateTime          @default(now()) @updatedAt
 
-  @@index([subscriptionsId])
+  @@index([subscriptionId])
 }
 
 enum OrderStatusType {

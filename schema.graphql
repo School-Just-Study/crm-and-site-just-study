@@ -2656,7 +2656,7 @@ type Lesson {
     skip: Int! = 0
   ): [User!]
   studentsCount(where: UserWhereInput! = {}): Int
-  subscriptions: UserSubscription
+  subscription: UserSubscription
   teachers(
     where: ManagerWhereInput! = {}
     orderBy: [ManagerOrderByInput!]! = []
@@ -2687,7 +2687,7 @@ input LessonWhereInput {
   endTime: DateTimeFilter
   trial: BooleanFilter
   students: UserManyRelationFilter
-  subscriptions: UserSubscriptionWhereInput
+  subscription: UserSubscriptionWhereInput
   teachers: ManagerManyRelationFilter
   comment: StringFilter
   timeZone: StringFilter
@@ -2725,7 +2725,7 @@ input LessonUpdateInput {
   endTime: DateTime
   trial: Boolean
   students: UserRelateToManyForUpdateInput
-  subscriptions: UserSubscriptionRelateToOneForUpdateInput
+  subscription: UserSubscriptionRelateToOneForUpdateInput
   teachers: ManagerRelateToManyForUpdateInput
   comment: String
   timeZone: String
@@ -2760,7 +2760,7 @@ input LessonCreateInput {
   endTime: DateTime
   trial: Boolean
   students: UserRelateToManyForCreateInput
-  subscriptions: UserSubscriptionRelateToOneForCreateInput
+  subscription: UserSubscriptionRelateToOneForCreateInput
   teachers: ManagerRelateToManyForCreateInput
   comment: String
   timeZone: String

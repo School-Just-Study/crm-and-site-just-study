@@ -1,0 +1,6 @@
+      <mj-section background-color="#fff" padding="0">
+        <mj-column background-color="#ccf1db">
+          <mj-text align="center" padding="20px 20px 0">Рекомендуем добавить себе напоминие себе в календарь </mj-text>
+          <mj-button padding="15px" href="webcal://localhost:8000/api/student/1/lessons.ical" background-color="#0c51c4" text-transform="uppercase">Добавить в календарь</mj-button>
+        </mj-column>
+      </mj-section>

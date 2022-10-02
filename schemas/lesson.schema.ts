@@ -43,7 +43,7 @@ export const Lesson = list({
       defaultValue: false,
     }),
     students: relationship({ ref: "User", many: true }),
-    subscriptions: relationship({
+    subscription: relationship({
       ref: "UserSubscription.lessons",
     }),
     teachers: relationship({ ref: "Manager", many: true }),

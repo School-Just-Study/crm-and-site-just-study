@@ -5,6 +5,8 @@ import { localeDate } from "../lib/localeDate";
 import { mailer } from "../lib/nodemailer";
 import { from } from "./index";
 import { baseTemplateEmail } from "../mailTemplate/base";
+import { templateLesson } from "../mailTemplate/templateLesson";
+import { FRONTEND_URL } from "../config";
 
 const infoForStudent = (lesson: any) => {
   const dateFormat = format(
@@ -18,7 +20,7 @@ const infoForStudent = (lesson: any) => {
 
   return `
       <div style='display:flex; flex-direction: column;'>
-          <p>✅ Вы записались на обучение: ${lesson.subscriptions.name}</p>
+          <p>✅ Вы записались на обучение: ${lesson.subscription.name}</p>
           <p>Дата: ${dateFormat}, ${lesson.timeZone}</p>
           <p>Ссылка на онлайн урок: ${lesson.teachers[0].linkOnlineLesson}</p>
       </div>
@@ -68,7 +70,7 @@ export const notifyNewLesson = async (
 ) => {
   const lesson = await ctx.query.Lesson.findOne({
     where: { id: `${lessonId}` },
-    query: `id statusLesson startTime endTime teachers { id email name language linkOnlineLesson timeZone } students { id name email } timeZone subscriptions { name }`,
+    query: `id statusLesson startTime endTime teachers { id email name language linkOnlineLesson timeZone } students { id name email } timeZone subscription { name }`,
   });
   const studentsEmail = lesson.students.map(
     (user: Lists.User.Item) => user.email
@@ -78,7 +80,11 @@ export const notifyNewLesson = async (
     to: studentsEmail,
     from,
     subject: "🧑🏼‍🏫 Запись на урок",
-    html: baseTemplateEmail("🧑🏼‍🏫 Запись на урок", infoForStudent(lesson)),
+    html: templateLesson(
+      "🧑🏼‍🏫 Запись на урок",
+      infoForStudent(lesson),
+      `${FRONTEND_URL}/api/student/${lesson.students[0].id}/lessons.ical`
+    ),
   });
 
   const teachersEmail = lesson.teachers.map(
