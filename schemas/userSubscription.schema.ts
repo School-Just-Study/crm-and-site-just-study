@@ -16,7 +16,7 @@ import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 import { addDays } from "date-fns";
 import format from "date-fns/format";
-import { handleStatusUserSubscription } from "../lib/handleStatusUserSubscription";
+import { LessonStatus } from "../enums/lesson-status";
 
 export const UserSubscription = list({
   ui: {
@@ -77,16 +77,36 @@ export const UserSubscription = list({
         description: "Рассчитывается автоматически от длительности периода",
       },
     }),
-    totalVisited: integer({
-      defaultValue: 0,
-      validation: { isRequired: true },
+    totalVisited: virtual({
+      field: graphql.field({
+        type: graphql.Int,
+        async resolve(item: Lists.UserSubscription.Item, arg, ctx) {
+          if (item.visitCount) {
+            const lessons = await ctx.query.Lesson.findMany({
+              where: {
+                statusLesson: { equals: LessonStatus.Completed },
+                subscription: { id: { equals: item.id } },
+              },
+            });
+            return lessons.length;
+          } else {
+            return;
+          }
+        },
+      }),
     }),
     lastCount: virtual({
       field: graphql.field({
         type: graphql.Int,
-        async resolve(item: Lists.UserSubscription.Item) {
+        async resolve(item: Lists.UserSubscription.Item, arg, ctx) {
           if (item.visitCount) {
-            return item.visitCount - item.totalVisited;
+            const lesson = await ctx.query.UserSubscription.findOne({
+              where: {
+                id: `${item.id}`,
+              },
+              query: `totalVisited`,
+            });
+            return item.visitCount - lesson.totalVisited;
           } else {
             return;
           }
@@ -101,9 +121,6 @@ export const UserSubscription = list({
     manager: relationship({ ref: "User" }),
     createdAt,
     lastModification,
-  },
-  hooks: {
-    resolveInput: handleStatusUserSubscription,
   },
   access: {
     operation: {

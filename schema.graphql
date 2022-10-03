@@ -1478,7 +1478,6 @@ input UserSubscriptionWhereInput {
   status: StringFilter
   student: UserWhereInput
   beginDate: DateTimeNullableFilter
-  totalVisited: IntFilter
   lessons: LessonManyRelationFilter
   trial: BooleanFilter
   manager: UserWhereInput
@@ -1502,7 +1501,6 @@ input UserSubscriptionOrderByInput {
   period: OrderDirection
   status: OrderDirection
   beginDate: OrderDirection
-  totalVisited: OrderDirection
   trial: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
@@ -1518,7 +1516,6 @@ input UserSubscriptionUpdateInput {
   status: String
   student: UserRelateToOneForUpdateInput
   beginDate: DateTime
-  totalVisited: Int
   lessons: LessonRelateToManyForUpdateInput
   trial: Boolean
   manager: UserRelateToOneForUpdateInput
@@ -1548,7 +1545,6 @@ input UserSubscriptionCreateInput {
   status: String
   student: UserRelateToOneForCreateInput
   beginDate: DateTime
-  totalVisited: Int
   lessons: LessonRelateToManyForCreateInput
   trial: Boolean
   manager: UserRelateToOneForCreateInput
@@ -2396,7 +2392,7 @@ input ManagerWhereInput {
   linkOnlineLesson: StringFilter
   workTime: WorkTimeManyRelationFilter
   cutoff: WorkTimeCutoffManyRelationFilter
-  timeZone: StringNullableFilter
+  timeZone: StringFilter
   comment: StringFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
@@ -2412,34 +2408,6 @@ input WorkTimeCutoffManyRelationFilter {
   every: WorkTimeCutoffWhereInput
   some: WorkTimeCutoffWhereInput
   none: WorkTimeCutoffWhereInput
-}
-
-input StringNullableFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  not: NestedStringNullableFilter
-}
-
-input NestedStringNullableFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  not: NestedStringNullableFilter
 }
 
 input ManagerOrderByInput {

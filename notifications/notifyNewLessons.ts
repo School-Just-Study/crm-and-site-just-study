@@ -4,11 +4,10 @@ import { format } from "date-fns-tz";
 import { localeDate } from "../lib/localeDate";
 import { mailer } from "../lib/nodemailer";
 import { from } from "./index";
-import { baseTemplateEmail } from "../mailTemplate/base";
 import { templateLesson } from "../mailTemplate/templateLesson";
-import { FRONTEND_URL } from "../config";
+import { BACKEND_URL } from "../config";
 
-const infoForStudent = (lesson: any) => {
+const infoForStudent = (lesson: any, student: Lists.User.Item) => {
   const dateFormat = format(
     new Date(lesson.startTime),
     "d MMMM yyyy HH:mm zzz",
@@ -20,20 +19,21 @@ const infoForStudent = (lesson: any) => {
 
   return `
       <div style='display:flex; flex-direction: column;'>
+          <p>${student.name},</p>
           <p>✅ Вы записались на обучение: ${lesson.subscription.name}</p>
-          <p>Дата: ${dateFormat}, ${lesson.timeZone}</p>
-          <p>Ссылка на онлайн урок: ${lesson.teachers[0].linkOnlineLesson}</p>
+          <p>⏰ Дата: ${dateFormat}, ${lesson.timeZone}</p>
+          <p>🏫 Ссылка на онлайн урок: ${lesson.teachers[0].linkOnlineLesson}</p>
       </div>
     `;
 };
 
-const infoForTeacher = (lesson: any) => {
+const infoForTeacher = (lesson: any, teacher: Lists.Manager.Item) => {
   const dateFormatStart = format(
     new Date(lesson.startTime),
     "d MMMM yyyy HH:mm zzz",
     {
-      timeZone: lesson.timeZone,
-      locale: localeDate("ru"),
+      timeZone: teacher.timeZone,
+      locale: localeDate(teacher.language),
     }
   );
 
@@ -41,8 +41,8 @@ const infoForTeacher = (lesson: any) => {
     new Date(lesson.startTime),
     "d MMMM yyyy HH:mm zzz",
     {
-      timeZone: lesson.timeZone,
-      locale: localeDate("ru"),
+      timeZone: teacher.timeZone,
+      locale: localeDate(teacher.language),
     }
   );
 
@@ -52,9 +52,10 @@ const infoForTeacher = (lesson: any) => {
 
   return `
       <div style='display:flex; flex-direction: column;'>
+          <p>${teacher.name}</p>
           <p>К вам записался ученик: ${studentsName.join(", ")}</p>
-          <p>Начало: ${dateFormatStart}, ${lesson.timeZone}</p>
-          <p>Конец: ${dateFormatEnd}, ${lesson.timeZone}</p>
+          <p>⏰ Начало: ${dateFormatStart}, ${lesson.timeZone}</p>
+          <p>⏰ Конец: ${dateFormatEnd}, ${lesson.timeZone}</p>
       </div>
     `;
 };
@@ -72,29 +73,30 @@ export const notifyNewLesson = async (
     where: { id: `${lessonId}` },
     query: `id statusLesson startTime endTime teachers { id email name language linkOnlineLesson timeZone } students { id name email } timeZone subscription { name }`,
   });
-  const studentsEmail = lesson.students.map(
-    (user: Lists.User.Item) => user.email
-  );
 
-  await mailer.sendMail({
-    to: studentsEmail,
-    from,
-    subject: "🧑🏼‍🏫 Запись на урок",
-    html: templateLesson(
-      "🧑🏼‍🏫 Запись на урок",
-      infoForStudent(lesson),
-      `${FRONTEND_URL}/api/student/${lesson.students[0].id}/lessons.ical`
-    ),
-  });
+  for (const user of lesson.students) {
+    await mailer.sendMail({
+      to: user.email,
+      from,
+      subject: "🧑🏼‍🏫 Запись на урок",
+      html: templateLesson(
+        "🧑🏼‍🏫 Запись на урок",
+        infoForStudent(lesson, user),
+        `${BACKEND_URL}/api/student/${user.id}/lessons.ical`
+      ),
+    });
+  }
 
-  const teachersEmail = lesson.teachers.map(
-    (user: Lists.Manager.Item) => user.email
-  );
-
-  await mailer.sendMail({
-    to: teachersEmail,
-    from,
-    subject: "Новый урок",
-    html: baseTemplateEmail("Новый урок", infoForTeacher(lesson)),
-  });
+  for (const teacher of lesson.teachers) {
+    await mailer.sendMail({
+      to: teacher.email,
+      from,
+      subject: "✅ Новый урок",
+      html: templateLesson(
+        "✅ Новый урок",
+        infoForTeacher(lesson, teacher),
+        `${BACKEND_URL}/api/teacher/${teacher.id}/lessons.ical`
+      ),
+    });
+  }
 };

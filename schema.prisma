@@ -267,7 +267,6 @@ model UserSubscription {
   student                  User?     @relation("UserSubscription_student", fields: [studentId], references: [id])
   studentId                Int?      @map("student")
   beginDate                DateTime? @default(now())
-  totalVisited             Int       @default(0)
   lessons                  Lesson[]  @relation("Lesson_subscription")
   trial                    Boolean   @default(false)
   manager                  User?     @relation("UserSubscription_manager", fields: [managerId], references: [id])
@@ -442,7 +441,7 @@ model Manager {
   linkOnlineLesson     String           @default("")
   workTime             WorkTime[]       @relation("WorkTime_manager")
   cutoff               WorkTimeCutoff[] @relation("WorkTimeCutoff_manager")
-  timeZone             String?
+  timeZone             String           @default("Europe/Moscow")
   comment              String           @default("") @mysql.VarChar(10000)
   createdAt            DateTime         @default(now())
   lastModification     DateTime         @default(now()) @updatedAt

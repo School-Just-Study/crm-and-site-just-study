@@ -174,7 +174,7 @@ export const templateLesson = (
                             <tbody>
                               <tr>
                                 <td align='center' style='font-size:0px;padding:20px 20px 0;word-break:break-word;'>
-                                  <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:center;color:#555555;'>Рекомендуем добавить себе напоминие себе в календарь</div>
+                                  <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:center;color:#555555;'>Рекомендуем добавить напоминие о всех занятиях в календарь</div>
                                 </td>
                               </tr>
                               <tr>
@@ -204,7 +204,7 @@ export const templateLesson = (
                 <table align='center' border='0' cellpadding='0' cellspacing='0' role='presentation' style='background:#ffffff;background-color:#ffffff;width:100%;'>
                   <tbody>
                     <tr>
-                      <td style='direction:ltr;font-size:0px;padding:20px 0;text-align:center;'>
+                      <td style='direction:ltr;font-size:0px;padding:15px 0 0;text-align:center;'>
                         <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
                         <div class='mj-column-per-100 mj-outlook-group-fix' style='font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;'>
                           <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='vertical-align:top;' width='100%'>

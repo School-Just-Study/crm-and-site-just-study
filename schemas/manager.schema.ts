@@ -61,7 +61,12 @@ export const Manager = list({
       many: true,
       label: "Часы неработы",
     }),
-    timeZone: select({ options: TimezoneOptionsConst, type: "string" }),
+    timeZone: select({
+      options: TimezoneOptionsConst,
+      type: "string",
+      validation: { isRequired: true },
+      defaultValue: "Europe/Moscow",
+    }),
     comment: text({
       ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(10000)" },

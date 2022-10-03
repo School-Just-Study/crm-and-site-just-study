@@ -9,6 +9,7 @@ import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 import { statusLesson } from "../fields/statusLesson";
 import { handleNotificationStudentAndTeacherLesson } from "../lib/handleNotificationStudentAndTeacherLesson";
+import { handleNotificationStudentAndTeacherDeleteLesson } from "../lib/handleNotificationStudentAndTeacherDeleteLesson";
 
 export const Lesson = list({
   ui: {
@@ -58,5 +59,6 @@ export const Lesson = list({
   },
   hooks: {
     afterOperation: handleNotificationStudentAndTeacherLesson,
+    resolveInput: handleNotificationStudentAndTeacherDeleteLesson,
   },
 });
