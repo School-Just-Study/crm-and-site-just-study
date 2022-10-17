@@ -1,6 +1,6 @@
 import { KeystoneContext } from "@keystone-6/core/dist/declarations/src/types";
 import { Lists } from ".keystone/types";
-import { format } from "date-fns-tz";
+import { formatInTimeZone } from "date-fns-tz";
 import { localeDate } from "../lib/localeDate";
 import { mailer } from "../lib/nodemailer";
 import { from } from "./index";
@@ -8,11 +8,11 @@ import { templateLesson } from "../mailTemplate/templateLesson";
 import { BACKEND_URL } from "../config";
 
 const infoForStudent = (lesson: any, student: Lists.User.Item) => {
-  const dateFormat = format(
+  const dateFormat = formatInTimeZone(
     new Date(lesson.startTime),
+    lesson.timeZone,
     "d MMMM yyyy HH:mm zzz",
     {
-      timeZone: lesson.timeZone,
       locale: localeDate("ru"),
     }
   );
@@ -28,20 +28,20 @@ const infoForStudent = (lesson: any, student: Lists.User.Item) => {
 };
 
 const infoForTeacher = (lesson: any, teacher: Lists.Manager.Item) => {
-  const dateFormatStart = format(
+  const dateFormatStart = formatInTimeZone(
     new Date(lesson.startTime),
+    teacher.timeZone,
     "d MMMM yyyy HH:mm zzz",
     {
-      timeZone: teacher.timeZone,
       locale: localeDate(teacher.language),
     }
   );
 
-  const dateFormatEnd = format(
+  const dateFormatEnd = formatInTimeZone(
     new Date(lesson.startTime),
+    teacher.timeZone,
     "d MMMM yyyy HH:mm zzz",
     {
-      timeZone: teacher.timeZone,
       locale: localeDate(teacher.language),
     }
   );
@@ -54,8 +54,8 @@ const infoForTeacher = (lesson: any, teacher: Lists.Manager.Item) => {
       <div style='display:flex; flex-direction: column;'>
           <p>${teacher.name}</p>
           <p>К вам записался ученик: ${studentsName.join(", ")}</p>
-          <p>⏰ Начало: ${dateFormatStart}, ${lesson.timeZone}</p>
-          <p>⏰ Конец: ${dateFormatEnd}, ${lesson.timeZone}</p>
+          <p>⏰ Начало: ${dateFormatStart}, ${teacher.timeZone}</p>
+          <p>⏰ Конец: ${dateFormatEnd}, ${teacher.timeZone}</p>
       </div>
     `;
 };

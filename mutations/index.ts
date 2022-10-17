@@ -7,6 +7,7 @@ import { checkPayment } from "./checkPayment";
 import { cart } from "./cart";
 import { authCart } from "./authCart";
 import { unavailableTimesForRecordLesson } from "./unavailableTimesForRecordLesson";
+import { nextStudentLesson } from "./nextStudentLesson";
 
 export const graphql = String.raw;
 export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
@@ -55,6 +56,7 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
       unavailableTimesForRecordLesson(
         data: UnavailableTimesForRecordLessonData!
       ): [UnavailableTimesForRecordLessonResponse]
+      nextStudentLesson(studentId: ID!): Lesson
     }
   `,
   resolvers: {
@@ -68,6 +70,7 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
     Query: {
       checkPayment,
       unavailableTimesForRecordLesson,
+      nextStudentLesson,
     },
   },
 });

@@ -1,0 +1,30 @@
+import { ServerConfig } from "@keystone-6/core/types";
+import { LessonStatus } from "../enums/lesson-status";
+import { notifyUpcomingLessons } from "../notifications/notifyUpcomingLessons";
+import { addHours, isAfter } from "date-fns";
+
+export const handleNotificationStudentLesson: ServerConfig<any>["extendExpressApp"] =
+  async (app, createContext) => {
+    app.get("/api/check-lessons", async (req, res) => {
+      const context = await createContext(req, res);
+      console.log(new Date(), "check lessons");
+
+      const lessons = await context.query.Lesson.findMany({
+        where: {
+          statusLesson: { equals: LessonStatus.Created },
+          notified: { not: { equals: true } },
+        },
+        query: `id startTime`,
+      });
+      for (const lesson of lessons) {
+        const leftTwoHours = isAfter(
+          new Date(lesson.startTime),
+          addHours(new Date(), -2)
+        );
+        if (leftTwoHours) {
+          await notifyUpcomingLessons(lesson.id, context);
+        }
+      }
+      res.sendStatus(200);
+    });
+  };

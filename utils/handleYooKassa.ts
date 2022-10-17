@@ -7,8 +7,6 @@ export const handleYooKassa: ServerConfig<any>["extendExpressApp"] = (
   createContext
 ) => {
   app.post("/api/yookassa", async (req, res) => {
-    console.log("/api/yookassa", req.body);
-
     const context = await createContext(req, res);
 
     const paymentYooKassa: Payment = req.body.object;

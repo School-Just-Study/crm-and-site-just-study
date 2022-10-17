@@ -267,6 +267,7 @@ model UserSubscription {
   student                  User?     @relation("UserSubscription_student", fields: [studentId], references: [id])
   studentId                Int?      @map("student")
   beginDate                DateTime? @default(now())
+  customVisited            Int?      @default(0)
   lessons                  Lesson[]  @relation("Lesson_subscription")
   trial                    Boolean   @default(false)
   manager                  User?     @relation("UserSubscription_manager", fields: [managerId], references: [id])
@@ -420,7 +421,7 @@ model Client {
   profession       String                  @default("")
   goal             String                  @default("")
   source           SourceClient[]          @relation("Client_source")
-  teacher          Manager[]               @relation("Client_teacher")
+  teachers         Manager[]               @relation("Client_teachers")
   comment          String                  @default("") @mysql.VarChar(10000)
   ymClientId       String                  @default("")
   createdAt        DateTime                @default(now())
@@ -446,7 +447,7 @@ model Manager {
   createdAt            DateTime         @default(now())
   lastModification     DateTime         @default(now()) @updatedAt
   from_User_manager    User[]           @relation("User_manager")
-  from_Client_teacher  Client[]         @relation("Client_teacher")
+  from_Client_teachers Client[]         @relation("Client_teachers")
   from_Lesson_teachers Lesson[]         @relation("Lesson_teachers")
 
   @@index([language])
@@ -492,7 +493,7 @@ model Lesson {
   subscriptionId   Int?              @map("subscription")
   teachers         Manager[]         @relation("Lesson_teachers")
   comment          String            @default("") @mysql.VarChar(10000)
-  timeZone         String            @default("")
+  timeZone         String            @default("Europe/Moscow")
   notified         Boolean           @default(false)
   createdAt        DateTime          @default(now())
   lastModification DateTime          @default(now()) @updatedAt

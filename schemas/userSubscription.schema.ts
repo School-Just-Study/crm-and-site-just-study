@@ -95,6 +95,10 @@ export const UserSubscription = list({
         },
       }),
     }),
+    customVisited: integer({
+      defaultValue: 0,
+      ui: { description: "Вручную указать сколько занятий было посещено" },
+    }),
     lastCount: virtual({
       field: graphql.field({
         type: graphql.Int,
@@ -104,9 +108,9 @@ export const UserSubscription = list({
               where: {
                 id: `${item.id}`,
               },
-              query: `totalVisited`,
+              query: `totalVisited customVisited`,
             });
-            return item.visitCount - lesson.totalVisited;
+            return item.visitCount - lesson.totalVisited - lesson.customVisited;
           } else {
             return;
           }

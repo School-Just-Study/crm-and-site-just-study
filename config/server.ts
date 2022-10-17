@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import { handleYooKassa } from "../utils/handleYooKassa";
 import { handleStudentCalendar } from "../utils/handleStudentCalendar";
 import { handleTeacherCalendar } from "../utils/handleTeacherCalendar";
+import { handleNotificationStudentLesson } from "../utils/handleNotificationStudentLesson";
 
 export const server: KeystoneConfig["server"] = {
   port: SERVER_PORT,
@@ -25,5 +26,6 @@ export const server: KeystoneConfig["server"] = {
     handleYooKassa!(app, createContext);
     handleStudentCalendar!(app, createContext);
     handleTeacherCalendar!(app, createContext);
+    handleNotificationStudentLesson!(app, createContext);
   },
 };

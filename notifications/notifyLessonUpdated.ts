@@ -32,7 +32,9 @@ const infoForTeacher = (lesson: any, teacher: Lists.Manager.Item) => {
   return `
       <div style='display:flex; flex-direction: column;'>
           <p>🧑🏼‍🏫 ${teacher.name},</p>
-          <p>Отменен урок с учеником: ${studentsName.join(", ")} </p>
+          <p>🦄 Обновлена информация об уроке с учеником: ${studentsName.join(
+            ", "
+          )} </p>
           <p>⏰ Начало: ${dateFormatStart}, ${teacher.timeZone}</p>
           <p>⏰ Конец: ${dateFormatEnd}, ${teacher.timeZone}</p>
       </div>
@@ -40,11 +42,11 @@ const infoForTeacher = (lesson: any, teacher: Lists.Manager.Item) => {
 };
 
 /**
- * Уведомление об отмене урока
+ * Уведомление об обновлении урока
  * @param lessonId
  * @param ctx
  */
-export const notifyLessonCanceled = async (
+export const notifyLessonUpdated = async (
   lessonId: Lists.Lesson.Item["id"],
   ctx: KeystoneContext
 ) => {
@@ -57,9 +59,9 @@ export const notifyLessonCanceled = async (
     await mailer.sendMail({
       to: teacher.email,
       from,
-      subject: "⛔️ Урок отменен",
+      subject: "🦄 Урок перезаписан",
       html: baseTemplateEmail(
-        "⛔️ Урок отменен",
+        "🦄 Урок перезаписан",
         infoForTeacher(lesson, teacher)
       ),
     });

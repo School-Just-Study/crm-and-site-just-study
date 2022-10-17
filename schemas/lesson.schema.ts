@@ -9,7 +9,7 @@ import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 import { statusLesson } from "../fields/statusLesson";
 import { handleNotificationStudentAndTeacherLesson } from "../lib/handleNotificationStudentAndTeacherLesson";
-import { handleNotificationStudentAndTeacherDeleteLesson } from "../lib/handleNotificationStudentAndTeacherDeleteLesson";
+import { handleCheckBookingLesson } from "../lib/handleCheckBookingLesson";
 
 export const Lesson = list({
   ui: {
@@ -17,13 +17,11 @@ export const Lesson = list({
     listView: {
       initialColumns: [
         "id",
-        "title",
-        "description",
+        "students",
         "startTime",
         "endTime",
         "statusLesson",
         "trial",
-        "students",
       ],
     },
   },
@@ -52,13 +50,13 @@ export const Lesson = list({
       ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(10000)" },
     }),
-    timeZone: text(),
+    timeZone: text({ defaultValue: "Europe/Moscow" }),
     notified: checkbox(),
     createdAt,
     lastModification,
   },
   hooks: {
+    validateInput: handleCheckBookingLesson,
     afterOperation: handleNotificationStudentAndTeacherLesson,
-    resolveInput: handleNotificationStudentAndTeacherDeleteLesson,
   },
 });

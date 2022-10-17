@@ -56,7 +56,7 @@ export const Client = list({
       label: "Источник",
       many: true,
     }),
-    teacher: relationship({ ref: "Manager", many: true }),
+    teachers: relationship({ ref: "Manager", many: true }),
     comment: text({
       ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(10000)" },

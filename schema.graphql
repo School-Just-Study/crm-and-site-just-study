@@ -1446,6 +1446,7 @@ type UserSubscription {
   beginDate: DateTime
   endDate: String
   totalVisited: Int
+  customVisited: Int
   lastCount: Int
   lessons(
     where: LessonWhereInput! = {}
@@ -1478,6 +1479,7 @@ input UserSubscriptionWhereInput {
   status: StringFilter
   student: UserWhereInput
   beginDate: DateTimeNullableFilter
+  customVisited: IntNullableFilter
   lessons: LessonManyRelationFilter
   trial: BooleanFilter
   manager: UserWhereInput
@@ -1501,6 +1503,7 @@ input UserSubscriptionOrderByInput {
   period: OrderDirection
   status: OrderDirection
   beginDate: OrderDirection
+  customVisited: OrderDirection
   trial: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
@@ -1516,6 +1519,7 @@ input UserSubscriptionUpdateInput {
   status: String
   student: UserRelateToOneForUpdateInput
   beginDate: DateTime
+  customVisited: Int
   lessons: LessonRelateToManyForUpdateInput
   trial: Boolean
   manager: UserRelateToOneForUpdateInput
@@ -1545,6 +1549,7 @@ input UserSubscriptionCreateInput {
   status: String
   student: UserRelateToOneForCreateInput
   beginDate: DateTime
+  customVisited: Int
   lessons: LessonRelateToManyForCreateInput
   trial: Boolean
   manager: UserRelateToOneForCreateInput
@@ -2169,13 +2174,13 @@ type Client {
     skip: Int! = 0
   ): [SourceClient!]
   sourceCount(where: SourceClientWhereInput! = {}): Int
-  teacher(
+  teachers(
     where: ManagerWhereInput! = {}
     orderBy: [ManagerOrderByInput!]! = []
     take: Int
     skip: Int! = 0
   ): [Manager!]
-  teacherCount(where: ManagerWhereInput! = {}): Int
+  teachersCount(where: ManagerWhereInput! = {}): Int
   comment: String
   ymClientId: String
   createdAt: DateTime
@@ -2222,7 +2227,7 @@ input ClientWhereInput {
   profession: StringFilter
   goal: StringFilter
   source: SourceClientManyRelationFilter
-  teacher: ManagerManyRelationFilter
+  teachers: ManagerManyRelationFilter
   comment: StringFilter
   ymClientId: StringFilter
   createdAt: DateTimeFilter
@@ -2292,7 +2297,7 @@ input ClientUpdateInput {
   profession: String
   goal: String
   source: SourceClientRelateToManyForUpdateInput
-  teacher: ManagerRelateToManyForUpdateInput
+  teachers: ManagerRelateToManyForUpdateInput
   comment: String
   ymClientId: String
   createdAt: DateTime
@@ -2328,7 +2333,7 @@ input ClientCreateInput {
   profession: String
   goal: String
   source: SourceClientRelateToManyForCreateInput
-  teacher: ManagerRelateToManyForCreateInput
+  teachers: ManagerRelateToManyForCreateInput
   comment: String
   ymClientId: String
   createdAt: DateTime
@@ -3287,6 +3292,7 @@ type Query {
   unavailableTimesForRecordLesson(
     data: UnavailableTimesForRecordLessonData!
   ): [UnavailableTimesForRecordLessonResponse]
+  nextStudentLesson(studentId: ID!): Lesson
 }
 
 union AuthenticatedItem = User

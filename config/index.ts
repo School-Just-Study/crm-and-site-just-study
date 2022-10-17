@@ -4,7 +4,7 @@ export const DATABASE_URL =
   process.env.DATABASE_URL || "mysql://root:root@localhost:8889/sitejuststudy";
 
 export const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
-export const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8000";
+export const BACKEND_URL = process.env.BACKEND_URL || "localhost:8000";
 
 export const NALOG_INN = process.env.NALOG_INN || 0;
 export const NALOG_PASSWORD = process.env.NALOG_PASSWORD || "";
