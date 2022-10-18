@@ -1089,7 +1089,6 @@ type PasswordState {
 enum UserRoleType {
   admin
   manager
-  teacher
   student
 }
 
@@ -3293,6 +3292,7 @@ type Query {
     data: UnavailableTimesForRecordLessonData!
   ): [UnavailableTimesForRecordLessonResponse]
   nextStudentLesson(studentId: ID!): Lesson
+  getTeacherSchedule(data: GetTeacherScheduleData!): GetTeacherScheduleResponse!
 }
 
 union AuthenticatedItem = User
@@ -3385,6 +3385,8 @@ enum KeystoneAdminUISortDirection {
   DESC
 }
 
+scalar Object
+
 type PaymentResponse {
   status: Boolean!
   redirectUrl: String!
@@ -3415,4 +3417,15 @@ input UnavailableTimesForRecordLessonData {
 type UnavailableTimesForRecordLessonResponse {
   startTime: String!
   endTime: String!
+}
+
+input GetTeacherScheduleData {
+  start: String!
+  end: String!
+  teacherId: ID!
+}
+
+type GetTeacherScheduleResponse {
+  lessons: [Object!]
+  cutoff: [Object!]
 }

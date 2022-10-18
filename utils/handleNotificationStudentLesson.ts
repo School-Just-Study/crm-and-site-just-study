@@ -1,8 +1,14 @@
-import { ServerConfig } from "@keystone-6/core/types";
-import { LessonStatus } from "../enums/lesson-status";
-import { notifyUpcomingLessons } from "../notifications/notifyUpcomingLessons";
-import { addHours, isAfter } from "date-fns";
+import { ServerConfig } from '@keystone-6/core/types';
+import { LessonStatus } from '../enums/lesson-status';
+import { notifyUpcomingLessons } from '../notifications/notifyUpcomingLessons';
+import { addHours, isAfter } from 'date-fns';
 
+/**
+ * Напоминалка об уроке для ученика
+ *  Скрипт запускается по cron каждые 10 мин
+ * @param app
+ * @param createContext
+ */
 export const handleNotificationStudentLesson: ServerConfig<any>["extendExpressApp"] =
   async (app, createContext) => {
     app.get("/api/check-lessons", async (req, res) => {

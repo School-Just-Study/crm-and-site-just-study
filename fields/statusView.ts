@@ -4,7 +4,7 @@ import { ViewStatus } from "../enums/view-status.enum";
 
 export const statusView = select({
   options: ViewStatusOptions,
-  defaultValue: ViewStatus.Draft,
+  defaultValue: ViewStatus.Show,
   ui: { displayMode: "segmented-control" },
   validation: { isRequired: true },
 });

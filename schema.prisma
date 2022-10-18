@@ -53,7 +53,7 @@ model Category {
 model Direction {
   id               Int               @id @default(autoincrement())
   language         String            @default("ru")
-  statusView       String            @default("draft")
+  statusView       String            @default("show")
   slug             String            @default("")
   name             String            @default("")
   description      String            @default("") @mysql.VarChar(10000)
@@ -74,7 +74,7 @@ model Direction {
 
 model DirectionGoal {
   id                   Int         @id @default(autoincrement())
-  statusView           String      @default("draft")
+  statusView           String      @default("show")
   name                 String      @default("")
   image_filesize       Int?
   image_extension      String?
@@ -88,7 +88,7 @@ model DirectionGoal {
 
 model DirectionResult {
   id                     Int         @id @default(autoincrement())
-  statusView             String      @default("draft")
+  statusView             String      @default("show")
   name                   String      @default("")
   createdAt              DateTime    @default(now())
   lastModification       DateTime    @default(now()) @updatedAt
@@ -134,7 +134,7 @@ model Payment {
 model Product {
   id                          Int             @id @default(autoincrement())
   language                    String          @default("ru")
-  statusView                  String          @default("draft")
+  statusView                  String          @default("show")
   name                        String          @default("")
   description                 String          @default("") @mysql.VarChar(10000)
   desc                        Json            @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
@@ -161,7 +161,7 @@ model Product {
 model ProductReview {
   id               Int       @id @default(autoincrement())
   language         String    @default("ru")
-  statusView       String    @default("draft")
+  statusView       String    @default("show")
   student          User?     @relation("ProductReview_student", fields: [studentId], references: [id])
   studentId        Int?      @map("student")
   products         Product[] @relation("ProductReview_products")
@@ -239,7 +239,7 @@ model SourceClient {
 model Subscription {
   id                         Int        @id @default(autoincrement())
   language                   String     @default("ru")
-  statusView                 String     @default("draft")
+  statusView                 String     @default("show")
   name                       String     @default("")
   visitCount                 Int        @default(10)
   unlimited                  Boolean    @default(false)
@@ -283,7 +283,7 @@ model UserSubscription {
 model Service {
   id                    Int        @id @default(autoincrement())
   language              String     @default("ru")
-  statusView            String     @default("draft")
+  statusView            String     @default("show")
   name                  String     @default("")
   description           Json       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   categories            Category[] @relation("Service_categories")
@@ -317,7 +317,7 @@ model UserService {
 model Page {
   id               Int      @id @default(autoincrement())
   language         String   @default("ru")
-  statusView       String   @default("draft")
+  statusView       String   @default("show")
   title            String   @default("")
   slug             String   @default("")
   description      String   @default("") @mysql.VarChar(10000)
@@ -349,7 +349,7 @@ model Tag {
 model Faq {
   id               Int       @id @default(autoincrement())
   language         String    @default("ru")
-  statusView       String    @default("draft")
+  statusView       String    @default("show")
   products         Product[] @relation("Faq_products")
   title            String    @default("")
   desc             String    @default("") @mysql.VarChar(1000)
@@ -362,7 +362,7 @@ model Faq {
 model Post {
   id               Int      @id @default(autoincrement())
   language         String   @default("ru")
-  statusView       String   @default("draft")
+  statusView       String   @default("show")
   cover_filesize   Int?
   cover_extension  String?
   cover_width      Int?
@@ -384,7 +384,7 @@ model Post {
 model Marketing {
   id               Int      @id @default(autoincrement())
   language         String   @default("ru")
-  statusView       String   @default("draft")
+  statusView       String   @default("show")
   slug             String   @unique @default("")
   image_filesize   Int?
   image_extension  String?
@@ -469,7 +469,7 @@ model WorkTime {
 
 model WorkTimeCutoff {
   id               Int      @id @default(autoincrement())
-  statusView       String   @default("draft")
+  statusView       String   @default("show")
   manager          Manager? @relation("WorkTimeCutoff_manager", fields: [managerId], references: [id])
   managerId        Int?     @map("manager")
   startTime        DateTime
@@ -519,7 +519,6 @@ enum PaymentStatusType {
 enum UserRoleType {
   admin
   manager
-  teacher
   student
 }
 

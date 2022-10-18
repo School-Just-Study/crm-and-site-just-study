@@ -5,6 +5,7 @@ import { handleYooKassa } from "../utils/handleYooKassa";
 import { handleStudentCalendar } from "../utils/handleStudentCalendar";
 import { handleTeacherCalendar } from "../utils/handleTeacherCalendar";
 import { handleNotificationStudentLesson } from "../utils/handleNotificationStudentLesson";
+import { handleCheckUserSubscription } from "../utils/handleCheckUserSubscription";
 
 export const server: KeystoneConfig["server"] = {
   port: SERVER_PORT,
@@ -23,9 +24,20 @@ export const server: KeystoneConfig["server"] = {
   extendExpressApp: (app, createContext) => {
     app.use(bodyParser.json());
 
-    handleYooKassa!(app, createContext);
-    handleStudentCalendar!(app, createContext);
-    handleTeacherCalendar!(app, createContext);
-    handleNotificationStudentLesson!(app, createContext);
+    if (handleYooKassa) {
+      handleYooKassa(app, createContext);
+    }
+    if (handleStudentCalendar) {
+      handleStudentCalendar(app, createContext);
+    }
+    if (handleTeacherCalendar) {
+      handleTeacherCalendar(app, createContext);
+    }
+    if (handleNotificationStudentLesson) {
+      handleNotificationStudentLesson(app, createContext);
+    }
+    if (handleCheckUserSubscription) {
+      handleCheckUserSubscription(app, createContext);
+    }
   },
 };

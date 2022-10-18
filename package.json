@@ -22,7 +22,6 @@
     "ical-generator": "^3.5.2",
     "lknpd-nalog-api": "1.0.1",
     "lru_map": "0.4.1",
-    "node-schedule": "^2.1.0",
     "nodemailer": "6.8.0",
     "payture-official": "0.0.6",
     "uuid": "9.0.0"

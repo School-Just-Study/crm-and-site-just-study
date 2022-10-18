@@ -15,7 +15,7 @@ export const nextStudentLesson = async (
   const lessons = await context.query.Lesson.findMany({
     where: {
       statusLesson: { equals: LessonStatus.Created },
-      students: { every: { id: { equals: studentId } } },
+      students: { some: { id: { equals: studentId } } },
     },
     orderBy: { startTime: "asc" },
     query: `id startTime endTime trial`,

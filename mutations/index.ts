@@ -8,10 +8,13 @@ import { cart } from "./cart";
 import { authCart } from "./authCart";
 import { unavailableTimesForRecordLesson } from "./unavailableTimesForRecordLesson";
 import { nextStudentLesson } from "./nextStudentLesson";
+import { getTeacherSchedule } from "./getTeacherSchedule";
 
 export const graphql = String.raw;
 export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
   typeDefs: graphql`
+    scalar Object
+
     type PaymentResponse {
       status: Boolean!
       redirectUrl: String!
@@ -43,6 +46,16 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
       endTime: String!
     }
 
+    input GetTeacherScheduleData {
+      start: String!
+      end: String!
+      teacherId: ID!
+    }
+    type GetTeacherScheduleResponse {
+      lessons: [Object!]
+      cutoff: [Object!]
+    }
+
     type Mutation {
       authWithEmail(email: String!): String
       checkout(userId: String!, currency: String!): PaymentResponse
@@ -57,6 +70,9 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
         data: UnavailableTimesForRecordLessonData!
       ): [UnavailableTimesForRecordLessonResponse]
       nextStudentLesson(studentId: ID!): Lesson
+      getTeacherSchedule(
+        data: GetTeacherScheduleData!
+      ): GetTeacherScheduleResponse!
     }
   `,
   resolvers: {
@@ -71,6 +87,7 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
       checkPayment,
       unavailableTimesForRecordLesson,
       nextStudentLesson,
+      getTeacherSchedule,
     },
   },
 });

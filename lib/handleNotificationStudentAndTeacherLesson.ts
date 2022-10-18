@@ -14,27 +14,27 @@ export const handleNotificationStudentAndTeacherLesson: ListHooks<Lists.Lesson.T
     if (operation === "update" && item.statusLesson === LessonStatus.Canceled) {
       notifyLessonCanceled(item.id, context);
     }
-    if (operation === "update" && item.statusLesson !== LessonStatus.Canceled) {
+    if (operation === "update" && item.statusLesson === LessonStatus.Created) {
       notifyLessonUpdated(item.id, context);
     }
 
     if (operation !== "create" && item) {
       const userSubscription = await context.query.UserSubscription.findOne({
-        where: { id: item.subscriptionId },
+        where: { id: `${item.subscriptionId}` },
         query: `lastCount unlimited`,
       });
 
       if (!userSubscription.unlimited) {
         if (userSubscription.lastCount === 0) {
           await context.query.UserSubscription.updateOne({
-            where: { id: item.subscriptionId },
+            where: { id: `${item.subscriptionId}` },
             data: { status: Statuses.Finished },
           });
         }
 
         if (userSubscription.lastCount >= 1) {
           await context.query.UserSubscription.updateOne({
-            where: { id: item.subscriptionId },
+            where: { id: `${item.subscriptionId}` },
             data: { status: Statuses.Active },
           });
         }
