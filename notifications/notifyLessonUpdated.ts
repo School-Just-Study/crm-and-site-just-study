@@ -17,7 +17,7 @@ const infoForTeacher = (lesson: any, teacher: Lists.Manager.Item) => {
   );
 
   const dateFormatEnd = formatInTimeZone(
-    new Date(lesson.startTime),
+    new Date(lesson.endTime),
     teacher.timeZone,
     "d MMMM yyyy HH:mm zzz",
     {

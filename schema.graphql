@@ -2495,8 +2495,8 @@ type WorkTime {
   manager: Manager
   dayOfWeek: Int
   isDayOff: Boolean
-  startTime: DateTime
-  endTime: DateTime
+  startTime: String
+  endTime: String
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -2513,8 +2513,8 @@ input WorkTimeWhereInput {
   manager: ManagerWhereInput
   dayOfWeek: IntFilter
   isDayOff: BooleanFilter
-  startTime: DateTimeNullableFilter
-  endTime: DateTimeNullableFilter
+  startTime: StringFilter
+  endTime: StringFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
@@ -2533,8 +2533,8 @@ input WorkTimeUpdateInput {
   manager: ManagerRelateToOneForUpdateInput
   dayOfWeek: Int
   isDayOff: Boolean
-  startTime: DateTime
-  endTime: DateTime
+  startTime: String
+  endTime: String
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -2548,8 +2548,8 @@ input WorkTimeCreateInput {
   manager: ManagerRelateToOneForCreateInput
   dayOfWeek: Int
   isDayOff: Boolean
-  startTime: DateTime
-  endTime: DateTime
+  startTime: String
+  endTime: String
   createdAt: DateTime
   lastModification: DateTime
 }

@@ -454,15 +454,15 @@ model Manager {
 }
 
 model WorkTime {
-  id               Int       @id @default(autoincrement())
-  manager          Manager?  @relation("WorkTime_manager", fields: [managerId], references: [id])
-  managerId        Int?      @map("manager")
+  id               Int      @id @default(autoincrement())
+  manager          Manager? @relation("WorkTime_manager", fields: [managerId], references: [id])
+  managerId        Int?     @map("manager")
   dayOfWeek        Int
-  isDayOff         Boolean   @default(false)
-  startTime        DateTime?
-  endTime          DateTime?
-  createdAt        DateTime  @default(now())
-  lastModification DateTime  @default(now()) @updatedAt
+  isDayOff         Boolean  @default(false)
+  startTime        String   @default("")
+  endTime          String   @default("")
+  createdAt        DateTime @default(now())
+  lastModification DateTime @default(now()) @updatedAt
 
   @@index([managerId])
 }
