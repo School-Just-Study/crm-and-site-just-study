@@ -18,11 +18,11 @@ export const nextStudentLesson = async (
       students: { some: { id: { equals: studentId } } },
     },
     orderBy: { startTime: "asc" },
-    query: `id startTime endTime trial`,
+    query: `id startTime endTime trial teachers { linkOnlineLesson }`,
   });
 
   const withOutPast = lessons.filter(
-    (lesson) => !isPast(new Date(lesson.startTime))
+    (lesson) => !isPast(new Date(lesson.endTime))
   );
 
   const nextLesson = withOutPast[0] as Lists.Lesson.Item;

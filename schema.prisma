@@ -488,6 +488,7 @@ model Lesson {
   startTime        DateTime
   endTime          DateTime
   trial            Boolean           @default(false)
+  burned           Boolean           @default(false)
   students         User[]            @relation("Lesson_students")
   subscription     UserSubscription? @relation("Lesson_subscription", fields: [subscriptionId], references: [id])
   subscriptionId   Int?              @map("subscription")

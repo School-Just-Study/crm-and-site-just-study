@@ -41,6 +41,10 @@ export const Lesson = list({
       label: "Пробный урок",
       defaultValue: false,
     }),
+    burned: checkbox({
+      label: "Урок сгорел",
+      defaultValue: false,
+    }),
     students: relationship({ ref: "User", many: true }),
     subscription: relationship({
       ref: "UserSubscription.lessons",

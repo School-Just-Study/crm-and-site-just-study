@@ -2621,6 +2621,7 @@ type Lesson {
   startTime: DateTime
   endTime: DateTime
   trial: Boolean
+  burned: Boolean
   students(
     where: UserWhereInput! = {}
     orderBy: [UserOrderByInput!]! = []
@@ -2658,6 +2659,7 @@ input LessonWhereInput {
   startTime: DateTimeFilter
   endTime: DateTimeFilter
   trial: BooleanFilter
+  burned: BooleanFilter
   students: UserManyRelationFilter
   subscription: UserSubscriptionWhereInput
   teachers: ManagerManyRelationFilter
@@ -2682,6 +2684,7 @@ input LessonOrderByInput {
   startTime: OrderDirection
   endTime: OrderDirection
   trial: OrderDirection
+  burned: OrderDirection
   comment: OrderDirection
   timeZone: OrderDirection
   notified: OrderDirection
@@ -2696,6 +2699,7 @@ input LessonUpdateInput {
   startTime: DateTime
   endTime: DateTime
   trial: Boolean
+  burned: Boolean
   students: UserRelateToManyForUpdateInput
   subscription: UserSubscriptionRelateToOneForUpdateInput
   teachers: ManagerRelateToManyForUpdateInput
@@ -2731,6 +2735,7 @@ input LessonCreateInput {
   startTime: DateTime
   endTime: DateTime
   trial: Boolean
+  burned: Boolean
   students: UserRelateToManyForCreateInput
   subscription: UserSubscriptionRelateToOneForCreateInput
   teachers: ManagerRelateToManyForCreateInput
@@ -3291,7 +3296,7 @@ type Query {
   unavailableTimesForRecordLesson(
     data: UnavailableTimesForRecordLessonData!
   ): [UnavailableTimesForRecordLessonResponse]
-  nextStudentLesson(studentId: ID!): Lesson
+  nextStudentLesson(studentId: ID!): Object
   getTeacherSchedule(data: GetTeacherScheduleData!): GetTeacherScheduleResponse!
 }
 

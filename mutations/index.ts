@@ -69,7 +69,7 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = graphQLSchemaExtension({
       unavailableTimesForRecordLesson(
         data: UnavailableTimesForRecordLessonData!
       ): [UnavailableTimesForRecordLessonResponse]
-      nextStudentLesson(studentId: ID!): Lesson
+      nextStudentLesson(studentId: ID!): Object
       getTeacherSchedule(
         data: GetTeacherScheduleData!
       ): GetTeacherScheduleResponse!

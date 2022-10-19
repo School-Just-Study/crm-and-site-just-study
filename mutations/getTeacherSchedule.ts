@@ -22,7 +22,7 @@ export const getTeacherSchedule = async (
       statusLesson: { not: { equals: LessonStatus.Canceled } },
       teachers: { some: { id: { equals: teacherId } } },
     },
-    query: `id startTime endTime statusLesson students { id name }`,
+    query: `id startTime endTime statusLesson students { id name } burned`,
   })) as Lists.Lesson.Item[];
   const lessons = allLessons?.filter(({ startTime, endTime }) =>
     areIntervalsOverlapping(
