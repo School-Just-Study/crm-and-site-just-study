@@ -14,10 +14,8 @@ export const handleStudentCalendar: ServerConfig<any>["extendExpressApp"] = (
 
     const lessons = await context.query.Lesson.findMany({
       where: {
-        students: {
-          some: { id: { equals: studentId } },
-          statusLesson: { in: [LessonStatus.Created, LessonStatus.Completed] },
-        },
+        students: { some: { id: { equals: studentId } } },
+        statusLesson: { in: [LessonStatus.Created, LessonStatus.Completed] },
       },
       query: `id statusLesson startTime endTime teachers { id email name language linkOnlineLesson timeZone } students { id name email } timeZone subscription { name }`,
     });
