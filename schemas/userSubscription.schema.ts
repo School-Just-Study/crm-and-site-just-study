@@ -62,6 +62,7 @@ export const UserSubscription = list({
       defaultValue: { kind: "now" },
     }),
     endDate: virtual({
+      // @ts-ignore
       field: graphql.field({
         type: graphql.String,
         resolve(item: Lists.UserSubscription.Item) {
@@ -78,6 +79,7 @@ export const UserSubscription = list({
       },
     }),
     totalVisited: virtual({
+      // @ts-ignore
       field: graphql.field({
         type: graphql.Int,
         async resolve(item: Lists.UserSubscription.Item, arg, ctx) {
@@ -100,6 +102,7 @@ export const UserSubscription = list({
       ui: { description: "Вручную указать сколько занятий было посещено" },
     }),
     lastCount: virtual({
+      // @ts-ignore
       field: graphql.field({
         type: graphql.Int,
         async resolve(item: Lists.UserSubscription.Item, arg, ctx) {
@@ -129,6 +132,9 @@ export const UserSubscription = list({
   access: {
     operation: {
       delete: ({ session }) => !!session && session.data.role !== Roles.Student,
+      query: () => true,
+      create: () => true,
+      update: () => true,
     },
   },
 });

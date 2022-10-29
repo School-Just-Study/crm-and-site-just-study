@@ -32,4 +32,12 @@ export const WorkTime = list({
     createdAt,
     lastModification,
   },
+  access: {
+    operation: {
+      query: () => true,
+      create: () => true,
+      update: () => true,
+      delete: () => true,
+    },
+  },
 });

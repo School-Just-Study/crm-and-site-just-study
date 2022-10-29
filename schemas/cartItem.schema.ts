@@ -56,4 +56,12 @@ export const CartItem = list({
   hooks: {
     resolveInput: handleCartItemPrice,
   },
+  access: {
+    operation: {
+      query: () => true,
+      create: () => true,
+      update: () => true,
+      delete: () => true,
+    },
+  },
 });

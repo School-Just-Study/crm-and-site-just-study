@@ -59,11 +59,6 @@ export const User = list({
     createdAt,
     lastModification,
   },
-  access: {
-    operation: {
-      delete: ({ session }) => !!session,
-    },
-  },
   hooks: {
     afterOperation: async ({ operation, item, context }) => {
       if (operation !== "create") {
@@ -75,6 +70,14 @@ export const User = list({
           user: { connect: { id: userId } },
         },
       });
+    },
+  },
+  access: {
+    operation: {
+      delete: ({ session }) => !!session,
+      query: () => true,
+      create: () => true,
+      update: () => true,
     },
   },
 });

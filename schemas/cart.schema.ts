@@ -75,7 +75,8 @@ export const Cart = list({
   },
   access: {
     operation: {
-      query: ({ session }) => !!session,
+      query: () => true,
+      create: ({ session }) => !!session,
       update: ({ session }) => !!session,
       delete: ({ session }) => !!session,
     },

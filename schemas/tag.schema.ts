@@ -22,6 +22,7 @@ export const Tag = list({
       create: ({ session }) => !!session,
       update: ({ session }) => !!session,
       delete: ({ session }) => !!session,
+      query: () => true,
     },
   },
 });

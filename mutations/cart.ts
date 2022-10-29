@@ -1,5 +1,5 @@
 import { KeystoneContext } from "@keystone-6/core/dist/declarations/src/types";
-import { graphql } from "./index";
+import { gql } from "./index";
 
 interface Arguments {
   firstName: string;
@@ -23,29 +23,19 @@ export const cart = async (
 
   const name = `${firstName} ${secondName}`;
 
-  if (!user) {
-    user = await context.query.User.createOne({
-      data: {
-        name,
-        email,
-        language,
-      },
-      query: `id`,
-    });
-  } else {
-    user = await context.query.User.updateOne({
-      where: { email },
-      data: {
-        name,
-        email,
-      },
-      query: `id`,
-    });
-  }
+  await context.query.Client.updateOne({
+    where: { email },
+    data: {
+      name,
+      phone,
+      email,
+    },
+    query: `id email`,
+  });
 
   const res = await context.graphql.raw({
     variables: { userId: user.id, currency },
-    query: graphql`
+    query: gql`
       mutation ($userId: String!, $currency: String!) {
         checkout(userId: $userId, currency: $currency) {
           status

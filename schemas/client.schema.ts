@@ -65,12 +65,15 @@ export const Client = list({
     createdAt,
     lastModification,
   },
+  hooks: {
+    afterOperation: handleCreateUserWithEmailClient,
+  },
   access: {
     operation: {
       delete: ({ session }) => !!session,
+      query: () => true,
+      create: () => true,
+      update: () => true,
     },
-  },
-  hooks: {
-    afterOperation: handleCreateUserWithEmailClient,
   },
 });

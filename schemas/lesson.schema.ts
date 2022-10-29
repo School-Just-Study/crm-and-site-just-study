@@ -63,4 +63,12 @@ export const Lesson = list({
     validateInput: handleCheckBookingLesson,
     afterOperation: handleNotificationStudentAndTeacherLesson,
   },
+  access: {
+    operation: {
+      query: () => true,
+      create: () => true,
+      update: () => true,
+      delete: () => true,
+    },
+  },
 });

@@ -1,4 +1,4 @@
-import { ListHooks } from '@keystone-6/core/dist/declarations/src/types/config/hooks';
+import { ListHooks } from '@keystone-6/core/types';
 import { Lists } from '.keystone/types';
 
 /**

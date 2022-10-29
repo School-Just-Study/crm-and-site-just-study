@@ -41,6 +41,9 @@ export const UserService = list({
   access: {
     operation: {
       delete: ({ session }) => !!session && session.data.role !== Roles.Student,
+      query: () => true,
+      create: () => true,
+      update: () => true,
     },
   },
 });

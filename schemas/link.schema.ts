@@ -37,6 +37,7 @@ export const Link = list({
       create: ({ session }) => !!session,
       update: ({ session }) => !!session,
       delete: ({ session }) => !!session,
+      query: () => true,
     },
   },
   db: {

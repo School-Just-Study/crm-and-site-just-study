@@ -61,6 +61,7 @@ export const Subscription = list({
       create: ({ session }) => !!session && session.data.role !== Roles.Student,
       update: ({ session }) => !!session && session.data.role !== Roles.Student,
       delete: ({ session }) => !!session && session.data.role !== Roles.Student,
+      query: () => true,
     },
   },
 });

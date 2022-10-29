@@ -16,6 +16,7 @@ export const AvatarUser = list({
   },
   access: {
     operation: {
+      query: () => true,
       create: ({ session }) => !!session,
       update: ({ session }) => !!session,
       delete: ({ session }) => !!session,

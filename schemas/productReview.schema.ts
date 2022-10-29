@@ -31,6 +31,8 @@ export const ProductReview = list({
     operation: {
       update: ({ session }) => !!session && session.data.role !== Roles.Student,
       delete: ({ session }) => !!session && session.data.role !== Roles.Student,
+      query: () => true,
+      create: () => true,
     },
   },
 });

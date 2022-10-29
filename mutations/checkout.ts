@@ -1,5 +1,5 @@
 import { KeystoneContext } from "@keystone-6/core/dist/declarations/src/types";
-import { graphql } from "./index";
+import { gql } from "./index";
 import { convertMoney } from "../lib/convertMoney";
 
 interface Arguments {
@@ -136,7 +136,7 @@ export const checkout = async (
 
   const res = await context.graphql.raw({
     variables: { orderId: order.id },
-    query: graphql`
+    query: gql`
       mutation ($orderId: String!) {
         payment(orderId: $orderId) {
           status

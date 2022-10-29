@@ -74,12 +74,15 @@ export const Manager = list({
     createdAt,
     lastModification,
   },
+  hooks: {
+    afterOperation: handleCreateUserWithEmailManager,
+  },
   access: {
     operation: {
       delete: ({ session }) => !!session,
+      query: () => true,
+      create: () => true,
+      update: () => true,
     },
-  },
-  hooks: {
-    afterOperation: handleCreateUserWithEmailManager,
   },
 });

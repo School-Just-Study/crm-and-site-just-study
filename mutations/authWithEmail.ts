@@ -1,5 +1,5 @@
 import { KeystoneContext } from "@keystone-6/core/dist/declarations/src/types";
-import { graphql } from "./index";
+import { gql } from "./index";
 
 interface Arguments {
   email: string;
@@ -18,7 +18,7 @@ export const authWithEmail = async (
     throw new Error("Sorry! The user does not exist");
   }
 
-  const setMagicToken = graphql`
+  const setMagicToken = gql`
     mutation ($email: String!) {
       sendUserMagicAuthLink(email: $email)
     }

@@ -169,6 +169,9 @@ export const Order = list({
   access: {
     operation: {
       delete: ({ session }) => !!session,
+      query: () => true,
+      create: () => true,
+      update: () => true,
     },
   },
 });
