@@ -1,6 +1,10 @@
-export const baseTemplateEmail = (title: string, body: string) => {
+export const templateLesson = (
+  title: string,
+  body: string,
+  linkCalendar: string
+) => {
   return `
-<!doctype html>
+  <!doctype html>
 <html xmlns='http://www.w3.org/1999/xhtml' xmlns:v='urn:schemas-microsoft-com:vml' xmlns:o='urn:schemas-microsoft-com:office:office'>
 
 <head>
@@ -164,6 +168,43 @@ export const baseTemplateEmail = (title: string, body: string) => {
                   <tbody>
                     <tr>
                       <td style='direction:ltr;font-size:0px;padding:0;text-align:center;'>
+                        <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+                        <div class='mj-column-per-100 mj-outlook-group-fix' style='font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;'>
+                          <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='background-color:#ccf1db;vertical-align:top;' width='100%'>
+                            <tbody>
+                              <tr>
+                                <td align='center' style='font-size:0px;padding:20px 20px 0;word-break:break-word;'>
+                                  <div style='font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:center;color:#555555;'>Рекомендуем добавить напоминие о всех занятиях в календарь</div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td align='center' vertical-align='middle' style='font-size:0px;padding:15px;word-break:break-word;'>
+                                  <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='border-collapse:separate;line-height:100%;'>
+                                    <tbody>
+                                      <tr>
+                                        <td align='center' bgcolor='#0c51c4' role='presentation' style='border:none;border-radius:3px;cursor:auto;mso-padding-alt:10px 25px;background:#0c51c4;' valign='middle'>
+                                          <a href='webcal://${linkCalendar}' style='display:inline-block;background:#0c51c4;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:uppercase;padding:10px 25px;mso-padding-alt:0px;border-radius:3px;' target='_blank'> Добавить в календарь </a>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!--[if mso | IE]></td></tr></table><![endif]-->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table></td></tr><tr><td class="" width="600px" ><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+              <div style='background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;'>
+                <table align='center' border='0' cellpadding='0' cellspacing='0' role='presentation' style='background:#ffffff;background-color:#ffffff;width:100%;'>
+                  <tbody>
+                    <tr>
+                      <td style='direction:ltr;font-size:0px;padding:15px 0 0;text-align:center;'>
                         <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
                         <div class='mj-column-per-100 mj-outlook-group-fix' style='font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;'>
                           <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='vertical-align:top;' width='100%'>

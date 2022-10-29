@@ -32,9 +32,7 @@ export const Subscription = list({
         type: graphql.String,
         resolve(item: Lists.Subscription.Item) {
           if (!item) return;
-          return `${item.name} - ${item.price} ${getCurrencyForLanguage(
-            item.language
-          )}`;
+          return `${item.name} - ${item.price} ${getCurrencyForLanguage("ru")}`;
         },
       }),
     }),
@@ -43,6 +41,10 @@ export const Subscription = list({
     visitCount: integer({
       defaultValue: 10,
       validation: { isRequired: true },
+    }),
+    unlimited: checkbox({
+      defaultValue: false,
+      ui: { description: "Безлимитное количество занятий" },
     }),
     price: integer({ validation: { isRequired: true } }),
     period: integer({ defaultValue: 45 }),

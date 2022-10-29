@@ -65,7 +65,7 @@ export const checkout = async (
       async ({ id, price }: { id: string; price: number }) => {
         const subscriptionTemplate = await context.query.Subscription.findOne({
           where: { id },
-          query: `name visitCount price period trial`,
+          query: `name visitCount price period trial unlimited`,
         });
 
         const userSubscription = await context.query.UserSubscription.createOne(
@@ -77,6 +77,7 @@ export const checkout = async (
               price,
               period: subscriptionTemplate.period,
               trial: subscriptionTemplate.trial,
+              unlimited: subscriptionTemplate.unlimited,
               student: { connect: { id: userId } },
             },
             query: `id`,
@@ -145,7 +146,9 @@ export const checkout = async (
     `,
   });
 
+  // @ts-ignore
   if (res.data?.payment) {
+    // @ts-ignore
     return res.data?.payment;
   } else {
     res.errors;

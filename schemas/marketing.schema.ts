@@ -5,7 +5,7 @@ import { lastModification } from "../fields/lastModification";
 import { image, text, virtual } from "@keystone-6/core/fields";
 import { statusView } from "../fields/statusView";
 import { checkboxField } from "../fields/checkbox";
-import { ViewStatus } from "../enums/view-status";
+import { ViewStatus } from "../enums/view-status.enum";
 import { FRONTEND_URL } from "../config";
 import { Lists } from ".keystone/types";
 

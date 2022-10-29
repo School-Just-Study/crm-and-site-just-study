@@ -16,7 +16,7 @@ import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 import { addDays } from "date-fns";
 import format from "date-fns/format";
-import { handleStatusUserSubscription } from "../lib/handleStatusUserSubscription";
+import { LessonStatus } from "../enums/lesson-status";
 
 export const UserSubscription = list({
   ui: {
@@ -33,7 +33,6 @@ export const UserSubscription = list({
         "student",
         "beginDate",
         "endDate",
-        "payed",
         "lastCount",
         "manager",
       ],
@@ -43,6 +42,10 @@ export const UserSubscription = list({
   fields: {
     name: text(),
     visitCount: integer(),
+    unlimited: checkbox({
+      defaultValue: false,
+      ui: { description: "Безлимитное количество занятий" },
+    }),
     originalPrice: integer(),
     price: integer(),
     period: integer({
@@ -74,24 +77,47 @@ export const UserSubscription = list({
         description: "Рассчитывается автоматически от длительности периода",
       },
     }),
-    payed: integer(),
-    totalVisited: integer({
-      defaultValue: 0,
-      validation: { isRequired: true },
-    }),
-    totalBurned: integer({ defaultValue: 0, validation: { isRequired: true } }),
-    lastCount: virtual({
+    totalVisited: virtual({
       field: graphql.field({
         type: graphql.Int,
-        async resolve(item: Lists.UserSubscription.Item) {
+        async resolve(item: Lists.UserSubscription.Item, arg, ctx) {
           if (item.visitCount) {
-            return item.visitCount - item.totalVisited - item.totalBurned;
+            const lessons = await ctx.query.Lesson.findMany({
+              where: {
+                statusLesson: { equals: LessonStatus.Completed },
+                subscription: { id: { equals: item.id } },
+              },
+            });
+            return lessons.length;
           } else {
             return;
           }
         },
       }),
     }),
+    customVisited: integer({
+      defaultValue: 0,
+      ui: { description: "Вручную указать сколько занятий было посещено" },
+    }),
+    lastCount: virtual({
+      field: graphql.field({
+        type: graphql.Int,
+        async resolve(item: Lists.UserSubscription.Item, arg, ctx) {
+          if (item.visitCount) {
+            const lesson = await ctx.query.UserSubscription.findOne({
+              where: {
+                id: `${item.id}`,
+              },
+              query: `totalVisited customVisited`,
+            });
+            return item.visitCount - lesson.totalVisited - lesson.customVisited;
+          } else {
+            return;
+          }
+        },
+      }),
+    }),
+    lessons: relationship({ ref: "Lesson.subscription", many: true }),
     trial: checkbox({
       defaultValue: false,
       ui: { description: "Пробный урок" },
@@ -99,9 +125,6 @@ export const UserSubscription = list({
     manager: relationship({ ref: "User" }),
     createdAt,
     lastModification,
-  },
-  hooks: {
-    resolveInput: handleStatusUserSubscription,
   },
   access: {
     operation: {

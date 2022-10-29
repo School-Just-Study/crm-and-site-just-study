@@ -53,7 +53,7 @@ model Category {
 model Direction {
   id               Int               @id @default(autoincrement())
   language         String            @default("ru")
-  statusView       String            @default("draft")
+  statusView       String            @default("show")
   slug             String            @default("")
   name             String            @default("")
   description      String            @default("") @mysql.VarChar(10000)
@@ -74,7 +74,7 @@ model Direction {
 
 model DirectionGoal {
   id                   Int         @id @default(autoincrement())
-  statusView           String      @default("draft")
+  statusView           String      @default("show")
   name                 String      @default("")
   image_filesize       Int?
   image_extension      String?
@@ -88,7 +88,7 @@ model DirectionGoal {
 
 model DirectionResult {
   id                     Int         @id @default(autoincrement())
-  statusView             String      @default("draft")
+  statusView             String      @default("show")
   name                   String      @default("")
   createdAt              DateTime    @default(now())
   lastModification       DateTime    @default(now()) @updatedAt
@@ -134,7 +134,7 @@ model Payment {
 model Product {
   id                          Int             @id @default(autoincrement())
   language                    String          @default("ru")
-  statusView                  String          @default("draft")
+  statusView                  String          @default("show")
   name                        String          @default("")
   description                 String          @default("") @mysql.VarChar(10000)
   desc                        Json            @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
@@ -161,7 +161,7 @@ model Product {
 model ProductReview {
   id               Int       @id @default(autoincrement())
   language         String    @default("ru")
-  statusView       String    @default("draft")
+  statusView       String    @default("show")
   student          User?     @relation("ProductReview_student", fields: [studentId], references: [id])
   studentId        Int?      @map("student")
   products         Product[] @relation("ProductReview_products")
@@ -185,6 +185,8 @@ model User {
   comment                       String             @default("") @mysql.VarChar(10000)
   client                        Client?            @relation("User_client", fields: [clientId], references: [id])
   clientId                      Int?               @map("client")
+  manager                       Manager?           @relation("User_manager", fields: [managerId], references: [id])
+  managerId                     Int?               @map("manager")
   cart                          Cart?              @relation("Cart_user")
   magicLinkToken                String             @default("")
   createdAt                     DateTime           @default(now())
@@ -201,9 +203,11 @@ model User {
   from_UserService_manager      UserService[]      @relation("UserService_manager")
   from_Page_author              Page[]             @relation("Page_author")
   from_Post_author              Post[]             @relation("Post_author")
+  from_Lesson_students          Lesson[]           @relation("Lesson_students")
 
   @@index([language])
   @@index([clientId])
+  @@index([managerId])
 }
 
 model AvatarUser {
@@ -235,9 +239,10 @@ model SourceClient {
 model Subscription {
   id                         Int        @id @default(autoincrement())
   language                   String     @default("ru")
-  statusView                 String     @default("draft")
+  statusView                 String     @default("show")
   name                       String     @default("")
   visitCount                 Int        @default(10)
+  unlimited                  Boolean    @default(false)
   price                      Int
   period                     Int?       @default(45)
   desc                       Json       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
@@ -254,6 +259,7 @@ model UserSubscription {
   id                       Int       @id @default(autoincrement())
   name                     String    @default("")
   visitCount               Int?
+  unlimited                Boolean   @default(false)
   originalPrice            Int?
   price                    Int?
   period                   Int?
@@ -261,9 +267,8 @@ model UserSubscription {
   student                  User?     @relation("UserSubscription_student", fields: [studentId], references: [id])
   studentId                Int?      @map("student")
   beginDate                DateTime? @default(now())
-  payed                    Int?
-  totalVisited             Int       @default(0)
-  totalBurned              Int       @default(0)
+  customVisited            Int?      @default(0)
+  lessons                  Lesson[]  @relation("Lesson_subscription")
   trial                    Boolean   @default(false)
   manager                  User?     @relation("UserSubscription_manager", fields: [managerId], references: [id])
   managerId                Int?      @map("manager")
@@ -278,7 +283,7 @@ model UserSubscription {
 model Service {
   id                    Int        @id @default(autoincrement())
   language              String     @default("ru")
-  statusView            String     @default("draft")
+  statusView            String     @default("show")
   name                  String     @default("")
   description           Json       @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   categories            Category[] @relation("Service_categories")
@@ -312,7 +317,7 @@ model UserService {
 model Page {
   id               Int      @id @default(autoincrement())
   language         String   @default("ru")
-  statusView       String   @default("draft")
+  statusView       String   @default("show")
   title            String   @default("")
   slug             String   @default("")
   description      String   @default("") @mysql.VarChar(10000)
@@ -344,7 +349,7 @@ model Tag {
 model Faq {
   id               Int       @id @default(autoincrement())
   language         String    @default("ru")
-  statusView       String    @default("draft")
+  statusView       String    @default("show")
   products         Product[] @relation("Faq_products")
   title            String    @default("")
   desc             String    @default("") @mysql.VarChar(1000)
@@ -357,7 +362,7 @@ model Faq {
 model Post {
   id               Int      @id @default(autoincrement())
   language         String   @default("ru")
-  statusView       String   @default("draft")
+  statusView       String   @default("show")
   cover_filesize   Int?
   cover_extension  String?
   cover_width      Int?
@@ -379,7 +384,7 @@ model Post {
 model Marketing {
   id               Int      @id @default(autoincrement())
   language         String   @default("ru")
-  statusView       String   @default("draft")
+  statusView       String   @default("show")
   slug             String   @unique @default("")
   image_filesize   Int?
   image_extension  String?
@@ -416,12 +421,85 @@ model Client {
   profession       String                  @default("")
   goal             String                  @default("")
   source           SourceClient[]          @relation("Client_source")
+  teachers         Manager[]               @relation("Client_teachers")
   comment          String                  @default("") @mysql.VarChar(10000)
+  ymClientId       String                  @default("")
   createdAt        DateTime                @default(now())
   lastModification DateTime                @default(now()) @updatedAt
   from_User_client User[]                  @relation("User_client")
 
   @@index([language])
+}
+
+model Manager {
+  id                   Int              @id @default(autoincrement())
+  language             String           @default("ru")
+  name                 String           @default("")
+  email                String           @default("")
+  phone                Decimal?         @mysql.Decimal(18, 0)
+  work                 Boolean          @default(true)
+  teacher              Boolean          @default(true)
+  linkOnlineLesson     String           @default("")
+  workTime             WorkTime[]       @relation("WorkTime_manager")
+  cutoff               WorkTimeCutoff[] @relation("WorkTimeCutoff_manager")
+  timeZone             String           @default("Europe/Moscow")
+  comment              String           @default("") @mysql.VarChar(10000)
+  createdAt            DateTime         @default(now())
+  lastModification     DateTime         @default(now()) @updatedAt
+  from_User_manager    User[]           @relation("User_manager")
+  from_Client_teachers Client[]         @relation("Client_teachers")
+  from_Lesson_teachers Lesson[]         @relation("Lesson_teachers")
+
+  @@index([language])
+}
+
+model WorkTime {
+  id               Int      @id @default(autoincrement())
+  manager          Manager? @relation("WorkTime_manager", fields: [managerId], references: [id])
+  managerId        Int?     @map("manager")
+  dayOfWeek        Int
+  isDayOff         Boolean  @default(false)
+  startTime        String   @default("")
+  endTime          String   @default("")
+  createdAt        DateTime @default(now())
+  lastModification DateTime @default(now()) @updatedAt
+
+  @@index([managerId])
+}
+
+model WorkTimeCutoff {
+  id               Int      @id @default(autoincrement())
+  statusView       String   @default("show")
+  manager          Manager? @relation("WorkTimeCutoff_manager", fields: [managerId], references: [id])
+  managerId        Int?     @map("manager")
+  startTime        DateTime
+  endTime          DateTime
+  createdAt        DateTime @default(now())
+  lastModification DateTime @default(now()) @updatedAt
+
+  @@index([managerId])
+}
+
+model Lesson {
+  id               Int               @id @default(autoincrement())
+  statusLesson     String            @default("created")
+  title            String            @default("")
+  description      String            @default("")
+  startTime        DateTime
+  endTime          DateTime
+  trial            Boolean           @default(false)
+  burned           Boolean           @default(false)
+  students         User[]            @relation("Lesson_students")
+  subscription     UserSubscription? @relation("Lesson_subscription", fields: [subscriptionId], references: [id])
+  subscriptionId   Int?              @map("subscription")
+  teachers         Manager[]         @relation("Lesson_teachers")
+  comment          String            @default("") @mysql.VarChar(10000)
+  timeZone         String            @default("Europe/Moscow")
+  notified         Boolean           @default(false)
+  createdAt        DateTime          @default(now())
+  lastModification DateTime          @default(now()) @updatedAt
+
+  @@index([subscriptionId])
 }
 
 enum OrderStatusType {
@@ -442,7 +520,6 @@ enum PaymentStatusType {
 enum UserRoleType {
   admin
   manager
-  teacher
   student
 }
 

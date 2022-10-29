@@ -59,12 +59,11 @@ export const payment = async (
         type: "redirect",
         return_url: `${FRONTEND_URL}/checkout/result?orderid=${payment.id}`,
       },
-      capture: "true",
+      capture: true,
       metadata: {
         orderId,
         paymentId: payment.id,
       },
-      // @ts-ignore
       merchant_customer_id: order.student.id,
     };
 

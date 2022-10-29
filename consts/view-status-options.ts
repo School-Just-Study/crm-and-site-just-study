@@ -1,4 +1,4 @@
-import { ViewStatus } from "../enums/view-status";
+import { ViewStatus } from "../enums/view-status.enum";
 
 export const ViewStatusOptions = [
   { label: ViewStatus.Draft, value: ViewStatus.Draft },

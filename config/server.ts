@@ -1,21 +1,13 @@
 import { KeystoneConfig } from "@keystone-6/core/dist/declarations/src/types/config";
 import { FRONTEND_URL, SERVER_PORT } from "./index";
 import bodyParser from "body-parser";
-import { Payment } from "@a2seven/yoo-checkout/lib/models/payment";
-import { PaymentStatus } from "../enums/payment-status.enum";
-import { IPaymentStatus } from "@a2seven/yoo-checkout/lib/types";
-
-const statusPayment = (status: IPaymentStatus) => {
-  switch (status) {
-    case "canceled":
-      return PaymentStatus.Cancelled;
-    case "pending":
-    case "waiting_for_capture":
-      return PaymentStatus.Created;
-    case "succeeded":
-      return PaymentStatus.Successfully;
-  }
-};
+import { handleYooKassa } from "../utils/handleYooKassa";
+import { handleStudentCalendar } from "../utils/handleStudentCalendar";
+import { handleTeacherCalendar } from "../utils/handleTeacherCalendar";
+import { handleNotificationStudentLesson } from "../utils/handleNotificationStudentLesson";
+import { handleCheckUserSubscription } from "../utils/handleCheckUserSubscription";
+import { getStudents } from "../utils/getStudents";
+import { getManagers } from "../utils/getManagers";
 
 export const server: KeystoneConfig["server"] = {
   port: SERVER_PORT,
@@ -34,30 +26,26 @@ export const server: KeystoneConfig["server"] = {
   extendExpressApp: (app, createContext) => {
     app.use(bodyParser.json());
 
-    app.post("/api/yookassa", async (req, res) => {
-      console.log("/api/yookassa", req.body);
-
-      const context = await createContext(req, res);
-
-      const paymentYooKassa: Payment = req.body.object;
-      const paymentId = paymentYooKassa.metadata.paymentId;
-      const statusYooKassa = paymentYooKassa.status;
-
-      const payment = await context.query.Payment.findOne({
-        where: { id: paymentId },
-        query: "id",
-      });
-
-      if (payment) {
-        await context.query.Payment.updateOne({
-          where: { id: paymentId },
-          data: {
-            status: statusPayment(statusYooKassa),
-          },
-        });
-      }
-
-      res.sendStatus(200);
-    });
+    if (handleYooKassa) {
+      handleYooKassa(app, createContext);
+    }
+    if (handleStudentCalendar) {
+      handleStudentCalendar(app, createContext);
+    }
+    if (handleTeacherCalendar) {
+      handleTeacherCalendar(app, createContext);
+    }
+    if (handleNotificationStudentLesson) {
+      handleNotificationStudentLesson(app, createContext);
+    }
+    if (handleCheckUserSubscription) {
+      handleCheckUserSubscription(app, createContext);
+    }
+    if (getStudents) {
+      getStudents(app, createContext);
+    }
+    if (getManagers) {
+      getManagers(app, createContext);
+    }
   },
 };
