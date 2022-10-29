@@ -13,7 +13,7 @@
   "dependencies": {
     "@a2seven/yoo-checkout": "1.1.4",
     "@keystone-6/auth": "4.0.1",
-    "@keystone-6/core": "2.3.1",
+    "@keystone-6/core": "3.0.1",
     "@keystone-6/fields-document": "4.1.2",
     "@semantic-release/npm": "9.0.1",
     "body-parser": "1.20.1",
