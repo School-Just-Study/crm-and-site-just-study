@@ -24,8 +24,8 @@ export const handleNotificationStudentLesson: ServerConfig<any>["extendExpressAp
       });
       for (const lesson of lessons) {
         const leftTwoHours = isAfter(
-          new Date(lesson.startTime),
-          addHours(new Date(), -2)
+          new Date(),
+          addHours(new Date(lesson.startTime), -2)
         );
         if (leftTwoHours) {
           await notifyUpcomingLessons(lesson.id, context);
