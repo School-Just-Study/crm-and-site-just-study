@@ -6,6 +6,8 @@ import { handleStudentCalendar } from "../utils/handleStudentCalendar";
 import { handleTeacherCalendar } from "../utils/handleTeacherCalendar";
 import { handleNotificationStudentLesson } from "../utils/handleNotificationStudentLesson";
 import { handleCheckUserSubscription } from "../utils/handleCheckUserSubscription";
+import { getStudents } from "../utils/getStudents";
+import { getManagers } from "../utils/getManagers";
 
 export const server: KeystoneConfig["server"] = {
   port: SERVER_PORT,
@@ -38,6 +40,12 @@ export const server: KeystoneConfig["server"] = {
     }
     if (handleCheckUserSubscription) {
       handleCheckUserSubscription(app, createContext);
+    }
+    if (getStudents) {
+      getStudents(app, createContext);
+    }
+    if (getManagers) {
+      getManagers(app, createContext);
     }
   },
 };
