@@ -20,7 +20,7 @@ export const handleCreateUserWithEmailManager: ListHooks<Lists.Client.TypeInfo>[
               email,
               manager: { connect: { id: `${item.id}` } },
               language,
-              role: Roles.Teacher,
+              role: Roles.Manager,
             },
             query: `id`,
           });
