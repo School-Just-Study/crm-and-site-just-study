@@ -1031,6 +1031,7 @@ type PasswordState {
 enum UserRoleType {
   admin
   manager
+  teacher
   student
 }
 
