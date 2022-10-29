@@ -41,19 +41,5 @@
   "engines": {
     "node": ">= 16.x",
     "yarn": ">= 1.x"
-  },
-  "release": {
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      [
-        "@semantic-release/npm",
-        {
-          "npmPublish": false
-        }
-      ],
-      "@semantic-release/git"
-    ],
-    "branch": "master"
   }
 }
