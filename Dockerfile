@@ -1,4 +1,4 @@
-FROM node:18 AS builder
+FROM node:19 AS builder
 
 # Copy
 WORKDIR /usr/src/app
