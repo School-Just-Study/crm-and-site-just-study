@@ -11,4 +11,5 @@ COPY --from=builder /usr/src/app/.keystone /usr/share/nginx/html
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/crm-just-study.conf /etc/nginx/conf.d/crm-just-study.conf
 
+EXPOSE 8000
 CMD ["yarn", "start"]
