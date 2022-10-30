@@ -47,7 +47,7 @@ jobs:
           revision-core-fraction: 100
           revision-concurrency: 8
           revision-image-url: cr.yandex/crpt6ftcvvm3ts7j581s/crm-back:${{ github.sha }}
-          revision-execution-timeout: 10
+          revision-execution-timeout: 600
           revision-env: |
             DATABASE_URL=${{ secrets.DATABASE_URL }}
             SESSION_SECRET=${{ secrets.SESSION_SECRET }}
