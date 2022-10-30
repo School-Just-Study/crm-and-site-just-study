@@ -48,22 +48,22 @@ jobs:
           revision-concurrency: 8
           revision-image-url: cr.yandex/crpt6ftcvvm3ts7j581s/crm-back:${{ github.sha }}
           revision-execution-timeout: 10
-          revision-env:
-            DATABASE_URL: ${{ secrets.DATABASE_URL }}
-            SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-            FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
-            BACKEND_URL: ${{ secrets.BACKEND_URL }}
-            PAYTURE_URL: ${{ secrets.PAYTURE_URL }}
-            PAYTURE_TERMINAL_RUB: ${{ secrets.PAYTURE_TERMINAL_RUB }}
-            PAYTURE_TERMINAL_USD: ${{ secrets.PAYTURE_TERMINAL_USD }}
-            PAYTURE_TERMINAL_PASSWORD: ${{ secrets.PAYTURE_TERMINAL_PASSWORD }}
-            NALOG_INN: ${{ secrets.NALOG_INN }}
-            NALOG_PASSWORD: ${{ secrets.NALOG_PASSWORD }}
-            S3_STORAGE_KEY_ID: ${{ secrets.S3_STORAGE_KEY_ID }}
-            S3_STORAGE_KEY_SECRET: ${{ secrets.S3_STORAGE_KEY_SECRET }}
-            MAIL_HOST: ${{ secrets.MAIL_HOST }}
-            MAIL_PORT: ${{ secrets.MAIL_PORT }}
-            MAIL_USER: ${{ secrets.MAIL_USER }}
-            MAIL_PASS: ${{ secrets.MAIL_PASS }}
-            YOOKASSA_ID: ${{ secrets.YOOKASSA_ID }}
-            YOOKASSA_SECRET: ${{ secrets.YOOKASSA_SECRET }}
+          revision-env: |
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
+            SESSION_SECRET=${{ secrets.SESSION_SECRET }}
+            FRONTEND_URL=${{ secrets.FRONTEND_URL }}
+            BACKEND_URL=${{ secrets.BACKEND_URL }}
+            PAYTURE_URL=${{ secrets.PAYTURE_URL }}
+            PAYTURE_TERMINAL_RUB=${{ secrets.PAYTURE_TERMINAL_RUB }}
+            PAYTURE_TERMINAL_USD=${{ secrets.PAYTURE_TERMINAL_USD }}
+            PAYTURE_TERMINAL_PASSWORD=${{ secrets.PAYTURE_TERMINAL_PASSWORD }}
+            NALOG_INN=${{ secrets.NALOG_INN }}
+            NALOG_PASSWORD=${{ secrets.NALOG_PASSWORD }}
+            S3_STORAGE_KEY_ID=${{ secrets.S3_STORAGE_KEY_ID }}
+            S3_STORAGE_KEY_SECRET=${{ secrets.S3_STORAGE_KEY_SECRET }}
+            MAIL_HOST=${{ secrets.MAIL_HOST }}
+            MAIL_PORT=${{ secrets.MAIL_PORT }}
+            MAIL_USER=${{ secrets.MAIL_USER }}
+            MAIL_PASS=${{ secrets.MAIL_PASS }}
+            YOOKASSA_ID=${{ secrets.YOOKASSA_ID }}
+            YOOKASSA_SECRET=${{ secrets.YOOKASSA_SECRET }}
