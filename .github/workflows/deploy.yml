@@ -21,6 +21,10 @@ jobs:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
 
       - name: Build, tag, and push image to Yandex Cloud Container Registry
+        with:
+          docker_build_args: |
+            DATABASE_URL | SESSION_SECRET | FRONTEND_URL | BACKEND_URL | PAYTURE_URL | PAYTURE_TERMINAL_RUB | PAYTURE_TERMINAL_USD | PAYTURE_TERMINAL_PASSWORD | NALOG_INN | 
+            NALOG_PASSWORD | S3_STORAGE_KEY_ID | S3_STORAGE_KEY_SECRET | MAIL_HOST | MAIL_PORT | MAIL_USER | MAIL_PASS | YOOKASSA_ID | YOOKASSA_SECRET
         env:
           CR_REGISTRY: crpt6ftcvvm3ts7j581s
           CR_REPOSITORY: crm-back
@@ -43,10 +47,6 @@ jobs:
           MAIL_PASS: ${{ secrets.MAIL_PASS }}
           YOOKASSA_ID: ${{ secrets.YOOKASSA_ID }}
           YOOKASSA_SECRET: ${{ secrets.YOOKASSA_SECRET }}
-        with:
-          docker_build_args: |
-            DATABASE_URL | SESSION_SECRET | FRONTEND_URL | BACKEND_URL | PAYTURE_URL | PAYTURE_TERMINAL_RUB | PAYTURE_TERMINAL_USD | PAYTURE_TERMINAL_PASSWORD | NALOG_INN | 
-            NALOG_PASSWORD | S3_STORAGE_KEY_ID | S3_STORAGE_KEY_SECRET | MAIL_HOST | MAIL_PORT | MAIL_USER | MAIL_PASS | YOOKASSA_ID | YOOKASSA_SECRET
         run: |
           docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
