@@ -17,6 +17,7 @@ export const User = list({
       },
       pageSize: 20,
     },
+    searchFields: ["name", "email", "comment"],
   },
   fields: {
     language,

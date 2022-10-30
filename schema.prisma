@@ -263,7 +263,7 @@ model UserSubscription {
   originalPrice            Int?
   price                    Int?
   period                   Int?
-  status                   String    @default("inactive")
+  status                   String    @default("active")
   student                  User?     @relation("UserSubscription_student", fields: [studentId], references: [id])
   studentId                Int?      @map("student")
   beginDate                DateTime? @default(now())

@@ -16,6 +16,7 @@ export const Service = list({
     listView: {
       initialColumns: ["id", "label", "language", "statusView", "categories"],
     },
+    searchFields: ["name"],
   },
   fields: {
     language,

@@ -8,6 +8,7 @@ import { handleNotificationStudentLesson } from "../utils/handleNotificationStud
 import { handleCheckUserSubscription } from "../utils/handleCheckUserSubscription";
 import { getStudents } from "../utils/getStudents";
 import { getManagers } from "../utils/getManagers";
+import { handlePayture } from "../utils/handlePayture";
 
 export const server: KeystoneConfig["server"] = {
   port: SERVER_PORT,
@@ -28,6 +29,9 @@ export const server: KeystoneConfig["server"] = {
 
     if (handleYooKassa) {
       handleYooKassa(app, createContext);
+    }
+    if (handlePayture) {
+      handlePayture(app, createContext);
     }
     if (handleStudentCalendar) {
       handleStudentCalendar(app, createContext);

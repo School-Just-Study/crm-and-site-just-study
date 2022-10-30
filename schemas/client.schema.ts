@@ -28,6 +28,7 @@ export const Client = list({
       },
       pageSize: 20,
     },
+    searchFields: ["name", "email", "comment"],
   },
   fields: {
     language,

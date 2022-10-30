@@ -20,8 +20,6 @@ export const checkout = async (
     throw new Error("Sorry! The user does not exist!");
   }
 
-  let orderText = user.name;
-
   const cart = await context.query.Cart.findOne({
     where: { id: user.cart.id },
     query: `id items { id subscription { id name } service { id name } price } quantityPayments amount`,
@@ -46,8 +44,10 @@ export const checkout = async (
       };
     });
 
-  orderText += ": " + subscriptionsIds.map((item: any) => item.name).join(", ");
-  orderText += ", " + servicesIds.map((item: any) => item.name).join(", ");
+  const orderItemsText: string[] = [];
+  subscriptionsIds.forEach((item: any) => orderItemsText.push(item.name));
+  servicesIds.map((item: any) => orderItemsText.push(item.name));
+  const orderText = `${user.name}: ${orderItemsText.join(", ")}`;
 
   const order = await context.query.Order.createOne({
     data: {

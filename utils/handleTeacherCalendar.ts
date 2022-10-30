@@ -24,7 +24,7 @@ export const handleTeacherCalendar: ServerConfig<any>["extendExpressApp"] = (
       calendar.createEvent({
         start: new Date(lesson.startTime),
         end: new Date(lesson.endTime),
-        summary: `Урок с ${lesson.students[0].name}`,
+        summary: `${lesson.students[0].name} - урок`,
         url: lesson.teachers[0]?.linkOnlineLesson,
         alarms: [{ type: ICalAlarmType.audio, triggerBefore: 3600 }],
       });

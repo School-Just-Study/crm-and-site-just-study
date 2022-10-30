@@ -15,16 +15,16 @@ export const cart = async (
   { data }: { data: Arguments },
   context: KeystoneContext
 ) => {
-  const { firstName, secondName, phone, email, currency, language } = data;
+  const { firstName, secondName, phone, email, currency } = data;
   let user = await context.query.User.findOne({
     where: { email },
-    query: `id`,
+    query: `id client { id }`,
   });
 
   const name = `${firstName} ${secondName}`;
 
   await context.query.Client.updateOne({
-    where: { email },
+    where: { id: `${user.client.id}` },
     data: {
       name,
       phone,
