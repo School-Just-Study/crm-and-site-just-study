@@ -33,7 +33,7 @@ export const authCart = async (
     });
   } else {
     client = await context.query.Client.updateOne({
-      where: { email },
+      where: { id: `${client.id}` },
       data: {
         name,
         phone,

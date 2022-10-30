@@ -54,7 +54,7 @@ export const UserSubscription = list({
     status: select({
       options: StatusesOptions,
       ui: { displayMode: "segmented-control" },
-      defaultValue: Statuses.Inactive,
+      defaultValue: Statuses.Active,
       validation: { isRequired: true },
     }),
     student: relationship({ ref: "User" }),
