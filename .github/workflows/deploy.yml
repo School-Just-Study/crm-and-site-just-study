@@ -1,15 +1,41 @@
-name: Docker
+name: Deploy
 
 on:
   push:
     branches: [ "master" ]
 
 jobs:
-  build:
+  deploy-docker:
     runs-on: ubuntu-latest
+    environment:
+      name: prod
+      url: https://juststudy.online
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Create env file
+        run: |
+          touch .env
+          echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
+          echo SESSION_SECRET=${{ secrets.SESSION_SECRET }} >> .env
+          echo FRONTEND_URL=${{ secrets.FRONTEND_URL }} >> .env
+          echo BACKEND_URL=${{ secrets.BACKEND_URL }} >> .env
+          echo PAYTURE_URL=${{ secrets.PAYTURE_URL }} >> .env
+          echo PAYTURE_TERMINAL_RUB=${{ secrets.PAYTURE_TERMINAL_RUB }} >> .env
+          echo PAYTURE_TERMINAL_USD=${{ secrets.PAYTURE_TERMINAL_USD }} >> .env
+          echo PAYTURE_TERMINAL_PASSWORD=${{ secrets.PAYTURE_TERMINAL_PASSWORD }} >> .env
+          echo NALOG_INN=${{ secrets.NALOG_INN }} >> .env
+          echo NALOG_PASSWORD=${{ secrets.NALOG_PASSWORD }} >> .env
+          echo S3_STORAGE_KEY_ID=${{ secrets.S3_STORAGE_KEY_ID }} >> .env
+          echo S3_STORAGE_KEY_SECRET=${{ secrets.S3_STORAGE_KEY_SECRET }} >> .env
+          echo MAIL_HOST=${{ secrets.MAIL_HOST }} >> .env
+          echo MAIL_PORT=${{ secrets.MAIL_PORT }} >> .env
+          echo MAIL_USER=${{ secrets.MAIL_USER }} >> .env
+          echo MAIL_PASS=${{ secrets.MAIL_PASS }} >> .env
+          echo YOOKASSA_ID=${{ secrets.YOOKASSA_ID }} >> .env
+          echo YOOKASSA_SECRET=${{ secrets.YOOKASSA_SECRET }} >> .env
+          cat .env
 
       - name: Login to Yandex Cloud Container Registry
         id: login-cr
@@ -25,27 +51,23 @@ jobs:
         run: |
           docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
-  deploy:
+  update-server:
     needs:
-      - build
+      - deploy-docker
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      - name: Deploy COI VM
-        id: deploy-coi
-        uses: yc-actions/yc-coi-deploy@v1.0.1
-        env:
-          IMAGE_URL: cr.yandex/crpt6ftcvvm3ts7j581s/yc-coi-github-action:${{ github.sha }}
-          SSH_KEY: ${{ secrets.SSH_KEY }}
+      - name: Deploy Serverless Container
+        id: deploy-sls-container
+        uses: yc-actions/yc-sls-container-deploy@v2
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+          container-name: just-study-crm
           folder-id: b1g4s4k8tj83buc1hdoq
-          vm-name: crm-back
-          vm-service-account-id: ajesfn13n9hlksu185rq
-          vm-cores: 2
-          vm-memory: 2 GB
-          vm-core-fraction: 100
-          vm-zone-id: ru-central1-a
-          vm-subnet-id: e9b3f919snkged91gkks
-          user-data-path: "./user-data.yaml"
+          revision-service-account-id: ajesfn13n9hlksu185rq
+          revision-cores: 1
+          revision-memory: 512Mb
+          revision-core-fraction: 100
+          revision-concurrency: 8
+          revision-image-url: cr.yandex/crpt6ftcvvm3ts7j581s/crm-back:${{ github.sha }}
+          revision-execution-timeout: 10

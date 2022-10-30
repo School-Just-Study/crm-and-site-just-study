@@ -1,15 +1,23 @@
-FROM node:18 AS builder
+FROM node:18 as dependencies
+WORKDIR /usr/src/app
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
 
-# Copy
+FROM node:18 as builder
 WORKDIR /usr/src/app
 COPY . .
-RUN yarn install --frozen-lockfile && yarn build && ls -lah
+COPY --from=dependencies /usr/src/app/node_modules ./node_modules
+RUN yarn build
 
-FROM nginx:1.23.2-alpine AS final
-RUN rm -f /etc/nginx/conf.d/default.conf
-COPY --from=builder /usr/src/app/.keystone /usr/share/nginx/html
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
-COPY nginx/crm-just-study.conf /etc/nginx/conf.d/crm-just-study.conf
+FROM node:18 as runner
+WORKDIR /usr/src/app
+ENV NODE_ENV production
 
-EXPOSE 8000
+COPY --from=builder /usr/src/app/package.json ./package.json
+COPY --from=builder /usr/src/app/.keystone ./.keystone
+COPY --from=builder /usr/src/app/node_modules ./node_modules
+
+ENV PORT 3000
+
+EXPOSE 3000
 CMD ["yarn", "start"]
