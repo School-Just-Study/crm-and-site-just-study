@@ -14,29 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Create env file
-        run: |
-          touch .env
-          echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
-          echo SESSION_SECRET=${{ secrets.SESSION_SECRET }} >> .env
-          echo FRONTEND_URL=${{ secrets.FRONTEND_URL }} >> .env
-          echo BACKEND_URL=${{ secrets.BACKEND_URL }} >> .env
-          echo PAYTURE_URL=${{ secrets.PAYTURE_URL }} >> .env
-          echo PAYTURE_TERMINAL_RUB=${{ secrets.PAYTURE_TERMINAL_RUB }} >> .env
-          echo PAYTURE_TERMINAL_USD=${{ secrets.PAYTURE_TERMINAL_USD }} >> .env
-          echo PAYTURE_TERMINAL_PASSWORD=${{ secrets.PAYTURE_TERMINAL_PASSWORD }} >> .env
-          echo NALOG_INN=${{ secrets.NALOG_INN }} >> .env
-          echo NALOG_PASSWORD=${{ secrets.NALOG_PASSWORD }} >> .env
-          echo S3_STORAGE_KEY_ID=${{ secrets.S3_STORAGE_KEY_ID }} >> .env
-          echo S3_STORAGE_KEY_SECRET=${{ secrets.S3_STORAGE_KEY_SECRET }} >> .env
-          echo MAIL_HOST=${{ secrets.MAIL_HOST }} >> .env
-          echo MAIL_PORT=${{ secrets.MAIL_PORT }} >> .env
-          echo MAIL_USER=${{ secrets.MAIL_USER }} >> .env
-          echo MAIL_PASS=${{ secrets.MAIL_PASS }} >> .env
-          echo YOOKASSA_ID=${{ secrets.YOOKASSA_ID }} >> .env
-          echo YOOKASSA_SECRET=${{ secrets.YOOKASSA_SECRET }} >> .env
-          cat .env
-
       - name: Login to Yandex Cloud Container Registry
         id: login-cr
         uses: yc-actions/yc-cr-login@v1
@@ -48,6 +25,24 @@ jobs:
           CR_REGISTRY: crpt6ftcvvm3ts7j581s
           CR_REPOSITORY: crm-back
           IMAGE_TAG: ${{ github.sha }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+          FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+          BACKEND_URL: ${{ secrets.BACKEND_URL }}
+          PAYTURE_URL: ${{ secrets.PAYTURE_URL }}
+          PAYTURE_TERMINAL_RUB: ${{ secrets.PAYTURE_TERMINAL_RUB }}
+          PAYTURE_TERMINAL_USD: ${{ secrets.PAYTURE_TERMINAL_USD }}
+          PAYTURE_TERMINAL_PASSWORD: ${{ secrets.PAYTURE_TERMINAL_PASSWORD }}
+          NALOG_INN: ${{ secrets.NALOG_INN }}
+          NALOG_PASSWORD: ${{ secrets.NALOG_PASSWORD }}
+          S3_STORAGE_KEY_ID: ${{ secrets.S3_STORAGE_KEY_ID }}
+          S3_STORAGE_KEY_SECRET: ${{ secrets.S3_STORAGE_KEY_SECRET }}
+          MAIL_HOST: ${{ secrets.MAIL_HOST }}
+          MAIL_PORT: ${{ secrets.MAIL_PORT }}
+          MAIL_USER: ${{ secrets.MAIL_USER }}
+          MAIL_PASS: ${{ secrets.MAIL_PASS }}
+          YOOKASSA_ID: ${{ secrets.YOOKASSA_ID }}
+          YOOKASSA_SECRET: ${{ secrets.YOOKASSA_SECRET }}
         run: |
           docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
