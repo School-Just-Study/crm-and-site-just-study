@@ -7,9 +7,6 @@ on:
 jobs:
   deploy-docker:
     runs-on: ubuntu-latest
-    environment:
-      name: prod
-      url: https://juststudy.online
 
     steps:
       - uses: actions/checkout@v3
