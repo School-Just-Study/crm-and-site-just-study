@@ -1382,7 +1382,6 @@ type UserSubscription {
   unlimited: Boolean
   originalPrice: Int
   price: Int
-  period: Int
   status: String
   student: User
   beginDate: DateTime
@@ -1412,7 +1411,6 @@ input UserSubscriptionWhereInput {
   unlimited: BooleanFilter
   originalPrice: IntNullableFilter
   price: IntNullableFilter
-  period: IntNullableFilter
   status: StringFilter
   student: UserWhereInput
   beginDate: DateTimeNullableFilter
@@ -1438,7 +1436,6 @@ input UserSubscriptionOrderByInput {
   unlimited: OrderDirection
   originalPrice: OrderDirection
   price: OrderDirection
-  period: OrderDirection
   status: OrderDirection
   beginDate: OrderDirection
   endDate: OrderDirection
@@ -1454,7 +1451,6 @@ input UserSubscriptionUpdateInput {
   unlimited: Boolean
   originalPrice: Int
   price: Int
-  period: Int
   status: String
   student: UserRelateToOneForUpdateInput
   beginDate: DateTime
@@ -1485,7 +1481,6 @@ input UserSubscriptionCreateInput {
   unlimited: Boolean
   originalPrice: Int
   price: Int
-  period: Int
   status: String
   student: UserRelateToOneForCreateInput
   beginDate: DateTime

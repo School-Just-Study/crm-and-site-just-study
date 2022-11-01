@@ -1,6 +1,7 @@
 import { KeystoneContext } from "@keystone-6/core/dist/declarations/src/types";
 import { gql } from "./index";
 import { convertMoney } from "../lib/convertMoney";
+import { addDays } from "date-fns";
 
 interface Arguments {
   userId: string;
@@ -68,6 +69,8 @@ export const checkout = async (
           query: `name visitCount price period trial unlimited`,
         });
 
+        const endDate = addDays(new Date(), subscriptionTemplate.period);
+
         const userSubscription = await context.query.UserSubscription.createOne(
           {
             data: {
@@ -75,7 +78,7 @@ export const checkout = async (
               visitCount: subscriptionTemplate.visitCount,
               originalPrice: subscriptionTemplate.price,
               price,
-              period: subscriptionTemplate.period,
+              endDate,
               trial: subscriptionTemplate.trial,
               unlimited: subscriptionTemplate.unlimited,
               student: { connect: { id: userId } },
