@@ -14,6 +14,7 @@ export const ClientStatusOptionsConst = [
   },
   { label: "Некачественный лид", value: ClientStatus.LowQualityLead },
   { label: "Клиент", value: ClientStatus.Client },
+  { label: "Закончил обучение", value: ClientStatus.FinishedClient },
   { label: "Неактивный клиент", value: ClientStatus.DisabledClient },
   { label: "Отказ", value: ClientStatus.Rejection },
 ];

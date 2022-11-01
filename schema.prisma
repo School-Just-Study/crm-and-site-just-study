@@ -532,6 +532,7 @@ enum ClientStatusClientType {
   decisionAfterTrialLesson
   LowQualityLead
   client
+  finishedClient
   disabledClient
   rejection
 }

@@ -7,5 +7,6 @@ export enum ClientStatus {
   LowQualityLead = "LowQualityLead",
   Client = "client",
   DisabledClient = "disabledClient",
+  FinishedClient = "finishedClient",
   Rejection = "rejection",
 }
