@@ -14,8 +14,6 @@ import { Statuses } from "../enums/statuses.enum";
 import { Lists } from ".keystone/types";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
-import { addDays } from "date-fns";
-import format from "date-fns/format";
 import { LessonStatus } from "../enums/lesson-status";
 
 export const UserSubscription = list({
@@ -50,6 +48,7 @@ export const UserSubscription = list({
     price: integer(),
     period: integer({
       ui: { description: "Количество дней, которое действует абонемент" },
+      defaultValue: 45,
     }),
     status: select({
       options: StatusesOptions,
@@ -61,23 +60,7 @@ export const UserSubscription = list({
     beginDate: timestamp({
       defaultValue: { kind: "now" },
     }),
-    endDate: virtual({
-      // @ts-ignore
-      field: graphql.field({
-        type: graphql.String,
-        resolve(item: Lists.UserSubscription.Item) {
-          if (item.period && item.beginDate) {
-            const endDate = addDays(new Date(item.beginDate), item.period);
-            return format(endDate, "yyyy-MM-dd");
-          } else {
-            return;
-          }
-        },
-      }),
-      ui: {
-        description: "Рассчитывается автоматически от длительности периода",
-      },
-    }),
+    endDate: timestamp(),
     totalVisited: virtual({
       // @ts-ignore
       field: graphql.field({
