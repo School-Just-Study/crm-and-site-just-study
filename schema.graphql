@@ -1386,7 +1386,7 @@ type UserSubscription {
   status: String
   student: User
   beginDate: DateTime
-  endDate: String
+  endDate: DateTime
   totalVisited: Int
   customVisited: Int
   lastCount: Int
@@ -1416,6 +1416,7 @@ input UserSubscriptionWhereInput {
   status: StringFilter
   student: UserWhereInput
   beginDate: DateTimeNullableFilter
+  endDate: DateTimeNullableFilter
   customVisited: IntNullableFilter
   lessons: LessonManyRelationFilter
   trial: BooleanFilter
@@ -1440,6 +1441,7 @@ input UserSubscriptionOrderByInput {
   period: OrderDirection
   status: OrderDirection
   beginDate: OrderDirection
+  endDate: OrderDirection
   customVisited: OrderDirection
   trial: OrderDirection
   createdAt: OrderDirection
@@ -1456,6 +1458,7 @@ input UserSubscriptionUpdateInput {
   status: String
   student: UserRelateToOneForUpdateInput
   beginDate: DateTime
+  endDate: DateTime
   customVisited: Int
   lessons: LessonRelateToManyForUpdateInput
   trial: Boolean
@@ -1486,6 +1489,7 @@ input UserSubscriptionCreateInput {
   status: String
   student: UserRelateToOneForCreateInput
   beginDate: DateTime
+  endDate: DateTime
   customVisited: Int
   lessons: LessonRelateToManyForCreateInput
   trial: Boolean

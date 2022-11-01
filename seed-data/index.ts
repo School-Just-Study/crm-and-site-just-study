@@ -1,10 +1,10 @@
 import { KeystoneContext } from "@keystone-6/core/dist/declarations/src/types";
-import { seedClients } from "./seedClients";
+import { updateUserSub } from "./updateUserSub";
 
 export async function insertSeedData(context: KeystoneContext) {
   console.log(`🌱 Inserting seed data`);
 
-  await seedClients(context);
+  await updateUserSub(context);
 
   console.log(`✅ Seed data inserted`);
   console.log(
