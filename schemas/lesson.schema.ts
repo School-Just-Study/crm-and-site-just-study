@@ -2,6 +2,7 @@ import { list } from "@keystone-6/core";
 import {
   checkbox,
   relationship,
+  select,
   text,
   timestamp,
 } from "@keystone-6/core/fields";
@@ -10,6 +11,7 @@ import { lastModification } from "../fields/lastModification";
 import { statusLesson } from "../fields/statusLesson";
 import { handleNotificationStudentAndTeacherLesson } from "../lib/handleNotificationStudentAndTeacherLesson";
 import { handleCheckBookingLesson } from "../lib/handleCheckBookingLesson";
+import { TimezoneOptionsConst } from "../consts/timezone-options.const";
 
 export const Lesson = list({
   ui: {
@@ -54,7 +56,12 @@ export const Lesson = list({
       ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(10000)" },
     }),
-    timeZone: text({ defaultValue: "Europe/Moscow" }),
+    timeZone: select({
+      options: TimezoneOptionsConst,
+      type: "string",
+      validation: { isRequired: true },
+      defaultValue: "Europe/Moscow",
+    }),
     notified: checkbox(),
     createdAt,
     lastModification,
