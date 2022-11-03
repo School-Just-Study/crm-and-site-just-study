@@ -50,6 +50,7 @@ jobs:
           revision-execution-timeout: 100
           revision-provisioned: 1
           revision-env: |
+            NODE_ENV=production
             DATABASE_URL=${{ secrets.DATABASE_URL }}
             SESSION_SECRET=${{ secrets.SESSION_SECRET }}
             FRONTEND_URL=${{ secrets.FRONTEND_URL }}
