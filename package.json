@@ -3,7 +3,7 @@
   "version": "2.2.8",
   "private": true,
   "scripts": {
-    "dev": "keystone dev",
+    "dev": "SKIP_NALOG=true keystone dev",
     "seed-data": "keystone --seed-data",
     "start": "keystone start",
     "build": "keystone build"
