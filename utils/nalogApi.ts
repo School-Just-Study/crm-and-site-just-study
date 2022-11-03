@@ -4,7 +4,7 @@ import { NALOG_INN, NALOG_PASSWORD } from "../config";
 export const addRecent = async (
   amount: number
 ): Promise<string | undefined> => {
-  if (process.env.NODE_ENV === "development") return "test_recent_id";
+  if (process.env.SKIP_NALOG === "true") return "test_recent_id";
 
   try {
     const nalogApi = new NalogApi({
@@ -23,7 +23,7 @@ export const addRecent = async (
 };
 
 export const cancelRecent = async (id: string) => {
-  if (process.env.NODE_ENV === "development") return;
+  if (process.env.SKIP_NALOG === "true") return;
 
   try {
     const nalogApi = new NalogApi({
