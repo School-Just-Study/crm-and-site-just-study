@@ -299,7 +299,7 @@ model UserService {
   id                  Int      @id @default(autoincrement())
   name                String   @default("")
   originalPrice       Int?
-  status              String   @default("inactive")
+  status              String   @default("finished")
   price               Int?
   student             User?    @relation("UserService_student", fields: [studentId], references: [id])
   studentId           Int?     @map("student")
