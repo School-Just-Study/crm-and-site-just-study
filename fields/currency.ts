@@ -6,6 +6,6 @@ export const currency = select({
   options: currencyOptions,
   defaultValue: Currency.RUB,
   ui: { displayMode: "segmented-control" },
-  label: "Терминал для оплаты",
+  label: "Валюта",
   validation: { isRequired: true },
 });

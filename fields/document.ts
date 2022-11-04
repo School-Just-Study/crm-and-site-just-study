@@ -36,4 +36,5 @@ export const content = document({
     [1, 2],
     [1, 2, 1],
   ],
+  label: "Содержимое",
 });

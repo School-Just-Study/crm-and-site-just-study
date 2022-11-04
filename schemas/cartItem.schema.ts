@@ -14,16 +14,20 @@ export const CartItem = list({
         "subscription",
       ],
     },
+    label: "Позиция в корзине",
   },
   fields: {
-    cart: relationship({ ref: "Cart.items" }),
+    cart: relationship({ ref: "Cart.items", label: "Корзина" }),
     subscription: relationship({
       ref: "Subscription",
+      label: "Абонемент",
     }),
     service: relationship({
       ref: "Service",
+      label: "Услуга",
     }),
     originalPrice: virtual({
+      label: "Оригинальная цена",
       field: graphql.field({
         type: graphql.Int,
         async resolve(item, arg, context) {
@@ -51,6 +55,7 @@ export const CartItem = list({
     }),
     price: integer({
       ui: { description: "Цену можно не вписывать, если нет скидки." },
+      label: "Цена для продажи",
     }),
   },
   hooks: {

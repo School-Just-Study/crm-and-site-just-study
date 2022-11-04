@@ -9,8 +9,8 @@ export const AvatarUser = list({
     isHidden: true,
   },
   fields: {
-    user: relationship({ ref: "User.avatar" }),
-    image: image({ storage: "storage_image_avatars" }),
+    user: relationship({ ref: "User.avatar", label: "Клиент" }),
+    image: image({ storage: "storage_image_avatars", label: "Изображение" }),
     createdAt,
     lastModification,
   },

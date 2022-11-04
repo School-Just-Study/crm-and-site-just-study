@@ -13,7 +13,7 @@ export const Link = list({
   },
   fields: {
     label: virtual({
-      ui: { description: "Ссылка" },
+      label: "Ссылка",
       field: graphql.field({
         type: graphql.String,
         resolve(item) {
@@ -25,10 +25,14 @@ export const Link = list({
     status: select({
       options: LinkStatusOptions,
       defaultValue: LinkStatus.Active,
-      ui: { displayMode: "segmented-control", description: "Статус ссылки" },
+      ui: { displayMode: "segmented-control" },
       validation: { isRequired: true },
+      label: "Статус ссылки",
     }),
-    link: text({ validation: { isRequired: true } }),
+    link: text({
+      validation: { isRequired: true },
+      label: "Ссылка для сокращения",
+    }),
     createdAt,
     lastModification,
   },

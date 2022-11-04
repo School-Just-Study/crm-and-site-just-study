@@ -13,7 +13,7 @@ export const Tag = list({
   },
   fields: {
     language,
-    name: text({ validation: { isRequired: true } }),
+    name: text({ validation: { isRequired: true }, label: "Заголовок" }),
     createdAt,
     lastModification,
   },

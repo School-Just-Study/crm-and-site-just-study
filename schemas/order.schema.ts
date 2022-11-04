@@ -35,15 +35,16 @@ export const Order = list({
     },
   },
   fields: {
-    label: text(),
-    student: relationship({ ref: "User" }),
+    label: text({ label: "Название заказа" }),
+    student: relationship({ ref: "User", label: "Клиент" }),
     quantityPayments: integer({
       validation: { isRequired: true },
       defaultValue: 1,
       ui: { description: "Всего платежей" },
+      label: "Количество платежей",
     }),
     leftPayments: virtual({
-      ui: { description: "Осталось платежей" },
+      label: "Осталось платежей",
       // @ts-ignore
       field: graphql.field({
         type: graphql.Int,
@@ -63,9 +64,14 @@ export const Order = list({
       }),
     }),
     currency,
-    payments: relationship({ ref: "Payment.order", many: true }),
+    payments: relationship({
+      ref: "Payment.order",
+      many: true,
+      label: "Платежи",
+    }),
     status: select({
       type: "enum",
+      label: "Статус заказа",
       options: OrderStatusOptions,
       ui: { displayMode: "segmented-control" },
       defaultValue: OrderStatus.Created,
@@ -73,13 +79,16 @@ export const Order = list({
     subscriptions: relationship({
       ref: "UserSubscription",
       many: true,
+      label: "Абонементы",
     }),
     services: relationship({
       ref: "UserService",
       many: true,
+      label: "Услуги",
     }),
-    amount: integer(),
+    amount: integer({ label: "Сумма" }),
     payed: virtual({
+      label: "Оплачено",
       // @ts-ignore
       field: graphql.field({
         type: graphql.Int,
@@ -102,6 +111,7 @@ export const Order = list({
       }),
     }),
     dept: virtual({
+      label: "Долг",
       // @ts-ignore
       field: graphql.field({
         type: graphql.Int,
@@ -129,6 +139,7 @@ export const Order = list({
       }),
     }),
     nextPayment: virtual({
+      label: "Следующая оплата",
       // @ts-ignore
       field: graphql.field({
         type: graphql.Int,

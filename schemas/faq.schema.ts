@@ -15,12 +15,13 @@ export const Faq = list({
   fields: {
     language,
     statusView,
-    products: relationship({ ref: "Product", many: true }),
-    title: text({ validation: { isRequired: true } }),
+    products: relationship({ ref: "Product", many: true, label: "Курсы" }),
+    title: text({ validation: { isRequired: true }, label: "Вопрос" }),
     desc: text({
       validation: { isRequired: true },
       ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(1000)" },
+      label: "Ответ",
     }),
     createdAt,
     lastModification,

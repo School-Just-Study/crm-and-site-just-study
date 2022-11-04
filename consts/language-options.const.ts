@@ -1,7 +1,7 @@
 import { Language } from "../enums/language.enum";
 
 export const LanguageOptions = [
-  { label: Language.Russian, value: Language.Russian },
-  { label: Language.English, value: Language.English },
-  { label: Language.Spanish, value: Language.Spanish },
+  { label: "🇷🇺Русский", value: Language.Russian },
+  { label: "🇬🇧Английский", value: Language.English },
+  { label: "🇪🇸Испанский", value: Language.Spanish },
 ];

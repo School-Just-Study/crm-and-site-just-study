@@ -27,6 +27,7 @@ export const Marketing = list({
     language,
     statusView,
     link: virtual({
+      label: "Ссылка на лендинг",
       // @ts-ignore
       field: graphql.field({
         type: graphql.String,
@@ -38,15 +39,19 @@ export const Marketing = list({
         },
       }),
     }),
-    slug: text({ validation: { isRequired: true }, isIndexed: "unique" }),
-    image: image({ storage: "storage_marketing_image" }),
-    title: text({ validation: { isRequired: true } }),
+    slug: text({
+      validation: { isRequired: true },
+      isIndexed: "unique",
+      label: "Путь для лендинга",
+    }),
+    image: image({ storage: "storage_marketing_image", label: "Аватарка" }),
+    title: text({ validation: { isRequired: true }, label: "Заголовок" }),
     description: text({
       ui: {
         displayMode: "textarea",
-        description: "Выделенный текст сверху страницы",
       },
       db: { nativeType: "VarChar(10000)" },
+      label: "Выделенный текст сверху страницы",
     }),
     aboutGeorge: checkboxField("Об основателе"),
     advantages: checkboxField("Чем мы отличаемся?"),

@@ -17,13 +17,14 @@ export const ProductReview = list({
   fields: {
     language,
     statusView,
-    student: relationship({ ref: "User" }),
-    products: relationship({ ref: "Product", many: true }),
+    student: relationship({ ref: "User", label: "Клиент" }),
+    products: relationship({ ref: "Product", many: true, label: "Курсы" }),
     desc: text({
       ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(10000)" },
+      label: "Описание",
     }),
-    media: text(),
+    media: text({ label: "Видео" }),
     createdAt,
     lastModification,
   },

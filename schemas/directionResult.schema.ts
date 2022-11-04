@@ -16,6 +16,7 @@ export const DirectionResult = list({
     statusView,
     name: text({
       validation: { isRequired: true },
+      label: "Заголовок",
     }),
     createdAt,
     lastModification,
