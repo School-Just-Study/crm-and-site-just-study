@@ -31,7 +31,6 @@ export const Marketing = list({
       field: graphql.field({
         type: graphql.String,
         resolve(item: Lists.Marketing.Item) {
-          console.log(item);
           if (item.statusView === ViewStatus.Show) {
             return `${FRONTEND_URL}/${item.language}/marketing/${item.slug}`;
           }
