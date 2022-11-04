@@ -6,6 +6,8 @@ export const getStudents: ServerConfig<any>["extendExpressApp"] = (
   createContext
 ) => {
   app.get("/api/students", async (req, res) => {
+    console.info(new Date(), "get students");
+
     const context = await createContext(req, res);
 
     const users = await context.query.User.findMany({

@@ -5,6 +5,8 @@ export const handlePayture: ServerConfig<any>["extendExpressApp"] = (
   createContext
 ) => {
   app.post("/api/payture", async (req, res) => {
+    console.info(new Date(), "post payture");
+
     console.log("body", "/api/payture", req.body);
     console.log("query", "/api/payture", req.query);
 

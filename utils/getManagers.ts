@@ -6,6 +6,7 @@ export const getManagers: ServerConfig<any>["extendExpressApp"] = (
   createContext
 ) => {
   app.get("/api/managers", async (req, res) => {
+    console.info(new Date(), "get managers");
     const context = await createContext(req, res);
 
     const managers = await context.query.User.findMany({

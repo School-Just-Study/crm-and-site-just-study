@@ -12,7 +12,7 @@ export const handleCheckUserSubscription: ServerConfig<any>["extendExpressApp"] 
   async (app, createContext) => {
     app.get("/api/check-subscriptions", async (req, res) => {
       const context = await createContext(req, res);
-      console.log(new Date(), "check subscription");
+      console.info(new Date(), "check subscription");
 
       const subscriptions = await context.query.UserSubscription.findMany({
         where: { status: { in: [Statuses.Active] } },

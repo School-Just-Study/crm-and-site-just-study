@@ -8,6 +8,7 @@ export const handleTeacherCalendar: ServerConfig<any>["extendExpressApp"] = (
 ) => {
   app.get("/api/teacher/:id/lessons.ical", async (req, res) => {
     const teacherId = req.params.id;
+    console.info(new Date(), "get teachers calendar", teacherId);
 
     const context = await createContext(req, res);
     const calendar = ical({ name: "Just Study - online english school" });
