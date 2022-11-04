@@ -2,7 +2,7 @@ import { checkbox } from "@keystone-6/core/fields";
 
 export const checkboxField = (description: string) =>
   checkbox({
-    ui: { description },
+    label: description,
     defaultValue: true,
     graphql: {
       read: {

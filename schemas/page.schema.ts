@@ -19,14 +19,18 @@ export const Page = list({
   fields: {
     language,
     statusView,
-    title: text({ validation: { isRequired: true } }),
-    slug: text({ isIndexed: true, isFilterable: true }),
+    title: text({ validation: { isRequired: true }, label: "Заголовок" }),
+    slug: text({
+      isIndexed: true,
+      isFilterable: true,
+      label: "Путь к странице",
+    }),
     description: text({
       ui: {
         displayMode: "textarea",
-        description: "Выделенный текст сверху страницы",
       },
       db: { nativeType: "VarChar(10000)" },
+      label: "Выделенный текст сверху страницы",
     }),
     content,
     tag: relationship({
@@ -40,8 +44,9 @@ export const Page = list({
         inlineConnect: true,
         inlineCreate: { fields: ["name"] },
       },
+      label: "Теги",
     }),
-    author: relationship({ ref: "User" }),
+    author: relationship({ ref: "User", label: "Автор" }),
     createdAt,
     lastModification,
   },

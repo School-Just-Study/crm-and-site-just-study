@@ -8,7 +8,7 @@ import { lastModification } from "../fields/lastModification";
 
 export const User = list({
   ui: {
-    label: "Пользователи",
+    label: "Клиенты",
     listView: {
       initialColumns: ["id", "name", "language", "email", "role", "comment"],
       initialSort: {
@@ -22,6 +22,7 @@ export const User = list({
   fields: {
     language,
     avatar: relationship({
+      label: "Аватар",
       ref: "AvatarUser.user",
       many: false,
       ui: {
@@ -33,27 +34,30 @@ export const User = list({
         inlineCreate: { fields: ["image"] },
       },
     }),
-    name: text(),
+    name: text({ label: "Имя, фамилия" }),
     email: text({
       isIndexed: "unique",
       isFilterable: true,
       validation: { isRequired: true },
     }),
     password: password({
+      label: "Пароль",
       validation: { length: { min: 4 } },
     }),
     role: select({
+      label: "Роль",
       type: "enum",
       options: RolesValues,
       defaultValue: Roles.Student,
     }),
     comment: text({
+      label: "Комментарий",
       ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(10000)" },
     }),
-    client: relationship({ ref: "Client" }),
-    manager: relationship({ ref: "Manager" }),
-    cart: relationship({ ref: "Cart.user" }),
+    client: relationship({ ref: "Client", label: "Лид" }),
+    manager: relationship({ ref: "Manager", label: "Работник" }),
+    cart: relationship({ ref: "Cart.user", label: "Корзина" }),
     magicLinkToken: text({
       ui: { listView: "hidden", itemView: "hidden", createView: "hidden" },
     }),

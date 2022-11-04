@@ -20,13 +20,15 @@ export const Product = list({
   fields: {
     language,
     statusView,
-    name: text({ validation: { isRequired: true } }),
+    name: text({ validation: { isRequired: true }, label: "Название курса" }),
     description: text({
-      ui: { displayMode: "textarea", description: "Краткое описание" },
+      ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(10000)" },
+      label: "Краткое описание",
     }),
     desc: content,
     category: relationship({
+      label: "Категория",
       ref: "Category",
       ui: {
         displayMode: "cards",
@@ -37,8 +39,9 @@ export const Product = list({
         inlineCreate: { fields: ["language", "name"] },
       },
     }),
-    image: image({ storage: "storage_product_image" }),
+    image: image({ storage: "storage_product_image", label: "Изображение" }),
     tags: relationship({
+      label: "Теги",
       ref: "Tag",
       many: true,
       ui: {
@@ -50,7 +53,11 @@ export const Product = list({
         inlineCreate: { fields: ["language", "name"] },
       },
     }),
-    subscriptions: relationship({ ref: "Subscription", many: true }),
+    subscriptions: relationship({
+      ref: "Subscription",
+      many: true,
+      label: "Абонементы",
+    }),
     createdAt,
     lastModification,
   },

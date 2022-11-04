@@ -36,26 +36,29 @@ export const UserSubscription = list({
     },
   },
   fields: {
-    name: text(),
-    visitCount: integer(),
+    name: text({ label: "Название" }),
+    visitCount: integer({ label: "Количество занятий" }),
     unlimited: checkbox({
       defaultValue: false,
-      ui: { description: "Безлимитное количество занятий" },
+      label: "Безлимитное количество занятий",
     }),
-    originalPrice: integer(),
-    price: integer(),
+    originalPrice: integer({ label: "Оригинальная цена" }),
+    price: integer({ label: "Цена продажи" }),
     status: select({
       options: StatusesOptions,
       ui: { displayMode: "segmented-control" },
       defaultValue: Statuses.Active,
       validation: { isRequired: true },
+      label: "Статус абонемента",
     }),
-    student: relationship({ ref: "User" }),
+    student: relationship({ ref: "User", label: "Клиенты" }),
     beginDate: timestamp({
       defaultValue: { kind: "now" },
+      label: "Дата начала",
     }),
-    endDate: timestamp(),
+    endDate: timestamp({ label: "Дата окончания" }),
     totalVisited: virtual({
+      label: "Посещено занятий",
       // @ts-ignore
       field: graphql.field({
         type: graphql.Int,
@@ -79,6 +82,7 @@ export const UserSubscription = list({
       ui: { description: "Вручную указать сколько занятий было посещено" },
     }),
     lastCount: virtual({
+      label: "Осталось занятий",
       // @ts-ignore
       field: graphql.field({
         type: graphql.Int,
@@ -97,10 +101,14 @@ export const UserSubscription = list({
         },
       }),
     }),
-    lessons: relationship({ ref: "Lesson.subscription", many: true }),
+    lessons: relationship({
+      ref: "Lesson.subscription",
+      many: true,
+      label: "Уроки",
+    }),
     trial: checkbox({
       defaultValue: false,
-      ui: { description: "Пробный урок" },
+      label: "Пробный урок",
     }),
     manager: relationship({ ref: "User" }),
     createdAt,

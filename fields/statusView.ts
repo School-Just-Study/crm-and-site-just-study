@@ -7,4 +7,5 @@ export const statusView = select({
   defaultValue: ViewStatus.Show,
   ui: { displayMode: "segmented-control" },
   validation: { isRequired: true },
+  label: "Статус",
 });

@@ -22,21 +22,26 @@ export const Direction = list({
       validation: { isRequired: true },
       isIndexed: true,
       isFilterable: true,
-      ui: { description: "Путь к странице" },
+      label: "Путь к странице",
     }),
     name: text({
       validation: { isRequired: true },
+      label: "Название",
     }),
     description: text({
       ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(10000)" },
+      label: "Описание",
     }),
-    image: image({ storage: "storage_product_image" }),
+    image: image({
+      storage: "storage_product_image",
+      label: "Баннер",
+    }),
     goals: relationship({
       ref: "DirectionGoal",
       many: true,
+      label: "Блок: Для каких целей подойдет этот курс",
       ui: {
-        description: "Блок: Для каких целей подойдет этот курс",
         displayMode: "cards",
         cardFields: ["statusView", "image", "name"],
         inlineEdit: { fields: ["statusView", "image", "name"] },
@@ -48,8 +53,8 @@ export const Direction = list({
     results: relationship({
       ref: "DirectionResult",
       many: true,
+      label: "Блок: Чему вы научитесь",
       ui: {
-        description: "Блок: Чему вы научитесь",
         displayMode: "cards",
         cardFields: ["statusView", "name"],
         inlineEdit: { fields: ["statusView", "name"] },
@@ -58,7 +63,7 @@ export const Direction = list({
         inlineCreate: { fields: ["statusView", "name"] },
       },
     }),
-    products: relationship({ ref: "Product", many: true }),
+    products: relationship({ ref: "Product", many: true, label: "Курсы" }),
     createdAt,
     lastModification,
   },

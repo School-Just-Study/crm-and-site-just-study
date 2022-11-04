@@ -30,7 +30,6 @@ export const seedSubscriptions = async (context: KeystoneContext) => {
         unlimited: subscription.visitCount === 0,
         originalPrice: subscription.originalPrice,
         price: subscription.price,
-        period: 45,
         status: "finished",
         student: { connect: { email: emailStudent } },
         beginDate: new Date(subscription.beginDate),

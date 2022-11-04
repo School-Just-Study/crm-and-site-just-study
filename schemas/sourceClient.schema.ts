@@ -14,8 +14,9 @@ export const SourceClient = list({
   fields: {
     name: text({
       validation: { isRequired: true },
+      label: "Категория",
     }),
-    parent: relationship({ ref: "SourceClient" }),
+    parent: relationship({ ref: "SourceClient", label: "Подкатегория" }),
     createdAt,
     lastModification,
   },

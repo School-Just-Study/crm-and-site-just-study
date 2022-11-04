@@ -12,16 +12,16 @@ export const WorkTime = list({
     },
   },
   fields: {
-    manager: relationship({ ref: "Manager.workTime" }),
+    manager: relationship({ ref: "Manager.workTime", label: "Учитель" }),
     dayOfWeek: select({
       type: "integer",
       options: DayOfWeekOptionsConst,
       validation: { isRequired: true },
-      ui: { description: "День недели" },
+      label: "День недели",
     }),
     isDayOff: checkbox({
       defaultValue: false,
-      ui: { description: "Это выходной день?" },
+      label: "Это выходной день?",
     }),
     startTime: text({
       label: "Начало работы",
