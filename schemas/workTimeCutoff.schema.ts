@@ -1,23 +1,40 @@
-import { list } from "@keystone-6/core";
-import { relationship, timestamp } from "@keystone-6/core/fields";
+import { graphql, list } from "@keystone-6/core";
+import { relationship, timestamp, virtual } from "@keystone-6/core/fields";
 import { createdAt } from "../fields/createdAt";
 import { lastModification } from "../fields/lastModification";
 import { statusView } from "../fields/statusView";
+import { Lists } from ".keystone/types";
+import format from "date-fns/format";
 
 export const WorkTimeCutoff = list({
   ui: {
     isHidden: true,
     label: "Часы неработы",
-    labelField: "startTime",
     listView: {
       initialColumns: ["id", "statusView", "startTime", "endTime"],
     },
   },
   fields: {
+    label: virtual({
+      // @ts-ignore
+      field: graphql.field({
+        type: graphql.String,
+        resolve(item: Lists.WorkTimeCutoff.Item) {
+          if (!item) return;
+          return `${format(new Date(item.startTime), "dd.MM.yyyy")} - ${format(
+            new Date(item.endTime),
+            "dd.MM.yyyy"
+          )}`;
+        },
+      }),
+    }),
     statusView,
-    manager: relationship({ ref: "Manager.cutoff" }),
-    startTime: timestamp({ validation: { isRequired: true } }),
-    endTime: timestamp({ validation: { isRequired: true } }),
+    manager: relationship({ ref: "Manager.cutoff", label: "Учитель" }),
+    startTime: timestamp({ validation: { isRequired: true }, label: "Начало" }),
+    endTime: timestamp({
+      validation: { isRequired: true },
+      label: "Окончение",
+    }),
     createdAt,
     lastModification,
   },

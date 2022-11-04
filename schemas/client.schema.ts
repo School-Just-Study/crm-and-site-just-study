@@ -11,7 +11,7 @@ import { handleCreateUserWithEmailClient } from "../lib/handleCreateUserWithEmai
 
 export const Client = list({
   ui: {
-    label: "Клиенты",
+    label: "Лиды",
     listView: {
       initialColumns: [
         "id",
@@ -32,11 +32,12 @@ export const Client = list({
   },
   fields: {
     language,
-    name: text(),
+    name: text({ label: "Имя, фамилия" }),
     email: text(),
     phone: decimal({
       scale: 0,
       ui: { description: "Пример: 79991234567" },
+      label: "Телефон",
     }),
     statusClient: select({
       type: "enum",
@@ -50,19 +51,20 @@ export const Client = list({
       defaultValue: LevelStudent.A1,
       label: "Уровень подготовки",
     }),
-    profession: text(),
+    profession: text({ label: "Профессия" }),
     goal: text({ label: "Цель изучения" }),
     source: relationship({
       ref: "SourceClient",
       label: "Источник",
       many: true,
     }),
-    teachers: relationship({ ref: "Manager", many: true }),
+    teachers: relationship({ ref: "Manager", many: true, label: "Учителя" }),
     comment: text({
       ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(10000)" },
+      label: "Комментарий",
     }),
-    ymClientId: text(),
+    ymClientId: text({ label: "ymClientId" }),
     createdAt,
     lastModification,
   },

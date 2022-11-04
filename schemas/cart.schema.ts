@@ -16,13 +16,29 @@ export const Cart = list({
     },
   },
   fields: {
+    label: virtual({
+      // @ts-ignore
+      field: graphql.field({
+        type: graphql.String,
+        async resolve(item: Lists.Cart.Item, arg, context) {
+          if (!item) return;
+          const user = await context.query.User.findOne({
+            where: { id: `${item.userId}` },
+            query: "name",
+          });
+          return `Корзина №${item.id} - ${user.name}`;
+        },
+      }),
+    }),
     user: relationship({
       ref: "User.cart",
+      label: "Клиент",
       ui: {
         hideCreate: true,
       },
     }),
     linkForUser: virtual({
+      label: "Ссылка для клиента",
       // @ts-ignore
       field: graphql.field({
         type: graphql.String,
@@ -38,6 +54,7 @@ export const Cart = list({
     currency,
     items: relationship({
       ref: "CartItem.cart",
+      label: "Позиции в корзине",
       many: true,
       ui: {
         description:
@@ -51,6 +68,7 @@ export const Cart = list({
       },
     }),
     amount: virtual({
+      label: "Сумма",
       // @ts-ignore
       field: graphql.field({
         type: graphql.Int,
@@ -70,7 +88,10 @@ export const Cart = list({
         },
       }),
     }),
-    quantityPayments: integer({ defaultValue: 1 }),
+    quantityPayments: integer({
+      defaultValue: 1,
+      label: "Количество платежей",
+    }),
     lastModification,
   },
   access: {

@@ -1,9 +1,9 @@
 import { OrderStatus } from "../enums/order-status.enum";
 
 export const OrderStatusOptions = [
-  { label: OrderStatus.Created, value: OrderStatus.Created },
-  { label: OrderStatus.Frozen, value: OrderStatus.Frozen },
-  { label: OrderStatus.Processing, value: OrderStatus.Processing },
-  { label: OrderStatus.Finished, value: OrderStatus.Finished },
-  { label: OrderStatus.Cancelled, value: OrderStatus.Cancelled },
+  { label: "Создан", value: OrderStatus.Created },
+  { label: "Заморожен", value: OrderStatus.Frozen },
+  { label: "В процессе оплаты", value: OrderStatus.Processing },
+  { label: "Завершен", value: OrderStatus.Finished },
+  { label: "Отменен", value: OrderStatus.Cancelled },
 ];

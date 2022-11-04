@@ -3,6 +3,7 @@
 
 type Cart {
   id: ID!
+  label: String
   user: User
   linkForUser: String
   currency: String
@@ -1596,7 +1597,6 @@ type UserService {
   status: String
   price: Int
   student: User
-  payed: Int
   manager: User
   createdAt: DateTime
   lastModification: DateTime
@@ -1616,7 +1616,6 @@ input UserServiceWhereInput {
   status: StringFilter
   price: IntNullableFilter
   student: UserWhereInput
-  payed: IntNullableFilter
   manager: UserWhereInput
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
@@ -1628,7 +1627,6 @@ input UserServiceOrderByInput {
   originalPrice: OrderDirection
   status: OrderDirection
   price: OrderDirection
-  payed: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -1639,7 +1637,6 @@ input UserServiceUpdateInput {
   status: String
   price: Int
   student: UserRelateToOneForUpdateInput
-  payed: Int
   manager: UserRelateToOneForUpdateInput
   createdAt: DateTime
   lastModification: DateTime
@@ -1656,7 +1653,6 @@ input UserServiceCreateInput {
   status: String
   price: Int
   student: UserRelateToOneForCreateInput
-  payed: Int
   manager: UserRelateToOneForCreateInput
   createdAt: DateTime
   lastModification: DateTime
@@ -2454,6 +2450,7 @@ input WorkTimeCreateInput {
 
 type WorkTimeCutoff {
   id: ID!
+  label: String
   statusView: String
   manager: Manager
   startTime: DateTime

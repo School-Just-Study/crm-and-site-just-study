@@ -16,8 +16,9 @@ export const DirectionGoal = list({
     statusView,
     name: text({
       validation: { isRequired: true },
+      label: "Заголовок",
     }),
-    image: image({ storage: "storage_product_image" }),
+    image: image({ storage: "storage_product_image", label: "Обложка" }),
     createdAt,
     lastModification,
   },

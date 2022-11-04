@@ -30,15 +30,16 @@ export const Manager = list({
   },
   fields: {
     language,
-    name: text(),
+    name: text({ label: "Имя, Фамилия" }),
     email: text(),
     phone: decimal({
       scale: 0,
       ui: { description: "Пример: 79991234567" },
+      label: "Телефон",
     }),
-    work: checkbox({ defaultValue: true }),
-    teacher: checkbox({ defaultValue: true }),
-    linkOnlineLesson: text({ ui: { description: "Ссылка на онлайн урок" } }),
+    work: checkbox({ defaultValue: true, label: "Работает" }),
+    teacher: checkbox({ defaultValue: true, label: "Преподает" }),
+    linkOnlineLesson: text({ label: "Ссылка на онлайн урок" }),
     workTime: relationship({
       ref: "WorkTime.manager",
       many: true,
@@ -66,10 +67,12 @@ export const Manager = list({
       type: "string",
       validation: { isRequired: true },
       defaultValue: "Europe/Moscow",
+      label: "Часовой пояс",
     }),
     comment: text({
       ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(10000)" },
+      label: "Комментарий",
     }),
     createdAt,
     lastModification,

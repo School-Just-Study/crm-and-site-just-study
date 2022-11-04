@@ -7,4 +7,5 @@ export const lastModification = timestamp({
     updatedAt: true,
   },
   validation: { isRequired: true },
+  label: "Дата обновления",
 });

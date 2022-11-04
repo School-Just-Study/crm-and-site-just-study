@@ -9,6 +9,7 @@ export const Category = list({
   ui: {
     label: "Категории курсов",
     labelField: "name",
+    isHidden: true,
     description: "Категория курсов",
     listView: { initialColumns: ["id", "name", "language", "products"] },
   },
@@ -16,8 +17,9 @@ export const Category = list({
     language,
     name: text({
       validation: { isRequired: true },
+      label: "Название",
     }),
-    products: relationship({ ref: "Product", many: true }),
+    products: relationship({ ref: "Product", many: true, label: "Курс" }),
     createdAt,
     lastModification,
   },
