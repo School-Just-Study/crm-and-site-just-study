@@ -28,7 +28,7 @@ export const UserService = list({
     status: select({
       options: StatusesOptions,
       ui: { displayMode: "segmented-control" },
-      defaultValue: Statuses.Inactive,
+      defaultValue: Statuses.Finished,
       validation: { isRequired: true },
     }),
     price: integer(),
