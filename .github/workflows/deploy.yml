@@ -48,7 +48,7 @@ jobs:
           revision-concurrency: 8
           revision-image-url: cr.yandex/crpt6ftcvvm3ts7j581s/crm-back:${{ github.sha }}
           revision-execution-timeout: 100
-          revision-provisioned: 1
+          revision-provisioned: 0
           revision-env: |
             NODE_ENV=production
             DATABASE_URL=${{ secrets.DATABASE_URL }}
