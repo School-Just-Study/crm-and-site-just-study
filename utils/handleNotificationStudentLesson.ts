@@ -13,7 +13,7 @@ export const handleNotificationStudentLesson: ServerConfig<any>["extendExpressAp
   async (app, createContext) => {
     app.get("/api/check-lessons", async (req, res) => {
       const context = await createContext(req, res);
-      console.log(new Date(), "check lessons");
+      console.info(new Date(), "check lessons");
 
       const lessons = await context.query.Lesson.findMany({
         where: {
