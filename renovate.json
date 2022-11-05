@@ -11,7 +11,7 @@
       "matchPackagePatterns": [
         "^@keystone-6/"
       ],
-      "groupName": "@keystone"
+      "groupName": "@keystonejs"
     }
   ]
 }
