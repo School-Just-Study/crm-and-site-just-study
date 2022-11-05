@@ -5,7 +5,7 @@ import { notifyNewClient } from "../notifications/notifyNewClient";
 export const handleCreateUserWithEmailClient: ListHooks<Lists.Client.TypeInfo>["afterOperation"] =
   async ({ context, item, operation }) => {
     if (operation === "create") {
-      await notifyNewClient(item, context);
+      notifyNewClient(item, context);
     }
     if (operation !== "delete") {
       if (item && item.email) {
