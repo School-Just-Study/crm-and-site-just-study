@@ -20,7 +20,7 @@ const { withAuth } = createAuth({
         data: { magicLinkToken: token },
       });
     },
-    tokensValidForMins: 60,
+    tokensValidForMins: 3,
   },
 });
 
