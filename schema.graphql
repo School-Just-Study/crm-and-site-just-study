@@ -3051,12 +3051,12 @@ type PaymentResponse {
 }
 
 input CartData {
-  firstName: String!
-  secondName: String!
-  phone: Decimal!
+  firstName: String
+  secondName: String
+  phone: Decimal
   email: String!
   currency: String!
-  language: String!
+  language: String
 }
 
 input AuthCartData {

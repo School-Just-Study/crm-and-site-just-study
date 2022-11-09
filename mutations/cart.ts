@@ -1,47 +1,50 @@
-import { KeystoneContext } from "@keystone-6/core/dist/declarations/src/types";
-import { gql } from "./index";
+import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
+import { gql } from './index';
 
 interface Arguments {
-  firstName: string;
-  secondName: string;
-  phone: number;
+  firstName?: string;
+  secondName?: string;
+  phone?: number;
   email: string;
   currency: string;
-  language: string;
+  language?: string;
 }
 
 export const cart = async (
   root: any,
   { data }: { data: Arguments },
-  context: KeystoneContext
+  context: KeystoneContext,
 ) => {
   const { firstName, secondName, phone, email, currency } = data;
-  let user = await context.query.User.findOne({
+
+  const user = await context.query.User.findOne({
     where: { email },
     query: `id client { id }`,
   });
 
-  const name = `${firstName} ${secondName}`;
+  if (firstName || secondName || phone) {
+    const name = `${firstName} ${secondName}`;
 
-  await context.query.Client.updateOne({
-    where: { id: `${user.client.id}` },
-    data: {
-      name,
-      phone,
-      email,
-    },
-    query: `id email`,
-  });
+    await context.query.Client.updateOne({
+      where: { id: `${user.client.id}` },
+      data: {
+        name,
+        phone,
+        email,
+      },
+      query: `id email`,
+    });
+  }
 
   const res = await context.graphql.raw({
     variables: { userId: user.id, currency },
     query: gql`
-      mutation ($userId: String!, $currency: String!) {
-        checkout(userId: $userId, currency: $currency) {
-          status
-          redirectUrl
+        mutation ($userId: String!, $currency: String!) {
+            checkout(userId: $userId, currency: $currency) {
+                status
+                redirectUrl
+            }
         }
-      }
     `,
   });
 

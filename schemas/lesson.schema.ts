@@ -1,71 +1,66 @@
-import { list } from "@keystone-6/core";
-import {
-  checkbox,
-  relationship,
-  select,
-  text,
-  timestamp,
-} from "@keystone-6/core/fields";
-import { createdAt } from "../fields/createdAt";
-import { lastModification } from "../fields/lastModification";
-import { statusLesson } from "../fields/statusLesson";
-import { handleNotificationStudentAndTeacherLesson } from "../lib/handleNotificationStudentAndTeacherLesson";
-import { handleCheckBookingLesson } from "../lib/handleCheckBookingLesson";
-import { TimezoneOptionsConst } from "../consts/timezone-options.const";
+import { list } from '@keystone-6/core';
+import { checkbox, relationship, select, text, timestamp } from '@keystone-6/core/fields';
+import { createdAt } from '../fields/createdAt';
+import { lastModification } from '../fields/lastModification';
+import { statusLesson } from '../fields/statusLesson';
+import { handleNotificationStudentAndTeacherLesson } from '../lib/handleNotificationStudentAndTeacherLesson';
+import { handleCheckBookingLesson } from '../lib/handleCheckBookingLesson';
+import { TimezoneOptionsConst } from '../consts/timezone-options.const';
 
 export const Lesson = list({
   ui: {
-    label: "Уроки",
+    label: 'Уроки',
     listView: {
       initialColumns: [
-        "id",
-        "students",
-        "startTime",
-        "endTime",
-        "statusLesson",
-        "trial",
+        'id',
+        'students',
+        'statusLesson',
+        'startTime',
+        'endTime',
+        'trial',
+        'timeZone',
       ],
     },
   },
   fields: {
     statusLesson,
-    title: text({ label: "Заголовок" }),
-    description: text({ label: "Описание" }),
+    title: text({ label: 'Заголовок' }),
+    description: text({ label: 'Описание' }),
     startTime: timestamp({
       validation: { isRequired: true },
-      label: "Начало урока",
+      label: 'Начало урока',
     }),
     endTime: timestamp({
       validation: { isRequired: true },
-      label: "Окончание урока",
+      label: 'Окончание урока',
     }),
     trial: checkbox({
-      label: "Пробный урок",
+      label: 'Пробный урок',
       defaultValue: false,
     }),
     burned: checkbox({
-      label: "Урок сгорел",
+      label: 'Урок сгорел',
       defaultValue: false,
     }),
-    students: relationship({ ref: "User", many: true, label: "Клиент" }),
+    students: relationship({ ref: 'User', many: true, label: 'Клиент' }),
     subscription: relationship({
-      ref: "UserSubscription.lessons",
-      label: "Абонемент",
+      ref: 'UserSubscription.lessons',
+      label: 'Абонемент',
     }),
-    teachers: relationship({ ref: "Manager", many: true, label: "Учителя" }),
+    teachers: relationship({ ref: 'Manager', many: true, label: 'Учителя' }),
     comment: text({
-      ui: { displayMode: "textarea" },
-      db: { nativeType: "VarChar(10000)" },
-      label: "Комментарий",
+      ui: { displayMode: 'textarea' },
+      db: { nativeType: 'VarChar(10000)' },
+      label: 'Комментарий',
     }),
     timeZone: select({
       options: TimezoneOptionsConst,
-      type: "string",
+      type: 'string',
       validation: { isRequired: true },
-      defaultValue: "Europe/Moscow",
-      label: "Часовой пояс",
+      defaultValue: 'Europe/Moscow',
+      label: 'Часовой пояс',
     }),
-    notified: checkbox({ label: "Уведомление о начале урока" }),
+    notified: checkbox({ label: 'Уведомление о начале урока' }),
     createdAt,
     lastModification,
   },
