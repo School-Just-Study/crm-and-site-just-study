@@ -28,7 +28,7 @@ export const notifyNewReview = async (
 
   const managersEmail = managers.map((user) => user.email);
 
-  const linkReview = `${BACKEND_URL}/product-reviews/${review.id}`;
+  const linkReview = `https://${BACKEND_URL}/product-reviews/${review.id}`;
 
   const clientInfo = `
     <div style='display:flex; flex-direction: column'>
