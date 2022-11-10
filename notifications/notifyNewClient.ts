@@ -14,7 +14,7 @@ import { from } from './index';
  */
 export const notifyNewClient = async (
   client: Lists.Client.Item,
-  ctx: KeystoneContext
+  ctx: KeystoneContext,
 ) => {
   const managers = await ctx.query.User.findMany({
     where: { role: { in: [Roles.Admin, Roles.Manager] } },
@@ -25,24 +25,24 @@ export const notifyNewClient = async (
 
   const clientInfo = `
     <div style='display:flex; flex-direction: column'>
-    ${fieldsEmail("Имя", client.name)}
-    ${fieldsEmail("Телефон", `${client.phone}`)}
+    ${fieldsEmail('Имя', client.name)}
+    ${fieldsEmail('Телефон', `${client.phone}`)}
     ${fieldsEmail(
-      "Дата",
-      `${format(
-        new Date(client.createdAt as unknown as string),
-        "dd.MM.yyyy HH:mm"
-      )}`
-    )}
-    ${fieldsEmail("Email", client.email)}
-    ${fieldsEmail("Коммент", client.comment)}
+    'Дата',
+    `${format(
+      new Date(client.createdAt as unknown as string),
+      'dd.MM.yyyy HH:mm',
+    )}`,
+  )}
+    ${fieldsEmail('Email', client.email)}
+    ${fieldsEmail('Коммент', client.comment)}
 </div>
   `;
 
   await mailer.sendMail({
     to: managersEmail,
     from,
-    subject: "У вас новый лид",
-    html: baseTemplateEmail("Новый лид", clientInfo),
+    subject: 'У вас новый лид',
+    html: baseTemplateEmail('🐥 Новый лид', clientInfo),
   });
 };
