@@ -1,33 +1,35 @@
-import { list } from "@keystone-6/core";
-import { relationship, text } from "@keystone-6/core/fields";
-import { Roles } from "../enums/roles.enum";
-import { language } from "../fields/language";
-import { createdAt } from "../fields/createdAt";
-import { lastModification } from "../fields/lastModification";
-import { statusView } from "../fields/statusView";
+import { list } from '@keystone-6/core';
+import { relationship, text } from '@keystone-6/core/fields';
+import { Roles } from '../enums/roles.enum';
+import { language } from '../fields/language';
+import { createdAt } from '../fields/createdAt';
+import { lastModification } from '../fields/lastModification';
+import { statusView } from '../fields/statusView';
+import { handleNotificationManagerNewReview } from '../lib/handleNotificationManagerNewReview';
 
 export const ProductReview = list({
   ui: {
-    label: "Отзывы студентов",
+    label: 'Отзывы студентов',
     listView: {
-      initialColumns: ["student", "statusView", "products", "desc"],
+      initialColumns: ['id', 'student', 'statusView', 'products', 'desc'],
       pageSize: 20,
     },
   },
   fields: {
     language,
     statusView,
-    student: relationship({ ref: "User", label: "Клиент" }),
-    products: relationship({ ref: "Product", many: true, label: "Курсы" }),
+    student: relationship({ ref: 'User', label: 'Клиент' }),
+    products: relationship({ ref: 'Product', many: true, label: 'Курсы' }),
     desc: text({
-      ui: { displayMode: "textarea" },
-      db: { nativeType: "VarChar(10000)" },
-      label: "Описание",
+      ui: { displayMode: 'textarea' },
+      db: { nativeType: 'VarChar(10000)' },
+      label: 'Описание',
     }),
-    media: text({ label: "Видео" }),
+    media: text({ label: 'Видео' }),
     createdAt,
     lastModification,
   },
+  hooks: { afterOperation: handleNotificationManagerNewReview },
   access: {
     operation: {
       update: ({ session }) => !!session && session.data.role !== Roles.Student,
