@@ -1,28 +1,24 @@
-import { KeystoneConfig } from "@keystone-6/core/dist/declarations/src/types/config";
-import { FRONTEND_URL, SERVER_PORT } from "./index";
-import bodyParser from "body-parser";
-import { handleYooKassa } from "../utils/handleYooKassa";
-import { handleStudentCalendar } from "../utils/handleStudentCalendar";
-import { handleTeacherCalendar } from "../utils/handleTeacherCalendar";
-import { handleNotificationStudentLesson } from "../utils/handleNotificationStudentLesson";
-import { handleCheckUserSubscription } from "../utils/handleCheckUserSubscription";
-import { getStudents } from "../utils/getStudents";
-import { getManagers } from "../utils/getManagers";
-import { handlePayture } from "../utils/handlePayture";
+import { KeystoneConfig } from '@keystone-6/core/dist/declarations/src/types/config';
+import { SERVER_PORT } from './index';
+import bodyParser from 'body-parser';
+import { handleYooKassa } from '../utils/handleYooKassa';
+import { handleStudentCalendar } from '../utils/handleStudentCalendar';
+import { handleTeacherCalendar } from '../utils/handleTeacherCalendar';
+import { handleNotificationStudentLesson } from '../utils/handleNotificationStudentLesson';
+import { handleCheckUserSubscription } from '../utils/handleCheckUserSubscription';
+import { getStudents } from '../utils/getStudents';
+import { getManagers } from '../utils/getManagers';
+import { handlePayture } from '../utils/handlePayture';
 
-export const server: KeystoneConfig["server"] = {
+export const server: KeystoneConfig['server'] = {
   port: SERVER_PORT,
   healthCheck: {
-    path: "/check",
+    path: '/check',
     data: () => ({
-      status: "healthy",
+      status: 'healthy',
       timestamp: Date.now(),
       uptime: process.uptime(),
     }),
-  },
-  cors: {
-    origin: [FRONTEND_URL],
-    credentials: true,
   },
   extendExpressApp: (app, createContext) => {
     app.use(bodyParser.json());
