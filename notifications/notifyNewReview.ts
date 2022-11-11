@@ -1,10 +1,8 @@
 import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
 import { Roles } from '../enums/roles.enum';
-import { baseTemplateEmail } from '../mailTemplate/base';
-import { mailer } from '../lib/nodemailer';
 import { Lists } from '.keystone/types';
 import { fieldsEmail } from '../lib/fieldsEmail';
-import { from } from './index';
+import { sendMessage } from './index';
 import { BACKEND_URL } from '../config';
 
 /**
@@ -13,24 +11,24 @@ import { BACKEND_URL } from '../config';
  * @param ctx
  */
 export const notifyNewReview = async (
-  review: Lists.ProductReview.Item,
-  ctx: KeystoneContext,
+    review: Lists.ProductReview.Item,
+    ctx: KeystoneContext
 ) => {
-  const managers = await ctx.query.User.findMany({
-    where: { role: { in: [Roles.Admin, Roles.Manager] } },
-    query: `email`,
-  });
+    const managers = await ctx.query.User.findMany({
+        where: { role: { in: [Roles.Admin, Roles.Manager] } },
+        query: `email`
+    });
 
-  const student = await ctx.query.User.findOne({
-    where: { id: `${review.studentId}` },
-    query: `name`,
-  });
+    const student = await ctx.query.User.findOne({
+        where: { id: `${review.studentId}` },
+        query: `name`
+    });
 
-  const managersEmail = managers.map((user) => user.email);
+    const managersEmail = managers.map((user) => user.email);
 
-  const linkReview = `https://${BACKEND_URL}/product-reviews/${review.id}`;
+    const linkReview = `https://${BACKEND_URL}/product-reviews/${review.id}`;
 
-  const clientInfo = `
+    const clientInfo = `
     <div style='display:flex; flex-direction: column'>
       <p>👨🏻‍🎓 Студент ${student.name} оставил новый отзыв</p>
       <p>Содержание: 👇🏻</p>
@@ -40,10 +38,9 @@ export const notifyNewReview = async (
     </div>
   `;
 
-  await mailer.sendMail({
-    to: managersEmail,
-    from,
-    subject: 'У вас новый отзыв',
-    html: baseTemplateEmail('🤗 Новый отзыв', clientInfo),
-  });
+    await sendMessage({
+        email: managersEmail,
+        title: '🤗 Новый отзыв',
+        body: clientInfo
+    });
 };
