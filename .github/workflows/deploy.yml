@@ -61,11 +61,9 @@ jobs:
             PAYTURE_TERMINAL_PASSWORD=${{ secrets.PAYTURE_TERMINAL_PASSWORD }}
             NALOG_INN=${{ secrets.NALOG_INN }}
             NALOG_PASSWORD=${{ secrets.NALOG_PASSWORD }}
-            S3_STORAGE_KEY_ID=${{ secrets.S3_STORAGE_KEY_ID }}
-            S3_STORAGE_KEY_SECRET=${{ secrets.S3_STORAGE_KEY_SECRET }}
-            MAIL_HOST=${{ secrets.MAIL_HOST }}
-            MAIL_PORT=${{ secrets.MAIL_PORT }}
-            MAIL_USER=${{ secrets.MAIL_USER }}
-            MAIL_PASS=${{ secrets.MAIL_PASS }}
+            S3_STORAGE_KEY_ID=${{ secrets.SERVICE_KEY_ID }}
+            S3_STORAGE_KEY_SECRET=${{ secrets.SERVICE_KEY_SECRET }}
             YOOKASSA_ID=${{ secrets.YOOKASSA_ID }}
             YOOKASSA_SECRET=${{ secrets.YOOKASSA_SECRET }}
+            AWS_ACCESS_KEY_ID=${{ secrets.SERVICE_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY=${{ secrets.SERVICE_KEY_SECRET }}
