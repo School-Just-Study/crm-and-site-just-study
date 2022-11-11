@@ -1,10 +1,8 @@
 import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
-import { mailer } from '../lib/nodemailer';
-import { baseTemplateEmail } from '../mailTemplate/base';
 import { Roles } from '../enums/roles.enum';
 import { fieldsEmail } from '../lib/fieldsEmail';
 import { getTextCurrency } from '../lib/getCurrency';
-import { from } from './index';
+import { sendMessage } from './index';
 
 /**
  * Уведомление для студента об успешном платеже
@@ -14,31 +12,31 @@ import { from } from './index';
  * @param ctx
  */
 export const notifySuccessfulPaymentForClient = async (
-  clientId: string,
-  paymentId: number,
-  ctx: KeystoneContext,
-  receiptId?: string
+    clientId: string,
+    paymentId: number,
+    ctx: KeystoneContext,
+    receiptId?: string
 ) => {
-  if (process.env.NODE_ENV === "development") return;
+    if (process.env.NODE_ENV === 'development') return;
 
-  const client = await ctx.query.User.findOne({
-    where: { id: clientId },
-    query: `email name`,
-  });
-  const payment = await ctx.query.Payment.findOne({
-    where: { id: `${paymentId}` },
-    query: `amount currency`,
-  });
+    const client = await ctx.query.User.findOne({
+        where: { id: clientId },
+        query: `email name`
+    });
+    const payment = await ctx.query.Payment.findOne({
+        where: { id: `${paymentId}` },
+        query: `amount currency`
+    });
 
-  const amountText = `${payment.amount} ${getTextCurrency(payment.currency)}`;
+    const amountText = `${payment.amount} ${getTextCurrency(payment.currency)}`;
 
-  const emailInfo = `
+    const emailInfo = `
     <div style='display:flex; flex-direction: column; gap: 8px'>
     <p>${client.name}, ваше обучение успешно оплачено ✨</p>
-    ${fieldsEmail("Сумма платежа", amountText)}
+    ${fieldsEmail('Сумма платежа', amountText)}
     ${
-      receiptId &&
-      `<div style='display:flex; flex-direction: column; width: 100%; align-items: center'>
+        receiptId &&
+        `<div style='display:flex; flex-direction: column; width: 100%; align-items: center'>
       <p>Ваш чек:</p>
       <img src='https://lknpd.nalog.ru/api/v1/receipt/710303226683/${receiptId}/print' alt='чек'>
     </div>`
@@ -46,12 +44,11 @@ export const notifySuccessfulPaymentForClient = async (
     </div>
   `;
 
-  await mailer.sendMail({
-    to: client.email,
-    from,
-    subject: "Ваше обучение успешно оплачено",
-    html: baseTemplateEmail("Уведомление об платеже", emailInfo),
-  });
+    await sendMessage({
+        email: client.email,
+        title: '🥳 Ваше обучение успешно оплачено',
+        body: emailInfo
+    });
 };
 
 /**
@@ -61,41 +58,40 @@ export const notifySuccessfulPaymentForClient = async (
  * @param ctx
  */
 export const notifySuccessfulPaymentForManagers = async (
-  clientId: string,
-  paymentId: number,
-  ctx: KeystoneContext
+    clientId: string,
+    paymentId: number,
+    ctx: KeystoneContext
 ) => {
-  if (process.env.NODE_ENV === "development") return;
+    if (process.env.NODE_ENV === 'development') return;
 
-  const client = await ctx.query.User.findOne({
-    where: { id: clientId },
-    query: `email name`,
-  });
-  const payment = await ctx.query.Payment.findOne({
-    where: { id: `${paymentId}` },
-    query: `receiptId amount currency`,
-  });
-  const managers = await ctx.query.User.findMany({
-    where: { role: { in: [Roles.Admin, Roles.Manager] } },
-    query: `email`,
-  });
+    const client = await ctx.query.User.findOne({
+        where: { id: clientId },
+        query: `email name`
+    });
+    const payment = await ctx.query.Payment.findOne({
+        where: { id: `${paymentId}` },
+        query: `receiptId amount currency`
+    });
+    const managers = await ctx.query.User.findMany({
+        where: { role: { in: [Roles.Admin, Roles.Manager] } },
+        query: `email`
+    });
 
-  const managersEmail = managers.map((user) => user.email);
-  const amountText = `${payment.amount} ${getTextCurrency(payment.currency)}`;
+    const managersEmail = managers.map((user) => user.email);
+    const amountText = `${payment.amount} ${getTextCurrency(payment.currency)}`;
 
-  const emailInfo = `
+    const emailInfo = `
   <div style='display:flex; flex-direction: column; gap: 8px'>
   <p>Поздравляем!</p>
   <p>Поступил новый платеж от ${client.name} 😍</p>
-  ${fieldsEmail("Сумма платежа: ", amountText)}
+  ${fieldsEmail('Сумма платежа: ', amountText)}
   <p>Чек уже отправлен клиенту на почту!</p>
 </div>
   `;
 
-  await mailer.sendMail({
-    to: managersEmail,
-    from,
-    subject: "Новая оплата 💃🕺",
-    html: baseTemplateEmail("Уведомление об платеже", emailInfo),
-  });
+    await sendMessage({
+        email: managersEmail,
+        title: 'Новая оплата 💃🕺',
+        body: emailInfo
+    });
 };
