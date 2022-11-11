@@ -41,7 +41,7 @@ jobs:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           container-name: just-study-crm
           folder-id: b1g4s4k8tj83buc1hdoq
-          revision-service-account-id: ajesfn13n9hlksu185rq
+          revision-service-account-id: aje38cdteqcfo55pe02h
           revision-cores: 1
           revision-memory: 512Mb
           revision-core-fraction: 100
