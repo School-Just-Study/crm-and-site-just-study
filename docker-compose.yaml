@@ -1,11 +1,17 @@
 version: '3.7'
 services:
-  app:
+  nginx:
+    restart: always
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+  crm:
     container_name: just-study-crm
     image: { { env.IMAGE_URL } }
     restart: always
     ports:
-      - "80:80"
+      - "3000:3000"
     environment:
       NODE_ENV: production
       DATABASE_URL: { { env.DATABASE_URL } }
