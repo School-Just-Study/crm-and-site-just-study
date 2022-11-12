@@ -2641,6 +2641,84 @@ input UserSubscriptionRelateToOneForCreateInput {
   connect: UserSubscriptionWhereUniqueInput
 }
 
+type Mailing {
+  id: ID!
+  language: String
+  status: String
+  clients(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0): [User!]
+  clientsCount(where: UserWhereInput! = {}): Int
+  statusClient: [MailingStatusClientType!]
+  content: Mailing_content_Document
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+enum MailingStatusClientType {
+  new
+  firstCall
+  recordFirstLesson
+  trialLesson
+  decisionAfterTrialLesson
+  LowQualityLead
+  client
+  finishedClient
+  disabledClient
+  rejection
+}
+
+type Mailing_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input MailingWhereUniqueInput {
+  id: ID
+}
+
+input MailingWhereInput {
+  AND: [MailingWhereInput!]
+  OR: [MailingWhereInput!]
+  NOT: [MailingWhereInput!]
+  id: IDFilter
+  language: StringFilter
+  status: StringFilter
+  clients: UserManyRelationFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input MailingOrderByInput {
+  id: OrderDirection
+  language: OrderDirection
+  status: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input MailingUpdateInput {
+  language: String
+  status: String
+  clients: UserRelateToManyForUpdateInput
+  statusClient: [MailingStatusClientType!]
+  content: JSON
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input MailingUpdateArgs {
+  where: MailingWhereUniqueInput!
+  data: MailingUpdateInput!
+}
+
+input MailingCreateInput {
+  language: String
+  status: String
+  clients: UserRelateToManyForCreateInput
+  statusClient: [MailingStatusClientType!]
+  content: JSON
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -2813,6 +2891,12 @@ type Mutation {
   updateLessons(data: [LessonUpdateArgs!]!): [Lesson]
   deleteLesson(where: LessonWhereUniqueInput!): Lesson
   deleteLessons(where: [LessonWhereUniqueInput!]!): [Lesson]
+  createMailing(data: MailingCreateInput!): Mailing
+  createMailings(data: [MailingCreateInput!]!): [Mailing]
+  updateMailing(where: MailingWhereUniqueInput!, data: MailingUpdateInput!): Mailing
+  updateMailings(data: [MailingUpdateArgs!]!): [Mailing]
+  deleteMailing(where: MailingWhereUniqueInput!): Mailing
+  deleteMailings(where: [MailingWhereUniqueInput!]!): [Mailing]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -2946,6 +3030,9 @@ type Query {
   lessons(where: LessonWhereInput! = {}, orderBy: [LessonOrderByInput!]! = [], take: Int, skip: Int! = 0): [Lesson!]
   lesson(where: LessonWhereUniqueInput!): Lesson
   lessonsCount(where: LessonWhereInput! = {}): Int
+  mailings(where: MailingWhereInput! = {}, orderBy: [MailingOrderByInput!]! = [], take: Int, skip: Int! = 0): [Mailing!]
+  mailing(where: MailingWhereUniqueInput!): Mailing
+  mailingsCount(where: MailingWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
   checkPayment(paymentId: String!): Payment
