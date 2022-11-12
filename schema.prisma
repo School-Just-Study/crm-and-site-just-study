@@ -510,7 +510,6 @@ model Mailing {
   statusClient     Json     @default("[]")
   title            String   @default("")
   content          Json     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  shipped          Boolean  @default(false)
   createdAt        DateTime @default(now())
   lastModification DateTime @default(now()) @updatedAt
 
