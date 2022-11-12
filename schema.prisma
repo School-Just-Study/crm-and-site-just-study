@@ -204,6 +204,7 @@ model User {
   from_Page_author              Page[]             @relation("Page_author")
   from_Post_author              Post[]             @relation("Post_author")
   from_Lesson_students          Lesson[]           @relation("Lesson_students")
+  from_Mailing_clients          Mailing[]          @relation("Mailing_clients")
 
   @@index([language])
   @@index([clientId])
@@ -499,6 +500,21 @@ model Lesson {
   lastModification DateTime          @default(now()) @updatedAt
 
   @@index([subscriptionId])
+}
+
+model Mailing {
+  id               Int      @id @default(autoincrement())
+  language         String   @default("ru")
+  status           String   @default("draft")
+  clients          User[]   @relation("Mailing_clients")
+  statusClient     Json     @default("[]")
+  title            String   @default("")
+  content          Json     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  shipped          Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  lastModification DateTime @default(now()) @updatedAt
+
+  @@index([language])
 }
 
 enum OrderStatusType {
