@@ -21,8 +21,14 @@ export const Payment = list({
         currency,
         student: relationship({ ref: 'User', label: 'Клиент' }),
         amount: integer({ defaultValue: 0, label: 'Сумма' }),
-        sessionId: text({ label: 'Платежная сессия' }),
-        receiptId: text({ label: 'Номер чека' }),
+        sessionId: text({
+            label: 'Платежная сессия',
+            ui: { createView: { fieldMode: 'hidden' }, itemView: { fieldMode: 'read' } }
+        }),
+        receiptId: text({
+            label: 'Номер чека',
+            ui: { createView: { fieldMode: 'hidden' }, itemView: { fieldMode: 'read' } }
+        }),
         status: select({
             type: 'enum',
             options: PaymentStatusOptions,

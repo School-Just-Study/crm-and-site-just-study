@@ -1,13 +1,14 @@
 import { list } from '@keystone-6/core';
 import { Roles } from '../enums/roles.enum';
 import { language } from '../fields/language';
-import { multiselect, relationship, select } from '@keystone-6/core/fields';
+import { checkbox, multiselect, relationship, select, text } from '@keystone-6/core/fields';
 import { MailingStatusOptions } from '../consts/mailing-status-options.const';
 import { MailingStatus } from '../enums/mailing-status.enum';
 import { ClientStatusOptionsConst } from '../consts/client-status-options.const';
 import { createdAt } from '../fields/createdAt';
 import { lastModification } from '../fields/lastModification';
 import { content } from '../fields/document';
+import { handleMailerSending } from '../lib/handleMailerSending';
 
 export const Mailing = list({
     ui: {
@@ -45,10 +46,16 @@ export const Mailing = list({
             options: ClientStatusOptionsConst,
             label: 'Отправить клиентам со статусами'
         }),
+        title: text({ label: 'Заголовок', validation: { isRequired: true } }),
         content,
+        shipped: checkbox({
+            label: 'Отправлено',
+            ui: { createView: { fieldMode: 'hidden' }, itemView: { fieldMode: 'read' } }
+        }),
         createdAt,
         lastModification
     },
+    hooks: { afterOperation: handleMailerSending },
     access: {
         operation: {
             create: ({ session }) => !!session && session.data.role !== Roles.Student,

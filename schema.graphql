@@ -2648,7 +2648,9 @@ type Mailing {
   clients(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0): [User!]
   clientsCount(where: UserWhereInput! = {}): Int
   statusClient: [MailingStatusClientType!]
+  title: String
   content: Mailing_content_Document
+  shipped: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -2682,6 +2684,8 @@ input MailingWhereInput {
   language: StringFilter
   status: StringFilter
   clients: UserManyRelationFilter
+  title: StringFilter
+  shipped: BooleanFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
@@ -2690,6 +2694,8 @@ input MailingOrderByInput {
   id: OrderDirection
   language: OrderDirection
   status: OrderDirection
+  title: OrderDirection
+  shipped: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -2699,7 +2705,9 @@ input MailingUpdateInput {
   status: String
   clients: UserRelateToManyForUpdateInput
   statusClient: [MailingStatusClientType!]
+  title: String
   content: JSON
+  shipped: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -2714,7 +2722,9 @@ input MailingCreateInput {
   status: String
   clients: UserRelateToManyForCreateInput
   statusClient: [MailingStatusClientType!]
+  title: String
   content: JSON
+  shipped: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }

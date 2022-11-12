@@ -59,7 +59,11 @@ export const User = list({
         manager: relationship({ ref: 'Manager', label: 'Работник' }),
         cart: relationship({ ref: 'Cart.user', label: 'Корзина' }),
         magicLinkToken: text({
-            ui: { listView: 'hidden', itemView: 'hidden', createView: 'hidden' }
+            ui: {
+                listView: { fieldMode: 'hidden' },
+                itemView: { fieldMode: 'hidden' },
+                createView: { fieldMode: 'hidden' }
+            }
         }),
         createdAt,
         lastModification
