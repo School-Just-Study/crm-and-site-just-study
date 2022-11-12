@@ -67,39 +67,3 @@ jobs:
             YOOKASSA_SECRET=${{ secrets.YOOKASSA_SECRET }}
             AWS_ACCESS_KEY_ID=${{ secrets.SERVICE_KEY_ID }}
             AWS_SECRET_ACCESS_KEY=${{ secrets.SERVICE_KEY_SECRET }}
-
-      - name: Deploy COI VM
-        id: deploy-coi
-        uses: yc-actions/yc-coi-deploy@v1.0.1
-        env:
-          IMAGE_URL: cr.yandex/crpk28lsfu91rns28316/yc-coi-github-action:${{ github.sha }}
-          SSH_KEY: ${{ secrets.SSH_KEY }}
-          NODE_ENV: production
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-          FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
-          BACKEND_URL: ${{ secrets.BACKEND_URL }}
-          PAYTURE_URL: ${{ secrets.PAYTURE_URL }}
-          PAYTURE_TERMINAL_RUB: ${{ secrets.PAYTURE_TERMINAL_RUB }}
-          PAYTURE_TERMINAL_USD: ${{ secrets.PAYTURE_TERMINAL_USD }}
-          PAYTURE_TERMINAL_PASSWORD: ${{ secrets.PAYTURE_TERMINAL_PASSWORD }}
-          NALOG_INN: ${{ secrets.NALOG_INN }}
-          NALOG_PASSWORD: ${{ secrets.NALOG_PASSWORD }}
-          S3_STORAGE_KEY_ID: ${{ secrets.SERVICE_KEY_ID }}
-          S3_STORAGE_KEY_SECRET: ${{ secrets.SERVICE_KEY_SECRET }}
-          YOOKASSA_ID: ${{ secrets.YOOKASSA_ID }}
-          YOOKASSA_SECRET: ${{ secrets.YOOKASSA_SECRET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.SERVICE_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.SERVICE_KEY_SECRET }}
-        with:
-          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
-          folder-id: b1g4s4k8tj83buc1hdoq
-          vm-name: just-study-crm
-          vm-service-account-id: aje38cdteqcfo55pe02h
-          vm-cores: 2
-          vm-memory: 1 GB
-          vm-core-fraction: 20
-          vm-zone-id: ru-central1-a
-          vm-subnet-id: e9b3f919snkged91gkks
-          user-data-path: './user-data.yaml'
-          docker-compose-path: './docker-compose.yaml'
