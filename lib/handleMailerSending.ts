@@ -5,7 +5,7 @@ import { MailingStatus } from '../enums/mailing-status.enum';
 
 export const handleMailerSending: ListHooks<Lists.Mailing.TypeInfo>['afterOperation'] =
     async ({ context, item, operation }) => {
-        if (operation !== 'delete' && !item.shipped && item.status === MailingStatus.Sending) {
+        if (operation !== 'delete' && item.status === MailingStatus.Sending) {
             const emails: string[] = [];
 
             const mailing = await context.query.Mailing.findOne({
@@ -37,12 +37,5 @@ export const handleMailerSending: ListHooks<Lists.Mailing.TypeInfo>['afterOperat
                     content: item.content as unknown as JSON
                 });
             }
-
-            await context.query.Mailing.updateOne({
-                where: { id: `${item.id}` },
-                data: {
-                    shipped: true
-                }
-            });
         }
     };

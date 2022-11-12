@@ -2650,7 +2650,6 @@ type Mailing {
   statusClient: [MailingStatusClientType!]
   title: String
   content: Mailing_content_Document
-  shipped: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -2685,7 +2684,6 @@ input MailingWhereInput {
   status: StringFilter
   clients: UserManyRelationFilter
   title: StringFilter
-  shipped: BooleanFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
@@ -2695,7 +2693,6 @@ input MailingOrderByInput {
   language: OrderDirection
   status: OrderDirection
   title: OrderDirection
-  shipped: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -2707,7 +2704,6 @@ input MailingUpdateInput {
   statusClient: [MailingStatusClientType!]
   title: String
   content: JSON
-  shipped: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -2724,7 +2720,6 @@ input MailingCreateInput {
   statusClient: [MailingStatusClientType!]
   title: String
   content: JSON
-  shipped: Boolean
   createdAt: DateTime
   lastModification: DateTime
 }
