@@ -1,7 +1,7 @@
 FROM nginx:alpine
 
-COPY ./nginx.yc.conf /etc/nginx/conf.d/default.conf
-COPY ./start-nginx.sh /start-nginx.sh
+COPY ./nginx/nginx.yc.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx/start-nginx.sh /start-nginx.sh
 
 RUN chmod +x /start-nginx.sh
 
