@@ -4,8 +4,13 @@ on:
   push:
     branches: [ "master" ]
 
+env:
+  CR_REGISTRY: crpt6ftcvvm3ts7j581s
+  BACKEND_IMAGE: cr.yandex/${{ env.CR_REGISTRY }}/crm-back:${{ github.sha }}
+  NGINX_IMAGE: cr.yandex/${{ env.CR_REGISTRY }}/nginx:${{ github.sha }}
+
 jobs:
-  deploy-docker:
+  build-backend:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,15 +24,37 @@ jobs:
 
       - name: Build, tag, and push image to Yandex Cloud Container Registry
         env:
-          CR_REGISTRY: crpt6ftcvvm3ts7j581s
           CR_REPOSITORY: crm-back
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
+
+  build-nginx:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to Yandex Cloud Container Registry
+        id: login-cr
+        uses: yc-actions/yc-cr-login@v1
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+
+      - name: Build, tag, and push image to Yandex Cloud Container Registry
+        env:
+          CR_REPOSITORY: nginx
+          IMAGE_TAG: ${{ github.sha }}
+        with:
+          context: ./nginx
+          file: ./nginx/Dockerfile
+        run: |
+          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
+          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
+
   update-server:
-    needs:
-      - deploy-docker
+    needs: [ build-backend, build-nginx ]
     runs-on: ubuntu-latest
     environment:
       name: prod
@@ -46,7 +73,7 @@ jobs:
           revision-memory: 512Mb
           revision-core-fraction: 100
           revision-concurrency: 8
-          revision-image-url: cr.yandex/crpt6ftcvvm3ts7j581s/crm-back:${{ github.sha }}
+          revision-image-url: ${{ env.BACKEND_IMAGE }}
           revision-execution-timeout: 100
           revision-provisioned: 0
           revision-env: |
@@ -67,3 +94,52 @@ jobs:
             YOOKASSA_SECRET=${{ secrets.YOOKASSA_SECRET }}
             AWS_ACCESS_KEY_ID=${{ secrets.SERVICE_KEY_ID }}
             AWS_SECRET_ACCESS_KEY=${{ secrets.SERVICE_KEY_SECRET }}
+
+  update-coi:
+    needs: [ build-backend, build-nginx ]
+    runs-on: ubuntu-latest
+    environment:
+      name: prod
+      url: https://juststudy.online
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Deploy COI VM
+        id: deploy-coi
+        uses: yc-actions/yc-coi-deploy@v1.0.1
+        env:
+          BACKEND_IMAGE: ${{ env.BACKEND_IMAGE }}
+          NGINX_IMAGE: ${{ env.NGINX_IMAGE }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+          FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+          BACKEND_URL: ${{ secrets.BACKEND_URL }}
+          PAYTURE_URL: ${{ secrets.PAYTURE_URL }}
+          PAYTURE_TERMINAL_RUB: ${{ secrets.PAYTURE_TERMINAL_RUB }}
+          PAYTURE_TERMINAL_USD: ${{ secrets.PAYTURE_TERMINAL_USD }}
+          PAYTURE_TERMINAL_PASSWORD: ${{ secrets.PAYTURE_TERMINAL_PASSWORD }}
+          NALOG_INN: ${{ secrets.NALOG_INN }}
+          NALOG_PASSWORD: ${{ secrets.NALOG_PASSWORD }}
+          S3_STORAGE_KEY_ID: ${{ secrets.SERVICE_KEY_ID }}
+          S3_STORAGE_KEY_SECRET: ${{ secrets.SERVICE_KEY_SECRET }}
+          YOOKASSA_ID: ${{ secrets.YOOKASSA_ID }}
+          YOOKASSA_SECRET: ${{ secrets.YOOKASSA_SECRET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.SERVICE_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SERVICE_KEY_SECRET }}
+          NGINX_CERT: ${{ secrets.NGINX_CERT }}
+          NGINX_CERT_KEY: ${{ secrets.NGINX_CERT_KEY }}
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+          folder-id: b1g4s4k8tj83buc1hdoq
+          vm-name: just-study-crm
+          vm-service-account-id: aje38cdteqcfo55pe02h
+          vm-cores: 2
+          vm-memory: 512Mb
+          vm-disk-size: 30Gb
+          vm-core-fraction: 5
+          vm-zone-id: ru-central1-a
+          vm-subnet-id: e9b0mid7cobe4c9paohd
+          docker-compose-path: './yandex-cloud/docker-compose.yc.yaml'
+          user-data-path: './yandex-cloud/user-data.yaml'
