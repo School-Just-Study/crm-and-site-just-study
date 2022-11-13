@@ -40,6 +40,7 @@ export const handleNotificationStudentMissYou: ServerConfig<any>['extendExpressA
                     body: message
                 });
             }
+
             res.sendStatus(200);
         });
     };
