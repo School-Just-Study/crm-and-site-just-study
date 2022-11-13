@@ -5,9 +5,8 @@ on:
     branches: [ "master" ]
 
 env:
-  CR_REGISTRY: crpt6ftcvvm3ts7j581s
-  BACKEND_IMAGE: cr.yandex/$CR_REGISTRY/crm-back:${{ github.sha }}
-  NGINX_IMAGE: cr.yandex/$CR_REGISTRY/nginx:${{ github.sha }}
+  BACKEND_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/crm-back:${{ github.sha }}
+  NGINX_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/nginx:${{ github.sha }}
 
 jobs:
   build-backend:
@@ -138,5 +137,5 @@ jobs:
           vm-core-fraction: 5
           vm-zone-id: ru-central1-a
           vm-subnet-id: e9b0mid7cobe4c9paohd
-          docker-compose-path: './yandex-cloud/docker-compose.yc.yaml'
+          docker-compose-path: './yandex-cloud/docker-compose.yaml'
           user-data-path: './yandex-cloud/user-data.yaml'
