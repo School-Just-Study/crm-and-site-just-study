@@ -130,7 +130,7 @@ jobs:
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           folder-id: b1g4s4k8tj83buc1hdoq
-          vm-name: just-study-crm
+          vm-name: just-study
           vm-service-account-id: aje38cdteqcfo55pe02h
           vm-cores: 2
           vm-memory: 512Mb
