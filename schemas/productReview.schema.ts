@@ -12,6 +12,7 @@ export const ProductReview = list({
         label: 'Отзывы студентов',
         listView: {
             initialColumns: ['id', 'student', 'statusView', 'products', 'desc'],
+            initialSort: { field: 'statusView', direction: 'ASC' },
             pageSize: 20
         },
         searchFields: ['desc']

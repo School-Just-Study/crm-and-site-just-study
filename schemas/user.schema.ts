@@ -12,7 +12,7 @@ export const User = list({
         listView: {
             initialColumns: ['id', 'name', 'language', 'email', 'role', 'comment'],
             initialSort: {
-                field: 'createdAt',
+                field: 'id',
                 direction: 'DESC'
             },
             pageSize: 20

@@ -10,8 +10,9 @@ export const Cart = list({
     ui: {
         label: 'Корзины',
         description: 'Корзина для клиентов',
+        labelField: 'label',
         listView: {
-            initialColumns: ['user', 'quantityPayments'],
+            initialColumns: ['label', 'quantityPayments', 'amount'],
             pageSize: 20
         }
     },

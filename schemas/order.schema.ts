@@ -25,6 +25,7 @@ export const Order = list({
                 'dept',
                 'nextPayment'
             ],
+            initialSort: { field: 'status', direction: 'ASC' },
             pageSize: 20
         }
     },
