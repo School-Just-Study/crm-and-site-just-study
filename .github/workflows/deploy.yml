@@ -133,7 +133,7 @@ jobs:
           vm-name: just-study
           vm-service-account-id: aje38cdteqcfo55pe02h
           vm-cores: 2
-          vm-memory: 512Mb
+          vm-memory: 1GB
           vm-disk-size: 30Gb
           vm-core-fraction: 20
           vm-zone-id: ru-central1-a
