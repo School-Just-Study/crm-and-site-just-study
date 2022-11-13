@@ -9,43 +9,29 @@ import { handleCheckUserSubscription } from '../utils/handleCheckUserSubscriptio
 import { getStudents } from '../utils/getStudents';
 import { getManagers } from '../utils/getManagers';
 import { handlePayture } from '../utils/handlePayture';
+import { handleNotificationStudentMissYou } from '../utils/handleNotificationStudentMissYou';
 
 export const server: KeystoneConfig['server'] = {
-  port: SERVER_PORT,
-  healthCheck: {
-    path: '/check',
-    data: () => ({
-      status: 'healthy',
-      timestamp: Date.now(),
-      uptime: process.uptime(),
-    }),
-  },
-  extendExpressApp: (app, createContext) => {
-    app.use(bodyParser.json());
+    port: SERVER_PORT,
+    healthCheck: {
+        path: '/check',
+        data: () => ({
+            status: 'healthy',
+            timestamp: Date.now(),
+            uptime: process.uptime()
+        })
+    },
+    extendExpressApp: (app, createContext) => {
+        app.use(bodyParser.json());
 
-    if (handleYooKassa) {
-      handleYooKassa(app, createContext);
+        handleYooKassa(app, createContext);
+        handlePayture(app, createContext);
+        handleStudentCalendar(app, createContext);
+        handleTeacherCalendar(app, createContext);
+        handleNotificationStudentLesson(app, createContext);
+        handleCheckUserSubscription(app, createContext);
+        getStudents(app, createContext);
+        getManagers(app, createContext);
+        handleNotificationStudentMissYou(app, createContext);
     }
-    if (handlePayture) {
-      handlePayture(app, createContext);
-    }
-    if (handleStudentCalendar) {
-      handleStudentCalendar(app, createContext);
-    }
-    if (handleTeacherCalendar) {
-      handleTeacherCalendar(app, createContext);
-    }
-    if (handleNotificationStudentLesson) {
-      handleNotificationStudentLesson(app, createContext);
-    }
-    if (handleCheckUserSubscription) {
-      handleCheckUserSubscription(app, createContext);
-    }
-    if (getStudents) {
-      getStudents(app, createContext);
-    }
-    if (getManagers) {
-      getManagers(app, createContext);
-    }
-  },
 };
