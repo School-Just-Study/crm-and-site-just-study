@@ -47,7 +47,7 @@ jobs:
           CR_REPOSITORY: nginx
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG nginx/Dockerfile .
+          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG -f nginx/Dockerfile .
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
 
   update-server:
