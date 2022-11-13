@@ -16,13 +16,14 @@ export const Mailing = list({
         listView: {
             initialColumns: [
                 'id',
+                'status',
                 'content',
                 'statusClient',
                 'clients'
             ],
             initialSort: {
-                field: 'createdAt',
-                direction: 'DESC'
+                field: 'status',
+                direction: 'ASC'
             },
             pageSize: 20
         },

@@ -23,7 +23,7 @@ export const Client = list({
                 'comment'
             ],
             initialSort: {
-                field: 'createdAt',
+                field: 'lastModification',
                 direction: 'DESC'
             },
             pageSize: 20

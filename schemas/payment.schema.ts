@@ -14,7 +14,8 @@ export const Payment = list({
         listView: {
             initialColumns: ['id', 'order', 'status', 'amount', 'currency'],
             pageSize: 20
-        }
+        },
+        isHidden: true
     },
     fields: {
         order: relationship({ ref: 'Order.payments', label: 'Заказ' }),
