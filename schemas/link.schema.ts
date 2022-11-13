@@ -11,7 +11,7 @@ export const Link = list({
     ui: {
         label: 'Сокращатель ссылок',
         description: 'Утилита позволяет сократить длинные ссылки',
-        isHidden: ({ session }) => !!session && session.data.role !== Roles.Admin
+        isHidden: ({ session }) => !!session && session.data.role === Roles.Admin
     },
     fields: {
         label: virtual({
