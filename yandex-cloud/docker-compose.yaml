@@ -2,6 +2,7 @@ version: '3.7'
 
 services:
   nginx:
+    container_name: nginx
     image: {{ env.NGINX_IMAGE }}
     ports:
       - '80:80'
@@ -11,6 +12,7 @@ services:
       - backend
 
   backend:
+    container_name: backend
     image: {{ env.BACKEND_IMAGE }}
     restart: always
     environment:
