@@ -23,6 +23,7 @@ jobs:
         with:
           cache: yarn
           node-version: 18
+          cache-dependency-path: crm/yarn.lock.json
       - run: yarn install --frozen-lockfile
       - run: yarn build --ignore-scripts
 
@@ -39,5 +40,6 @@ jobs:
         with:
           cache: yarn
           node-version: 18
+          cache-dependency-path: site/yarn.lock.json
       - run: yarn install --frozen-lockfile
       - run: yarn build --ignore-scripts
