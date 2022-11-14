@@ -42,4 +42,4 @@ jobs:
           node-version: 18
           cache-dependency-path: '**/yarn.lock'
       - run: yarn install --frozen-lockfile
-      - run: yarn build --ignore-scripts
+      - run: yarn build:dev --ignore-scripts
