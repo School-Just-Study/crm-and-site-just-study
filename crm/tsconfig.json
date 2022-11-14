@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "extendedDiagnostics": true,
+    "types": ["@emotion/core", "react", "node"]
+  },
+  "exclude": [
+    "../node_modules"
+  ]
+}

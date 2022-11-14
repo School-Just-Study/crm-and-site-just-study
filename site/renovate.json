@@ -1,0 +1,11 @@
+{
+    "baseBranches": ["develop"],
+    "extends": ["config:base"],
+    "schedule": "every weekend",
+    "packageRules": [
+        {
+            "matchPackagePatterns": ["^@mui"],
+            "groupName": "@mui"
+        }
+    ]
+}

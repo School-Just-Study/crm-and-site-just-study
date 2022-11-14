@@ -1,0 +1,3086 @@
+input AuthCartData {
+  email: String!
+  firstName: String!
+  language: String
+  phone: Decimal!
+  secondName: String!
+}
+
+union AuthenticatedItem = User
+
+type AvatarUser {
+  createdAt: DateTime
+  id: ID!
+  image: ImageFieldOutput
+  lastModification: DateTime
+  user: User
+}
+
+input AvatarUserCreateInput {
+  createdAt: DateTime
+  image: ImageFieldInput
+  lastModification: DateTime
+  user: UserRelateToOneForCreateInput
+}
+
+input AvatarUserOrderByInput {
+  createdAt: OrderDirection
+  id: OrderDirection
+  lastModification: OrderDirection
+}
+
+input AvatarUserRelateToOneForCreateInput {
+  connect: AvatarUserWhereUniqueInput
+  create: AvatarUserCreateInput
+}
+
+input AvatarUserRelateToOneForUpdateInput {
+  connect: AvatarUserWhereUniqueInput
+  create: AvatarUserCreateInput
+  disconnect: Boolean
+}
+
+input AvatarUserUpdateArgs {
+  data: AvatarUserUpdateInput!
+  where: AvatarUserWhereUniqueInput!
+}
+
+input AvatarUserUpdateInput {
+  createdAt: DateTime
+  image: ImageFieldInput
+  lastModification: DateTime
+  user: UserRelateToOneForUpdateInput
+}
+
+input AvatarUserWhereInput {
+  AND: [AvatarUserWhereInput!]
+  NOT: [AvatarUserWhereInput!]
+  OR: [AvatarUserWhereInput!]
+  createdAt: DateTimeFilter
+  id: IDFilter
+  lastModification: DateTimeFilter
+  user: UserWhereInput
+}
+
+input AvatarUserWhereUniqueInput {
+  id: ID
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
+type Cart {
+  amount: Int
+  currency: String
+  id: ID!
+  items(orderBy: [CartItemOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CartItemWhereInput! = {}): [CartItem!]
+  itemsCount(where: CartItemWhereInput! = {}): Int
+  label: String
+  lastModification: DateTime
+  linkForUser: String
+  quantityPayments: Int
+  user: User
+}
+
+input CartData {
+  currency: String!
+  email: String!
+  firstName: String
+  language: String
+  phone: Decimal
+  secondName: String
+}
+
+type CartItem {
+  cart: Cart
+  id: ID!
+  originalPrice: Int
+  price: Int
+  service: Service
+  subscription: Subscription
+}
+
+input CartItemCreateInput {
+  cart: CartRelateToOneForCreateInput
+  price: Int
+  service: ServiceRelateToOneForCreateInput
+  subscription: SubscriptionRelateToOneForCreateInput
+}
+
+input CartItemManyRelationFilter {
+  every: CartItemWhereInput
+  none: CartItemWhereInput
+  some: CartItemWhereInput
+}
+
+input CartItemOrderByInput {
+  id: OrderDirection
+  price: OrderDirection
+}
+
+input CartItemRelateToManyForUpdateInput {
+  connect: [CartItemWhereUniqueInput!]
+  create: [CartItemCreateInput!]
+  disconnect: [CartItemWhereUniqueInput!]
+  set: [CartItemWhereUniqueInput!]
+}
+
+input CartItemUpdateArgs {
+  data: CartItemUpdateInput!
+  where: CartItemWhereUniqueInput!
+}
+
+input CartItemUpdateInput {
+  cart: CartRelateToOneForUpdateInput
+  price: Int
+  service: ServiceRelateToOneForUpdateInput
+  subscription: SubscriptionRelateToOneForUpdateInput
+}
+
+input CartItemWhereInput {
+  AND: [CartItemWhereInput!]
+  NOT: [CartItemWhereInput!]
+  OR: [CartItemWhereInput!]
+  cart: CartWhereInput
+  id: IDFilter
+  price: IntNullableFilter
+  service: ServiceWhereInput
+  subscription: SubscriptionWhereInput
+}
+
+input CartItemWhereUniqueInput {
+  id: ID
+}
+
+input CartOrderByInput {
+  currency: OrderDirection
+  id: OrderDirection
+  lastModification: OrderDirection
+  quantityPayments: OrderDirection
+}
+
+input CartRelateToOneForCreateInput {
+  connect: CartWhereUniqueInput
+}
+
+input CartRelateToOneForUpdateInput {
+  connect: CartWhereUniqueInput
+  disconnect: Boolean
+}
+
+input CartUpdateArgs {
+  data: CartUpdateInput!
+  where: CartWhereUniqueInput!
+}
+
+input CartUpdateInput {
+  currency: String
+  items: CartItemRelateToManyForUpdateInput
+  lastModification: DateTime
+  quantityPayments: Int
+  user: UserRelateToOneForUpdateInput
+}
+
+input CartWhereInput {
+  AND: [CartWhereInput!]
+  NOT: [CartWhereInput!]
+  OR: [CartWhereInput!]
+  currency: StringFilter
+  id: IDFilter
+  items: CartItemManyRelationFilter
+  lastModification: DateTimeFilter
+  quantityPayments: IntNullableFilter
+  user: UserWhereInput
+}
+
+input CartWhereUniqueInput {
+  id: ID
+}
+
+type Category {
+  createdAt: DateTime
+  id: ID!
+  language: String
+  lastModification: DateTime
+  name: String
+  products(orderBy: [ProductOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductWhereInput! = {}): [Product!]
+  productsCount(where: ProductWhereInput! = {}): Int
+}
+
+input CategoryCreateInput {
+  createdAt: DateTime
+  language: String
+  lastModification: DateTime
+  name: String
+  products: ProductRelateToManyForCreateInput
+}
+
+input CategoryManyRelationFilter {
+  every: CategoryWhereInput
+  none: CategoryWhereInput
+  some: CategoryWhereInput
+}
+
+input CategoryOrderByInput {
+  createdAt: OrderDirection
+  id: OrderDirection
+  language: OrderDirection
+  lastModification: OrderDirection
+  name: OrderDirection
+}
+
+input CategoryRelateToManyForCreateInput {
+  connect: [CategoryWhereUniqueInput!]
+  create: [CategoryCreateInput!]
+}
+
+input CategoryRelateToManyForUpdateInput {
+  connect: [CategoryWhereUniqueInput!]
+  create: [CategoryCreateInput!]
+  disconnect: [CategoryWhereUniqueInput!]
+  set: [CategoryWhereUniqueInput!]
+}
+
+input CategoryRelateToOneForCreateInput {
+  connect: CategoryWhereUniqueInput
+  create: CategoryCreateInput
+}
+
+input CategoryRelateToOneForUpdateInput {
+  connect: CategoryWhereUniqueInput
+  create: CategoryCreateInput
+  disconnect: Boolean
+}
+
+input CategoryUpdateArgs {
+  data: CategoryUpdateInput!
+  where: CategoryWhereUniqueInput!
+}
+
+input CategoryUpdateInput {
+  createdAt: DateTime
+  language: String
+  lastModification: DateTime
+  name: String
+  products: ProductRelateToManyForUpdateInput
+}
+
+input CategoryWhereInput {
+  AND: [CategoryWhereInput!]
+  NOT: [CategoryWhereInput!]
+  OR: [CategoryWhereInput!]
+  createdAt: DateTimeFilter
+  id: IDFilter
+  language: StringFilter
+  lastModification: DateTimeFilter
+  name: StringFilter
+  products: ProductManyRelationFilter
+}
+
+input CategoryWhereUniqueInput {
+  id: ID
+}
+
+type Client {
+  comment: String
+  createdAt: DateTime
+  email: String
+  goal: String
+  id: ID!
+  language: String
+  lastModification: DateTime
+  levelStudent: ClientLevelStudentType
+  name: String
+  phone: Decimal
+  profession: String
+  source(orderBy: [SourceClientOrderByInput!]! = [], skip: Int! = 0, take: Int, where: SourceClientWhereInput! = {}): [SourceClient!]
+  sourceCount(where: SourceClientWhereInput! = {}): Int
+  statusClient: ClientStatusClientType
+  teachers(orderBy: [ManagerOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ManagerWhereInput! = {}): [Manager!]
+  teachersCount(where: ManagerWhereInput! = {}): Int
+  ymClientId: String
+}
+
+input ClientCreateInput {
+  comment: String
+  createdAt: DateTime
+  email: String
+  goal: String
+  language: String
+  lastModification: DateTime
+  levelStudent: ClientLevelStudentType
+  name: String
+  phone: Decimal
+  profession: String
+  source: SourceClientRelateToManyForCreateInput
+  statusClient: ClientStatusClientType
+  teachers: ManagerRelateToManyForCreateInput
+  ymClientId: String
+}
+
+enum ClientLevelStudentType {
+  a1
+  a2
+  b1
+  b2
+  c1
+}
+
+input ClientLevelStudentTypeNullableFilter {
+  equals: ClientLevelStudentType
+  in: [ClientLevelStudentType!]
+  not: ClientLevelStudentTypeNullableFilter
+  notIn: [ClientLevelStudentType!]
+}
+
+input ClientOrderByInput {
+  comment: OrderDirection
+  createdAt: OrderDirection
+  email: OrderDirection
+  goal: OrderDirection
+  id: OrderDirection
+  language: OrderDirection
+  lastModification: OrderDirection
+  levelStudent: OrderDirection
+  name: OrderDirection
+  phone: OrderDirection
+  profession: OrderDirection
+  statusClient: OrderDirection
+  ymClientId: OrderDirection
+}
+
+input ClientRelateToOneForCreateInput {
+  connect: ClientWhereUniqueInput
+  create: ClientCreateInput
+}
+
+input ClientRelateToOneForUpdateInput {
+  connect: ClientWhereUniqueInput
+  create: ClientCreateInput
+  disconnect: Boolean
+}
+
+enum ClientStatusClientType {
+  LowQualityLead
+  client
+  decisionAfterTrialLesson
+  disabledClient
+  finishedClient
+  firstCall
+  new
+  recordFirstLesson
+  rejection
+  trialLesson
+}
+
+input ClientStatusClientTypeNullableFilter {
+  equals: ClientStatusClientType
+  in: [ClientStatusClientType!]
+  not: ClientStatusClientTypeNullableFilter
+  notIn: [ClientStatusClientType!]
+}
+
+input ClientUpdateArgs {
+  data: ClientUpdateInput!
+  where: ClientWhereUniqueInput!
+}
+
+input ClientUpdateInput {
+  comment: String
+  createdAt: DateTime
+  email: String
+  goal: String
+  language: String
+  lastModification: DateTime
+  levelStudent: ClientLevelStudentType
+  name: String
+  phone: Decimal
+  profession: String
+  source: SourceClientRelateToManyForUpdateInput
+  statusClient: ClientStatusClientType
+  teachers: ManagerRelateToManyForUpdateInput
+  ymClientId: String
+}
+
+input ClientWhereInput {
+  AND: [ClientWhereInput!]
+  NOT: [ClientWhereInput!]
+  OR: [ClientWhereInput!]
+  comment: StringFilter
+  createdAt: DateTimeFilter
+  email: StringFilter
+  goal: StringFilter
+  id: IDFilter
+  language: StringFilter
+  lastModification: DateTimeFilter
+  levelStudent: ClientLevelStudentTypeNullableFilter
+  name: StringFilter
+  phone: DecimalNullableFilter
+  profession: StringFilter
+  source: SourceClientManyRelationFilter
+  statusClient: ClientStatusClientTypeNullableFilter
+  teachers: ManagerManyRelationFilter
+  ymClientId: StringFilter
+}
+
+input ClientWhereUniqueInput {
+  id: ID
+}
+
+input CreateInitialUserInput {
+  email: String
+  name: String
+  password: String
+  role: UserRoleType
+}
+
+scalar DateTime
+
+input DateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: DateTimeFilter
+  notIn: [DateTime!]
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: DateTimeNullableFilter
+  notIn: [DateTime!]
+}
+
+scalar Decimal
+
+input DecimalNullableFilter {
+  equals: Decimal
+  gt: Decimal
+  gte: Decimal
+  in: [Decimal!]
+  lt: Decimal
+  lte: Decimal
+  not: DecimalNullableFilter
+  notIn: [Decimal!]
+}
+
+type Direction {
+  createdAt: DateTime
+  description: String
+  goals(orderBy: [DirectionGoalOrderByInput!]! = [], skip: Int! = 0, take: Int, where: DirectionGoalWhereInput! = {}): [DirectionGoal!]
+  goalsCount(where: DirectionGoalWhereInput! = {}): Int
+  id: ID!
+  image: ImageFieldOutput
+  language: String
+  lastModification: DateTime
+  name: String
+  products(orderBy: [ProductOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductWhereInput! = {}): [Product!]
+  productsCount(where: ProductWhereInput! = {}): Int
+  results(orderBy: [DirectionResultOrderByInput!]! = [], skip: Int! = 0, take: Int, where: DirectionResultWhereInput! = {}): [DirectionResult!]
+  resultsCount(where: DirectionResultWhereInput! = {}): Int
+  slug: String
+  statusView: String
+}
+
+input DirectionCreateInput {
+  createdAt: DateTime
+  description: String
+  goals: DirectionGoalRelateToManyForCreateInput
+  image: ImageFieldInput
+  language: String
+  lastModification: DateTime
+  name: String
+  products: ProductRelateToManyForCreateInput
+  results: DirectionResultRelateToManyForCreateInput
+  slug: String
+  statusView: String
+}
+
+type DirectionGoal {
+  createdAt: DateTime
+  id: ID!
+  image: ImageFieldOutput
+  lastModification: DateTime
+  name: String
+  statusView: String
+}
+
+input DirectionGoalCreateInput {
+  createdAt: DateTime
+  image: ImageFieldInput
+  lastModification: DateTime
+  name: String
+  statusView: String
+}
+
+input DirectionGoalManyRelationFilter {
+  every: DirectionGoalWhereInput
+  none: DirectionGoalWhereInput
+  some: DirectionGoalWhereInput
+}
+
+input DirectionGoalOrderByInput {
+  createdAt: OrderDirection
+  id: OrderDirection
+  lastModification: OrderDirection
+  name: OrderDirection
+  statusView: OrderDirection
+}
+
+input DirectionGoalRelateToManyForCreateInput {
+  connect: [DirectionGoalWhereUniqueInput!]
+  create: [DirectionGoalCreateInput!]
+}
+
+input DirectionGoalRelateToManyForUpdateInput {
+  connect: [DirectionGoalWhereUniqueInput!]
+  create: [DirectionGoalCreateInput!]
+  disconnect: [DirectionGoalWhereUniqueInput!]
+  set: [DirectionGoalWhereUniqueInput!]
+}
+
+input DirectionGoalUpdateArgs {
+  data: DirectionGoalUpdateInput!
+  where: DirectionGoalWhereUniqueInput!
+}
+
+input DirectionGoalUpdateInput {
+  createdAt: DateTime
+  image: ImageFieldInput
+  lastModification: DateTime
+  name: String
+  statusView: String
+}
+
+input DirectionGoalWhereInput {
+  AND: [DirectionGoalWhereInput!]
+  NOT: [DirectionGoalWhereInput!]
+  OR: [DirectionGoalWhereInput!]
+  createdAt: DateTimeFilter
+  id: IDFilter
+  lastModification: DateTimeFilter
+  name: StringFilter
+  statusView: StringFilter
+}
+
+input DirectionGoalWhereUniqueInput {
+  id: ID
+}
+
+input DirectionOrderByInput {
+  createdAt: OrderDirection
+  description: OrderDirection
+  id: OrderDirection
+  language: OrderDirection
+  lastModification: OrderDirection
+  name: OrderDirection
+  slug: OrderDirection
+  statusView: OrderDirection
+}
+
+type DirectionResult {
+  createdAt: DateTime
+  id: ID!
+  lastModification: DateTime
+  name: String
+  statusView: String
+}
+
+input DirectionResultCreateInput {
+  createdAt: DateTime
+  lastModification: DateTime
+  name: String
+  statusView: String
+}
+
+input DirectionResultManyRelationFilter {
+  every: DirectionResultWhereInput
+  none: DirectionResultWhereInput
+  some: DirectionResultWhereInput
+}
+
+input DirectionResultOrderByInput {
+  createdAt: OrderDirection
+  id: OrderDirection
+  lastModification: OrderDirection
+  name: OrderDirection
+  statusView: OrderDirection
+}
+
+input DirectionResultRelateToManyForCreateInput {
+  connect: [DirectionResultWhereUniqueInput!]
+  create: [DirectionResultCreateInput!]
+}
+
+input DirectionResultRelateToManyForUpdateInput {
+  connect: [DirectionResultWhereUniqueInput!]
+  create: [DirectionResultCreateInput!]
+  disconnect: [DirectionResultWhereUniqueInput!]
+  set: [DirectionResultWhereUniqueInput!]
+}
+
+input DirectionResultUpdateArgs {
+  data: DirectionResultUpdateInput!
+  where: DirectionResultWhereUniqueInput!
+}
+
+input DirectionResultUpdateInput {
+  createdAt: DateTime
+  lastModification: DateTime
+  name: String
+  statusView: String
+}
+
+input DirectionResultWhereInput {
+  AND: [DirectionResultWhereInput!]
+  NOT: [DirectionResultWhereInput!]
+  OR: [DirectionResultWhereInput!]
+  createdAt: DateTimeFilter
+  id: IDFilter
+  lastModification: DateTimeFilter
+  name: StringFilter
+  statusView: StringFilter
+}
+
+input DirectionResultWhereUniqueInput {
+  id: ID
+}
+
+input DirectionUpdateArgs {
+  data: DirectionUpdateInput!
+  where: DirectionWhereUniqueInput!
+}
+
+input DirectionUpdateInput {
+  createdAt: DateTime
+  description: String
+  goals: DirectionGoalRelateToManyForUpdateInput
+  image: ImageFieldInput
+  language: String
+  lastModification: DateTime
+  name: String
+  products: ProductRelateToManyForUpdateInput
+  results: DirectionResultRelateToManyForUpdateInput
+  slug: String
+  statusView: String
+}
+
+input DirectionWhereInput {
+  AND: [DirectionWhereInput!]
+  NOT: [DirectionWhereInput!]
+  OR: [DirectionWhereInput!]
+  createdAt: DateTimeFilter
+  description: StringFilter
+  goals: DirectionGoalManyRelationFilter
+  id: IDFilter
+  language: StringFilter
+  lastModification: DateTimeFilter
+  name: StringFilter
+  products: ProductManyRelationFilter
+  results: DirectionResultManyRelationFilter
+  slug: StringFilter
+  statusView: StringFilter
+}
+
+input DirectionWhereUniqueInput {
+  id: ID
+}
+
+type Faq {
+  createdAt: DateTime
+  desc: String
+  id: ID!
+  language: String
+  lastModification: DateTime
+  products(orderBy: [ProductOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductWhereInput! = {}): [Product!]
+  productsCount(where: ProductWhereInput! = {}): Int
+  statusView: String
+  title: String
+}
+
+input FaqCreateInput {
+  createdAt: DateTime
+  desc: String
+  language: String
+  lastModification: DateTime
+  products: ProductRelateToManyForCreateInput
+  statusView: String
+  title: String
+}
+
+input FaqOrderByInput {
+  createdAt: OrderDirection
+  desc: OrderDirection
+  id: OrderDirection
+  language: OrderDirection
+  lastModification: OrderDirection
+  statusView: OrderDirection
+  title: OrderDirection
+}
+
+input FaqUpdateArgs {
+  data: FaqUpdateInput!
+  where: FaqWhereUniqueInput!
+}
+
+input FaqUpdateInput {
+  createdAt: DateTime
+  desc: String
+  language: String
+  lastModification: DateTime
+  products: ProductRelateToManyForUpdateInput
+  statusView: String
+  title: String
+}
+
+input FaqWhereInput {
+  AND: [FaqWhereInput!]
+  NOT: [FaqWhereInput!]
+  OR: [FaqWhereInput!]
+  createdAt: DateTimeFilter
+  desc: StringFilter
+  id: IDFilter
+  language: StringFilter
+  lastModification: DateTimeFilter
+  products: ProductManyRelationFilter
+  statusView: StringFilter
+  title: StringFilter
+}
+
+input FaqWhereUniqueInput {
+  id: ID
+}
+
+input GetTeacherScheduleData {
+  end: String!
+  start: String!
+  teacherId: ID!
+}
+
+type GetTeacherScheduleResponse {
+  cutoff: [Object!]
+  lessons: [Object!]
+}
+
+input IDFilter {
+  equals: ID
+  gt: ID
+  gte: ID
+  in: [ID!]
+  lt: ID
+  lte: ID
+  not: IDFilter
+  notIn: [ID!]
+}
+
+enum ImageExtension {
+  gif
+  jpg
+  png
+  webp
+}
+
+input ImageFieldInput {
+  upload: Upload!
+}
+
+type ImageFieldOutput {
+  extension: ImageExtension!
+  filesize: Int!
+  height: Int!
+  id: ID!
+  url: String!
+  width: Int!
+}
+
+input IntFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: IntFilter
+  notIn: [Int!]
+}
+
+input IntNullableFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: IntNullableFilter
+  notIn: [Int!]
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type KeystoneAdminMeta {
+  list(key: String!): KeystoneAdminUIListMeta
+  lists: [KeystoneAdminUIListMeta!]!
+}
+
+type KeystoneAdminUIFieldMeta {
+  createView: KeystoneAdminUIFieldMetaCreateView!
+  customViewsIndex: Int
+  description: String
+  fieldMeta: JSON
+  isFilterable: Boolean!
+  isOrderable: Boolean!
+  itemView(id: ID): KeystoneAdminUIFieldMetaItemView
+  label: String!
+  listView: KeystoneAdminUIFieldMetaListView!
+  path: String!
+  search: QueryMode
+  viewsIndex: Int!
+}
+
+type KeystoneAdminUIFieldMetaCreateView {
+  fieldMode: KeystoneAdminUIFieldMetaCreateViewFieldMode!
+}
+
+enum KeystoneAdminUIFieldMetaCreateViewFieldMode {
+  edit
+  hidden
+}
+
+type KeystoneAdminUIFieldMetaItemView {
+  fieldMode: KeystoneAdminUIFieldMetaItemViewFieldMode
+}
+
+enum KeystoneAdminUIFieldMetaItemViewFieldMode {
+  edit
+  hidden
+  read
+}
+
+type KeystoneAdminUIFieldMetaListView {
+  fieldMode: KeystoneAdminUIFieldMetaListViewFieldMode!
+}
+
+enum KeystoneAdminUIFieldMetaListViewFieldMode {
+  hidden
+  read
+}
+
+type KeystoneAdminUIListMeta {
+  description: String
+  fields: [KeystoneAdminUIFieldMeta!]!
+  hideCreate: Boolean!
+  hideDelete: Boolean!
+  initialColumns: [String!]!
+  initialSort: KeystoneAdminUISort
+  isHidden: Boolean!
+  isSingleton: Boolean
+  itemQueryName: String!
+  key: String!
+  label: String!
+  labelField: String!
+  listQueryName: String!
+  pageSize: Int!
+  path: String!
+  plural: String!
+  singular: String!
+}
+
+type KeystoneAdminUISort {
+  direction: KeystoneAdminUISortDirection!
+  field: String!
+}
+
+enum KeystoneAdminUISortDirection {
+  ASC
+  DESC
+}
+
+type KeystoneMeta {
+  adminMeta: KeystoneAdminMeta!
+}
+
+type Lesson {
+  burned: Boolean
+  comment: String
+  createdAt: DateTime
+  description: String
+  endTime: DateTime
+  id: ID!
+  lastModification: DateTime
+  notified: Boolean
+  startTime: DateTime
+  statusLesson: String
+  students(orderBy: [UserOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserWhereInput! = {}): [User!]
+  studentsCount(where: UserWhereInput! = {}): Int
+  subscription: UserSubscription
+  teachers(orderBy: [ManagerOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ManagerWhereInput! = {}): [Manager!]
+  teachersCount(where: ManagerWhereInput! = {}): Int
+  timeZone: String
+  title: String
+  trial: Boolean
+}
+
+input LessonCreateInput {
+  burned: Boolean
+  comment: String
+  createdAt: DateTime
+  description: String
+  endTime: DateTime
+  lastModification: DateTime
+  notified: Boolean
+  startTime: DateTime
+  statusLesson: String
+  students: UserRelateToManyForCreateInput
+  subscription: UserSubscriptionRelateToOneForCreateInput
+  teachers: ManagerRelateToManyForCreateInput
+  timeZone: String
+  title: String
+  trial: Boolean
+}
+
+input LessonManyRelationFilter {
+  every: LessonWhereInput
+  none: LessonWhereInput
+  some: LessonWhereInput
+}
+
+input LessonOrderByInput {
+  burned: OrderDirection
+  comment: OrderDirection
+  createdAt: OrderDirection
+  description: OrderDirection
+  endTime: OrderDirection
+  id: OrderDirection
+  lastModification: OrderDirection
+  notified: OrderDirection
+  startTime: OrderDirection
+  statusLesson: OrderDirection
+  timeZone: OrderDirection
+  title: OrderDirection
+  trial: OrderDirection
+}
+
+input LessonRelateToManyForCreateInput {
+  connect: [LessonWhereUniqueInput!]
+  create: [LessonCreateInput!]
+}
+
+input LessonRelateToManyForUpdateInput {
+  connect: [LessonWhereUniqueInput!]
+  create: [LessonCreateInput!]
+  disconnect: [LessonWhereUniqueInput!]
+  set: [LessonWhereUniqueInput!]
+}
+
+input LessonUpdateArgs {
+  data: LessonUpdateInput!
+  where: LessonWhereUniqueInput!
+}
+
+input LessonUpdateInput {
+  burned: Boolean
+  comment: String
+  createdAt: DateTime
+  description: String
+  endTime: DateTime
+  lastModification: DateTime
+  notified: Boolean
+  startTime: DateTime
+  statusLesson: String
+  students: UserRelateToManyForUpdateInput
+  subscription: UserSubscriptionRelateToOneForUpdateInput
+  teachers: ManagerRelateToManyForUpdateInput
+  timeZone: String
+  title: String
+  trial: Boolean
+}
+
+input LessonWhereInput {
+  AND: [LessonWhereInput!]
+  NOT: [LessonWhereInput!]
+  OR: [LessonWhereInput!]
+  burned: BooleanFilter
+  comment: StringFilter
+  createdAt: DateTimeFilter
+  description: StringFilter
+  endTime: DateTimeFilter
+  id: IDFilter
+  lastModification: DateTimeFilter
+  notified: BooleanFilter
+  startTime: DateTimeFilter
+  statusLesson: StringFilter
+  students: UserManyRelationFilter
+  subscription: UserSubscriptionWhereInput
+  teachers: ManagerManyRelationFilter
+  timeZone: StringFilter
+  title: StringFilter
+  trial: BooleanFilter
+}
+
+input LessonWhereUniqueInput {
+  id: ID
+}
+
+type Link {
+  createdAt: DateTime
+  id: ID!
+  label: String
+  lastModification: DateTime
+  link: String
+  status: String
+}
+
+input LinkCreateInput {
+  createdAt: DateTime
+  lastModification: DateTime
+  link: String
+  status: String
+}
+
+input LinkOrderByInput {
+  createdAt: OrderDirection
+  id: OrderDirection
+  lastModification: OrderDirection
+  link: OrderDirection
+  status: OrderDirection
+}
+
+input LinkUpdateArgs {
+  data: LinkUpdateInput!
+  where: LinkWhereUniqueInput!
+}
+
+input LinkUpdateInput {
+  createdAt: DateTime
+  lastModification: DateTime
+  link: String
+  status: String
+}
+
+input LinkWhereInput {
+  AND: [LinkWhereInput!]
+  NOT: [LinkWhereInput!]
+  OR: [LinkWhereInput!]
+  createdAt: DateTimeFilter
+  id: IDFilter
+  lastModification: DateTimeFilter
+  link: StringFilter
+  status: StringFilter
+}
+
+input LinkWhereUniqueInput {
+  id: ID
+}
+
+enum MagicLinkRedemptionErrorCode {
+  FAILURE
+  TOKEN_EXPIRED
+  TOKEN_REDEEMED
+}
+
+type Manager {
+  comment: String
+  createdAt: DateTime
+  cutoff(orderBy: [WorkTimeCutoffOrderByInput!]! = [], skip: Int! = 0, take: Int, where: WorkTimeCutoffWhereInput! = {}): [WorkTimeCutoff!]
+  cutoffCount(where: WorkTimeCutoffWhereInput! = {}): Int
+  email: String
+  id: ID!
+  language: String
+  lastModification: DateTime
+  linkOnlineLesson: String
+  name: String
+  phone: Decimal
+  teacher: Boolean
+  timeZone: String
+  work: Boolean
+  workTime(orderBy: [WorkTimeOrderByInput!]! = [], skip: Int! = 0, take: Int, where: WorkTimeWhereInput! = {}): [WorkTime!]
+  workTimeCount(where: WorkTimeWhereInput! = {}): Int
+}
+
+input ManagerCreateInput {
+  comment: String
+  createdAt: DateTime
+  cutoff: WorkTimeCutoffRelateToManyForCreateInput
+  email: String
+  language: String
+  lastModification: DateTime
+  linkOnlineLesson: String
+  name: String
+  phone: Decimal
+  teacher: Boolean
+  timeZone: String
+  work: Boolean
+  workTime: WorkTimeRelateToManyForCreateInput
+}
+
+input ManagerManyRelationFilter {
+  every: ManagerWhereInput
+  none: ManagerWhereInput
+  some: ManagerWhereInput
+}
+
+input ManagerOrderByInput {
+  comment: OrderDirection
+  createdAt: OrderDirection
+  email: OrderDirection
+  id: OrderDirection
+  language: OrderDirection
+  lastModification: OrderDirection
+  linkOnlineLesson: OrderDirection
+  name: OrderDirection
+  phone: OrderDirection
+  teacher: OrderDirection
+  timeZone: OrderDirection
+  work: OrderDirection
+}
+
+input ManagerRelateToManyForCreateInput {
+  connect: [ManagerWhereUniqueInput!]
+  create: [ManagerCreateInput!]
+}
+
+input ManagerRelateToManyForUpdateInput {
+  connect: [ManagerWhereUniqueInput!]
+  create: [ManagerCreateInput!]
+  disconnect: [ManagerWhereUniqueInput!]
+  set: [ManagerWhereUniqueInput!]
+}
+
+input ManagerRelateToOneForCreateInput {
+  connect: ManagerWhereUniqueInput
+  create: ManagerCreateInput
+}
+
+input ManagerRelateToOneForUpdateInput {
+  connect: ManagerWhereUniqueInput
+  create: ManagerCreateInput
+  disconnect: Boolean
+}
+
+input ManagerUpdateArgs {
+  data: ManagerUpdateInput!
+  where: ManagerWhereUniqueInput!
+}
+
+input ManagerUpdateInput {
+  comment: String
+  createdAt: DateTime
+  cutoff: WorkTimeCutoffRelateToManyForUpdateInput
+  email: String
+  language: String
+  lastModification: DateTime
+  linkOnlineLesson: String
+  name: String
+  phone: Decimal
+  teacher: Boolean
+  timeZone: String
+  work: Boolean
+  workTime: WorkTimeRelateToManyForUpdateInput
+}
+
+input ManagerWhereInput {
+  AND: [ManagerWhereInput!]
+  NOT: [ManagerWhereInput!]
+  OR: [ManagerWhereInput!]
+  comment: StringFilter
+  createdAt: DateTimeFilter
+  cutoff: WorkTimeCutoffManyRelationFilter
+  email: StringFilter
+  id: IDFilter
+  language: StringFilter
+  lastModification: DateTimeFilter
+  linkOnlineLesson: StringFilter
+  name: StringFilter
+  phone: DecimalNullableFilter
+  teacher: BooleanFilter
+  timeZone: StringFilter
+  work: BooleanFilter
+  workTime: WorkTimeManyRelationFilter
+}
+
+input ManagerWhereUniqueInput {
+  id: ID
+}
+
+type Marketing {
+  aboutGeorge: Boolean!
+  advantages: Boolean!
+  createdAt: DateTime
+  description: String
+  id: ID!
+  image: ImageFieldOutput
+  language: String
+  lastModification: DateTime
+  link: String
+  reviews: Boolean!
+  slug: String
+  statusView: String
+  title: String
+}
+
+input MarketingCreateInput {
+  aboutGeorge: Boolean! = true
+  advantages: Boolean! = true
+  createdAt: DateTime
+  description: String
+  image: ImageFieldInput
+  language: String
+  lastModification: DateTime
+  reviews: Boolean! = true
+  slug: String
+  statusView: String
+  title: String
+}
+
+input MarketingOrderByInput {
+  aboutGeorge: OrderDirection
+  advantages: OrderDirection
+  createdAt: OrderDirection
+  description: OrderDirection
+  id: OrderDirection
+  language: OrderDirection
+  lastModification: OrderDirection
+  reviews: OrderDirection
+  slug: OrderDirection
+  statusView: OrderDirection
+  title: OrderDirection
+}
+
+input MarketingUpdateArgs {
+  data: MarketingUpdateInput!
+  where: MarketingWhereUniqueInput!
+}
+
+input MarketingUpdateInput {
+  aboutGeorge: Boolean
+  advantages: Boolean
+  createdAt: DateTime
+  description: String
+  image: ImageFieldInput
+  language: String
+  lastModification: DateTime
+  reviews: Boolean
+  slug: String
+  statusView: String
+  title: String
+}
+
+input MarketingWhereInput {
+  AND: [MarketingWhereInput!]
+  NOT: [MarketingWhereInput!]
+  OR: [MarketingWhereInput!]
+  aboutGeorge: BooleanFilter
+  advantages: BooleanFilter
+  createdAt: DateTimeFilter
+  description: StringFilter
+  id: IDFilter
+  language: StringFilter
+  lastModification: DateTimeFilter
+  reviews: BooleanFilter
+  slug: StringFilter
+  statusView: StringFilter
+  title: StringFilter
+}
+
+input MarketingWhereUniqueInput {
+  id: ID
+  slug: String
+}
+
+type Mutation {
+  authCart(data: AuthCartData!): Client
+  authWithEmail(email: String!): String
+  authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
+  cart(data: CartData!): PaymentResponse
+  checkout(currency: String!, userId: String!): PaymentResponse
+  createAvatarUser(data: AvatarUserCreateInput!): AvatarUser
+  createAvatarUsers(data: [AvatarUserCreateInput!]!): [AvatarUser]
+  createCartItem(data: CartItemCreateInput!): CartItem
+  createCartItems(data: [CartItemCreateInput!]!): [CartItem]
+  createCategories(data: [CategoryCreateInput!]!): [Category]
+  createCategory(data: CategoryCreateInput!): Category
+  createClient(data: ClientCreateInput!): Client
+  createClients(data: [ClientCreateInput!]!): [Client]
+  createDirection(data: DirectionCreateInput!): Direction
+  createDirectionGoal(data: DirectionGoalCreateInput!): DirectionGoal
+  createDirectionGoals(data: [DirectionGoalCreateInput!]!): [DirectionGoal]
+  createDirectionResult(data: DirectionResultCreateInput!): DirectionResult
+  createDirectionResults(data: [DirectionResultCreateInput!]!): [DirectionResult]
+  createDirections(data: [DirectionCreateInput!]!): [Direction]
+  createFaq(data: FaqCreateInput!): Faq
+  createFaqs(data: [FaqCreateInput!]!): [Faq]
+  createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
+  createLesson(data: LessonCreateInput!): Lesson
+  createLessons(data: [LessonCreateInput!]!): [Lesson]
+  createLink(data: LinkCreateInput!): Link
+  createLinks(data: [LinkCreateInput!]!): [Link]
+  createManager(data: ManagerCreateInput!): Manager
+  createManagers(data: [ManagerCreateInput!]!): [Manager]
+  createMarketing(data: MarketingCreateInput!): Marketing
+  createMarketings(data: [MarketingCreateInput!]!): [Marketing]
+  createOrder(data: OrderCreateInput!): Order
+  createOrders(data: [OrderCreateInput!]!): [Order]
+  createPage(data: PageCreateInput!): Page
+  createPages(data: [PageCreateInput!]!): [Page]
+  createPayment(data: PaymentCreateInput!): Payment
+  createPayments(data: [PaymentCreateInput!]!): [Payment]
+  createPost(data: PostCreateInput!): Post
+  createPosts(data: [PostCreateInput!]!): [Post]
+  createProduct(data: ProductCreateInput!): Product
+  createProductReview(data: ProductReviewCreateInput!): ProductReview
+  createProductReviews(data: [ProductReviewCreateInput!]!): [ProductReview]
+  createProducts(data: [ProductCreateInput!]!): [Product]
+  createService(data: ServiceCreateInput!): Service
+  createServices(data: [ServiceCreateInput!]!): [Service]
+  createSourceClient(data: SourceClientCreateInput!): SourceClient
+  createSourceClients(data: [SourceClientCreateInput!]!): [SourceClient]
+  createSubscription(data: SubscriptionCreateInput!): Subscription
+  createSubscriptions(data: [SubscriptionCreateInput!]!): [Subscription]
+  createTag(data: TagCreateInput!): Tag
+  createTags(data: [TagCreateInput!]!): [Tag]
+  createUser(data: UserCreateInput!): User
+  createUserService(data: UserServiceCreateInput!): UserService
+  createUserServices(data: [UserServiceCreateInput!]!): [UserService]
+  createUserSubscription(data: UserSubscriptionCreateInput!): UserSubscription
+  createUserSubscriptions(data: [UserSubscriptionCreateInput!]!): [UserSubscription]
+  createUsers(data: [UserCreateInput!]!): [User]
+  createWorkTime(data: WorkTimeCreateInput!): WorkTime
+  createWorkTimeCutoff(data: WorkTimeCutoffCreateInput!): WorkTimeCutoff
+  createWorkTimeCutoffs(data: [WorkTimeCutoffCreateInput!]!): [WorkTimeCutoff]
+  createWorkTimes(data: [WorkTimeCreateInput!]!): [WorkTime]
+  deleteAvatarUser(where: AvatarUserWhereUniqueInput!): AvatarUser
+  deleteAvatarUsers(where: [AvatarUserWhereUniqueInput!]!): [AvatarUser]
+  deleteCart(where: CartWhereUniqueInput!): Cart
+  deleteCartItem(where: CartItemWhereUniqueInput!): CartItem
+  deleteCartItems(where: [CartItemWhereUniqueInput!]!): [CartItem]
+  deleteCarts(where: [CartWhereUniqueInput!]!): [Cart]
+  deleteCategories(where: [CategoryWhereUniqueInput!]!): [Category]
+  deleteCategory(where: CategoryWhereUniqueInput!): Category
+  deleteClient(where: ClientWhereUniqueInput!): Client
+  deleteClients(where: [ClientWhereUniqueInput!]!): [Client]
+  deleteDirection(where: DirectionWhereUniqueInput!): Direction
+  deleteDirectionGoal(where: DirectionGoalWhereUniqueInput!): DirectionGoal
+  deleteDirectionGoals(where: [DirectionGoalWhereUniqueInput!]!): [DirectionGoal]
+  deleteDirectionResult(where: DirectionResultWhereUniqueInput!): DirectionResult
+  deleteDirectionResults(where: [DirectionResultWhereUniqueInput!]!): [DirectionResult]
+  deleteDirections(where: [DirectionWhereUniqueInput!]!): [Direction]
+  deleteFaq(where: FaqWhereUniqueInput!): Faq
+  deleteFaqs(where: [FaqWhereUniqueInput!]!): [Faq]
+  deleteLesson(where: LessonWhereUniqueInput!): Lesson
+  deleteLessons(where: [LessonWhereUniqueInput!]!): [Lesson]
+  deleteLink(where: LinkWhereUniqueInput!): Link
+  deleteLinks(where: [LinkWhereUniqueInput!]!): [Link]
+  deleteManager(where: ManagerWhereUniqueInput!): Manager
+  deleteManagers(where: [ManagerWhereUniqueInput!]!): [Manager]
+  deleteMarketing(where: MarketingWhereUniqueInput!): Marketing
+  deleteMarketings(where: [MarketingWhereUniqueInput!]!): [Marketing]
+  deleteOrder(where: OrderWhereUniqueInput!): Order
+  deleteOrders(where: [OrderWhereUniqueInput!]!): [Order]
+  deletePage(where: PageWhereUniqueInput!): Page
+  deletePages(where: [PageWhereUniqueInput!]!): [Page]
+  deletePayment(where: PaymentWhereUniqueInput!): Payment
+  deletePayments(where: [PaymentWhereUniqueInput!]!): [Payment]
+  deletePost(where: PostWhereUniqueInput!): Post
+  deletePosts(where: [PostWhereUniqueInput!]!): [Post]
+  deleteProduct(where: ProductWhereUniqueInput!): Product
+  deleteProductReview(where: ProductReviewWhereUniqueInput!): ProductReview
+  deleteProductReviews(where: [ProductReviewWhereUniqueInput!]!): [ProductReview]
+  deleteProducts(where: [ProductWhereUniqueInput!]!): [Product]
+  deleteService(where: ServiceWhereUniqueInput!): Service
+  deleteServices(where: [ServiceWhereUniqueInput!]!): [Service]
+  deleteSourceClient(where: SourceClientWhereUniqueInput!): SourceClient
+  deleteSourceClients(where: [SourceClientWhereUniqueInput!]!): [SourceClient]
+  deleteSubscription(where: SubscriptionWhereUniqueInput!): Subscription
+  deleteSubscriptions(where: [SubscriptionWhereUniqueInput!]!): [Subscription]
+  deleteTag(where: TagWhereUniqueInput!): Tag
+  deleteTags(where: [TagWhereUniqueInput!]!): [Tag]
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteUserService(where: UserServiceWhereUniqueInput!): UserService
+  deleteUserServices(where: [UserServiceWhereUniqueInput!]!): [UserService]
+  deleteUserSubscription(where: UserSubscriptionWhereUniqueInput!): UserSubscription
+  deleteUserSubscriptions(where: [UserSubscriptionWhereUniqueInput!]!): [UserSubscription]
+  deleteUsers(where: [UserWhereUniqueInput!]!): [User]
+  deleteWorkTime(where: WorkTimeWhereUniqueInput!): WorkTime
+  deleteWorkTimeCutoff(where: WorkTimeCutoffWhereUniqueInput!): WorkTimeCutoff
+  deleteWorkTimeCutoffs(where: [WorkTimeCutoffWhereUniqueInput!]!): [WorkTimeCutoff]
+  deleteWorkTimes(where: [WorkTimeWhereUniqueInput!]!): [WorkTime]
+  endSession: Boolean!
+  payment(orderId: String!): PaymentResponse
+  redeemUserMagicAuthToken(email: String!, token: String!): RedeemUserMagicAuthTokenResult!
+  sendUserMagicAuthLink(email: String!): Boolean!
+  updateAvatarUser(data: AvatarUserUpdateInput!, where: AvatarUserWhereUniqueInput!): AvatarUser
+  updateAvatarUsers(data: [AvatarUserUpdateArgs!]!): [AvatarUser]
+  updateCart(data: CartUpdateInput!, where: CartWhereUniqueInput!): Cart
+  updateCartItem(data: CartItemUpdateInput!, where: CartItemWhereUniqueInput!): CartItem
+  updateCartItems(data: [CartItemUpdateArgs!]!): [CartItem]
+  updateCarts(data: [CartUpdateArgs!]!): [Cart]
+  updateCategories(data: [CategoryUpdateArgs!]!): [Category]
+  updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
+  updateClient(data: ClientUpdateInput!, where: ClientWhereUniqueInput!): Client
+  updateClients(data: [ClientUpdateArgs!]!): [Client]
+  updateDirection(data: DirectionUpdateInput!, where: DirectionWhereUniqueInput!): Direction
+  updateDirectionGoal(data: DirectionGoalUpdateInput!, where: DirectionGoalWhereUniqueInput!): DirectionGoal
+  updateDirectionGoals(data: [DirectionGoalUpdateArgs!]!): [DirectionGoal]
+  updateDirectionResult(data: DirectionResultUpdateInput!, where: DirectionResultWhereUniqueInput!): DirectionResult
+  updateDirectionResults(data: [DirectionResultUpdateArgs!]!): [DirectionResult]
+  updateDirections(data: [DirectionUpdateArgs!]!): [Direction]
+  updateFaq(data: FaqUpdateInput!, where: FaqWhereUniqueInput!): Faq
+  updateFaqs(data: [FaqUpdateArgs!]!): [Faq]
+  updateLesson(data: LessonUpdateInput!, where: LessonWhereUniqueInput!): Lesson
+  updateLessons(data: [LessonUpdateArgs!]!): [Lesson]
+  updateLink(data: LinkUpdateInput!, where: LinkWhereUniqueInput!): Link
+  updateLinks(data: [LinkUpdateArgs!]!): [Link]
+  updateManager(data: ManagerUpdateInput!, where: ManagerWhereUniqueInput!): Manager
+  updateManagers(data: [ManagerUpdateArgs!]!): [Manager]
+  updateMarketing(data: MarketingUpdateInput!, where: MarketingWhereUniqueInput!): Marketing
+  updateMarketings(data: [MarketingUpdateArgs!]!): [Marketing]
+  updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
+  updateOrders(data: [OrderUpdateArgs!]!): [Order]
+  updatePage(data: PageUpdateInput!, where: PageWhereUniqueInput!): Page
+  updatePages(data: [PageUpdateArgs!]!): [Page]
+  updatePayment(data: PaymentUpdateInput!, where: PaymentWhereUniqueInput!): Payment
+  updatePayments(data: [PaymentUpdateArgs!]!): [Payment]
+  updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+  updatePosts(data: [PostUpdateArgs!]!): [Post]
+  updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
+  updateProductReview(data: ProductReviewUpdateInput!, where: ProductReviewWhereUniqueInput!): ProductReview
+  updateProductReviews(data: [ProductReviewUpdateArgs!]!): [ProductReview]
+  updateProducts(data: [ProductUpdateArgs!]!): [Product]
+  updateService(data: ServiceUpdateInput!, where: ServiceWhereUniqueInput!): Service
+  updateServices(data: [ServiceUpdateArgs!]!): [Service]
+  updateSourceClient(data: SourceClientUpdateInput!, where: SourceClientWhereUniqueInput!): SourceClient
+  updateSourceClients(data: [SourceClientUpdateArgs!]!): [SourceClient]
+  updateSubscription(data: SubscriptionUpdateInput!, where: SubscriptionWhereUniqueInput!): Subscription
+  updateSubscriptions(data: [SubscriptionUpdateArgs!]!): [Subscription]
+  updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
+  updateTags(data: [TagUpdateArgs!]!): [Tag]
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateUserService(data: UserServiceUpdateInput!, where: UserServiceWhereUniqueInput!): UserService
+  updateUserServices(data: [UserServiceUpdateArgs!]!): [UserService]
+  updateUserSubscription(data: UserSubscriptionUpdateInput!, where: UserSubscriptionWhereUniqueInput!): UserSubscription
+  updateUserSubscriptions(data: [UserSubscriptionUpdateArgs!]!): [UserSubscription]
+  updateUsers(data: [UserUpdateArgs!]!): [User]
+  updateWorkTime(data: WorkTimeUpdateInput!, where: WorkTimeWhereUniqueInput!): WorkTime
+  updateWorkTimeCutoff(data: WorkTimeCutoffUpdateInput!, where: WorkTimeCutoffWhereUniqueInput!): WorkTimeCutoff
+  updateWorkTimeCutoffs(data: [WorkTimeCutoffUpdateArgs!]!): [WorkTimeCutoff]
+  updateWorkTimes(data: [WorkTimeUpdateArgs!]!): [WorkTime]
+}
+
+input NestedStringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+scalar Object
+
+type Order {
+  amount: Int
+  createdAt: DateTime
+  currency: String
+  dept: Int
+  id: ID!
+  label: String
+  lastModification: DateTime
+  leftPayments: Int
+  nextPayment: Int
+  payed: Int
+  payments(orderBy: [PaymentOrderByInput!]! = [], skip: Int! = 0, take: Int, where: PaymentWhereInput! = {}): [Payment!]
+  paymentsCount(where: PaymentWhereInput! = {}): Int
+  quantityPayments: Int
+  services(orderBy: [UserServiceOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserServiceWhereInput! = {}): [UserService!]
+  servicesCount(where: UserServiceWhereInput! = {}): Int
+  status: OrderStatusType
+  student: User
+  subscriptions(orderBy: [UserSubscriptionOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserSubscriptionWhereInput! = {}): [UserSubscription!]
+  subscriptionsCount(where: UserSubscriptionWhereInput! = {}): Int
+}
+
+input OrderCreateInput {
+  amount: Int
+  createdAt: DateTime
+  currency: String
+  label: String
+  lastModification: DateTime
+  payments: PaymentRelateToManyForCreateInput
+  quantityPayments: Int
+  services: UserServiceRelateToManyForCreateInput
+  status: OrderStatusType
+  student: UserRelateToOneForCreateInput
+  subscriptions: UserSubscriptionRelateToManyForCreateInput
+}
+
+enum OrderDirection {
+  asc
+  desc
+}
+
+input OrderOrderByInput {
+  amount: OrderDirection
+  createdAt: OrderDirection
+  currency: OrderDirection
+  id: OrderDirection
+  label: OrderDirection
+  lastModification: OrderDirection
+  quantityPayments: OrderDirection
+  status: OrderDirection
+}
+
+input OrderRelateToOneForCreateInput {
+  connect: OrderWhereUniqueInput
+  create: OrderCreateInput
+}
+
+input OrderRelateToOneForUpdateInput {
+  connect: OrderWhereUniqueInput
+  create: OrderCreateInput
+  disconnect: Boolean
+}
+
+enum OrderStatusType {
+  cancelled
+  created
+  finished
+  frozen
+  processing
+}
+
+input OrderStatusTypeNullableFilter {
+  equals: OrderStatusType
+  in: [OrderStatusType!]
+  not: OrderStatusTypeNullableFilter
+  notIn: [OrderStatusType!]
+}
+
+input OrderUpdateArgs {
+  data: OrderUpdateInput!
+  where: OrderWhereUniqueInput!
+}
+
+input OrderUpdateInput {
+  amount: Int
+  createdAt: DateTime
+  currency: String
+  label: String
+  lastModification: DateTime
+  payments: PaymentRelateToManyForUpdateInput
+  quantityPayments: Int
+  services: UserServiceRelateToManyForUpdateInput
+  status: OrderStatusType
+  student: UserRelateToOneForUpdateInput
+  subscriptions: UserSubscriptionRelateToManyForUpdateInput
+}
+
+input OrderWhereInput {
+  AND: [OrderWhereInput!]
+  NOT: [OrderWhereInput!]
+  OR: [OrderWhereInput!]
+  amount: IntNullableFilter
+  createdAt: DateTimeFilter
+  currency: StringFilter
+  id: IDFilter
+  label: StringFilter
+  lastModification: DateTimeFilter
+  payments: PaymentManyRelationFilter
+  quantityPayments: IntFilter
+  services: UserServiceManyRelationFilter
+  status: OrderStatusTypeNullableFilter
+  student: UserWhereInput
+  subscriptions: UserSubscriptionManyRelationFilter
+}
+
+input OrderWhereUniqueInput {
+  id: ID
+}
+
+type Page {
+  author: User
+  content: Page_content_Document
+  createdAt: DateTime
+  description: String
+  id: ID!
+  language: String
+  lastModification: DateTime
+  slug: String
+  statusView: String
+  tag(orderBy: [TagOrderByInput!]! = [], skip: Int! = 0, take: Int, where: TagWhereInput! = {}): [Tag!]
+  tagCount(where: TagWhereInput! = {}): Int
+  title: String
+}
+
+input PageCreateInput {
+  author: UserRelateToOneForCreateInput
+  content: JSON
+  createdAt: DateTime
+  description: String
+  language: String
+  lastModification: DateTime
+  slug: String
+  statusView: String
+  tag: TagRelateToManyForCreateInput
+  title: String
+}
+
+input PageOrderByInput {
+  createdAt: OrderDirection
+  description: OrderDirection
+  id: OrderDirection
+  language: OrderDirection
+  lastModification: OrderDirection
+  slug: OrderDirection
+  statusView: OrderDirection
+  title: OrderDirection
+}
+
+input PageUpdateArgs {
+  data: PageUpdateInput!
+  where: PageWhereUniqueInput!
+}
+
+input PageUpdateInput {
+  author: UserRelateToOneForUpdateInput
+  content: JSON
+  createdAt: DateTime
+  description: String
+  language: String
+  lastModification: DateTime
+  slug: String
+  statusView: String
+  tag: TagRelateToManyForUpdateInput
+  title: String
+}
+
+input PageWhereInput {
+  AND: [PageWhereInput!]
+  NOT: [PageWhereInput!]
+  OR: [PageWhereInput!]
+  author: UserWhereInput
+  createdAt: DateTimeFilter
+  description: StringFilter
+  id: IDFilter
+  language: StringFilter
+  lastModification: DateTimeFilter
+  slug: StringFilter
+  statusView: StringFilter
+  tag: TagManyRelationFilter
+  title: StringFilter
+}
+
+input PageWhereUniqueInput {
+  id: ID
+}
+
+type Page_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input PasswordFilter {
+  isSet: Boolean!
+}
+
+type PasswordState {
+  isSet: Boolean!
+}
+
+type Payment {
+  amount: Int
+  createdAt: DateTime
+  currency: String
+  id: ID!
+  lastModification: DateTime
+  order: Order
+  receiptId: String
+  sessionId: String
+  status: PaymentStatusType
+  student: User
+}
+
+input PaymentCreateInput {
+  amount: Int
+  createdAt: DateTime
+  currency: String
+  lastModification: DateTime
+  order: OrderRelateToOneForCreateInput
+  receiptId: String
+  sessionId: String
+  status: PaymentStatusType
+  student: UserRelateToOneForCreateInput
+}
+
+input PaymentManyRelationFilter {
+  every: PaymentWhereInput
+  none: PaymentWhereInput
+  some: PaymentWhereInput
+}
+
+input PaymentOrderByInput {
+  amount: OrderDirection
+  createdAt: OrderDirection
+  currency: OrderDirection
+  id: OrderDirection
+  lastModification: OrderDirection
+  receiptId: OrderDirection
+  sessionId: OrderDirection
+  status: OrderDirection
+}
+
+input PaymentRelateToManyForCreateInput {
+  connect: [PaymentWhereUniqueInput!]
+  create: [PaymentCreateInput!]
+}
+
+input PaymentRelateToManyForUpdateInput {
+  connect: [PaymentWhereUniqueInput!]
+  create: [PaymentCreateInput!]
+  disconnect: [PaymentWhereUniqueInput!]
+  set: [PaymentWhereUniqueInput!]
+}
+
+type PaymentResponse {
+  redirectUrl: String!
+  status: Boolean!
+}
+
+enum PaymentStatusType {
+  cancelled
+  created
+  error
+  successfully
+}
+
+input PaymentStatusTypeNullableFilter {
+  equals: PaymentStatusType
+  in: [PaymentStatusType!]
+  not: PaymentStatusTypeNullableFilter
+  notIn: [PaymentStatusType!]
+}
+
+input PaymentUpdateArgs {
+  data: PaymentUpdateInput!
+  where: PaymentWhereUniqueInput!
+}
+
+input PaymentUpdateInput {
+  amount: Int
+  createdAt: DateTime
+  currency: String
+  lastModification: DateTime
+  order: OrderRelateToOneForUpdateInput
+  receiptId: String
+  sessionId: String
+  status: PaymentStatusType
+  student: UserRelateToOneForUpdateInput
+}
+
+input PaymentWhereInput {
+  AND: [PaymentWhereInput!]
+  NOT: [PaymentWhereInput!]
+  OR: [PaymentWhereInput!]
+  amount: IntNullableFilter
+  createdAt: DateTimeFilter
+  currency: StringFilter
+  id: IDFilter
+  lastModification: DateTimeFilter
+  order: OrderWhereInput
+  receiptId: StringFilter
+  sessionId: StringFilter
+  status: PaymentStatusTypeNullableFilter
+  student: UserWhereInput
+}
+
+input PaymentWhereUniqueInput {
+  id: ID
+}
+
+type Post {
+  author: User
+  content: Post_content_Document
+  cover: ImageFieldOutput
+  createdAt: DateTime
+  description: String
+  id: ID!
+  language: String
+  lastModification: DateTime
+  statusView: String
+  tag(orderBy: [TagOrderByInput!]! = [], skip: Int! = 0, take: Int, where: TagWhereInput! = {}): [Tag!]
+  tagCount(where: TagWhereInput! = {}): Int
+  title: String
+}
+
+input PostCreateInput {
+  author: UserRelateToOneForCreateInput
+  content: JSON
+  cover: ImageFieldInput
+  createdAt: DateTime
+  description: String
+  language: String
+  lastModification: DateTime
+  statusView: String
+  tag: TagRelateToManyForCreateInput
+  title: String
+}
+
+input PostOrderByInput {
+  createdAt: OrderDirection
+  description: OrderDirection
+  id: OrderDirection
+  language: OrderDirection
+  lastModification: OrderDirection
+  statusView: OrderDirection
+  title: OrderDirection
+}
+
+input PostUpdateArgs {
+  data: PostUpdateInput!
+  where: PostWhereUniqueInput!
+}
+
+input PostUpdateInput {
+  author: UserRelateToOneForUpdateInput
+  content: JSON
+  cover: ImageFieldInput
+  createdAt: DateTime
+  description: String
+  language: String
+  lastModification: DateTime
+  statusView: String
+  tag: TagRelateToManyForUpdateInput
+  title: String
+}
+
+input PostWhereInput {
+  AND: [PostWhereInput!]
+  NOT: [PostWhereInput!]
+  OR: [PostWhereInput!]
+  author: UserWhereInput
+  createdAt: DateTimeFilter
+  description: StringFilter
+  id: IDFilter
+  language: StringFilter
+  lastModification: DateTimeFilter
+  statusView: StringFilter
+  tag: TagManyRelationFilter
+  title: StringFilter
+}
+
+input PostWhereUniqueInput {
+  id: ID
+}
+
+type Post_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+type Product {
+  category: Category
+  createdAt: DateTime
+  desc: Product_desc_Document
+  description: String
+  id: ID!
+  image: ImageFieldOutput
+  language: String
+  lastModification: DateTime
+  name: String
+  statusView: String
+  subscriptions(orderBy: [SubscriptionOrderByInput!]! = [], skip: Int! = 0, take: Int, where: SubscriptionWhereInput! = {}): [Subscription!]
+  subscriptionsCount(where: SubscriptionWhereInput! = {}): Int
+  tags(orderBy: [TagOrderByInput!]! = [], skip: Int! = 0, take: Int, where: TagWhereInput! = {}): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+}
+
+input ProductCreateInput {
+  category: CategoryRelateToOneForCreateInput
+  createdAt: DateTime
+  desc: JSON
+  description: String
+  image: ImageFieldInput
+  language: String
+  lastModification: DateTime
+  name: String
+  statusView: String
+  subscriptions: SubscriptionRelateToManyForCreateInput
+  tags: TagRelateToManyForCreateInput
+}
+
+input ProductManyRelationFilter {
+  every: ProductWhereInput
+  none: ProductWhereInput
+  some: ProductWhereInput
+}
+
+input ProductOrderByInput {
+  createdAt: OrderDirection
+  description: OrderDirection
+  id: OrderDirection
+  language: OrderDirection
+  lastModification: OrderDirection
+  name: OrderDirection
+  statusView: OrderDirection
+}
+
+input ProductRelateToManyForCreateInput {
+  connect: [ProductWhereUniqueInput!]
+  create: [ProductCreateInput!]
+}
+
+input ProductRelateToManyForUpdateInput {
+  connect: [ProductWhereUniqueInput!]
+  create: [ProductCreateInput!]
+  disconnect: [ProductWhereUniqueInput!]
+  set: [ProductWhereUniqueInput!]
+}
+
+type ProductReview {
+  createdAt: DateTime
+  desc: String
+  id: ID!
+  language: String
+  lastModification: DateTime
+  media: String
+  products(orderBy: [ProductOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductWhereInput! = {}): [Product!]
+  productsCount(where: ProductWhereInput! = {}): Int
+  statusView: String
+  student: User
+}
+
+input ProductReviewCreateInput {
+  createdAt: DateTime
+  desc: String
+  language: String
+  lastModification: DateTime
+  media: String
+  products: ProductRelateToManyForCreateInput
+  statusView: String
+  student: UserRelateToOneForCreateInput
+}
+
+input ProductReviewOrderByInput {
+  createdAt: OrderDirection
+  desc: OrderDirection
+  id: OrderDirection
+  language: OrderDirection
+  lastModification: OrderDirection
+  media: OrderDirection
+  statusView: OrderDirection
+}
+
+input ProductReviewUpdateArgs {
+  data: ProductReviewUpdateInput!
+  where: ProductReviewWhereUniqueInput!
+}
+
+input ProductReviewUpdateInput {
+  createdAt: DateTime
+  desc: String
+  language: String
+  lastModification: DateTime
+  media: String
+  products: ProductRelateToManyForUpdateInput
+  statusView: String
+  student: UserRelateToOneForUpdateInput
+}
+
+input ProductReviewWhereInput {
+  AND: [ProductReviewWhereInput!]
+  NOT: [ProductReviewWhereInput!]
+  OR: [ProductReviewWhereInput!]
+  createdAt: DateTimeFilter
+  desc: StringFilter
+  id: IDFilter
+  language: StringFilter
+  lastModification: DateTimeFilter
+  media: StringFilter
+  products: ProductManyRelationFilter
+  statusView: StringFilter
+  student: UserWhereInput
+}
+
+input ProductReviewWhereUniqueInput {
+  id: ID
+}
+
+input ProductUpdateArgs {
+  data: ProductUpdateInput!
+  where: ProductWhereUniqueInput!
+}
+
+input ProductUpdateInput {
+  category: CategoryRelateToOneForUpdateInput
+  createdAt: DateTime
+  desc: JSON
+  description: String
+  image: ImageFieldInput
+  language: String
+  lastModification: DateTime
+  name: String
+  statusView: String
+  subscriptions: SubscriptionRelateToManyForUpdateInput
+  tags: TagRelateToManyForUpdateInput
+}
+
+input ProductWhereInput {
+  AND: [ProductWhereInput!]
+  NOT: [ProductWhereInput!]
+  OR: [ProductWhereInput!]
+  category: CategoryWhereInput
+  createdAt: DateTimeFilter
+  description: StringFilter
+  id: IDFilter
+  language: StringFilter
+  lastModification: DateTimeFilter
+  name: StringFilter
+  statusView: StringFilter
+  subscriptions: SubscriptionManyRelationFilter
+  tags: TagManyRelationFilter
+}
+
+input ProductWhereUniqueInput {
+  id: ID
+}
+
+type Product_desc_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+type Query {
+  authenticatedItem: AuthenticatedItem
+  avatarUser(where: AvatarUserWhereUniqueInput!): AvatarUser
+  avatarUsers(orderBy: [AvatarUserOrderByInput!]! = [], skip: Int! = 0, take: Int, where: AvatarUserWhereInput! = {}): [AvatarUser!]
+  avatarUsersCount(where: AvatarUserWhereInput! = {}): Int
+  cart(where: CartWhereUniqueInput!): Cart
+  cartItem(where: CartItemWhereUniqueInput!): CartItem
+  cartItems(orderBy: [CartItemOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CartItemWhereInput! = {}): [CartItem!]
+  cartItemsCount(where: CartItemWhereInput! = {}): Int
+  carts(orderBy: [CartOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CartWhereInput! = {}): [Cart!]
+  cartsCount(where: CartWhereInput! = {}): Int
+  categories(orderBy: [CategoryOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CategoryWhereInput! = {}): [Category!]
+  categoriesCount(where: CategoryWhereInput! = {}): Int
+  category(where: CategoryWhereUniqueInput!): Category
+  checkPayment(paymentId: String!): Payment
+  client(where: ClientWhereUniqueInput!): Client
+  clients(orderBy: [ClientOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ClientWhereInput! = {}): [Client!]
+  clientsCount(where: ClientWhereInput! = {}): Int
+  direction(where: DirectionWhereUniqueInput!): Direction
+  directionGoal(where: DirectionGoalWhereUniqueInput!): DirectionGoal
+  directionGoals(orderBy: [DirectionGoalOrderByInput!]! = [], skip: Int! = 0, take: Int, where: DirectionGoalWhereInput! = {}): [DirectionGoal!]
+  directionGoalsCount(where: DirectionGoalWhereInput! = {}): Int
+  directionResult(where: DirectionResultWhereUniqueInput!): DirectionResult
+  directionResults(orderBy: [DirectionResultOrderByInput!]! = [], skip: Int! = 0, take: Int, where: DirectionResultWhereInput! = {}): [DirectionResult!]
+  directionResultsCount(where: DirectionResultWhereInput! = {}): Int
+  directions(orderBy: [DirectionOrderByInput!]! = [], skip: Int! = 0, take: Int, where: DirectionWhereInput! = {}): [Direction!]
+  directionsCount(where: DirectionWhereInput! = {}): Int
+  faq(where: FaqWhereUniqueInput!): Faq
+  faqs(orderBy: [FaqOrderByInput!]! = [], skip: Int! = 0, take: Int, where: FaqWhereInput! = {}): [Faq!]
+  faqsCount(where: FaqWhereInput! = {}): Int
+  getTeacherSchedule(data: GetTeacherScheduleData!): GetTeacherScheduleResponse!
+  keystone: KeystoneMeta!
+  lesson(where: LessonWhereUniqueInput!): Lesson
+  lessons(orderBy: [LessonOrderByInput!]! = [], skip: Int! = 0, take: Int, where: LessonWhereInput! = {}): [Lesson!]
+  lessonsCount(where: LessonWhereInput! = {}): Int
+  link(where: LinkWhereUniqueInput!): Link
+  links(orderBy: [LinkOrderByInput!]! = [], skip: Int! = 0, take: Int, where: LinkWhereInput! = {}): [Link!]
+  linksCount(where: LinkWhereInput! = {}): Int
+  manager(where: ManagerWhereUniqueInput!): Manager
+  managers(orderBy: [ManagerOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ManagerWhereInput! = {}): [Manager!]
+  managersCount(where: ManagerWhereInput! = {}): Int
+  marketing(where: MarketingWhereUniqueInput!): Marketing
+  marketings(orderBy: [MarketingOrderByInput!]! = [], skip: Int! = 0, take: Int, where: MarketingWhereInput! = {}): [Marketing!]
+  marketingsCount(where: MarketingWhereInput! = {}): Int
+  nextStudentLesson(studentId: ID!): Object
+  order(where: OrderWhereUniqueInput!): Order
+  orders(orderBy: [OrderOrderByInput!]! = [], skip: Int! = 0, take: Int, where: OrderWhereInput! = {}): [Order!]
+  ordersCount(where: OrderWhereInput! = {}): Int
+  page(where: PageWhereUniqueInput!): Page
+  pages(orderBy: [PageOrderByInput!]! = [], skip: Int! = 0, take: Int, where: PageWhereInput! = {}): [Page!]
+  pagesCount(where: PageWhereInput! = {}): Int
+  payment(where: PaymentWhereUniqueInput!): Payment
+  payments(orderBy: [PaymentOrderByInput!]! = [], skip: Int! = 0, take: Int, where: PaymentWhereInput! = {}): [Payment!]
+  paymentsCount(where: PaymentWhereInput! = {}): Int
+  post(where: PostWhereUniqueInput!): Post
+  posts(orderBy: [PostOrderByInput!]! = [], skip: Int! = 0, take: Int, where: PostWhereInput! = {}): [Post!]
+  postsCount(where: PostWhereInput! = {}): Int
+  product(where: ProductWhereUniqueInput!): Product
+  productReview(where: ProductReviewWhereUniqueInput!): ProductReview
+  productReviews(orderBy: [ProductReviewOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductReviewWhereInput! = {}): [ProductReview!]
+  productReviewsCount(where: ProductReviewWhereInput! = {}): Int
+  products(orderBy: [ProductOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductWhereInput! = {}): [Product!]
+  productsCount(where: ProductWhereInput! = {}): Int
+  service(where: ServiceWhereUniqueInput!): Service
+  services(orderBy: [ServiceOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ServiceWhereInput! = {}): [Service!]
+  servicesCount(where: ServiceWhereInput! = {}): Int
+  sourceClient(where: SourceClientWhereUniqueInput!): SourceClient
+  sourceClients(orderBy: [SourceClientOrderByInput!]! = [], skip: Int! = 0, take: Int, where: SourceClientWhereInput! = {}): [SourceClient!]
+  sourceClientsCount(where: SourceClientWhereInput! = {}): Int
+  subscription(where: SubscriptionWhereUniqueInput!): Subscription
+  subscriptions(orderBy: [SubscriptionOrderByInput!]! = [], skip: Int! = 0, take: Int, where: SubscriptionWhereInput! = {}): [Subscription!]
+  subscriptionsCount(where: SubscriptionWhereInput! = {}): Int
+  tag(where: TagWhereUniqueInput!): Tag
+  tags(orderBy: [TagOrderByInput!]! = [], skip: Int! = 0, take: Int, where: TagWhereInput! = {}): [Tag!]
+  tagsCount(where: TagWhereInput! = {}): Int
+  unavailableTimesForRecordLesson(data: UnavailableTimesForRecordLessonData!): [UnavailableTimesForRecordLessonResponse]
+  user(where: UserWhereUniqueInput!): User
+  userService(where: UserServiceWhereUniqueInput!): UserService
+  userServices(orderBy: [UserServiceOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserServiceWhereInput! = {}): [UserService!]
+  userServicesCount(where: UserServiceWhereInput! = {}): Int
+  userSubscription(where: UserSubscriptionWhereUniqueInput!): UserSubscription
+  userSubscriptions(orderBy: [UserSubscriptionOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserSubscriptionWhereInput! = {}): [UserSubscription!]
+  userSubscriptionsCount(where: UserSubscriptionWhereInput! = {}): Int
+  users(orderBy: [UserOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserWhereInput! = {}): [User!]
+  usersCount(where: UserWhereInput! = {}): Int
+  workTime(where: WorkTimeWhereUniqueInput!): WorkTime
+  workTimeCutoff(where: WorkTimeCutoffWhereUniqueInput!): WorkTimeCutoff
+  workTimeCutoffs(orderBy: [WorkTimeCutoffOrderByInput!]! = [], skip: Int! = 0, take: Int, where: WorkTimeCutoffWhereInput! = {}): [WorkTimeCutoff!]
+  workTimeCutoffsCount(where: WorkTimeCutoffWhereInput! = {}): Int
+  workTimes(orderBy: [WorkTimeOrderByInput!]! = [], skip: Int! = 0, take: Int, where: WorkTimeWhereInput! = {}): [WorkTime!]
+  workTimesCount(where: WorkTimeWhereInput! = {}): Int
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+type RedeemUserMagicAuthTokenFailure {
+  code: MagicLinkRedemptionErrorCode!
+  message: String!
+}
+
+union RedeemUserMagicAuthTokenResult = RedeemUserMagicAuthTokenFailure | RedeemUserMagicAuthTokenSuccess
+
+type RedeemUserMagicAuthTokenSuccess {
+  item: User!
+  token: String!
+}
+
+type Service {
+  categories(orderBy: [CategoryOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CategoryWhereInput! = {}): [Category!]
+  categoriesCount(where: CategoryWhereInput! = {}): Int
+  createdAt: DateTime
+  description: Service_description_Document
+  id: ID!
+  label: String
+  language: String
+  lastModification: DateTime
+  name: String
+  price: Int
+  statusView: String
+}
+
+input ServiceCreateInput {
+  categories: CategoryRelateToManyForCreateInput
+  createdAt: DateTime
+  description: JSON
+  language: String
+  lastModification: DateTime
+  name: String
+  price: Int
+  statusView: String
+}
+
+input ServiceOrderByInput {
+  createdAt: OrderDirection
+  id: OrderDirection
+  language: OrderDirection
+  lastModification: OrderDirection
+  name: OrderDirection
+  price: OrderDirection
+  statusView: OrderDirection
+}
+
+input ServiceRelateToOneForCreateInput {
+  connect: ServiceWhereUniqueInput
+  create: ServiceCreateInput
+}
+
+input ServiceRelateToOneForUpdateInput {
+  connect: ServiceWhereUniqueInput
+  create: ServiceCreateInput
+  disconnect: Boolean
+}
+
+input ServiceUpdateArgs {
+  data: ServiceUpdateInput!
+  where: ServiceWhereUniqueInput!
+}
+
+input ServiceUpdateInput {
+  categories: CategoryRelateToManyForUpdateInput
+  createdAt: DateTime
+  description: JSON
+  language: String
+  lastModification: DateTime
+  name: String
+  price: Int
+  statusView: String
+}
+
+input ServiceWhereInput {
+  AND: [ServiceWhereInput!]
+  NOT: [ServiceWhereInput!]
+  OR: [ServiceWhereInput!]
+  categories: CategoryManyRelationFilter
+  createdAt: DateTimeFilter
+  id: IDFilter
+  language: StringFilter
+  lastModification: DateTimeFilter
+  name: StringFilter
+  price: IntNullableFilter
+  statusView: StringFilter
+}
+
+input ServiceWhereUniqueInput {
+  id: ID
+}
+
+type Service_description_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+type SourceClient {
+  createdAt: DateTime
+  id: ID!
+  lastModification: DateTime
+  name: String
+  parent: SourceClient
+}
+
+input SourceClientCreateInput {
+  createdAt: DateTime
+  lastModification: DateTime
+  name: String
+  parent: SourceClientRelateToOneForCreateInput
+}
+
+input SourceClientManyRelationFilter {
+  every: SourceClientWhereInput
+  none: SourceClientWhereInput
+  some: SourceClientWhereInput
+}
+
+input SourceClientOrderByInput {
+  createdAt: OrderDirection
+  id: OrderDirection
+  lastModification: OrderDirection
+  name: OrderDirection
+}
+
+input SourceClientRelateToManyForCreateInput {
+  connect: [SourceClientWhereUniqueInput!]
+  create: [SourceClientCreateInput!]
+}
+
+input SourceClientRelateToManyForUpdateInput {
+  connect: [SourceClientWhereUniqueInput!]
+  create: [SourceClientCreateInput!]
+  disconnect: [SourceClientWhereUniqueInput!]
+  set: [SourceClientWhereUniqueInput!]
+}
+
+input SourceClientRelateToOneForCreateInput {
+  connect: SourceClientWhereUniqueInput
+  create: SourceClientCreateInput
+}
+
+input SourceClientRelateToOneForUpdateInput {
+  connect: SourceClientWhereUniqueInput
+  create: SourceClientCreateInput
+  disconnect: Boolean
+}
+
+input SourceClientUpdateArgs {
+  data: SourceClientUpdateInput!
+  where: SourceClientWhereUniqueInput!
+}
+
+input SourceClientUpdateInput {
+  createdAt: DateTime
+  lastModification: DateTime
+  name: String
+  parent: SourceClientRelateToOneForUpdateInput
+}
+
+input SourceClientWhereInput {
+  AND: [SourceClientWhereInput!]
+  NOT: [SourceClientWhereInput!]
+  OR: [SourceClientWhereInput!]
+  createdAt: DateTimeFilter
+  id: IDFilter
+  lastModification: DateTimeFilter
+  name: StringFilter
+  parent: SourceClientWhereInput
+}
+
+input SourceClientWhereUniqueInput {
+  id: ID
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+type Subscription {
+  createdAt: DateTime
+  desc: Subscription_desc_Document
+  id: ID!
+  label: String
+  language: String
+  lastModification: DateTime
+  name: String
+  period: Int
+  price: Int
+  statusView: String
+  trial: Boolean
+  unlimited: Boolean
+  visitCount: Int
+}
+
+input SubscriptionCreateInput {
+  createdAt: DateTime
+  desc: JSON
+  language: String
+  lastModification: DateTime
+  name: String
+  period: Int
+  price: Int
+  statusView: String
+  trial: Boolean
+  unlimited: Boolean
+  visitCount: Int
+}
+
+input SubscriptionManyRelationFilter {
+  every: SubscriptionWhereInput
+  none: SubscriptionWhereInput
+  some: SubscriptionWhereInput
+}
+
+input SubscriptionOrderByInput {
+  createdAt: OrderDirection
+  id: OrderDirection
+  language: OrderDirection
+  lastModification: OrderDirection
+  name: OrderDirection
+  period: OrderDirection
+  price: OrderDirection
+  statusView: OrderDirection
+  trial: OrderDirection
+  unlimited: OrderDirection
+  visitCount: OrderDirection
+}
+
+input SubscriptionRelateToManyForCreateInput {
+  connect: [SubscriptionWhereUniqueInput!]
+  create: [SubscriptionCreateInput!]
+}
+
+input SubscriptionRelateToManyForUpdateInput {
+  connect: [SubscriptionWhereUniqueInput!]
+  create: [SubscriptionCreateInput!]
+  disconnect: [SubscriptionWhereUniqueInput!]
+  set: [SubscriptionWhereUniqueInput!]
+}
+
+input SubscriptionRelateToOneForCreateInput {
+  connect: SubscriptionWhereUniqueInput
+  create: SubscriptionCreateInput
+}
+
+input SubscriptionRelateToOneForUpdateInput {
+  connect: SubscriptionWhereUniqueInput
+  create: SubscriptionCreateInput
+  disconnect: Boolean
+}
+
+input SubscriptionUpdateArgs {
+  data: SubscriptionUpdateInput!
+  where: SubscriptionWhereUniqueInput!
+}
+
+input SubscriptionUpdateInput {
+  createdAt: DateTime
+  desc: JSON
+  language: String
+  lastModification: DateTime
+  name: String
+  period: Int
+  price: Int
+  statusView: String
+  trial: Boolean
+  unlimited: Boolean
+  visitCount: Int
+}
+
+input SubscriptionWhereInput {
+  AND: [SubscriptionWhereInput!]
+  NOT: [SubscriptionWhereInput!]
+  OR: [SubscriptionWhereInput!]
+  createdAt: DateTimeFilter
+  id: IDFilter
+  language: StringFilter
+  lastModification: DateTimeFilter
+  name: StringFilter
+  period: IntNullableFilter
+  price: IntFilter
+  statusView: StringFilter
+  trial: BooleanFilter
+  unlimited: BooleanFilter
+  visitCount: IntFilter
+}
+
+input SubscriptionWhereUniqueInput {
+  id: ID
+}
+
+type Subscription_desc_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+type Tag {
+  createdAt: DateTime
+  id: ID!
+  language: String
+  lastModification: DateTime
+  name: String
+}
+
+input TagCreateInput {
+  createdAt: DateTime
+  language: String
+  lastModification: DateTime
+  name: String
+}
+
+input TagManyRelationFilter {
+  every: TagWhereInput
+  none: TagWhereInput
+  some: TagWhereInput
+}
+
+input TagOrderByInput {
+  createdAt: OrderDirection
+  id: OrderDirection
+  language: OrderDirection
+  lastModification: OrderDirection
+  name: OrderDirection
+}
+
+input TagRelateToManyForCreateInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateInput!]
+}
+
+input TagRelateToManyForUpdateInput {
+  connect: [TagWhereUniqueInput!]
+  create: [TagCreateInput!]
+  disconnect: [TagWhereUniqueInput!]
+  set: [TagWhereUniqueInput!]
+}
+
+input TagUpdateArgs {
+  data: TagUpdateInput!
+  where: TagWhereUniqueInput!
+}
+
+input TagUpdateInput {
+  createdAt: DateTime
+  language: String
+  lastModification: DateTime
+  name: String
+}
+
+input TagWhereInput {
+  AND: [TagWhereInput!]
+  NOT: [TagWhereInput!]
+  OR: [TagWhereInput!]
+  createdAt: DateTimeFilter
+  id: IDFilter
+  language: StringFilter
+  lastModification: DateTimeFilter
+  name: StringFilter
+}
+
+input TagWhereUniqueInput {
+  id: ID
+}
+
+input UnavailableTimesForRecordLessonData {
+  date: String!
+  teacherId: ID!
+}
+
+type UnavailableTimesForRecordLessonResponse {
+  endTime: String!
+  startTime: String!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+type User {
+  avatar: AvatarUser
+  cart: Cart
+  client: Client
+  comment: String
+  createdAt: DateTime
+  email: String
+  id: ID!
+  language: String
+  lastModification: DateTime
+  magicAuthIssuedAt: DateTime
+  magicAuthRedeemedAt: DateTime
+  magicAuthToken: PasswordState
+  magicLinkToken: String
+  manager: Manager
+  name: String
+  password: PasswordState
+  role: UserRoleType
+}
+
+type UserAuthenticationWithPasswordFailure {
+  message: String!
+}
+
+union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordFailure | UserAuthenticationWithPasswordSuccess
+
+type UserAuthenticationWithPasswordSuccess {
+  item: User!
+  sessionToken: String!
+}
+
+input UserCreateInput {
+  avatar: AvatarUserRelateToOneForCreateInput
+  cart: CartRelateToOneForCreateInput
+  client: ClientRelateToOneForCreateInput
+  comment: String
+  createdAt: DateTime
+  email: String
+  language: String
+  lastModification: DateTime
+  magicAuthIssuedAt: DateTime
+  magicAuthRedeemedAt: DateTime
+  magicAuthToken: String
+  magicLinkToken: String
+  manager: ManagerRelateToOneForCreateInput
+  name: String
+  password: String
+  role: UserRoleType
+}
+
+input UserManyRelationFilter {
+  every: UserWhereInput
+  none: UserWhereInput
+  some: UserWhereInput
+}
+
+input UserOrderByInput {
+  comment: OrderDirection
+  createdAt: OrderDirection
+  email: OrderDirection
+  id: OrderDirection
+  language: OrderDirection
+  lastModification: OrderDirection
+  magicAuthIssuedAt: OrderDirection
+  magicAuthRedeemedAt: OrderDirection
+  magicLinkToken: OrderDirection
+  name: OrderDirection
+  role: OrderDirection
+}
+
+input UserRelateToManyForCreateInput {
+  connect: [UserWhereUniqueInput!]
+  create: [UserCreateInput!]
+}
+
+input UserRelateToManyForUpdateInput {
+  connect: [UserWhereUniqueInput!]
+  create: [UserCreateInput!]
+  disconnect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+}
+
+input UserRelateToOneForCreateInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateInput
+}
+
+input UserRelateToOneForUpdateInput {
+  connect: UserWhereUniqueInput
+  create: UserCreateInput
+  disconnect: Boolean
+}
+
+enum UserRoleType {
+  admin
+  manager
+  student
+  teacher
+}
+
+input UserRoleTypeNullableFilter {
+  equals: UserRoleType
+  in: [UserRoleType!]
+  not: UserRoleTypeNullableFilter
+  notIn: [UserRoleType!]
+}
+
+type UserService {
+  createdAt: DateTime
+  id: ID!
+  lastModification: DateTime
+  manager: User
+  name: String
+  originalPrice: Int
+  price: Int
+  status: String
+  student: User
+}
+
+input UserServiceCreateInput {
+  createdAt: DateTime
+  lastModification: DateTime
+  manager: UserRelateToOneForCreateInput
+  name: String
+  originalPrice: Int
+  price: Int
+  status: String
+  student: UserRelateToOneForCreateInput
+}
+
+input UserServiceManyRelationFilter {
+  every: UserServiceWhereInput
+  none: UserServiceWhereInput
+  some: UserServiceWhereInput
+}
+
+input UserServiceOrderByInput {
+  createdAt: OrderDirection
+  id: OrderDirection
+  lastModification: OrderDirection
+  name: OrderDirection
+  originalPrice: OrderDirection
+  price: OrderDirection
+  status: OrderDirection
+}
+
+input UserServiceRelateToManyForCreateInput {
+  connect: [UserServiceWhereUniqueInput!]
+  create: [UserServiceCreateInput!]
+}
+
+input UserServiceRelateToManyForUpdateInput {
+  connect: [UserServiceWhereUniqueInput!]
+  create: [UserServiceCreateInput!]
+  disconnect: [UserServiceWhereUniqueInput!]
+  set: [UserServiceWhereUniqueInput!]
+}
+
+input UserServiceUpdateArgs {
+  data: UserServiceUpdateInput!
+  where: UserServiceWhereUniqueInput!
+}
+
+input UserServiceUpdateInput {
+  createdAt: DateTime
+  lastModification: DateTime
+  manager: UserRelateToOneForUpdateInput
+  name: String
+  originalPrice: Int
+  price: Int
+  status: String
+  student: UserRelateToOneForUpdateInput
+}
+
+input UserServiceWhereInput {
+  AND: [UserServiceWhereInput!]
+  NOT: [UserServiceWhereInput!]
+  OR: [UserServiceWhereInput!]
+  createdAt: DateTimeFilter
+  id: IDFilter
+  lastModification: DateTimeFilter
+  manager: UserWhereInput
+  name: StringFilter
+  originalPrice: IntNullableFilter
+  price: IntNullableFilter
+  status: StringFilter
+  student: UserWhereInput
+}
+
+input UserServiceWhereUniqueInput {
+  id: ID
+}
+
+type UserSubscription {
+  beginDate: DateTime
+  createdAt: DateTime
+  customVisited: Int
+  endDate: DateTime
+  id: ID!
+  lastCount: Int
+  lastModification: DateTime
+  lessons(orderBy: [LessonOrderByInput!]! = [], skip: Int! = 0, take: Int, where: LessonWhereInput! = {}): [Lesson!]
+  lessonsCount(where: LessonWhereInput! = {}): Int
+  manager: User
+  name: String
+  originalPrice: Int
+  price: Int
+  status: String
+  student: User
+  totalVisited: Int
+  trial: Boolean
+  unlimited: Boolean
+  visitCount: Int
+}
+
+input UserSubscriptionCreateInput {
+  beginDate: DateTime
+  createdAt: DateTime
+  customVisited: Int
+  endDate: DateTime
+  lastModification: DateTime
+  lessons: LessonRelateToManyForCreateInput
+  manager: UserRelateToOneForCreateInput
+  name: String
+  originalPrice: Int
+  price: Int
+  status: String
+  student: UserRelateToOneForCreateInput
+  trial: Boolean
+  unlimited: Boolean
+  visitCount: Int
+}
+
+input UserSubscriptionManyRelationFilter {
+  every: UserSubscriptionWhereInput
+  none: UserSubscriptionWhereInput
+  some: UserSubscriptionWhereInput
+}
+
+input UserSubscriptionOrderByInput {
+  beginDate: OrderDirection
+  createdAt: OrderDirection
+  customVisited: OrderDirection
+  endDate: OrderDirection
+  id: OrderDirection
+  lastModification: OrderDirection
+  name: OrderDirection
+  originalPrice: OrderDirection
+  price: OrderDirection
+  status: OrderDirection
+  trial: OrderDirection
+  unlimited: OrderDirection
+  visitCount: OrderDirection
+}
+
+input UserSubscriptionRelateToManyForCreateInput {
+  connect: [UserSubscriptionWhereUniqueInput!]
+  create: [UserSubscriptionCreateInput!]
+}
+
+input UserSubscriptionRelateToManyForUpdateInput {
+  connect: [UserSubscriptionWhereUniqueInput!]
+  create: [UserSubscriptionCreateInput!]
+  disconnect: [UserSubscriptionWhereUniqueInput!]
+  set: [UserSubscriptionWhereUniqueInput!]
+}
+
+input UserSubscriptionRelateToOneForCreateInput {
+  connect: UserSubscriptionWhereUniqueInput
+  create: UserSubscriptionCreateInput
+}
+
+input UserSubscriptionRelateToOneForUpdateInput {
+  connect: UserSubscriptionWhereUniqueInput
+  create: UserSubscriptionCreateInput
+  disconnect: Boolean
+}
+
+input UserSubscriptionUpdateArgs {
+  data: UserSubscriptionUpdateInput!
+  where: UserSubscriptionWhereUniqueInput!
+}
+
+input UserSubscriptionUpdateInput {
+  beginDate: DateTime
+  createdAt: DateTime
+  customVisited: Int
+  endDate: DateTime
+  lastModification: DateTime
+  lessons: LessonRelateToManyForUpdateInput
+  manager: UserRelateToOneForUpdateInput
+  name: String
+  originalPrice: Int
+  price: Int
+  status: String
+  student: UserRelateToOneForUpdateInput
+  trial: Boolean
+  unlimited: Boolean
+  visitCount: Int
+}
+
+input UserSubscriptionWhereInput {
+  AND: [UserSubscriptionWhereInput!]
+  NOT: [UserSubscriptionWhereInput!]
+  OR: [UserSubscriptionWhereInput!]
+  beginDate: DateTimeNullableFilter
+  createdAt: DateTimeFilter
+  customVisited: IntNullableFilter
+  endDate: DateTimeNullableFilter
+  id: IDFilter
+  lastModification: DateTimeFilter
+  lessons: LessonManyRelationFilter
+  manager: UserWhereInput
+  name: StringFilter
+  originalPrice: IntNullableFilter
+  price: IntNullableFilter
+  status: StringFilter
+  student: UserWhereInput
+  trial: BooleanFilter
+  unlimited: BooleanFilter
+  visitCount: IntNullableFilter
+}
+
+input UserSubscriptionWhereUniqueInput {
+  id: ID
+}
+
+input UserUpdateArgs {
+  data: UserUpdateInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserUpdateInput {
+  avatar: AvatarUserRelateToOneForUpdateInput
+  cart: CartRelateToOneForUpdateInput
+  client: ClientRelateToOneForUpdateInput
+  comment: String
+  createdAt: DateTime
+  email: String
+  language: String
+  lastModification: DateTime
+  magicAuthIssuedAt: DateTime
+  magicAuthRedeemedAt: DateTime
+  magicAuthToken: String
+  magicLinkToken: String
+  manager: ManagerRelateToOneForUpdateInput
+  name: String
+  password: String
+  role: UserRoleType
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  avatar: AvatarUserWhereInput
+  cart: CartWhereInput
+  client: ClientWhereInput
+  comment: StringFilter
+  createdAt: DateTimeFilter
+  email: StringFilter
+  id: IDFilter
+  language: StringFilter
+  lastModification: DateTimeFilter
+  magicAuthIssuedAt: DateTimeNullableFilter
+  magicAuthRedeemedAt: DateTimeNullableFilter
+  magicAuthToken: PasswordFilter
+  magicLinkToken: StringFilter
+  manager: ManagerWhereInput
+  name: StringFilter
+  password: PasswordFilter
+  role: UserRoleTypeNullableFilter
+}
+
+input UserWhereUniqueInput {
+  email: String
+  id: ID
+}
+
+type WorkTime {
+  createdAt: DateTime
+  dayOfWeek: Int
+  endTime: String
+  id: ID!
+  isDayOff: Boolean
+  lastModification: DateTime
+  manager: Manager
+  startTime: String
+}
+
+input WorkTimeCreateInput {
+  createdAt: DateTime
+  dayOfWeek: Int
+  endTime: String
+  isDayOff: Boolean
+  lastModification: DateTime
+  manager: ManagerRelateToOneForCreateInput
+  startTime: String
+}
+
+type WorkTimeCutoff {
+  createdAt: DateTime
+  endTime: DateTime
+  id: ID!
+  label: String
+  lastModification: DateTime
+  manager: Manager
+  startTime: DateTime
+  statusView: String
+}
+
+input WorkTimeCutoffCreateInput {
+  createdAt: DateTime
+  endTime: DateTime
+  lastModification: DateTime
+  manager: ManagerRelateToOneForCreateInput
+  startTime: DateTime
+  statusView: String
+}
+
+input WorkTimeCutoffManyRelationFilter {
+  every: WorkTimeCutoffWhereInput
+  none: WorkTimeCutoffWhereInput
+  some: WorkTimeCutoffWhereInput
+}
+
+input WorkTimeCutoffOrderByInput {
+  createdAt: OrderDirection
+  endTime: OrderDirection
+  id: OrderDirection
+  lastModification: OrderDirection
+  startTime: OrderDirection
+  statusView: OrderDirection
+}
+
+input WorkTimeCutoffRelateToManyForCreateInput {
+  connect: [WorkTimeCutoffWhereUniqueInput!]
+  create: [WorkTimeCutoffCreateInput!]
+}
+
+input WorkTimeCutoffRelateToManyForUpdateInput {
+  connect: [WorkTimeCutoffWhereUniqueInput!]
+  create: [WorkTimeCutoffCreateInput!]
+  disconnect: [WorkTimeCutoffWhereUniqueInput!]
+  set: [WorkTimeCutoffWhereUniqueInput!]
+}
+
+input WorkTimeCutoffUpdateArgs {
+  data: WorkTimeCutoffUpdateInput!
+  where: WorkTimeCutoffWhereUniqueInput!
+}
+
+input WorkTimeCutoffUpdateInput {
+  createdAt: DateTime
+  endTime: DateTime
+  lastModification: DateTime
+  manager: ManagerRelateToOneForUpdateInput
+  startTime: DateTime
+  statusView: String
+}
+
+input WorkTimeCutoffWhereInput {
+  AND: [WorkTimeCutoffWhereInput!]
+  NOT: [WorkTimeCutoffWhereInput!]
+  OR: [WorkTimeCutoffWhereInput!]
+  createdAt: DateTimeFilter
+  endTime: DateTimeFilter
+  id: IDFilter
+  lastModification: DateTimeFilter
+  manager: ManagerWhereInput
+  startTime: DateTimeFilter
+  statusView: StringFilter
+}
+
+input WorkTimeCutoffWhereUniqueInput {
+  id: ID
+}
+
+input WorkTimeManyRelationFilter {
+  every: WorkTimeWhereInput
+  none: WorkTimeWhereInput
+  some: WorkTimeWhereInput
+}
+
+input WorkTimeOrderByInput {
+  createdAt: OrderDirection
+  dayOfWeek: OrderDirection
+  endTime: OrderDirection
+  id: OrderDirection
+  isDayOff: OrderDirection
+  lastModification: OrderDirection
+  startTime: OrderDirection
+}
+
+input WorkTimeRelateToManyForCreateInput {
+  connect: [WorkTimeWhereUniqueInput!]
+  create: [WorkTimeCreateInput!]
+}
+
+input WorkTimeRelateToManyForUpdateInput {
+  connect: [WorkTimeWhereUniqueInput!]
+  create: [WorkTimeCreateInput!]
+  disconnect: [WorkTimeWhereUniqueInput!]
+  set: [WorkTimeWhereUniqueInput!]
+}
+
+input WorkTimeUpdateArgs {
+  data: WorkTimeUpdateInput!
+  where: WorkTimeWhereUniqueInput!
+}
+
+input WorkTimeUpdateInput {
+  createdAt: DateTime
+  dayOfWeek: Int
+  endTime: String
+  isDayOff: Boolean
+  lastModification: DateTime
+  manager: ManagerRelateToOneForUpdateInput
+  startTime: String
+}
+
+input WorkTimeWhereInput {
+  AND: [WorkTimeWhereInput!]
+  NOT: [WorkTimeWhereInput!]
+  OR: [WorkTimeWhereInput!]
+  createdAt: DateTimeFilter
+  dayOfWeek: IntFilter
+  endTime: StringFilter
+  id: IDFilter
+  isDayOff: BooleanFilter
+  lastModification: DateTimeFilter
+  manager: ManagerWhereInput
+  startTime: StringFilter
+}
+
+input WorkTimeWhereUniqueInput {
+  id: ID
+}

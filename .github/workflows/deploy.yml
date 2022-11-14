@@ -7,6 +7,7 @@ on:
 env:
   CR_REGISTRY: crpt6ftcvvm3ts7j581s
   BACKEND_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/crm-back:${{ github.sha }}
+  SITE_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/site:${{ github.sha }}
   NGINX_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/nginx:${{ github.sha }}
 
 jobs:
@@ -27,7 +28,35 @@ jobs:
           CR_REPOSITORY: crm-back
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
+          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG crm/Dockerfile .
+          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
+
+  build-site:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Create env file
+        run: |
+          touch .env
+          echo NEXT_PUBLIC_GA_ID=${{ secrets.NEXT_PUBLIC_GA_ID }} >> .env
+          echo FRONTEND_URL=${{ secrets.FRONTEND_URL }} >> .env
+          echo NEXT_PUBLIC_FRONTEND_URL=${{ secrets.FRONTEND_URL }} >> .env
+          cat .env
+
+      - name: Login to Yandex Cloud Container Registry
+        id: login-cr
+        uses: yc-actions/yc-cr-login@v1
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+
+      - name: Build, tag, and push image to Yandex Cloud Container Registry
+        env:
+          CR_REPOSITORY: site
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG site/Dockerfile .
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
 
   build-nginx:
@@ -50,50 +79,50 @@ jobs:
           docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG -f nginx/Dockerfile .
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
 
-  update-server:
-    needs: [ build-backend, build-nginx ]
-    runs-on: ubuntu-latest
-    environment:
-      name: prod
-      url: https://juststudy.online
-    steps:
-      - uses: actions/checkout@v3
-      - name: Deploy Serverless Container
-        id: deploy-sls-container
-        uses: yc-actions/yc-sls-container-deploy@v2
-        with:
-          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
-          container-name: just-study-crm
-          folder-id: b1g4s4k8tj83buc1hdoq
-          revision-service-account-id: aje38cdteqcfo55pe02h
-          revision-cores: 1
-          revision-memory: 512Mb
-          revision-core-fraction: 100
-          revision-concurrency: 8
-          revision-image-url: ${{ env.BACKEND_IMAGE }}
-          revision-execution-timeout: 100
-          revision-provisioned: 0
-          revision-env: |
-            NODE_ENV=production
-            DATABASE_URL=${{ secrets.DATABASE_URL }}
-            SESSION_SECRET=${{ secrets.SESSION_SECRET }}
-            FRONTEND_URL=${{ secrets.FRONTEND_URL }}
-            BACKEND_URL=${{ secrets.BACKEND_URL }}
-            PAYTURE_URL=${{ secrets.PAYTURE_URL }}
-            PAYTURE_TERMINAL_RUB=${{ secrets.PAYTURE_TERMINAL_RUB }}
-            PAYTURE_TERMINAL_USD=${{ secrets.PAYTURE_TERMINAL_USD }}
-            PAYTURE_TERMINAL_PASSWORD=${{ secrets.PAYTURE_TERMINAL_PASSWORD }}
-            NALOG_INN=${{ secrets.NALOG_INN }}
-            NALOG_PASSWORD=${{ secrets.NALOG_PASSWORD }}
-            S3_STORAGE_KEY_ID=${{ secrets.SERVICE_KEY_ID }}
-            S3_STORAGE_KEY_SECRET=${{ secrets.SERVICE_KEY_SECRET }}
-            YOOKASSA_ID=${{ secrets.YOOKASSA_ID }}
-            YOOKASSA_SECRET=${{ secrets.YOOKASSA_SECRET }}
-            AWS_ACCESS_KEY_ID=${{ secrets.SERVICE_KEY_ID }}
-            AWS_SECRET_ACCESS_KEY=${{ secrets.SERVICE_KEY_SECRET }}
+#  update-server:
+#    needs: [ build-backend, build-nginx ]
+#    runs-on: ubuntu-latest
+#    environment:
+#      name: prod
+#      url: https://juststudy.online
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Deploy Serverless Container
+#        id: deploy-sls-container
+#        uses: yc-actions/yc-sls-container-deploy@v2
+#        with:
+#          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+#          container-name: just-study-crm
+#          folder-id: b1g4s4k8tj83buc1hdoq
+#          revision-service-account-id: aje38cdteqcfo55pe02h
+#          revision-cores: 1
+#          revision-memory: 512Mb
+#          revision-core-fraction: 100
+#          revision-concurrency: 8
+#          revision-image-url: ${{ env.BACKEND_IMAGE }}
+#          revision-execution-timeout: 100
+#          revision-provisioned: 0
+#          revision-env: |
+#            NODE_ENV=production
+#            DATABASE_URL=${{ secrets.DATABASE_URL }}
+#            SESSION_SECRET=${{ secrets.SESSION_SECRET }}
+#            FRONTEND_URL=${{ secrets.FRONTEND_URL }}
+#            BACKEND_URL=${{ secrets.BACKEND_URL }}
+#            PAYTURE_URL=${{ secrets.PAYTURE_URL }}
+#            PAYTURE_TERMINAL_RUB=${{ secrets.PAYTURE_TERMINAL_RUB }}
+#            PAYTURE_TERMINAL_USD=${{ secrets.PAYTURE_TERMINAL_USD }}
+#            PAYTURE_TERMINAL_PASSWORD=${{ secrets.PAYTURE_TERMINAL_PASSWORD }}
+#            NALOG_INN=${{ secrets.NALOG_INN }}
+#            NALOG_PASSWORD=${{ secrets.NALOG_PASSWORD }}
+#            S3_STORAGE_KEY_ID=${{ secrets.SERVICE_KEY_ID }}
+#            S3_STORAGE_KEY_SECRET=${{ secrets.SERVICE_KEY_SECRET }}
+#            YOOKASSA_ID=${{ secrets.YOOKASSA_ID }}
+#            YOOKASSA_SECRET=${{ secrets.YOOKASSA_SECRET }}
+#            AWS_ACCESS_KEY_ID=${{ secrets.SERVICE_KEY_ID }}
+#            AWS_SECRET_ACCESS_KEY=${{ secrets.SERVICE_KEY_SECRET }}
 
   update-coi:
-    needs: [ build-backend, build-nginx ]
+    needs: [ build-backend, build-site, build-nginx ]
     runs-on: ubuntu-latest
     environment:
       name: prod
@@ -107,6 +136,7 @@ jobs:
         uses: yc-actions/yc-coi-deploy@v1.0.1
         env:
           BACKEND_IMAGE: ${{ env.BACKEND_IMAGE }}
+          SITE_IMAGE: ${{ env.SITE_IMAGE }}
           NGINX_IMAGE: ${{ env.NGINX_IMAGE }}
           SSH_KEY: ${{ secrets.SSH_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}

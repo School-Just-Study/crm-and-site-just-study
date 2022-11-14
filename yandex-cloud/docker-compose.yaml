@@ -13,6 +13,12 @@ services:
       NGINX_CERT_KEY: {{ env.NGINX_CERT_KEY }}
     depends_on:
       - backend
+      - site
+
+  site:
+    container_name: site
+    image: {{ env.SITE_IMAGE }}
+    restart: always
 
   backend:
     container_name: backend
