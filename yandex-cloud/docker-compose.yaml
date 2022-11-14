@@ -2,35 +2,35 @@ version: '3.7'
 
 services:
   nginx:
-    image: { { env.NGINX_IMAGE } }
+    image: {{ env.NGINX_IMAGE }}
     ports:
       - '80:80'
       - '443:443'
     restart: always
     environment:
-      NGINX_CERT: { { env.NGINX_CERT } }
-      NGINX_CERT_KEY: { { env.NGINX_CERT_KEY } }
+      NGINX_CERT: {{ env.NGINX_CERT }}
+      NGINX_CERT_KEY: {{ env.NGINX_CERT_KEY }}
     depends_on:
       - backend
 
   backend:
-    image: { { env.BACKEND_IMAGE } }
+    image: {{ env.BACKEND_IMAGE }}
     restart: always
     environment:
       NODE_ENV: production
-      DATABASE_URL: { { env.DATABASE_URL } }
-      SESSION_SECRET: { { env.SESSION_SECRET } }
-      FRONTEND_URL: { { env.FRONTEND_URL } }
-      BACKEND_URL: { { env.BACKEND_URL } }
-      PAYTURE_URL: { { env.PAYTURE_URL } }
-      PAYTURE_TERMINAL_RUB: { { env.PAYTURE_TERMINAL_RUB } }
-      PAYTURE_TERMINAL_USD: { { env.PAYTURE_TERMINAL_USD } }
-      PAYTURE_TERMINAL_PASSWORD: { { env.PAYTURE_TERMINAL_PASSWORD } }
-      NALOG_INN: { { env.NALOG_INN } }
-      NALOG_PASSWORD: { { env.NALOG_PASSWORD } }
-      S3_STORAGE_KEY_ID: { { env.SERVICE_KEY_ID } }
-      S3_STORAGE_KEY_SECRET: { { env.SERVICE_KEY_SECRET } }
-      YOOKASSA_ID: { { env.YOOKASSA_ID } }
-      YOOKASSA_SECRET: { { env.YOOKASSA_SECRET } }
-      AWS_ACCESS_KEY_ID: { { env.SERVICE_KEY_ID } }
-      AWS_SECRET_ACCESS_KEY: { { env.SERVICE_KEY_SECRET } }
+      DATABASE_URL: {{ env.DATABASE_URL }}
+      SESSION_SECRET: {{ env.SESSION_SECRET }}
+      FRONTEND_URL: {{ env.FRONTEND_URL }}
+      BACKEND_URL: {{ env.BACKEND_URL }}
+      PAYTURE_URL: {{ env.PAYTURE_URL }}
+      PAYTURE_TERMINAL_RUB: {{ env.PAYTURE_TERMINAL_RUB }}
+      PAYTURE_TERMINAL_USD: {{ env.PAYTURE_TERMINAL_USD }}
+      PAYTURE_TERMINAL_PASSWORD: {{ env.PAYTURE_TERMINAL_PASSWORD }}
+      NALOG_INN: {{ env.NALOG_INN }}
+      NALOG_PASSWORD: {{ env.NALOG_PASSWORD }}
+      S3_STORAGE_KEY_ID: {{ env.SERVICE_KEY_ID }}
+      S3_STORAGE_KEY_SECRET: {{ env.SERVICE_KEY_SECRET }}
+      YOOKASSA_ID: {{ env.YOOKASSA_ID }}
+      YOOKASSA_SECRET: {{ env.YOOKASSA_SECRET }}
+      AWS_ACCESS_KEY_ID: {{ env.SERVICE_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: {{ env.SERVICE_KEY_SECRET }}
