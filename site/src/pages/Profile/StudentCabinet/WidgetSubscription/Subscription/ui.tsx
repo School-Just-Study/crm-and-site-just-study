@@ -20,7 +20,7 @@ import { formatShortDate } from '@shared/dateTime';
 import CloseIcon from '@mui/icons-material/Close';
 import { CardHovered } from '@shared/ui/CardHovered';
 import { LessonItem } from './LessonItem';
-import { InfoIcon } from '@keystone-ui/icons';
+import InfoIcon from '@mui/icons-material/Info';
 
 export const Subscription: FC<{ subscription: UserSubscription }> = ({ subscription }) => {
     const [open, setOpen] = useState(false);
