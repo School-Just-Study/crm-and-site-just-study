@@ -1,7 +1,12 @@
 FROM nginx:alpine
 
-COPY ./nginx/nginx.yc.conf /etc/nginx/conf.d/default.conf
-COPY ./nginx/start-nginx.sh /start-nginx.sh
+RUN rm -f /etc/nginx/conf.d/default.conf
+
+COPY /nginx/nginx.conf /etc/nginx/nginx.conf
+COPY /nginx/crm.conf /etc/nginx/conf.d/crm.conf
+COPY /nginx/site.conf /etc/nginx/conf.d/site.conf
+
+COPY /nginx/start-nginx.sh /start-nginx.sh
 
 RUN chmod +x /start-nginx.sh
 
