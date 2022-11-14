@@ -1,7 +1,7 @@
 # deps
 FROM node:18 AS deps
 WORKDIR /app
-COPY ./site/package.json yarn.lock ./
+COPY ./site/package.json ./site/yarn.lock ./
 
 ENV PUPPETEER_SKIP_DOWNLOAD 1
 ENV NEXT_TELEMETRY_DISABLED 1
