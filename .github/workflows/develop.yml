@@ -16,6 +16,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Install and Build
         working-directory: ./crm
       - uses: actions/setup-node@v3
         with:
@@ -30,6 +31,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Install and Build
         working-directory: ./site
       - uses: actions/setup-node@v3
         with:
