@@ -7,9 +7,6 @@ services:
       - '80:80'
       - '443:443'
     restart: always
-    environment:
-      NGINX_CERT: {{ env.NGINX_CERT }}
-      NGINX_CERT_KEY: {{ env.NGINX_CERT_KEY }}
     depends_on:
       - backend
 
