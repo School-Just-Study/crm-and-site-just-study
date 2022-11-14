@@ -11,27 +11,27 @@ on:
 
 jobs:
   test-crm:
-    name: Validation
+    name: Build CRM
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          context: ./crm/
           cache: yarn
           node-version: 18
+      - run: cd ./crm
       - run: yarn install --frozen-lockfile
       - run: yarn build --ignore-scripts
 
   test-site:
-    name: Validation
+    name: Build Site
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          context: ./site/
           cache: yarn
           node-version: 18
+      - run: cd ./site
       - run: yarn install --frozen-lockfile
       - run: yarn build --ignore-scripts
