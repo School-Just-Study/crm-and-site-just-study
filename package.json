@@ -1,6 +1,6 @@
 {
   "name": "just-study",
-  "version": "1.0.0",
+  "version": "2.19.0",
   "private": true,
   "devDependencies": {
     "@semantic-release/commit-analyzer": "9.0.2",
