@@ -1,6 +1,6 @@
 {
   "name": "nextjs-with-typescript",
-  "version": "2.18.13",
+  "version": "2.18.14",
   "private": true,
   "scripts": {
     "dev": "SKIP_NALOG=true TEST_EMAIL=true keystone dev",
