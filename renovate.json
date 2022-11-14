@@ -12,6 +12,10 @@
         "^@keystone-6/"
       ],
       "groupName": "@keystonejs"
+    },
+    {
+      "matchPackagePatterns": ["^@mui"],
+      "groupName": "@mui"
     }
   ]
 }
