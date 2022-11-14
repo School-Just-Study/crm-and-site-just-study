@@ -119,12 +119,10 @@ jobs:
           PAYTURE_TERMINAL_PASSWORD: ${{ secrets.PAYTURE_TERMINAL_PASSWORD }}
           NALOG_INN: ${{ secrets.NALOG_INN }}
           NALOG_PASSWORD: ${{ secrets.NALOG_PASSWORD }}
-          S3_STORAGE_KEY_ID: ${{ secrets.SERVICE_KEY_ID }}
-          S3_STORAGE_KEY_SECRET: ${{ secrets.SERVICE_KEY_SECRET }}
           YOOKASSA_ID: ${{ secrets.YOOKASSA_ID }}
           YOOKASSA_SECRET: ${{ secrets.YOOKASSA_SECRET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.SERVICE_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.SERVICE_KEY_SECRET }}
+          SERVICE_KEY_ID: ${{ secrets.SERVICE_KEY_ID }}
+          SERVICE_KEY_SECRET: ${{ secrets.SERVICE_KEY_SECRET }}
           NGINX_CERT: ${{ secrets.NGINX_CERT }}
           NGINX_CERT_KEY: ${{ secrets.NGINX_CERT_KEY }}
         with:
