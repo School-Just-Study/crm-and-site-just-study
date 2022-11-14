@@ -15,11 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - run: cd ./crm
+
       - uses: actions/setup-node@v3
         with:
           cache: yarn
           node-version: 18
-      - run: cd ./crm
       - run: yarn install --frozen-lockfile
       - run: yarn build --ignore-scripts
 
@@ -28,10 +29,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - run: cd ./site
+
       - uses: actions/setup-node@v3
         with:
           cache: yarn
           node-version: 18
-      - run: cd ./site
       - run: yarn install --frozen-lockfile
       - run: yarn build --ignore-scripts
