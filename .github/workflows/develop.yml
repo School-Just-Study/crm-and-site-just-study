@@ -17,8 +17,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install and Build
-        working-directory: ./crm
       - uses: actions/setup-node@v3
+        working-directory: ./crm
         with:
           cache: yarn
           node-version: 18
@@ -32,8 +32,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install and Build
-        working-directory: ./site
       - uses: actions/setup-node@v3
+        working-directory: ./site
         with:
           cache: yarn
           node-version: 18
