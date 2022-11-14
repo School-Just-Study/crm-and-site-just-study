@@ -13,11 +13,12 @@ jobs:
   test-crm:
     name: Build CRM
     runs-on: ubuntu-latest
+    working-directory: ./crm
+
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          path: /crm
           cache: yarn
           node-version: 18
       - run: yarn install --frozen-lockfile
@@ -26,11 +27,12 @@ jobs:
   test-site:
     name: Build Site
     runs-on: ubuntu-latest
+    working-directory: ./site
+
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          path: /site
           cache: yarn
           node-version: 18
       - run: yarn install --frozen-lockfile
