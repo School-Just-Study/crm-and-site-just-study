@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./crm
+        working-directory: crm
 
     steps:
       - uses: actions/checkout@v3
@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./site
+        working-directory: site
 
     steps:
       - uses: actions/checkout@v3
