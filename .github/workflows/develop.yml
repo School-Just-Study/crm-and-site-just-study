@@ -10,14 +10,36 @@ on:
     branches: [ "develop" ]
 
 jobs:
-  tests:
-    name: Validation
+  test-crm:
+    name: Build CRM
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: crm
+
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           cache: yarn
           node-version: 18
+          cache-dependency-path: '**/yarn.lock.json'
+      - run: yarn install --frozen-lockfile
+      - run: yarn build --ignore-scripts
+
+  test-site:
+    name: Build Site
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: yarn
+          node-version: 18
+          cache-dependency-path: '**/yarn.lock.json'
       - run: yarn install --frozen-lockfile
       - run: yarn build --ignore-scripts
