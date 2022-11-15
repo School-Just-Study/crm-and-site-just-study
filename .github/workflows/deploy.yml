@@ -13,6 +13,9 @@ env:
 jobs:
   build-backend:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: crm
 
     steps:
       - uses: actions/checkout@v3
@@ -28,11 +31,14 @@ jobs:
           CR_REPOSITORY: crm-back
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG -f crm/Dockerfile .
+          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
 
   build-site:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
     environment:
       name: prod
 
@@ -41,11 +47,11 @@ jobs:
 
       - name: Create env file
         run: |
-          touch ./site/.env
-          echo NEXT_PUBLIC_GA_ID=${{ secrets.NEXT_PUBLIC_GA_ID }} >> ./site/.env
-          echo FRONTEND_URL=${{ secrets.FRONTEND_URL }} >> ./site/.env
-          echo NEXT_PUBLIC_FRONTEND_URL=${{ secrets.FRONTEND_URL }} >> ./site/.env
-          cat ./site/.env
+          touch .env
+          echo NEXT_PUBLIC_GA_ID=${{ secrets.NEXT_PUBLIC_GA_ID }} >> .env
+          echo FRONTEND_URL=${{ secrets.FRONTEND_URL }} >> .env
+          echo NEXT_PUBLIC_FRONTEND_URL=${{ secrets.FRONTEND_URL }} >> .env
+          cat .env
 
       - name: Login to Yandex Cloud Container Registry
         id: login-cr
@@ -58,11 +64,14 @@ jobs:
           CR_REPOSITORY: site
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG -f site/Dockerfile .
+          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
 
   build-nginx:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: nginx
 
     steps:
       - uses: actions/checkout@v3
@@ -78,7 +87,7 @@ jobs:
           CR_REPOSITORY: nginx
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG -f nginx/Dockerfile .
+          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
 
   update-coi:

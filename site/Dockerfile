@@ -1,7 +1,7 @@
 # deps
 FROM node:18 AS deps
 WORKDIR /app
-COPY ./site/package.json ./site/yarn.lock ./
+COPY package.json yarn.lock ./
 
 ENV PUPPETEER_SKIP_DOWNLOAD 1
 ENV NEXT_TELEMETRY_DISABLED 1
@@ -10,7 +10,7 @@ RUN yarn install --frozen-lockfile
 # build
 FROM node:18 AS builder
 WORKDIR /app
-COPY ./site/ .
+COPY . .
 COPY --from=deps /app/node_modules ./node_modules
 RUN yarn build
 
