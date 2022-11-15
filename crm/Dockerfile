@@ -5,7 +5,7 @@ RUN yarn install --frozen-lockfile
 
 FROM node:18 as builder
 WORKDIR /app
-COPY ./crm .
+COPY . .
 COPY --from=dependencies /app/node_modules ./node_modules
 ENV NODE_ENV production
 RUN yarn build
