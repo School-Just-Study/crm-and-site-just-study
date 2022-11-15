@@ -1,6 +1,6 @@
 FROM node:18 as dependencies
 WORKDIR /app
-COPY ./crm/package.json ./crm/yarn.lock ./
+COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
 FROM node:18 as builder
