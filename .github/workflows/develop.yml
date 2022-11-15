@@ -30,16 +30,27 @@ jobs:
   test-site:
     name: Build Site
     runs-on: ubuntu-latest
+    environment:
+      name: prod
     defaults:
       run:
         working-directory: site
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Create env file
+        run: |
+          touch ./site/.env
+          echo NEXT_PUBLIC_GA_ID=${{ secrets.NEXT_PUBLIC_GA_ID }} >> ./site/.env
+          echo FRONTEND_URL=${{ secrets.FRONTEND_URL }} >> ./site/.env
+          echo NEXT_PUBLIC_FRONTEND_URL=${{ secrets.FRONTEND_URL }} >> ./site/.env
+          cat ./site/.env
+
       - uses: actions/setup-node@v3
         with:
           cache: yarn
           node-version: 18
           cache-dependency-path: '**/yarn.lock'
       - run: yarn install --frozen-lockfile
-      - run: yarn build:dev --ignore-scripts
+      - run: yarn build --ignore-scripts
