@@ -6,6 +6,7 @@
     "scripts": {
         "dev-site": "next dev",
         "build": "next build && yarn run postbuild",
+        "build:dev": "DISABLE_BUILD_STATIC_PATHS=true yarn build",
         "postbuild": "next-sitemap --config=next-sitemap.config.js",
         "start": "next start -p 80",
         "lint": "next lint",
