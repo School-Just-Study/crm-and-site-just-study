@@ -1,19 +1,21 @@
-import { SEO } from "@src/shared/components/SEO/SEO";
-import { Box, Container, Stack } from "@mui/material";
-import * as React from "react";
-import { useTheme } from "@mui/material/styles";
-import { useRouter } from "next/router";
-import { transition } from "@src/shared/lib/transition";
-import { cartPage } from "@translations/cartPage";
-import { MainLayout } from "@src/layouts/MainLayout";
-import { Cart } from "@shared/components/Cart";
-import dynamic from "next/dynamic";
-import { NextPage } from "next";
-import { SpinnerWrapper } from "@shared/ui/SpinnerWrapper";
-import { Orders } from "@shared/components/Orders/Orders";
-import { MakingOrder } from "@shared/components/Cart/MakingOrder";
-import { useUnit } from "effector-react";
-import { $user, getUserFx } from "@shared/storage/user";
+import { SEO } from '@shared/components/SEO/SEO';
+import { Box, Container, Stack } from '@mui/material';
+import * as React from 'react';
+import { useTheme } from '@mui/material/styles';
+import { useRouter } from 'next/router';
+import { transition } from '@src/shared/lib/transition';
+import { cartPage } from '@translations/cartPage';
+import { MainLayout } from '@src/layouts/MainLayout';
+import { Cart } from '@src/pages/Checkout/Cart';
+import dynamic from 'next/dynamic';
+import { NextPage } from 'next';
+import { SpinnerWrapper } from '@shared/ui/SpinnerWrapper';
+import { Orders } from '@shared/components/Orders/Orders';
+import { MakingOrder } from '@src/pages/Checkout/Cart/MakingOrder';
+import { useGate, useUnit } from 'effector-react';
+import { $user, getUserFx } from '@shared/storage/user';
+import '@src/pages/Checkout/Cart/model/init';
+import { CartGate } from '@src/pages/Checkout/Cart/model';
 
 const Checkout: NextPage = () => {
     const theme = useTheme();
@@ -22,6 +24,7 @@ const Checkout: NextPage = () => {
 
     const user = useUnit($user);
     const loading = useUnit(getUserFx.pending);
+    useGate(CartGate);
 
     return (
         <MainLayout>

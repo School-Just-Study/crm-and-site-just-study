@@ -2,12 +2,12 @@ import * as React from 'react';
 import { FC } from 'react';
 import { Box, Stack } from '@mui/material';
 import { TextFieldElement } from 'react-hook-form-mui';
-import { transition } from '@src/shared/lib/transition';
+import { transition } from '@shared/lib/transition';
 import { formLeadsList } from '@translations/formLeadsList';
 import { useRouter } from 'next/router';
 import { useFormContext } from 'react-hook-form';
 import { PhoneField } from '@shared/fields/PhoneField';
-import { ICartForm } from '@shared/components/Cart/types';
+import { ICartForm } from '@src/pages/Checkout/Cart/types';
 
 export const ContactForm: FC = () => {
     const { locale } = useRouter();

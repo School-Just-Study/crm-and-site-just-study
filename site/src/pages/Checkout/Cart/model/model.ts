@@ -1,5 +1,6 @@
-import { createEvent, createStore } from "effector";
-import { persist } from "effector-storage/local";
+import { createEvent, createStore } from 'effector';
+import { persist } from 'effector-storage/local';
+import { createGate } from 'effector-react';
 
 export interface ICartItem {
     subscriptionId: string;
@@ -14,3 +15,5 @@ export const $cartItems = createStore<ICartItem[] | []>([])
     .reset(resetCartItem);
 
 persist({ store: $cartItems, key: 'cartItems' });
+
+export const CartGate = createGate();

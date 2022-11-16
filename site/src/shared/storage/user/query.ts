@@ -52,12 +52,14 @@ export const CURRENT_USER_QUERY = gql`
                     items {
                         id
                         subscription {
+                            id
                             name
                             desc {
                                 document(hydrateRelationships: true)
                             }
                         }
                         service {
+                            id
                             name
                             description {
                                 document(hydrateRelationships: true)

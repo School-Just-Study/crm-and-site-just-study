@@ -11,11 +11,11 @@ import { FormContainer } from 'react-hook-form-mui';
 import { convertMoney } from '@shared/lib/convertMoney';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { ICartForm } from '@shared/components/Cart/types';
 import { transition } from '@shared/lib/transition';
 import { cartPage } from '@translations/cartPage';
-import { CartItem } from '@shared/components/Cart/CartItem';
 import Routes from '@src/routes';
+import { ICartForm } from '@src/pages/Checkout/Cart/types';
+import { CartItem } from '@src/pages/Checkout/Cart/CartItem';
 
 export const WidgetCart = () => {
     const user = useUnit($user);

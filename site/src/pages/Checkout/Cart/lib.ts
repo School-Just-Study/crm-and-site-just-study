@@ -1,5 +1,5 @@
-import { ICartForm } from "@shared/components/Cart/types";
-import { CartData } from "@src/shared/lib/apollo/types";
+import { ICartForm } from '@src/pages/Checkout/Cart/types';
+import { CartData } from '@shared/lib/apollo/types';
 
 export const formatForm = (data: ICartForm): CartData => {
     delete data.agree;
