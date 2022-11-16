@@ -2,6 +2,11 @@
   "name": "just-study",
   "version": "2.19.7",
   "private": true,
+  "scripts": {
+    "run-dev-crm": "cd crm && yarn dev-crm",
+    "run-dev-site": "cd site && yarn dev-site",
+    "run-all-dev": "yarn run-dev-crm & yarn run-dev-site"
+  },
   "devDependencies": {
     "@semantic-release/commit-analyzer": "9.0.2",
     "@semantic-release/git": "10.0.1",

@@ -3,7 +3,7 @@ export interface ICartForm {
     secondName: string;
     phone: number;
     email: string;
-    agree?: [];
+    agree?: string[];
     currency: string;
     language: string;
 }

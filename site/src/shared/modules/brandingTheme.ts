@@ -470,21 +470,6 @@ export function getThemedComponents(theme: Theme): { components: Theme['componen
                             textDecorationLine: 'none'
                         }
                     },
-                    outlined: {
-                        display: 'block',
-                        borderColor:
-                            theme.palette.mode === 'dark' ? theme.palette.primaryDark[500] : theme.palette.grey[200],
-                        ...(theme.palette.mode === 'dark' && {
-                            backgroundColor: theme.palette.primaryDark[700]
-                        }),
-                        'a&, button&': {
-                            '&:hover': {
-                                boxShadow: `0px 4px 20px ${
-                                    theme.palette.mode === 'dark' ? 'rgba(0, 0, 0, 0.5)' : 'rgba(170, 180, 190, 0.3)'
-                                }`
-                            }
-                        }
-                    }
                 }
             },
             MuiCard: {

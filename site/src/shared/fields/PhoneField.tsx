@@ -12,6 +12,10 @@ const Phone = styled(PhoneInput)`
     .special-label {
         background: ${({ theme }) => theme.palette.background.paper} !important;
     }
+
+    .country-list {
+        background: ${({ theme }) => theme.palette.background.paper} !important;
+    }
 `;
 
 export function PhoneField<TFieldValues extends FieldValues>(props: TPhoneField<TFieldValues>) {

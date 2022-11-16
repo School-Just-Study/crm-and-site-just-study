@@ -1,5 +1,5 @@
-import { createEvent, createStore } from "effector";
-import { createGate } from "effector-react";
+import { createEvent, createStore } from 'effector';
+import { createGate } from 'effector-react';
 
 export const setActiveStep = createEvent<number>();
 export const nextActiveStep = createEvent();

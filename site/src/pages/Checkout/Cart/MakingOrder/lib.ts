@@ -1,4 +1,4 @@
-import { IAuthCartData } from "@shared/components/Cart/MakingOrder/types";
+import { IAuthCartData } from '@src/pages/Checkout/Cart/MakingOrder/types';
 
 export const formatForm = (data: IAuthCartData): IAuthCartData => {
     return {

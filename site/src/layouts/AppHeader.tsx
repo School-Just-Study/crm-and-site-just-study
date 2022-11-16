@@ -1,5 +1,4 @@
 import { alpha, styled } from '@mui/material/styles';
-import GlobalStyles from '@mui/material/GlobalStyles';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
@@ -12,6 +11,10 @@ import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
 import { Direction } from '@src/shared/lib/apollo/types';
 import { QUERY_DIRECTIONS_NAVBAR } from '@src/shared/lib/apollo/directionNavBar';
+import { useUnit } from 'effector-react';
+import { $showCartIcon } from '@shared/storage/user';
+import { Button } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const Header = styled('header')(({ theme }) => ({
     position: 'sticky',
@@ -38,16 +41,10 @@ export default function AppHeader() {
         variables: { lang: locale },
         fetchPolicy: 'cache-and-network'
     });
+    const userHaveCartItems = useUnit($showCartIcon);
 
     return (
         <Header>
-            <GlobalStyles
-                styles={{
-                    ':root': {
-                        '--MuiDocs-header-height': `${HEIGHT}px`
-                    }
-                }}
-            />
             <Container maxWidth="xl" sx={{ display: 'flex', alignItems: 'center', minHeight: HEIGHT }}>
                 <SvgJustStudyLogo
                     width={30}
@@ -63,6 +60,14 @@ export default function AppHeader() {
                 </Box>
                 <Box sx={{ ml: 'auto' }} />
                 <Stack direction="row" spacing={1}>
+                    {userHaveCartItems && (
+                        <Button
+                            variant="outlined"
+                            startIcon={<ShoppingCartIcon />}
+                            onClick={() => push(routes.checkout)}>
+                            Корзина
+                        </Button>
+                    )}
                     <ThemeModeToggle />
                 </Stack>
             </Container>
