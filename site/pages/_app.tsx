@@ -55,6 +55,7 @@ function MyApp(props: MyAppProps) {
     if (typeof window !== 'undefined') clientScope = scope;
 
     useGate(CheckAuthGate);
+
     useEffect(() => {
         if (query.setEmail) setEmailAuth(query.setEmail as string);
     }, [query.setEmail]);

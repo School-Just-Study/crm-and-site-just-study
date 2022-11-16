@@ -5,7 +5,7 @@ import { PaymentResponse } from '@shared/lib/apollo/types';
 import { useSnackbar } from 'notistack';
 import { useEffect } from 'react';
 import { SpinnerWrapper } from '@shared/ui/SpinnerWrapper';
-import { MUTATION_CART } from '@shared/components/Cart/graphql';
+import { MUTATION_CART } from '@src/pages/Checkout/Cart/graphql';
 
 const CheckoutPage: NextPage = () => {
     const { query, push } = useRouter();
