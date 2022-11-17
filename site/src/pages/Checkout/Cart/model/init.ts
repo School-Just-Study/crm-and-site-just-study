@@ -6,7 +6,6 @@ import { CartItemCreateInput } from '@shared/lib/apollo/types';
 
 sample({
     clock: authForCartFx.doneData,
-    filter: ({ data }) => Boolean(data?.authCart),
     fn: ({ data }) => data!.authCart.email,
     target: setEmailAuth
 });
