@@ -10,7 +10,7 @@ export const setAuthToken = createEvent<string>();
 export const updateDataUser = createEvent();
 
 export const $user = createStore<User | null>(null).reset(userReset);
-export const $isUserAuthorized = combine($user, (user) => user !== null);
+export const $isUserAuthorized = $user.map((user) => user !== null);
 
 export const setEmailAuth = createEvent<string>();
 

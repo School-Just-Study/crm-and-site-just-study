@@ -2,8 +2,8 @@ import { PaymentStatus } from '../enums/payment-status.enum';
 import { ListHooks } from '@keystone-6/core/dist/declarations/src/types/config/hooks';
 import { Lists } from '.keystone/types';
 import {
-    notifySuccessfulPaymentForClient,
-    notifySuccessfulPaymentForManagers
+  notifySuccessfulPaymentForClient,
+  notifySuccessfulPaymentForManagers
 } from '../notifications/successfulPayment';
 import { Currency } from '../enums/currency.enum';
 import { reConvertMoney } from './convertMoney';
@@ -12,7 +12,6 @@ import { ICreateRefund } from '@a2seven/yoo-checkout';
 import { yooKassa } from '../utils/yookassa';
 import { v4 as uuid } from 'uuid';
 import { addRecent, cancelRecent } from '../utils/nalogApi';
-import { Roles } from '../enums/roles.enum';
 
 const { paytureEnRefund } = require("../utils/paytureEn");
 
@@ -56,7 +55,7 @@ export const handleReceiptToNalog: ListHooks<Lists.Payment.TypeInfo>["resolveInp
         data: { status: OrderStatus.Processing },
       });
 
-      if (status === PaymentStatus.Cancelled && context.session.data.role === Roles.Admin) {
+      if (status === PaymentStatus.Cancelled) {
         if (item.currency === Currency.RUB && item.sessionId) {
           const createRefundPayload: ICreateRefund = {
             payment_id: item.sessionId,
