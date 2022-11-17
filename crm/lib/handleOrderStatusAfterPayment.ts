@@ -28,5 +28,5 @@ export const handleOrderStatusAfterPayment: ListHooks<Lists.Payment.TypeInfo>['a
             }
         }
 
-        console.info('update payment', context.session.itemId, resolvedData);
+        console.info('update payment', context?.session?.itemId || "robot", resolvedData);
     };

@@ -14,12 +14,16 @@ export const checkPayment = async (
   { paymentId }: Arguments,
   context: KeystoneContext
 ) => {
-  let payment = await context.query.Payment.findOne({
+  const payment = await context.query.Payment.findOne({
     where: { id: paymentId },
-    query: `id sessionId currency order { id leftPayments }`,
+    query: `id sessionId status currency order { id leftPayments }`,
   });
   if (!payment) {
     throw new Error("Sorry! The payment does not exist!");
+  }
+
+  if (payment.status !== PaymentStatus.Created) {
+    return payment;
   }
 
   let res = { status: false };

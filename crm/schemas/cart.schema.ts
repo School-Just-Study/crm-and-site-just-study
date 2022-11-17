@@ -4,7 +4,7 @@ import { lastModification } from '../fields/lastModification';
 import { Lists } from '.keystone/types';
 import { currency } from '../fields/currency';
 import { FRONTEND_URL } from '../config';
-import { convertMoney } from '../lib/convertMoney';
+import { Roles } from '../enums/roles.enum';
 
 export const Cart = list({
     ui: {
@@ -79,11 +79,10 @@ export const Cart = list({
                         query: `price`
                     });
                     if (cartItems) {
-                        const amount = cartItems.reduce(
+                        return cartItems.reduce(
                             (tally, item) => tally + item.price,
                             0
                         );
-                        return convertMoney(amount, item.currency);
                     }
                     return;
                 }
@@ -100,7 +99,7 @@ export const Cart = list({
             query: () => true,
             create: ({ session }) => !!session,
             update: ({ session }) => !!session,
-            delete: ({ session }) => !!session
+            delete: ({ session }) => !!session && session.data.role === Roles.Admin
         }
     },
     graphql: {
