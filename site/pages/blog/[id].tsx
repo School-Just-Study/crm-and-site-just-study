@@ -2,7 +2,6 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import client from '@src/shared/lib/apollo/apolloClient';
 import { Post } from '@src/shared/lib/apollo/types';
 import { Box, Card, Container, Stack, Typography } from '@mui/material';
-import { DocumentRenderer } from '@keystone-6/document-renderer';
 import { useTheme } from '@mui/material/styles';
 import { useRouter } from 'next/router';
 import { transition } from '@src/shared/lib/transition';
@@ -17,6 +16,7 @@ import { MainLayout } from '@src/layouts/MainLayout';
 import { QUERY_ALL_POST, QUERY_POST } from '@src/shared/lib/apollo/postPage';
 import { SpinnerWrapper } from '@shared/ui/SpinnerWrapper';
 import { DISABLED_BUILD_STATIC_PATHS } from '../../config';
+import { CustomRenderer } from '@shared/component-blocks/CustomRenderer/CustomRenderer';
 
 const PostBlogPage: NextPageWithLayout<{ data: Post }> = ({ data }) => {
     const { locale, isFallback } = useRouter();
@@ -58,14 +58,14 @@ const PostBlogPage: NextPageWithLayout<{ data: Post }> = ({ data }) => {
                         )}
                         {cover && (
                             <img
-                                src={cover.url}
+                                src={cover.image?.url}
                                 alt={title as string}
                                 width="100%"
                                 height="100%"
                                 style={{ borderRadius: 20 }}
                             />
                         )}
-                        {content && <DocumentRenderer document={content.document} />}
+                        {content && <CustomRenderer document={content.document} />}
                         <Stack mb={2} gap={3} direction="row" color={theme.palette.grey.A700}>
                             <Typography>
                                 {format(new Date(createdAt), 'dd MMMM yyyy, HH:mm', { locale: localeForDate })}

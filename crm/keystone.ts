@@ -9,11 +9,12 @@ import { extendGraphqlSchema } from './mutations';
 import { ui } from './config/ui';
 
 const { withAuth } = createAuth({
-  listKey: 'User',
-  identityField: 'email',
-  secretField: 'password',
-  initFirstItem: { fields: ['name', 'email', 'role', 'password'] },
-  magicAuthLink: {
+    listKey: 'User',
+    identityField: 'email',
+    secretField: 'password',
+    initFirstItem: { fields: ['name', 'email', 'role', 'password'] },
+    sessionData: "id name email role",
+    magicAuthLink: {
     sendToken: async ({ context, token, itemId }) => {
       await context.query.User.updateOne({
         where: { id: `${itemId}` },

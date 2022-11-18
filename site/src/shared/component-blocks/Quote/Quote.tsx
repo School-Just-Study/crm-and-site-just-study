@@ -1,5 +1,7 @@
 import React, { ReactNode } from 'react';
-import styles from './Quote.module.css';
+import { QuoteStyled } from '@shared/component-blocks/Quote/styles';
+import { Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 type QuoteProps = {
     attribution: ReactNode;
@@ -7,10 +9,14 @@ type QuoteProps = {
 };
 
 export function Quote({ attribution, content }: QuoteProps) {
+    const theme = useTheme();
+
     return (
-        <div className={styles.quote}>
-            <div style={{ fontStyle: 'italic', color: '#4A5568' }}>{content}</div>
-            <div style={{ fontWeight: 'bold', color: '#47546b' }}>— {attribution}</div>
-        </div>
+        <QuoteStyled>
+            <Typography fontStyle="italic">{content}</Typography>
+            <Typography fontWeight="bold" color={theme.palette.grey['600']}>
+                — {attribution}
+            </Typography>
+        </QuoteStyled>
     );
 }

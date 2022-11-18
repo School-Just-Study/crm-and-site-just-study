@@ -10,9 +10,11 @@ export const QUERY_LAST_POSTS = gql`
             id
             title
             cover {
-                url
-                width
-                height
+                image {
+                    url
+                    width
+                    height
+                }
             }
         }
     }

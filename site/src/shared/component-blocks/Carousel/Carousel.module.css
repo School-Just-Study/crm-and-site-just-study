@@ -5,15 +5,7 @@
     grid-gap: 8px;
     grid-template-columns: repeat(4, minmax(min(100%, 640px), 100%));
     grid-auto-flow: column;
-}
-
-.carouselItem {
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
-    padding: 8px;
-    box-sizing: border-box;
-    border-radius: 6px;
-    background: #eff3f6;
+    height: 390px;
 }
 
 .carouselImage {
@@ -22,10 +14,4 @@
     height: 320px;
     width: 100%;
     border-radius: 4px;
-}
-
-.title {
-    font-size: 1.25rem;
-    line-height: unset;
-    margin-top: 8px;
 }
