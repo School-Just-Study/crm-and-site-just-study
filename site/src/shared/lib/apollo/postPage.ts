@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const QUERY_POST = gql`
     query ($id: ID!) {
@@ -8,9 +8,11 @@ export const QUERY_POST = gql`
             language
             description
             cover {
-                url
-                width
-                height
+                image {
+                    url
+                    width
+                    height
+                }
             }
             content {
                 document(hydrateRelationships: true)

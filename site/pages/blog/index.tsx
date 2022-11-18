@@ -58,7 +58,7 @@ const BlogPage: NextPageWithLayout = () => {
                                         onClick={() => push(`${routes.blog}/${id}`)}>
                                         {cover && (
                                             <img
-                                                src={cover.url}
+                                                src={cover.image?.url}
                                                 alt={title as string}
                                                 width="100%"
                                                 height={270}

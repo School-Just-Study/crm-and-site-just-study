@@ -14,9 +14,11 @@ export const QUERY_BLOG_PAGE = gql`
                 document(hydrateRelationships: true)
             }
             cover {
-                url
-                width
-                height
+                image {
+                    url
+                    width
+                    height
+                }
             }
         }
         tags(where: { language: { equals: $lang } }) {

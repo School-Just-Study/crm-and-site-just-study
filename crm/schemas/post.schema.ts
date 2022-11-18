@@ -1,10 +1,11 @@
 import { list } from '@keystone-6/core';
 import { language } from '../fields/language';
 import { statusView } from '../fields/statusView';
-import { image, relationship, text } from '@keystone-6/core/fields';
+import { relationship, text } from '@keystone-6/core/fields';
 import { content } from '../fields/document';
 import { createdAt } from '../fields/createdAt';
 import { lastModification } from '../fields/lastModification';
+import { imageField } from '../fields/imageField';
 
 export const Post = list({
   ui: {
@@ -18,7 +19,7 @@ export const Post = list({
   fields: {
     language,
     statusView,
-    cover: image({ storage: "storage_blog_image", label: "Обложка" }),
+    cover: imageField,
     title: text({ validation: { isRequired: true }, label: "Заголовок" }),
     description: text({
       validation: { isRequired: true },

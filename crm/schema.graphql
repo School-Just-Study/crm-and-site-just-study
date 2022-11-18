@@ -1858,7 +1858,7 @@ type Post {
   id: ID!
   language: String
   statusView: String
-  cover: ImageFieldOutput
+  cover: Image
   title: String
   description: String
   content: Post_content_Document
@@ -1884,6 +1884,7 @@ input PostWhereInput {
   id: IDFilter
   language: StringFilter
   statusView: StringFilter
+  cover: ImageWhereInput
   title: StringFilter
   description: StringFilter
   tag: TagManyRelationFilter
@@ -1905,7 +1906,7 @@ input PostOrderByInput {
 input PostUpdateInput {
   language: String
   statusView: String
-  cover: ImageFieldInput
+  cover: ImageRelateToOneForUpdateInput
   title: String
   description: String
   content: JSON
@@ -1913,6 +1914,12 @@ input PostUpdateInput {
   author: UserRelateToOneForUpdateInput
   createdAt: DateTime
   lastModification: DateTime
+}
+
+input ImageRelateToOneForUpdateInput {
+  create: ImageCreateInput
+  connect: ImageWhereUniqueInput
+  disconnect: Boolean
 }
 
 input PostUpdateArgs {
@@ -1923,7 +1930,7 @@ input PostUpdateArgs {
 input PostCreateInput {
   language: String
   statusView: String
-  cover: ImageFieldInput
+  cover: ImageRelateToOneForCreateInput
   title: String
   description: String
   content: JSON
@@ -1931,6 +1938,11 @@ input PostCreateInput {
   author: UserRelateToOneForCreateInput
   createdAt: DateTime
   lastModification: DateTime
+}
+
+input ImageRelateToOneForCreateInput {
+  create: ImageCreateInput
+  connect: ImageWhereUniqueInput
 }
 
 type Marketing {
@@ -2724,6 +2736,83 @@ input MailingCreateInput {
   lastModification: DateTime
 }
 
+type Image {
+  id: ID!
+  name: String
+  type: String
+  filename: String
+  image: ImageFieldOutput
+}
+
+input ImageWhereUniqueInput {
+  id: ID
+  filename: String
+}
+
+input ImageWhereInput {
+  AND: [ImageWhereInput!]
+  OR: [ImageWhereInput!]
+  NOT: [ImageWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  type: StringFilter
+  filename: StringNullableFilter
+}
+
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
+input NestedStringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
+input ImageOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  type: OrderDirection
+  filename: OrderDirection
+}
+
+input ImageUpdateInput {
+  name: String
+  type: String
+  filename: String
+  image: ImageFieldInput
+}
+
+input ImageUpdateArgs {
+  where: ImageWhereUniqueInput!
+  data: ImageUpdateInput!
+}
+
+input ImageCreateInput {
+  name: String
+  type: String
+  filename: String
+  image: ImageFieldInput
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -2902,6 +2991,12 @@ type Mutation {
   updateMailings(data: [MailingUpdateArgs!]!): [Mailing]
   deleteMailing(where: MailingWhereUniqueInput!): Mailing
   deleteMailings(where: [MailingWhereUniqueInput!]!): [Mailing]
+  createImage(data: ImageCreateInput!): Image
+  createImages(data: [ImageCreateInput!]!): [Image]
+  updateImage(where: ImageWhereUniqueInput!, data: ImageUpdateInput!): Image
+  updateImages(data: [ImageUpdateArgs!]!): [Image]
+  deleteImage(where: ImageWhereUniqueInput!): Image
+  deleteImages(where: [ImageWhereUniqueInput!]!): [Image]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -3038,6 +3133,9 @@ type Query {
   mailings(where: MailingWhereInput! = {}, orderBy: [MailingOrderByInput!]! = [], take: Int, skip: Int! = 0): [Mailing!]
   mailing(where: MailingWhereUniqueInput!): Mailing
   mailingsCount(where: MailingWhereInput! = {}): Int
+  images(where: ImageWhereInput! = {}, orderBy: [ImageOrderByInput!]! = [], take: Int, skip: Int! = 0): [Image!]
+  image(where: ImageWhereUniqueInput!): Image
+  imagesCount(where: ImageWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
   checkPayment(paymentId: String!): Payment

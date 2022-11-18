@@ -24,14 +24,14 @@ export const server: KeystoneConfig['server'] = {
     extendExpressApp: (app, createContext) => {
         app.use(bodyParser.json());
 
-        handleYooKassa(app, createContext);
-        handlePayture(app, createContext);
-        handleStudentCalendar(app, createContext);
-        handleTeacherCalendar(app, createContext);
-        handleNotificationStudentLesson(app, createContext);
-        handleCheckUserSubscription(app, createContext);
-        getStudents(app, createContext);
-        getManagers(app, createContext);
-        handleNotificationStudentMissYou(app, createContext);
+        handleYooKassa?.(app, createContext);
+        handlePayture?.(app, createContext);
+        handleStudentCalendar?.(app, createContext);
+        handleTeacherCalendar?.(app, createContext);
+        handleNotificationStudentLesson?.(app, createContext);
+        handleCheckUserSubscription?.(app, createContext);
+        getStudents?.(app, createContext);
+        getManagers?.(app, createContext);
+        handleNotificationStudentMissYou?.(app, createContext);
     }
 };

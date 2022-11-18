@@ -15,7 +15,7 @@ const ContentTurbo: FC<{ post: Post }> = ({ post }) => {
                 <h1>{post.title}</h1>
                 <h2>{post.description}</h2>
                 <figure>
-                    <img src={post.cover?.url} alt={post.title as string} />
+                    <img src={post.cover?.image?.url} alt={post.title as string} />
                 </figure>
                 <menu>
                     <a href={`${FRONTEND_URL}${routes.directions}`}>Курсы</a>
