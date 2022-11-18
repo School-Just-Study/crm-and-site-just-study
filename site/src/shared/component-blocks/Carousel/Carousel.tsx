@@ -1,5 +1,7 @@
 import React from 'react';
 import styles from './Carousel.module.css';
+import { CarouselItem } from './styles';
+import { Typography } from '@mui/material';
 
 type CarouselProps = {
     items: {
@@ -13,10 +15,12 @@ export function Carousel({ items = [] }: CarouselProps) {
         <div className={styles.carousel}>
             {items.map((item) => {
                 return (
-                    <div key={item.imageSrc} className={styles.carouselItem}>
-                        <img role="presentation" src={item.imageSrc} className={styles.carouselImage} />
-                        <h1 className={styles.title}>{item.title}</h1>
-                    </div>
+                    <CarouselItem key={item.imageSrc}>
+                        <img src={item.imageSrc} className={styles.carouselImage} />
+                        <Typography variant="h6" mt={1} fontWeight="bold">
+                            {item.title}
+                        </Typography>
+                    </CarouselItem>
                 );
             })}
         </div>

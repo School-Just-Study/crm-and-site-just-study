@@ -33,8 +33,6 @@ const PostBlogPage: NextPageWithLayout<{ data: Post }> = ({ data }) => {
 
     const authorText = `${t.author}: ${author?.name}`;
 
-    console.log(data);
-
     return (
         <>
             <SEO
