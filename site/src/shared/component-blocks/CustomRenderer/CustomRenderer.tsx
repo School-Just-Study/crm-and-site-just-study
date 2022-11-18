@@ -2,7 +2,7 @@ import React, { ComponentProps } from 'react';
 import { DocumentRenderer } from '@keystone-6/document-renderer';
 import { Callout } from '../Callout/Callout';
 import { Quote } from '../Quote/Quote';
-import { Carousel } from '../Carousel/Carousel';
+import { Carousel } from '../Carousel';
 import { YouTubeVideo } from '../YouTubeVideo/YouTubeVideo';
 import styles from './CustomRenderer.module.css';
 import { Image } from '@shared/component-blocks/Image/ui';

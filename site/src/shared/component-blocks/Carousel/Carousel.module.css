@@ -5,6 +5,7 @@
     grid-gap: 8px;
     grid-template-columns: repeat(4, minmax(min(100%, 640px), 100%));
     grid-auto-flow: column;
+    height: 390px;
 }
 
 .carouselImage {
