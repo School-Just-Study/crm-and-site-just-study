@@ -782,6 +782,21 @@ input IDFilter {
   notIn: [ID!]
 }
 
+type Image {
+  filename: String
+  id: ID!
+  image: ImageFieldOutput
+  name: String
+  type: String
+}
+
+input ImageCreateInput {
+  filename: String
+  image: ImageFieldInput
+  name: String
+  type: String
+}
+
 enum ImageExtension {
   gif
   jpg
@@ -800,6 +815,51 @@ type ImageFieldOutput {
   id: ID!
   url: String!
   width: Int!
+}
+
+input ImageOrderByInput {
+  filename: OrderDirection
+  id: OrderDirection
+  name: OrderDirection
+  type: OrderDirection
+}
+
+input ImageRelateToOneForCreateInput {
+  connect: ImageWhereUniqueInput
+  create: ImageCreateInput
+}
+
+input ImageRelateToOneForUpdateInput {
+  connect: ImageWhereUniqueInput
+  create: ImageCreateInput
+  disconnect: Boolean
+}
+
+input ImageUpdateArgs {
+  data: ImageUpdateInput!
+  where: ImageWhereUniqueInput!
+}
+
+input ImageUpdateInput {
+  filename: String
+  image: ImageFieldInput
+  name: String
+  type: String
+}
+
+input ImageWhereInput {
+  AND: [ImageWhereInput!]
+  NOT: [ImageWhereInput!]
+  OR: [ImageWhereInput!]
+  filename: StringNullableFilter
+  id: IDFilter
+  name: StringFilter
+  type: StringFilter
+}
+
+input ImageWhereUniqueInput {
+  filename: String
+  id: ID
 }
 
 input IntFilter {
@@ -1090,6 +1150,89 @@ enum MagicLinkRedemptionErrorCode {
   TOKEN_REDEEMED
 }
 
+type Mailing {
+  clients(orderBy: [UserOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserWhereInput! = {}): [User!]
+  clientsCount(where: UserWhereInput! = {}): Int
+  content: Mailing_content_Document
+  createdAt: DateTime
+  id: ID!
+  language: String
+  lastModification: DateTime
+  status: String
+  statusClient: [MailingStatusClientType!]
+  title: String
+}
+
+input MailingCreateInput {
+  clients: UserRelateToManyForCreateInput
+  content: JSON
+  createdAt: DateTime
+  language: String
+  lastModification: DateTime
+  status: String
+  statusClient: [MailingStatusClientType!]
+  title: String
+}
+
+input MailingOrderByInput {
+  createdAt: OrderDirection
+  id: OrderDirection
+  language: OrderDirection
+  lastModification: OrderDirection
+  status: OrderDirection
+  title: OrderDirection
+}
+
+enum MailingStatusClientType {
+  LowQualityLead
+  client
+  decisionAfterTrialLesson
+  disabledClient
+  finishedClient
+  firstCall
+  new
+  recordFirstLesson
+  rejection
+  trialLesson
+}
+
+input MailingUpdateArgs {
+  data: MailingUpdateInput!
+  where: MailingWhereUniqueInput!
+}
+
+input MailingUpdateInput {
+  clients: UserRelateToManyForUpdateInput
+  content: JSON
+  createdAt: DateTime
+  language: String
+  lastModification: DateTime
+  status: String
+  statusClient: [MailingStatusClientType!]
+  title: String
+}
+
+input MailingWhereInput {
+  AND: [MailingWhereInput!]
+  NOT: [MailingWhereInput!]
+  OR: [MailingWhereInput!]
+  clients: UserManyRelationFilter
+  createdAt: DateTimeFilter
+  id: IDFilter
+  language: StringFilter
+  lastModification: DateTimeFilter
+  status: StringFilter
+  title: StringFilter
+}
+
+input MailingWhereUniqueInput {
+  id: ID
+}
+
+type Mailing_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
 type Manager {
   comment: String
   createdAt: DateTime
@@ -1321,11 +1464,15 @@ type Mutation {
   createDirections(data: [DirectionCreateInput!]!): [Direction]
   createFaq(data: FaqCreateInput!): Faq
   createFaqs(data: [FaqCreateInput!]!): [Faq]
+  createImage(data: ImageCreateInput!): Image
+  createImages(data: [ImageCreateInput!]!): [Image]
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
   createLesson(data: LessonCreateInput!): Lesson
   createLessons(data: [LessonCreateInput!]!): [Lesson]
   createLink(data: LinkCreateInput!): Link
   createLinks(data: [LinkCreateInput!]!): [Link]
+  createMailing(data: MailingCreateInput!): Mailing
+  createMailings(data: [MailingCreateInput!]!): [Mailing]
   createManager(data: ManagerCreateInput!): Manager
   createManagers(data: [ManagerCreateInput!]!): [Manager]
   createMarketing(data: MarketingCreateInput!): Marketing
@@ -1378,10 +1525,14 @@ type Mutation {
   deleteDirections(where: [DirectionWhereUniqueInput!]!): [Direction]
   deleteFaq(where: FaqWhereUniqueInput!): Faq
   deleteFaqs(where: [FaqWhereUniqueInput!]!): [Faq]
+  deleteImage(where: ImageWhereUniqueInput!): Image
+  deleteImages(where: [ImageWhereUniqueInput!]!): [Image]
   deleteLesson(where: LessonWhereUniqueInput!): Lesson
   deleteLessons(where: [LessonWhereUniqueInput!]!): [Lesson]
   deleteLink(where: LinkWhereUniqueInput!): Link
   deleteLinks(where: [LinkWhereUniqueInput!]!): [Link]
+  deleteMailing(where: MailingWhereUniqueInput!): Mailing
+  deleteMailings(where: [MailingWhereUniqueInput!]!): [Mailing]
   deleteManager(where: ManagerWhereUniqueInput!): Manager
   deleteManagers(where: [ManagerWhereUniqueInput!]!): [Manager]
   deleteMarketing(where: MarketingWhereUniqueInput!): Marketing
@@ -1438,10 +1589,14 @@ type Mutation {
   updateDirections(data: [DirectionUpdateArgs!]!): [Direction]
   updateFaq(data: FaqUpdateInput!, where: FaqWhereUniqueInput!): Faq
   updateFaqs(data: [FaqUpdateArgs!]!): [Faq]
+  updateImage(data: ImageUpdateInput!, where: ImageWhereUniqueInput!): Image
+  updateImages(data: [ImageUpdateArgs!]!): [Image]
   updateLesson(data: LessonUpdateInput!, where: LessonWhereUniqueInput!): Lesson
   updateLessons(data: [LessonUpdateArgs!]!): [Lesson]
   updateLink(data: LinkUpdateInput!, where: LinkWhereUniqueInput!): Link
   updateLinks(data: [LinkUpdateArgs!]!): [Link]
+  updateMailing(data: MailingUpdateInput!, where: MailingWhereUniqueInput!): Mailing
+  updateMailings(data: [MailingUpdateArgs!]!): [Mailing]
   updateManager(data: ManagerUpdateInput!, where: ManagerWhereUniqueInput!): Manager
   updateManagers(data: [ManagerUpdateArgs!]!): [Manager]
   updateMarketing(data: MarketingUpdateInput!, where: MarketingWhereUniqueInput!): Marketing
@@ -1488,6 +1643,20 @@ input NestedStringFilter {
   lt: String
   lte: String
   not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input NestedStringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
   notIn: [String!]
   startsWith: String
 }
@@ -1815,7 +1984,7 @@ input PaymentWhereUniqueInput {
 type Post {
   author: User
   content: Post_content_Document
-  cover: ImageFieldOutput
+  cover: Image
   createdAt: DateTime
   description: String
   id: ID!
@@ -1830,7 +1999,7 @@ type Post {
 input PostCreateInput {
   author: UserRelateToOneForCreateInput
   content: JSON
-  cover: ImageFieldInput
+  cover: ImageRelateToOneForCreateInput
   createdAt: DateTime
   description: String
   language: String
@@ -1858,7 +2027,7 @@ input PostUpdateArgs {
 input PostUpdateInput {
   author: UserRelateToOneForUpdateInput
   content: JSON
-  cover: ImageFieldInput
+  cover: ImageRelateToOneForUpdateInput
   createdAt: DateTime
   description: String
   language: String
@@ -1873,6 +2042,7 @@ input PostWhereInput {
   NOT: [PostWhereInput!]
   OR: [PostWhereInput!]
   author: UserWhereInput
+  cover: ImageWhereInput
   createdAt: DateTimeFilter
   description: StringFilter
   id: IDFilter
@@ -2093,6 +2263,9 @@ type Query {
   faqs(orderBy: [FaqOrderByInput!]! = [], skip: Int! = 0, take: Int, where: FaqWhereInput! = {}): [Faq!]
   faqsCount(where: FaqWhereInput! = {}): Int
   getTeacherSchedule(data: GetTeacherScheduleData!): GetTeacherScheduleResponse!
+  image(where: ImageWhereUniqueInput!): Image
+  images(orderBy: [ImageOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ImageWhereInput! = {}): [Image!]
+  imagesCount(where: ImageWhereInput! = {}): Int
   keystone: KeystoneMeta!
   lesson(where: LessonWhereUniqueInput!): Lesson
   lessons(orderBy: [LessonOrderByInput!]! = [], skip: Int! = 0, take: Int, where: LessonWhereInput! = {}): [Lesson!]
@@ -2100,6 +2273,9 @@ type Query {
   link(where: LinkWhereUniqueInput!): Link
   links(orderBy: [LinkOrderByInput!]! = [], skip: Int! = 0, take: Int, where: LinkWhereInput! = {}): [Link!]
   linksCount(where: LinkWhereInput! = {}): Int
+  mailing(where: MailingWhereUniqueInput!): Mailing
+  mailings(orderBy: [MailingOrderByInput!]! = [], skip: Int! = 0, take: Int, where: MailingWhereInput! = {}): [Mailing!]
+  mailingsCount(where: MailingWhereInput! = {}): Int
   manager(where: ManagerWhereUniqueInput!): Manager
   managers(orderBy: [ManagerOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ManagerWhereInput! = {}): [Manager!]
   managersCount(where: ManagerWhereInput! = {}): Int
@@ -2344,6 +2520,20 @@ input StringFilter {
   lt: String
   lte: String
   not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
   notIn: [String!]
   startsWith: String
 }

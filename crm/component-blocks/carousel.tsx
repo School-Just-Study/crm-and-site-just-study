@@ -3,6 +3,19 @@
 
 import { Box, jsx } from '@keystone-ui/core';
 import { component, fields, NotEditable } from '@keystone-6/fields-document/component-blocks';
+import { imageForDocument } from './image/imageForDocument';
+import React from 'react';
+import { gql, useQuery } from '@keystone-6/core/admin-ui/apollo';
+
+const findImage   = gql`
+    query($id: ID!) {
+        image(where: {id: $id}) {
+            id image {
+                url
+            }
+        }
+    }
+`
 
 export const carousel = component({
     label: 'Carousel',
@@ -17,6 +30,7 @@ export const carousel = component({
                     }}
                 >
                     {props.fields.items.elements.map(item => {
+                        const {data} = useQuery(findImage, {variables: {id: item?.fields?.image?.value?.id}})
                         return (
                             <Box
                                 key={item.key}
@@ -32,9 +46,10 @@ export const carousel = component({
                                     background: '#eff3f6'
                                 }}
                             >
+                                {data &&
                                 <img
                                     role='presentation'
-                                    src={item.fields.imageSrc.value}
+                                    src={data?.image.image.url}
                                     css={{
                                         objectFit: 'cover',
                                         objectPosition: 'center center',
@@ -43,6 +58,7 @@ export const carousel = component({
                                         borderRadius: 4
                                     }}
                                 />
+                                }
                                 <h1
                                     css={{
                                         '&&': {
@@ -65,10 +81,9 @@ export const carousel = component({
         items: fields.array(
             fields.object({
                 title: fields.text({ label: 'Title' }),
-                imageSrc: fields.url({
-                    label: 'Image URL',
-                    defaultValue: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809'
-                })
+                image: imageForDocument({
+                    listKey: 'Image',
+                }),
             })
         )
     }

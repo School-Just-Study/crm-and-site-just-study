@@ -363,11 +363,8 @@ model Post {
   id               Int      @id @default(autoincrement())
   language         String   @default("ru")
   statusView       String   @default("show")
-  cover_filesize   Int?
-  cover_extension  String?
-  cover_width      Int?
-  cover_height     Int?
-  cover_id         String?
+  cover            Image?   @relation("Post_cover", fields: [coverId], references: [id])
+  coverId          Int?     @map("cover")
   title            String   @default("")
   description      String   @default("") @mysql.VarChar(10000)
   content          Json     @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
@@ -378,6 +375,7 @@ model Post {
   lastModification DateTime @default(now()) @updatedAt
 
   @@index([language])
+  @@index([coverId])
   @@index([authorId])
 }
 
@@ -514,6 +512,19 @@ model Mailing {
   lastModification DateTime @default(now()) @updatedAt
 
   @@index([language])
+}
+
+model Image {
+  id              Int     @id @default(autoincrement())
+  name            String  @default("")
+  type            String  @default("Document")
+  filename        String? @unique
+  image_filesize  Int?
+  image_extension String?
+  image_width     Int?
+  image_height    Int?
+  image_id        String?
+  from_Post_cover Post[]  @relation("Post_cover")
 }
 
 enum OrderStatusType {

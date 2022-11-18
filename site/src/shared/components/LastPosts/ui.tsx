@@ -47,7 +47,7 @@ export const LastPosts: FC = () => {
                         <Stack gap={1} sx={{ cursor: 'pointer' }} onClick={() => push(`${routes.blog}/${id}`)}>
                             {cover && (
                                 <img
-                                    src={cover.url}
+                                    src={cover.image?.url}
                                     alt={title as string}
                                     width="100%"
                                     height={270}

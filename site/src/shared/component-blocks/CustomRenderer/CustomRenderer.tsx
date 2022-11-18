@@ -1,11 +1,11 @@
 import React, { ComponentProps } from 'react';
 import { DocumentRenderer } from '@keystone-6/document-renderer';
-import { Hero } from '../Hero/Hero';
 import { Callout } from '../Callout/Callout';
 import { Quote } from '../Quote/Quote';
-import { Carousel } from '../Carousel/Carousel';
+import { Carousel } from '../Carousel';
 import { YouTubeVideo } from '../YouTubeVideo/YouTubeVideo';
 import styles from './CustomRenderer.module.css';
+import { Image } from '@shared/component-blocks/Image/ui';
 
 type CustomRendererProps = ComponentProps<typeof DocumentRenderer>;
 
@@ -36,9 +36,6 @@ const defaultElementRenderers: CustomRendererProps['renderers'] = {
 };
 
 const customComponentRenderers: CustomRendererProps['componentBlocks'] = {
-    hero: (props) => {
-        return <Hero {...props} />;
-    },
     callout: (props) => {
         return <Callout {...props} />;
     },
@@ -50,6 +47,9 @@ const customComponentRenderers: CustomRendererProps['componentBlocks'] = {
     },
     youtubeVideo: (props) => {
         return <YouTubeVideo {...props} />;
+    },
+    image: (props) => {
+        return <Image {...props} />;
     }
 };
 
