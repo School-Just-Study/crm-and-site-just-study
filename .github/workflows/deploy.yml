@@ -102,7 +102,7 @@ jobs:
 
       - name: Deploy COI VM
         id: deploy-coi
-        uses: yc-actions/yc-coi-deploy@v1.0.1
+        uses: yc-actions/yc-coi-deploy@v1.2.0
         env:
           BACKEND_IMAGE: ${{ env.BACKEND_IMAGE }}
           SITE_IMAGE: ${{ env.SITE_IMAGE }}
