@@ -60,9 +60,9 @@
     },
     "devDependencies": {
         "@graphql-codegen/add": "3.2.1",
-        "@graphql-codegen/cli": "2.13.11",
+        "@graphql-codegen/cli": "2.13.12",
         "@graphql-codegen/schema-ast": "2.5.1",
-        "@graphql-codegen/typescript": "2.8.1",
+        "@graphql-codegen/typescript": "2.8.2",
         "@types/node": "18.11.9",
         "@types/react": "18.0.25",
         "@types/react-datepicker": "^4.4.2",
