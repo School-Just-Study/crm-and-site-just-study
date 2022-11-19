@@ -26,7 +26,7 @@ export const QUERY_STUDENT_CABINET = gql`
             beginDate
             endDate
             unlimited
-            lessons(where: { statusLesson: { in: ["created", "completed"] } }, orderBy: { startTime: asc }) {
+            lessons(where: { statusLesson: { in: ["created", "completed"] } }, orderBy: { startTime: desc }) {
                 id
                 title
                 description
