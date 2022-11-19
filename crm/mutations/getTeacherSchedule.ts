@@ -39,7 +39,7 @@ export const getTeacherSchedule = async (
       manager: { id: { equals: teacherId } },
       statusView: { equals: ViewStatus.Show },
     },
-    query: `id startTime endTime`,
+    query: `id startTime endTime title`,
   })) as Lists.WorkTimeCutoff.Item[];
   const cutoff = allCutoff?.filter(({ startTime, endTime }) =>
     areIntervalsOverlapping(

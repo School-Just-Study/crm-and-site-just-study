@@ -1234,6 +1234,7 @@ type Mailing_content_Document {
 }
 
 type Manager {
+  calendar: String
   comment: String
   createdAt: DateTime
   cutoff(orderBy: [WorkTimeCutoffOrderByInput!]! = [], skip: Int! = 0, take: Int, where: WorkTimeCutoffWhereInput! = {}): [WorkTimeCutoff!]
@@ -1253,6 +1254,7 @@ type Manager {
 }
 
 input ManagerCreateInput {
+  calendar: String
   comment: String
   createdAt: DateTime
   cutoff: WorkTimeCutoffRelateToManyForCreateInput
@@ -1275,6 +1277,7 @@ input ManagerManyRelationFilter {
 }
 
 input ManagerOrderByInput {
+  calendar: OrderDirection
   comment: OrderDirection
   createdAt: OrderDirection
   email: OrderDirection
@@ -1318,6 +1321,7 @@ input ManagerUpdateArgs {
 }
 
 input ManagerUpdateInput {
+  calendar: String
   comment: String
   createdAt: DateTime
   cutoff: WorkTimeCutoffRelateToManyForUpdateInput
@@ -1337,6 +1341,7 @@ input ManagerWhereInput {
   AND: [ManagerWhereInput!]
   NOT: [ManagerWhereInput!]
   OR: [ManagerWhereInput!]
+  calendar: StringFilter
   comment: StringFilter
   createdAt: DateTimeFilter
   cutoff: WorkTimeCutoffManyRelationFilter
@@ -3145,6 +3150,8 @@ type WorkTimeCutoff {
   manager: Manager
   startTime: DateTime
   statusView: String
+  title: String
+  uid: String
 }
 
 input WorkTimeCutoffCreateInput {
@@ -3154,6 +3161,8 @@ input WorkTimeCutoffCreateInput {
   manager: ManagerRelateToOneForCreateInput
   startTime: DateTime
   statusView: String
+  title: String
+  uid: String
 }
 
 input WorkTimeCutoffManyRelationFilter {
@@ -3169,6 +3178,8 @@ input WorkTimeCutoffOrderByInput {
   lastModification: OrderDirection
   startTime: OrderDirection
   statusView: OrderDirection
+  title: OrderDirection
+  uid: OrderDirection
 }
 
 input WorkTimeCutoffRelateToManyForCreateInput {
@@ -3195,6 +3206,8 @@ input WorkTimeCutoffUpdateInput {
   manager: ManagerRelateToOneForUpdateInput
   startTime: DateTime
   statusView: String
+  title: String
+  uid: String
 }
 
 input WorkTimeCutoffWhereInput {
@@ -3208,6 +3221,8 @@ input WorkTimeCutoffWhereInput {
   manager: ManagerWhereInput
   startTime: DateTimeFilter
   statusView: StringFilter
+  title: StringFilter
+  uid: StringFilter
 }
 
 input WorkTimeCutoffWhereUniqueInput {

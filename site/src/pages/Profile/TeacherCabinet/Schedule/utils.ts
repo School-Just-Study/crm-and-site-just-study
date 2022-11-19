@@ -56,10 +56,10 @@ export const formatSchedule = (data: ScheduleData): EventSourceInput => {
     });
     events.push(...(lessons as EventInput[]));
 
-    const cutoff = data.cutoff?.map(({ id, startTime, endTime }) => {
+    const cutoff = data.cutoff?.map(({ id, startTime, endTime, title }) => {
         return {
             id,
-            title: 'Перерыв',
+            title: title || 'Перерыв',
             start: startTime,
             end: endTime,
             color: '#A0AAB4',

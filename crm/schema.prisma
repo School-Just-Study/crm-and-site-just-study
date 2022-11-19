@@ -441,6 +441,7 @@ model Manager {
   workTime             WorkTime[]       @relation("WorkTime_manager")
   cutoff               WorkTimeCutoff[] @relation("WorkTimeCutoff_manager")
   timeZone             String           @default("Europe/Moscow")
+  calendar             String           @default("")
   comment              String           @default("") @mysql.VarChar(10000)
   createdAt            DateTime         @default(now())
   lastModification     DateTime         @default(now()) @updatedAt
@@ -466,8 +467,10 @@ model WorkTime {
 }
 
 model WorkTimeCutoff {
-  id               Int      @id @default(autoincrement())
+  id               String   @id @default(uuid())
   statusView       String   @default("show")
+  title            String   @default("")
+  uid              String   @default("manual")
   manager          Manager? @relation("WorkTimeCutoff_manager", fields: [managerId], references: [id])
   managerId        Int?     @map("manager")
   startTime        DateTime

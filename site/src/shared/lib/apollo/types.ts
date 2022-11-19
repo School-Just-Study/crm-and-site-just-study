@@ -1428,6 +1428,7 @@ export type Mailing_Content_DocumentDocumentArgs = {
 
 export type Manager = {
   __typename?: 'Manager';
+  calendar?: Maybe<Scalars['String']>;
   comment?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   cutoff?: Maybe<Array<WorkTimeCutoff>>;
@@ -1473,6 +1474,7 @@ export type ManagerWorkTimeCountArgs = {
 };
 
 export type ManagerCreateInput = {
+  calendar?: InputMaybe<Scalars['String']>;
   comment?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   cutoff?: InputMaybe<WorkTimeCutoffRelateToManyForCreateInput>;
@@ -1495,6 +1497,7 @@ export type ManagerManyRelationFilter = {
 };
 
 export type ManagerOrderByInput = {
+  calendar?: InputMaybe<OrderDirection>;
   comment?: InputMaybe<OrderDirection>;
   createdAt?: InputMaybe<OrderDirection>;
   email?: InputMaybe<OrderDirection>;
@@ -1538,6 +1541,7 @@ export type ManagerUpdateArgs = {
 };
 
 export type ManagerUpdateInput = {
+  calendar?: InputMaybe<Scalars['String']>;
   comment?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   cutoff?: InputMaybe<WorkTimeCutoffRelateToManyForUpdateInput>;
@@ -1557,6 +1561,7 @@ export type ManagerWhereInput = {
   AND?: InputMaybe<Array<ManagerWhereInput>>;
   NOT?: InputMaybe<Array<ManagerWhereInput>>;
   OR?: InputMaybe<Array<ManagerWhereInput>>;
+  calendar?: InputMaybe<StringFilter>;
   comment?: InputMaybe<StringFilter>;
   createdAt?: InputMaybe<DateTimeFilter>;
   cutoff?: InputMaybe<WorkTimeCutoffManyRelationFilter>;
@@ -5073,6 +5078,8 @@ export type WorkTimeCutoff = {
   manager?: Maybe<Manager>;
   startTime?: Maybe<Scalars['DateTime']>;
   statusView?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  uid?: Maybe<Scalars['String']>;
 };
 
 export type WorkTimeCutoffCreateInput = {
@@ -5082,6 +5089,8 @@ export type WorkTimeCutoffCreateInput = {
   manager?: InputMaybe<ManagerRelateToOneForCreateInput>;
   startTime?: InputMaybe<Scalars['DateTime']>;
   statusView?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+  uid?: InputMaybe<Scalars['String']>;
 };
 
 export type WorkTimeCutoffManyRelationFilter = {
@@ -5097,6 +5106,8 @@ export type WorkTimeCutoffOrderByInput = {
   lastModification?: InputMaybe<OrderDirection>;
   startTime?: InputMaybe<OrderDirection>;
   statusView?: InputMaybe<OrderDirection>;
+  title?: InputMaybe<OrderDirection>;
+  uid?: InputMaybe<OrderDirection>;
 };
 
 export type WorkTimeCutoffRelateToManyForCreateInput = {
@@ -5123,6 +5134,8 @@ export type WorkTimeCutoffUpdateInput = {
   manager?: InputMaybe<ManagerRelateToOneForUpdateInput>;
   startTime?: InputMaybe<Scalars['DateTime']>;
   statusView?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']>;
+  uid?: InputMaybe<Scalars['String']>;
 };
 
 export type WorkTimeCutoffWhereInput = {
@@ -5136,6 +5149,8 @@ export type WorkTimeCutoffWhereInput = {
   manager?: InputMaybe<ManagerWhereInput>;
   startTime?: InputMaybe<DateTimeFilter>;
   statusView?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  uid?: InputMaybe<StringFilter>;
 };
 
 export type WorkTimeCutoffWhereUniqueInput = {
