@@ -46,7 +46,7 @@ export const WidgetCart = () => {
                 </Stack>
             </Stack>
             <FormContainer formContext={formContext} handleSubmit={onSubmit}>
-                <Stack gap={0}>
+                <Stack gap={1}>
                     {userCart.items?.map((item: CartItemProps) => (
                         <CartItem item={item} key={item.id} currency={userCart.currency as Currency} hideImage />
                     ))}

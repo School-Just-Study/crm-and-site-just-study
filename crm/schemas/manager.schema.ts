@@ -63,6 +63,7 @@ export const Manager = list({
       defaultValue: "Europe/Moscow",
       label: "Часовой пояс",
     }),
+    calendar: text({label: "Ссылка на календарь"}),
     comment: text({
       ui: { displayMode: "textarea" },
       db: { nativeType: "VarChar(10000)" },
