@@ -13,7 +13,6 @@ export const handleCheckUserSubscription: ServerConfig<any>["extendExpressApp"] 
     app.get("/api/check-subscriptions", async (req, res) => {
       const context = await createContext(req, res);
       console.info(new Date(), "check subscription");
-      res.sendStatus(200);
 
       const subscriptions = await context.query.UserSubscription.findMany({
         where: { status: { in: [Statuses.Active] } },
@@ -30,5 +29,6 @@ export const handleCheckUserSubscription: ServerConfig<any>["extendExpressApp"] 
           });
         }
       }
+      res.sendStatus(200);
     });
   };
