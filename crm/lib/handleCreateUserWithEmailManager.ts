@@ -1,12 +1,12 @@
-import { ListHooks } from "@keystone-6/core/dist/declarations/src/types/config/hooks";
-import { Lists } from ".keystone/types";
-import { Roles } from "../enums/roles.enum";
+import { ListHooks } from '@keystone-6/core/dist/declarations/src/types/config/hooks';
+import { Lists } from '.keystone/types';
+import { Roles } from '../enums/roles.enum';
 
 export const handleCreateUserWithEmailManager: ListHooks<Lists.Client.TypeInfo>["afterOperation"] =
   async ({ context, item, operation }) => {
     if (operation === "update") {
       if (item && item.email) {
-        let user = await context.query.User.findOne({
+        const user = await context.query.User.findOne({
           where: { email: item.email },
           query: `id`,
         });

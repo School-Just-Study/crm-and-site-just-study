@@ -1,5 +1,5 @@
 import { graphql, list } from '@keystone-6/core';
-import { relationship, timestamp, virtual } from '@keystone-6/core/fields';
+import { relationship, text, timestamp, virtual } from '@keystone-6/core/fields';
 import { createdAt } from '../fields/createdAt';
 import { lastModification } from '../fields/lastModification';
 import { statusView } from '../fields/statusView';
@@ -13,6 +13,9 @@ export const WorkTimeCutoff = list({
     listView: {
       initialColumns: ["id", "statusView", "startTime", "endTime"],
     },
+  },
+  db: {
+    idField: { kind: 'uuid' }
   },
   fields: {
     label: virtual({
@@ -29,6 +32,8 @@ export const WorkTimeCutoff = list({
       }),
     }),
     statusView,
+    title: text(),
+    uid: text({isFilterable: true, validation: { isRequired: true }, defaultValue: "manual",  db: { isNullable: false } }),
     manager: relationship({ ref: "Manager.cutoff", label: "Учитель" }),
     startTime: timestamp({ validation: { isRequired: true }, label: "Начало" }),
     endTime: timestamp({

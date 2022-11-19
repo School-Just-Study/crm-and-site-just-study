@@ -10,6 +10,7 @@ import { getStudents } from '../utils/getStudents';
 import { getManagers } from '../utils/getManagers';
 import { handlePayture } from '../utils/handlePayture';
 import { handleNotificationStudentMissYou } from '../utils/handleNotificationStudentMissYou';
+import { handleSyncCalendarManagers } from '../utils/handleSyncCalendarManagers';
 
 export const server: KeystoneConfig['server'] = {
     port: SERVER_PORT,
@@ -33,5 +34,6 @@ export const server: KeystoneConfig['server'] = {
         getStudents?.(app, createContext);
         getManagers?.(app, createContext);
         handleNotificationStudentMissYou?.(app, createContext);
+        handleSyncCalendarManagers?.(app, createContext);
     }
 };
