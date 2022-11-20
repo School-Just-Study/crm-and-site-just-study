@@ -15,14 +15,16 @@ import { MakingOrder } from '@src/pages/Checkout/Cart/MakingOrder';
 import { useGate, useUnit } from 'effector-react';
 import { $user, authWithTokenFx, getAuthTokenWithEmailFx, getUserFx } from '@shared/storage/user';
 import '@src/pages/Checkout/Cart/model/init';
-import { CartGate } from '@src/pages/Checkout/Cart/model';
+import { CartGate, updateUserCartFx } from '@src/pages/Checkout/Cart/model';
 
 const Checkout: NextPage = () => {
     const theme = useTheme();
     const { locale } = useRouter();
     const t = transition(cartPage, locale);
     const user = useUnit($user);
-    const loading = useUnit(getUserFx.pending || getAuthTokenWithEmailFx.pending || authWithTokenFx.pending);
+    const loading = useUnit(
+        getUserFx.pending || getAuthTokenWithEmailFx.pending || authWithTokenFx.pending || updateUserCartFx.pending
+    );
     useGate(CartGate);
 
     return (
