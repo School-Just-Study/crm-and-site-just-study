@@ -1,12 +1,12 @@
-import { NextPage } from "next";
-import dynamic from "next/dynamic";
-import { useUnit } from "effector-react";
-import { $user } from "@shared/storage/user";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import { UserRoleType } from "@src/shared/lib/apollo/types";
-import Routes from "@src/routes";
-import { Authorization } from "@shared/components/Authorization";
+import { NextPage } from 'next';
+import dynamic from 'next/dynamic';
+import { useUnit } from 'effector-react';
+import { $user } from '@shared/storage/user';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { UserRoleType } from '@src/shared/lib/apollo/types';
+import Routes from '@src/routes';
+import { Authorization } from '@shared/components/Authorization';
 
 const Account: NextPage = () => {
     const { push, query } = useRouter();

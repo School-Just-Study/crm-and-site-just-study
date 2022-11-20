@@ -8,6 +8,7 @@ import { createdAt } from '../fields/createdAt';
 import { lastModification } from '../fields/lastModification';
 import { currency } from '../fields/currency';
 import { handleOrderStatus } from '../lib/handleOrderStatus';
+import { FRONTEND_URL } from '../config';
 
 export const Order = list({
     ui: {
@@ -31,6 +32,20 @@ export const Order = list({
     },
     fields: {
         label: text({ label: 'Название заказа' }),
+        linkForUser: virtual({
+            label: 'Ссылка для клиента',
+            // @ts-ignore
+            field: graphql.field({
+                type: graphql.String,
+                async resolve(item: Lists.Order.Item, arg, context) {
+                    const user = await context.query.User.findOne({
+                        where: { id: `${item.studentId}` },
+                        query: 'email language'
+                    });
+                    return `${FRONTEND_URL}/${user.language}/checkout?setEmail=${user.email}`;
+                }
+            })
+        }),
         student: relationship({ ref: 'User', label: 'Клиент' }),
         quantityPayments: integer({
             validation: { isRequired: true },
