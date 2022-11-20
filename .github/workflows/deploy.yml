@@ -124,6 +124,7 @@ jobs:
           SERVICE_KEY_SECRET: ${{ secrets.SERVICE_KEY_SECRET }}
           NGINX_CERT: ${{ secrets.NGINX_CERT }}
           NGINX_CERT_KEY: ${{ secrets.NGINX_CERT_KEY }}
+          YC_GROUP_ID: ${{ secrets.YC_GROUP_ID }}
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           folder-id: b1g4s4k8tj83buc1hdoq
