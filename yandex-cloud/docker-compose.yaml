@@ -14,6 +14,7 @@ services:
     depends_on:
       - backend
       - site
+      - fluentbit
     logging:
       driver: fluentd
       options:
@@ -50,8 +51,8 @@ services:
       SKIP_NALOG: {{ env.SKIP_NALOG }}
       TEST_EMAIL: {{ env.TEST_EMAIL }}
 
-  fluent-bit:
-    container_name: fluent-bit
+  fluentbit:
+    container_name: fluentbit
     image: cr.yandex/yc/fluent-bit-plugin-yandex:v2.0.3-fluent-bit-1.9.3
     ports:
       - 24224:24224
@@ -60,5 +61,5 @@ services:
     environment:
       YC_GROUP_ID: {{ env.YC_GROUP_ID }}
     volumes:
-      - /etc/fluent-bit/fluentbit.conf:/fluent-bit/etc/fluent-bit.conf
-      - /etc/fluent-bit/parsers.conf:/fluent-bit/etc/parsers.conf
+      - /etc/fluentbit/fluentbit.conf:/fluent-bit/etc/fluent-bit.conf
+      - /etc/fluentbit/parsers.conf:/fluent-bit/etc/parsers.conf

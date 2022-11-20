@@ -40,14 +40,14 @@ write_files:
           level_key       severity
           default_level   WARN
           authorization   instance-service-account
-    path: /etc/fluent-bit/fluentbit.conf
+    path: /etc/fluentbit/fluentbit.conf
   - content: |
       [PARSER]
           Name   nginx_parser
           Format regex
           Regex  ^access_log (?<remote_address>[^ ]*) "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<status>[^ ]*) "(?<http_user_agent>[^\"]*)"$
           Types  status:integer
-    path: /etc/fluent-bit/parsers.conf
+    path: /etc/fluentbit/parsers.conf
 
 users:
   - name: juststudy
