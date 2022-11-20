@@ -6,9 +6,9 @@ on:
 
 env:
   CR_REGISTRY: crpt6ftcvvm3ts7j581s
-  BACKEND_IMAGE: cr.yandex/$CR_REGISTRY/crm-back:${{ github.sha }}
-  SITE_IMAGE: cr.yandex/$CR_REGISTRY/site:${{ github.sha }}
-  NGINX_IMAGE: cr.yandex/$CR_REGISTRY/nginx:${{ github.sha }}
+  BACKEND_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/crm-back:${{ github.sha }}
+  SITE_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/site:${{ github.sha }}
+  NGINX_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/nginx:${{ github.sha }}
 
 jobs:
   build-backend:
@@ -16,6 +16,8 @@ jobs:
     defaults:
       run:
         working-directory: crm
+    environment:
+      name: dev
 
     steps:
       - uses: actions/checkout@v3
@@ -40,7 +42,7 @@ jobs:
       run:
         working-directory: site
     environment:
-      name: prod
+      name: dev
 
     steps:
       - uses: actions/checkout@v3
@@ -72,6 +74,8 @@ jobs:
     defaults:
       run:
         working-directory: nginx
+    environment:
+      name: dev
 
     steps:
       - uses: actions/checkout@v3
