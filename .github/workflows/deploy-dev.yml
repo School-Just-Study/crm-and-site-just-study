@@ -1,14 +1,14 @@
-name: Deploy
+name: Deploy-dev
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "develop" ]
 
 env:
   CR_REGISTRY: crpt6ftcvvm3ts7j581s
-  BACKEND_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/crm-back:${{ github.sha }}
-  SITE_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/site:${{ github.sha }}
-  NGINX_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/nginx:${{ github.sha }}
+  BACKEND_IMAGE: cr.yandex/$CR_REGISTRY/crm-back:${{ github.sha }}
+  SITE_IMAGE: cr.yandex/$CR_REGISTRY/site:${{ github.sha }}
+  NGINX_IMAGE: cr.yandex/$CR_REGISTRY/nginx:${{ github.sha }}
 
 jobs:
   build-backend:
@@ -94,8 +94,7 @@ jobs:
     needs: [ build-backend, build-site, build-nginx ]
     runs-on: ubuntu-latest
     environment:
-      name: prod
-      url: https://juststudy.online
+      name: dev
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -108,31 +107,25 @@ jobs:
           SITE_IMAGE: ${{ env.SITE_IMAGE }}
           NGINX_IMAGE: ${{ env.NGINX_IMAGE }}
           SSH_KEY: ${{ secrets.SSH_KEY }}
+          NODE_ENV: production
+          SKIP_NALOG: true
+          TEST_EMAIL: true
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
           FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
-          BACKEND_URL: ${{ secrets.BACKEND_URL }}
-          PAYTURE_URL: ${{ secrets.PAYTURE_URL }}
-          PAYTURE_TERMINAL_RUB: ${{ secrets.PAYTURE_TERMINAL_RUB }}
-          PAYTURE_TERMINAL_USD: ${{ secrets.PAYTURE_TERMINAL_USD }}
-          PAYTURE_TERMINAL_PASSWORD: ${{ secrets.PAYTURE_TERMINAL_PASSWORD }}
-          NALOG_INN: ${{ secrets.NALOG_INN }}
-          NALOG_PASSWORD: ${{ secrets.NALOG_PASSWORD }}
-          YOOKASSA_ID: ${{ secrets.YOOKASSA_ID }}
-          YOOKASSA_SECRET: ${{ secrets.YOOKASSA_SECRET }}
           SERVICE_KEY_ID: ${{ secrets.SERVICE_KEY_ID }}
           SERVICE_KEY_SECRET: ${{ secrets.SERVICE_KEY_SECRET }}
           NGINX_CERT: ${{ secrets.NGINX_CERT }}
           NGINX_CERT_KEY: ${{ secrets.NGINX_CERT_KEY }}
+          YC_GROUP_ID: ${{ secrets.YC_GROUP_ID }}
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           folder-id: b1g4s4k8tj83buc1hdoq
-          vm-name: just-study
+          vm-name: just-study-dev
           vm-service-account-id: aje38cdteqcfo55pe02h
           vm-cores: 2
-          vm-memory: 2GB
+          vm-memory: 1GB
           vm-disk-size: 30Gb
-          vm-core-fraction: 50
+          vm-core-fraction: 20
           vm-zone-id: ru-central1-a
           vm-subnet-id: e9b0mid7cobe4c9paohd
           docker-compose-path: './yandex-cloud/docker-compose.yaml'
