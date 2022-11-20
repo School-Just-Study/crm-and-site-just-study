@@ -60,5 +60,5 @@ services:
     environment:
       YC_GROUP_ID: {{ env.YC_GROUP_ID }}
     volumes:
-      - ./fluent-bit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
-      - ./fluent-bit/parsers.conf:/fluent-bit/parsers/parsers.conf
+      - /etc/fluent-bit/fluentbit.conf:/fluent-bit/etc/fluent-bit.conf
+      - /etc/fluent-bit/parsers.conf:/fluent-bit/etc/parsers.conf
