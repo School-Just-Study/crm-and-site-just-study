@@ -20,6 +20,5 @@ COPY --from=builder /app/schema.prisma ./schema.prisma
 COPY --from=builder /app/node_modules ./node_modules
 
 ENV PORT 80
-ENV NODE_ENV production
 EXPOSE 80
 CMD ["yarn", "start"]
