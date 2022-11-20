@@ -537,6 +537,7 @@ input DirectionResultCreateInput {
 type Order {
   id: ID!
   label: String
+  linkForUser: String
   student: User
   quantityPayments: Int
   leftPayments: Int
