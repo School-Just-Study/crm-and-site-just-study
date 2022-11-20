@@ -18,7 +18,7 @@ services:
       driver: fluentd
       options:
         fluentd-address: localhost:24224
-        tag: app.nginx
+        tag: nginx.logs
 
   site:
     container_name: site
@@ -49,7 +49,7 @@ services:
       AWS_SECRET_ACCESS_KEY: {{ env.SERVICE_KEY_SECRET }}
 
   fluentbit:
-    container_name: fluentbit
+    container_name: fluent-bit
     image: cr.yandex/yc/fluent-bit-plugin-yandex:v2.0.3-fluent-bit-1.9.3
     ports:
       - 24224:24224
@@ -58,5 +58,5 @@ services:
     environment:
       YC_GROUP_ID: {{ env.YC_GROUP_ID }}
     volumes:
-      - /etc/fluentbit/fluentbit.conf:/fluent-bit/etc/fluent-bit.conf
-      - /etc/fluentbit/parsers.conf:/fluent-bit/etc/parsers.conf
+      - ./fluent-bit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+      - ./fluent-bit/parsers.conf:/fluent-bit/parsers/parsers.conf
