@@ -2829,6 +2829,67 @@ input ImageCreateInput {
   image: ImageFieldInput
 }
 
+type Currency {
+  id: ID!
+  name: String
+  charCode: String
+  Nominal: Int
+  value: Int
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input CurrencyWhereUniqueInput {
+  id: ID
+  charCode: String
+}
+
+input CurrencyWhereInput {
+  AND: [CurrencyWhereInput!]
+  OR: [CurrencyWhereInput!]
+  NOT: [CurrencyWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  charCode: StringFilter
+  Nominal: IntNullableFilter
+  value: IntNullableFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input CurrencyOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  charCode: OrderDirection
+  Nominal: OrderDirection
+  value: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input CurrencyUpdateInput {
+  name: String
+  charCode: String
+  Nominal: Int
+  value: Int
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input CurrencyUpdateArgs {
+  where: CurrencyWhereUniqueInput!
+  data: CurrencyUpdateInput!
+}
+
+input CurrencyCreateInput {
+  name: String
+  charCode: String
+  Nominal: Int
+  value: Int
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -3013,6 +3074,12 @@ type Mutation {
   updateImages(data: [ImageUpdateArgs!]!): [Image]
   deleteImage(where: ImageWhereUniqueInput!): Image
   deleteImages(where: [ImageWhereUniqueInput!]!): [Image]
+  createCurrency(data: CurrencyCreateInput!): Currency
+  createCurrencies(data: [CurrencyCreateInput!]!): [Currency]
+  updateCurrency(where: CurrencyWhereUniqueInput!, data: CurrencyUpdateInput!): Currency
+  updateCurrencies(data: [CurrencyUpdateArgs!]!): [Currency]
+  deleteCurrency(where: CurrencyWhereUniqueInput!): Currency
+  deleteCurrencies(where: [CurrencyWhereUniqueInput!]!): [Currency]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -3152,6 +3219,9 @@ type Query {
   images(where: ImageWhereInput! = {}, orderBy: [ImageOrderByInput!]! = [], take: Int, skip: Int! = 0): [Image!]
   image(where: ImageWhereUniqueInput!): Image
   imagesCount(where: ImageWhereInput! = {}): Int
+  currencies(where: CurrencyWhereInput! = {}, orderBy: [CurrencyOrderByInput!]! = [], take: Int, skip: Int! = 0): [Currency!]
+  currency(where: CurrencyWhereUniqueInput!): Currency
+  currenciesCount(where: CurrencyWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
   checkPayment(paymentId: String!): Payment

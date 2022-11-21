@@ -530,6 +530,16 @@ model Image {
   from_Post_cover Post[]  @relation("Post_cover")
 }
 
+model Currency {
+  id               Int      @id @default(autoincrement())
+  name             String   @default("")
+  charCode         String   @unique @default("")
+  Nominal          Int?
+  value            Int?
+  createdAt        DateTime @default(now())
+  lastModification DateTime @default(now()) @updatedAt
+}
+
 enum OrderStatusType {
   created
   frozen
