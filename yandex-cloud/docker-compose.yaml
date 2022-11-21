@@ -14,6 +14,7 @@ services:
     depends_on:
       - backend
       - site
+      - fluentbit
     logging:
       driver: fluentd
       options:
@@ -24,13 +25,19 @@ services:
     container_name: site
     image: {{ env.SITE_IMAGE }}
     restart: always
+    depends_on:
+     - fluentbit
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
 
   backend:
     container_name: backend
     image: {{ env.BACKEND_IMAGE }}
     restart: always
     environment:
-      NODE_ENV: production
+      NODE_ENV: {{ env.NODE_ENV }}
       DATABASE_URL: {{ env.DATABASE_URL }}
       SESSION_SECRET: {{ env.SESSION_SECRET }}
       FRONTEND_URL: {{ env.FRONTEND_URL }}
@@ -47,9 +54,17 @@ services:
       YOOKASSA_SECRET: {{ env.YOOKASSA_SECRET }}
       AWS_ACCESS_KEY_ID: {{ env.SERVICE_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: {{ env.SERVICE_KEY_SECRET }}
+      SKIP_NALOG: {{ env.SKIP_NALOG }}
+      TEST_EMAIL: {{ env.TEST_EMAIL }}
+    depends_on:
+      - fluentbit
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
 
   fluentbit:
-    container_name: fluent-bit
+    container_name: fluentbit
     image: cr.yandex/yc/fluent-bit-plugin-yandex:v2.0.3-fluent-bit-1.9.3
     ports:
       - 24224:24224
@@ -58,5 +73,5 @@ services:
     environment:
       YC_GROUP_ID: {{ env.YC_GROUP_ID }}
     volumes:
-      - ./fluent-bit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
-      - ./fluent-bit/parsers.conf:/fluent-bit/parsers/parsers.conf
+      - /etc/fluentbit/fluentbit.conf:/fluent-bit/etc/fluent-bit.conf
+      - /etc/fluentbit/parsers.conf:/fluent-bit/etc/parsers.conf
