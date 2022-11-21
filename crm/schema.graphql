@@ -2831,9 +2831,8 @@ input ImageCreateInput {
 
 type Currency {
   id: ID!
-  name: String
   charCode: String
-  Nominal: Int
+  nominal: Int
   value: Int
   createdAt: DateTime
   lastModification: DateTime
@@ -2849,28 +2848,25 @@ input CurrencyWhereInput {
   OR: [CurrencyWhereInput!]
   NOT: [CurrencyWhereInput!]
   id: IDFilter
-  name: StringFilter
   charCode: StringFilter
-  Nominal: IntNullableFilter
-  value: IntNullableFilter
+  nominal: IntFilter
+  value: IntFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
 
 input CurrencyOrderByInput {
   id: OrderDirection
-  name: OrderDirection
   charCode: OrderDirection
-  Nominal: OrderDirection
+  nominal: OrderDirection
   value: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
 
 input CurrencyUpdateInput {
-  name: String
   charCode: String
-  Nominal: Int
+  nominal: Int
   value: Int
   createdAt: DateTime
   lastModification: DateTime
@@ -2882,9 +2878,8 @@ input CurrencyUpdateArgs {
 }
 
 input CurrencyCreateInput {
-  name: String
   charCode: String
-  Nominal: Int
+  nominal: Int
   value: Int
   createdAt: DateTime
   lastModification: DateTime

@@ -6,27 +6,32 @@ import { lastModification } from '../fields/lastModification';
 
 export const Currency = list({
     ui: {
-        isHidden: isAdmin
+        isHidden: !isAdmin,
+        label: 'Валюты'
     },
     fields: {
-        name: text({ ui: { description: 'Название' } }),
         charCode: text({
             isFilterable: true,
             validation: { isRequired: true },
             db: { isNullable: false },
             isIndexed: 'unique',
+            defaultValue: 'USD',
             ui: { description: 'Код валюты - например: USD' }
         }),
-        Nominal: integer({ ui: { description: 'Цена за сколько единиц указано' } }),
-        value: integer({ ui: { description: 'Курс' } }),
+        nominal: integer({
+            ui: { description: 'Цена за сколько единиц указано' },
+            defaultValue: 1,
+            validation: { isRequired: true }
+        }),
+        value: integer({ ui: { description: 'Курс' }, validation: { isRequired: true } }),
         createdAt,
         lastModification
     },
     access: {
         operation: {
             query: () => true,
-            create: isAdmin,
-            update: isAdmin,
+            create: () => true,
+            update: () => true,
             delete: isAdmin
         }
     }

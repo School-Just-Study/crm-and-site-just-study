@@ -4,15 +4,9 @@
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
         "skipLibCheck": true,
-        "strict": true,
-        "forceConsistentCasingInFileNames": true,
-        "noEmit": true,
-        "esModuleInterop": true,
-        "module": "esnext",
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "isolatedModules": true,
-        "jsx": "preserve",
         "jsxImportSource": "@emotion/react",
         "incremental": true,
         "paths": {
@@ -22,7 +16,13 @@
             "@src/*": ["./site/*"],
             "@translations/*": ["./site/translations/*"]
         },
-        "target": "ESNext"
+        "jsx": "react",
+        "target": "esnext",
+        "module": "commonjs",
+        "strict": true,
+        "noEmit": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
     "exclude": ["**/node_modules"]

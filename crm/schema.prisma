@@ -532,10 +532,9 @@ model Image {
 
 model Currency {
   id               Int      @id @default(autoincrement())
-  name             String   @default("")
-  charCode         String   @unique @default("")
-  Nominal          Int?
-  value            Int?
+  charCode         String   @unique @default("USD")
+  nominal          Int      @default(1)
+  value            Int
   createdAt        DateTime @default(now())
   lastModification DateTime @default(now()) @updatedAt
 }

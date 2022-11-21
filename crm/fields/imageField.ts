@@ -23,7 +23,8 @@ export const imageField = relationship({
         inlineEdit: { fields: ['image'] },
         linkToItem: true,
         inlineConnect: false,
-        inlineCreate: { fields: ['image'] }
+        inlineCreate: { fields: ['image'] },
+        createView: { fieldMode: 'hidden' }
     }
 });
 
