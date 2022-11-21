@@ -19,18 +19,20 @@ write_files:
           Name record_modifier
           Match *
           Whitelist_key log
-      
+          Reserve_Data On
       
       [FILTER]
           Name rewrite_tag
           Match nginx.logs
           Rule $log access_log nginx.access false
+          Reserve_Data On
       
       [FILTER]
           Name parser
           Match nginx.access
           Key_Name log
           Parser nginx_parser
+          Reserve_Data On
       
       [OUTPUT]
           Name            yc-logging
