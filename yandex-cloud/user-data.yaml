@@ -38,7 +38,7 @@ write_files:
           group_id        ${YC_GROUP_ID}
           message_key     text
           level_key       severity
-          default_level   WARN
+          default_level   INFO
           authorization   instance-service-account
     path: /etc/fluentbit/fluentbit.conf
   - content: |

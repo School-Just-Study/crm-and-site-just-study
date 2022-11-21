@@ -25,6 +25,12 @@ services:
     container_name: site
     image: {{ env.SITE_IMAGE }}
     restart: always
+    depends_on:
+     - fluentbit
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
 
   backend:
     container_name: backend
@@ -50,6 +56,12 @@ services:
       AWS_SECRET_ACCESS_KEY: {{ env.SERVICE_KEY_SECRET }}
       SKIP_NALOG: {{ env.SKIP_NALOG }}
       TEST_EMAIL: {{ env.TEST_EMAIL }}
+    depends_on:
+      - fluentbit
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
 
   fluentbit:
     container_name: fluentbit
