@@ -107,6 +107,7 @@ model Order {
   subscriptions    UserSubscription[] @relation("Order_subscriptions")
   services         UserService[]      @relation("Order_services")
   amount           Int?
+  amountUSD        Int?
   createdAt        DateTime           @default(now())
   lastModification DateTime           @default(now()) @updatedAt
 
@@ -121,6 +122,7 @@ model Payment {
   student          User?             @relation("Payment_student", fields: [studentId], references: [id])
   studentId        Int?              @map("student")
   amount           Int?              @default(0)
+  amountUSD        Int?              @default(0)
   sessionId        String            @default("")
   receiptId        String            @default("")
   status           PaymentStatusType @default(created)
@@ -242,7 +244,7 @@ model Subscription {
   language                   String     @default("ru")
   statusView                 String     @default("show")
   name                       String     @default("")
-  visitCount                 Int        @default(10)
+  visitCount                 Int?       @default(10)
   unlimited                  Boolean    @default(false)
   price                      Int
   period                     Int?       @default(45)

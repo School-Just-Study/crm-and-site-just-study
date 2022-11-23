@@ -14,14 +14,7 @@ export const Subscription = list({
         label: 'Шаблоны абонементов',
         labelField: 'label',
         listView: {
-            initialColumns: [
-                'id',
-                'label',
-                'language',
-                'statusView',
-                'visitCount',
-                'period'
-            ]
+            initialColumns: ['id', 'label', 'language', 'statusView', 'visitCount', 'period']
         },
         searchFields: ['name']
     },
@@ -41,7 +34,6 @@ export const Subscription = list({
         name: text({ validation: { isRequired: true }, label: 'Название' }),
         visitCount: integer({
             defaultValue: 10,
-            validation: { isRequired: true },
             label: 'Количество занятий'
         }),
         unlimited: checkbox({

@@ -1,6 +1,5 @@
 import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
 import { gql } from './index';
-import { convertMoney } from '../lib/convertMoney';
 import { addDays } from 'date-fns';
 
 interface Arguments {
@@ -19,7 +18,7 @@ export const checkout = async (root: any, { userId, currency }: Arguments, conte
 
     const cart = await context.query.Cart.findOne({
         where: { id: user.cart.id },
-        query: `id items { id subscription { id name } service { id name } price } quantityPayments amount`
+        query: `id items { id subscription { id name } service { id name } price } quantityPayments amount amountUSD`
     });
 
     const subscriptionsIds = cart.items
@@ -52,7 +51,8 @@ export const checkout = async (root: any, { userId, currency }: Arguments, conte
             currency,
             student: { connect: { id: userId } },
             quantityPayments: cart.quantityPayments,
-            amount: convertMoney(cart.amount, currency)
+            amount: cart.amount,
+            amountUSD: cart.amountUSD
         },
         query: `id`
     });

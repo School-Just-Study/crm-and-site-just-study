@@ -9,7 +9,7 @@ type Cart {
   currency: String
   items(where: CartItemWhereInput! = {}, orderBy: [CartItemOrderByInput!]! = [], take: Int, skip: Int! = 0): [CartItem!]
   itemsCount(where: CartItemWhereInput! = {}): Int
-  amountRUB: Int
+  amount: Int
   amountUSD: Int
   quantityPayments: Int
   lastModification: DateTime
@@ -551,9 +551,11 @@ type Order {
   services(where: UserServiceWhereInput! = {}, orderBy: [UserServiceOrderByInput!]! = [], take: Int, skip: Int! = 0): [UserService!]
   servicesCount(where: UserServiceWhereInput! = {}): Int
   amount: Int
+  amountUSD: Int
   payed: Int
   dept: Int
   nextPayment: Int
+  nextPaymentUSD: Int
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -584,6 +586,7 @@ input OrderWhereInput {
   subscriptions: UserSubscriptionManyRelationFilter
   services: UserServiceManyRelationFilter
   amount: IntNullableFilter
+  amountUSD: IntNullableFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
@@ -631,6 +634,7 @@ input OrderOrderByInput {
   currency: OrderDirection
   status: OrderDirection
   amount: OrderDirection
+  amountUSD: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -645,6 +649,7 @@ input OrderUpdateInput {
   subscriptions: UserSubscriptionRelateToManyForUpdateInput
   services: UserServiceRelateToManyForUpdateInput
   amount: Int
+  amountUSD: Int
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -685,6 +690,7 @@ input OrderCreateInput {
   subscriptions: UserSubscriptionRelateToManyForCreateInput
   services: UserServiceRelateToManyForCreateInput
   amount: Int
+  amountUSD: Int
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -715,6 +721,7 @@ type Payment {
   currency: String
   student: User
   amount: Int
+  amountUSD: Int
   sessionId: String
   receiptId: String
   status: PaymentStatusType
@@ -742,6 +749,7 @@ input PaymentWhereInput {
   currency: StringFilter
   student: UserWhereInput
   amount: IntNullableFilter
+  amountUSD: IntNullableFilter
   sessionId: StringFilter
   receiptId: StringFilter
   status: PaymentStatusTypeNullableFilter
@@ -760,6 +768,7 @@ input PaymentOrderByInput {
   id: OrderDirection
   currency: OrderDirection
   amount: OrderDirection
+  amountUSD: OrderDirection
   sessionId: OrderDirection
   receiptId: OrderDirection
   status: OrderDirection
@@ -772,6 +781,7 @@ input PaymentUpdateInput {
   currency: String
   student: UserRelateToOneForUpdateInput
   amount: Int
+  amountUSD: Int
   sessionId: String
   receiptId: String
   status: PaymentStatusType
@@ -795,6 +805,7 @@ input PaymentCreateInput {
   currency: String
   student: UserRelateToOneForCreateInput
   amount: Int
+  amountUSD: Int
   sessionId: String
   receiptId: String
   status: PaymentStatusType
@@ -1317,7 +1328,7 @@ input SubscriptionWhereInput {
   language: StringFilter
   statusView: StringFilter
   name: StringFilter
-  visitCount: IntFilter
+  visitCount: IntNullableFilter
   unlimited: BooleanFilter
   price: IntFilter
   period: IntNullableFilter

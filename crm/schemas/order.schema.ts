@@ -32,12 +32,11 @@ export const Order = list({
     },
     fields: {
         label: text({ label: 'Название заказа' }),
-        linkForUser: virtual({
+        linkForUser: virtual<Lists.Order.TypeInfo>({
             label: 'Ссылка для клиента',
-            // @ts-ignore
             field: graphql.field({
                 type: graphql.String,
-                async resolve(item: Lists.Order.Item, arg, context) {
+                async resolve(item, arg, context) {
                     const user = await context.query.User.findOne({
                         where: { id: `${item.studentId}` },
                         query: 'email language'
@@ -53,20 +52,17 @@ export const Order = list({
             ui: { description: 'Всего платежей' },
             label: 'Количество платежей'
         }),
-        leftPayments: virtual({
+        leftPayments: virtual<Lists.Order.TypeInfo>({
             label: 'Осталось платежей',
-            // @ts-ignore
             field: graphql.field({
                 type: graphql.Int,
-                async resolve(item: Lists.Order.Item, arg, context) {
+                async resolve(item, arg, context) {
                     const payments = await context.query.Payment.findMany({
                         where: { order: { id: { equals: item.id } } },
                         query: `amount status`
                     });
                     if (payments) {
-                        const successPayed = payments.filter(
-                            (item) => item.status === PaymentStatus.Successfully
-                        );
+                        const successPayed = payments.filter((item) => item.status === PaymentStatus.Successfully);
                         return item.quantityPayments - successPayed.length;
                     }
                     return;
@@ -97,47 +93,36 @@ export const Order = list({
             label: 'Услуги'
         }),
         amount: integer({ label: 'Сумма' }),
-        payed: virtual({
+        amountUSD: integer({ label: 'Сумма' }),
+        payed: virtual<Lists.Order.TypeInfo>({
             label: 'Оплачено',
-            // @ts-ignore
             field: graphql.field({
                 type: graphql.Int,
-                async resolve(item: Lists.Order.Item, arg, context) {
+                async resolve(item, arg, context) {
                     const payments = await context.query.Payment.findMany({
                         where: { order: { id: { equals: item.id } } },
                         query: `amount status`
                     });
                     if (payments) {
-                        const successPayed = payments.filter(
-                            (item) => item.status === PaymentStatus.Successfully
-                        );
-                        return successPayed.reduce(
-                            (tally, payment) => tally + payment.amount,
-                            0
-                        );
+                        const successPayed = payments.filter((item) => item.status === PaymentStatus.Successfully);
+                        return successPayed.reduce((tally, payment) => tally + payment.amount, 0);
                     }
                     return;
                 }
             })
         }),
-        dept: virtual({
+        dept: virtual<Lists.Order.TypeInfo>({
             label: 'Долг',
-            // @ts-ignore
             field: graphql.field({
                 type: graphql.Int,
-                async resolve(item: Lists.Order.Item, arg, context) {
+                async resolve(item, arg, context) {
                     const payments = await context.query.Payment.findMany({
                         where: { order: { id: { equals: item.id } } },
                         query: `amount status`
                     });
                     if (payments) {
-                        const successPayed = payments.filter(
-                            (item) => item.status === PaymentStatus.Successfully
-                        );
-                        const payed = successPayed.reduce(
-                            (tally, payment) => tally + payment.amount,
-                            0
-                        );
+                        const successPayed = payments.filter((item) => item.status === PaymentStatus.Successfully);
+                        const payed = successPayed.reduce((tally, payment) => tally + payment.amount, 0);
                         if (item.amount) {
                             return Math.round(item.amount - payed);
                         } else {
@@ -148,12 +133,11 @@ export const Order = list({
                 }
             })
         }),
-        nextPayment: virtual({
-            label: 'Следующая оплата',
-            // @ts-ignore
+        nextPayment: virtual<Lists.Order.TypeInfo>({
+            label: 'Следующая оплата в рублях',
             field: graphql.field({
                 type: graphql.Int,
-                async resolve(item: Lists.Order.Item, arg, context) {
+                async resolve(item, arg, context) {
                     const order = await context.query.Order.findOne({
                         where: { id: `${item.id}` },
                         query: `leftPayments`
@@ -163,19 +147,35 @@ export const Order = list({
                         query: `amount status`
                     });
                     if (payments) {
-                        const successPayed = payments.filter(
-                            (item) => item.status === PaymentStatus.Successfully
-                        );
-                        const payed = successPayed.reduce(
-                            (tally, payment) => tally + payment.amount,
-                            0
-                        );
+                        const successPayed = payments.filter((item) => item.status === PaymentStatus.Successfully);
+                        const payed = successPayed.reduce((tally, payment) => tally + payment.amount, 0);
                         if (item.amount && order.leftPayments >= 1) {
                             const dept = item.amount - payed;
                             return Math.round(dept / order.leftPayments);
                         } else {
                             return 0;
                         }
+                    }
+                    return;
+                }
+            })
+        }),
+        nextPaymentUSD: virtual<Lists.Order.TypeInfo>({
+            label: 'Следующая оплата в долларах',
+            field: graphql.field({
+                type: graphql.Int,
+                async resolve(item, arg, context) {
+                    const order = await context.query.Order.findOne({
+                        where: { id: `${item.id}` },
+                        query: `nextPayment`
+                    });
+                    if (order.nextPayment) {
+                        const currencyUSD = await context.query.Currency.findOne({
+                            where: { charCode: 'USD' },
+                            query: `value`
+                        });
+                        const amountUsd = order.nextPayment / currencyUSD.value;
+                        return Math.ceil(amountUsd);
                     }
                     return;
                 }

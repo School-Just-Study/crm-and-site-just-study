@@ -21,7 +21,8 @@ export const Payment = list({
         order: relationship({ ref: 'Order.payments', label: 'Заказ' }),
         currency,
         student: relationship({ ref: 'User', label: 'Клиент' }),
-        amount: integer({ defaultValue: 0, label: 'Сумма' }),
+        amount: integer({ defaultValue: 0, label: 'Сумма в рублях' }),
+        amountUSD: integer({ defaultValue: 0, label: 'Сумма в долларах' }),
         sessionId: text({
             label: 'Платежная сессия',
             ui: { createView: { fieldMode: 'hidden' }, itemView: { fieldMode: 'read' } }

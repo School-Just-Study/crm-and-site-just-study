@@ -10,23 +10,26 @@ import { PaymentStatus } from '../enums/payment-status.enum';
  * @param context
  * @param resolvedData
  */
-export const handleOrderStatusAfterPayment: ListHooks<Lists.Payment.TypeInfo>['afterOperation'] =
-    async ({ item, context, resolvedData }) => {
-        if (item) {
-            const status = resolvedData.status || item.status;
+export const handleOrderStatusAfterPayment: ListHooks<Lists.Payment.TypeInfo>['afterOperation'] = async ({
+    item,
+    context,
+    resolvedData
+}) => {
+    if (item) {
+        const status = resolvedData.status || item.status;
 
-            if (status === PaymentStatus.Successfully) {
-                await context.query.Order.updateOne({
-                    where: { id: `${item.orderId}` },
-                    data: { status: OrderStatus.Finished }
-                });
-            } else {
-                await context.query.Order.updateOne({
-                    where: { id: `${item.orderId}` },
-                    data: { status: OrderStatus.Processing }
-                });
-            }
+        if (status === PaymentStatus.Successfully) {
+            await context.query.Order.updateOne({
+                where: { id: `${item.orderId}` },
+                data: { status: OrderStatus.Finished }
+            });
+        } else {
+            await context.query.Order.updateOne({
+                where: { id: `${item.orderId}` },
+                data: { status: OrderStatus.Processing }
+            });
         }
+    }
 
-        console.info('update payment', context?.session?.itemId || "robot", resolvedData);
-    };
+    console.info('update payment', context?.session?.itemId || 'robot', resolvedData);
+};

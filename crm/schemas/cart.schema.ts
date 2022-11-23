@@ -67,12 +67,12 @@ export const Cart = list({
                 inlineCreate: { fields: ['subscription', 'service', 'price'] }
             }
         }),
-        amountRUB: virtual({
+        // @ts-ignore
+        amount: virtual<Lists.Cart.TypeInfo>({
             label: 'Сумма в рублях',
-            // @ts-ignore
             field: graphql.field({
                 type: graphql.Int,
-                async resolve(item: Lists.Cart.Item, arg, context) {
+                async resolve(item, arg, context) {
                     const cartItems = await context.query.CartItem.findMany({
                         where: { cart: { id: { equals: item.id } } },
                         query: `price`
@@ -84,23 +84,23 @@ export const Cart = list({
                 }
             })
         }),
-        amountUSD: virtual({
+        // @ts-ignore
+        amountUSD: virtual<Lists.Cart.TypeInfo>({
             label: 'Сумма в долларах',
-            // @ts-ignore
             field: graphql.field({
                 type: graphql.Int,
-                async resolve(item: Lists.Cart.Item, arg, context) {
-                    const cartItems = await context.query.CartItem.findMany({
-                        where: { cart: { id: { equals: item.id } } },
-                        query: `price`
+                async resolve(item, arg, context) {
+                    const cart = await context.query.Cart.findOne({
+                        where: { id: `${item.id}` },
+                        query: `amount`
                     });
-                    if (cartItems) {
+                    if (cart) {
                         const currencyUSD = await context.query.Currency.findOne({
                             where: { charCode: 'USD' },
                             query: `value`
                         });
-                        const amount = cartItems.reduce((tally, item) => tally + item.price, 0);
-                        return Math.round(amount / currencyUSD.value);
+                        const amountUsd = cart.amount / currencyUSD.value;
+                        return Math.ceil(amountUsd);
                     }
                     return;
                 }

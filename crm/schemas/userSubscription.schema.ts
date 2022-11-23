@@ -33,7 +33,7 @@ export const UserSubscription = list({
     fields: {
         name: text({ label: 'Название' }),
         linkForUser: virtual({
-            label: 'Ссылка для клиента',
+            label: 'Ссылка для записи на урок',
             // @ts-ignore
             field: graphql.field({
                 type: graphql.String,

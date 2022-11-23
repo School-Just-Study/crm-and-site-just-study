@@ -14,7 +14,7 @@ export const updateCurrency: ServerConfig<any>['extendExpressApp'] = (app, creat
         const currencies = JSON.parse(result1).ValCurs.Valute;
 
         for (const currency of currencies) {
-            const value = Math.round(+currency.Value._text.replace(/,/g, '.'));
+            const value = Math.ceil(+currency.Value._text.replace(/,/g, '.'));
             const charCode = currency.CharCode._text;
             const nominal = +currency.Nominal._text;
 
@@ -42,6 +42,6 @@ export const updateCurrency: ServerConfig<any>['extendExpressApp'] = (app, creat
             }
         }
 
-        res.send(currencies);
+        res.sendStatus(200);
     });
 };
