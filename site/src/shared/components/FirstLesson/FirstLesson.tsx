@@ -10,11 +10,11 @@ import { useRouter } from 'next/router';
 import { transition } from '@src/shared/lib/transition';
 import { successPage } from '@translations/successPage';
 import { ILanguages } from '@src/shared/modules/constants';
-import { getCurrencyForLanguage } from '@src/shared/lib/currency';
 import { useTheme } from '@mui/material/styles';
 import { InfoPopover } from '@shared/components/FirstLesson/InfoPopover';
 import { DocumentRenderer } from '@keystone-6/document-renderer';
 import { BuyButtonItem } from '@src/pages/Course/BuyButtonItem';
+import { CurrencyAmount } from '@shared/components/CurrencyAmount';
 
 export const FirstLesson: FC = () => {
     const { data } = useQuery<{ subscriptions: Subscription[] }>(QUERY_TRIAL_LESSON);
@@ -39,21 +39,14 @@ export const FirstLesson: FC = () => {
                     </List>
                 </Box>
                 {data?.subscriptions?.map((subscription) => {
-                    const { id, price, desc } = subscription;
+                    const { id, price, desc, priceUSD } = subscription;
                     return (
                         <Card key={id}>
                             <Stack py={3} px={{ xs: 2, md: 4 }} gap={2} justifyContent="left" alignItems="flex-start">
                                 <Typography variant="h2" borderBottom="3px solid #2750C5" textAlign="left">
                                     Первый урок
                                 </Typography>
-                                <Stack direction="row" gap={1}>
-                                    <Typography component="del" fontSize="x-large">
-                                        {price} {getCurrencyForLanguage(locale as string)}
-                                    </Typography>
-                                    <Typography fontSize="x-large" fontWeight="bold" color={theme.palette.primary.main}>
-                                        499 {getCurrencyForLanguage(locale as string)}
-                                    </Typography>
-                                </Stack>
+                                <CurrencyAmount amount={price!} discount={499} amountUSD={priceUSD!} discountUSD={9} />
                                 <Stack direction="row" alignItems="center" gap={1}>
                                     <Typography color={theme.palette.grey.A700}>Почему первый урок платный?</Typography>
                                     <InfoPopover />

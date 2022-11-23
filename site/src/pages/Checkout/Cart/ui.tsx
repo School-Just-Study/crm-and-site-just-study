@@ -76,7 +76,7 @@ export const Cart: FC = () => {
                                 <CurrencyAmount amount={userCart.amount!} amountUSD={userCart.amountUSD!} />
                             </Box>
                             {error && <Alert severity="error">{t.errorMessage}</Alert>}
-                            <Stack gap={2} direction={{ xs: 'column', md: 'row' }} width="100%">
+                            <Stack gap={2} direction={{ xs: 'column', sm: 'row' }} width="100%">
                                 {locale === 'ru' && (
                                     <LoadingButton
                                         fullWidth

@@ -130,10 +130,10 @@ export const checkout = async (root: any, { userId, currency }: Arguments, conte
     });
 
     const res = await context.graphql.raw({
-        variables: { orderId: order.id },
+        variables: { orderId: order.id, currency },
         query: gql`
-            mutation ($orderId: String!) {
-                payment(orderId: $orderId) {
+            mutation ($orderId: String!, $currency: String) {
+                payment(orderId: $orderId, currency: $currency) {
                     status
                     redirectUrl
                 }
