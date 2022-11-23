@@ -9,6 +9,7 @@ export const QUERY_TRIAL_LESSON = gql`
                 document(hydrateRelationships: true)
             }
             price
+            priceUSD
             trial
         }
     }

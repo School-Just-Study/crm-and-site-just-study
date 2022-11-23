@@ -12,7 +12,7 @@ export const Cart = list({
         description: 'Корзина для клиентов',
         labelField: 'label',
         listView: {
-            initialColumns: ['label', 'quantityPayments', 'amount'],
+            initialColumns: ['label', 'quantityPayments', 'amountRUB'],
             pageSize: 20
         }
     },
@@ -58,31 +58,49 @@ export const Cart = list({
             label: 'Позиции в корзине',
             many: true,
             ui: {
-                description:
-                    'В каждом item может быть ВНИМАНИЕ! либо абонемент, либо услуга.',
+                description: 'В каждом item может быть ВНИМАНИЕ! либо абонемент, либо услуга.',
                 displayMode: 'cards',
-                cardFields: ['subscription', 'service', 'originalPrice', 'price'],
+                cardFields: ['subscription', 'service', 'originalPrice', 'price', 'originalPriceUSD', 'priceUSD'],
                 inlineEdit: { fields: ['subscription', 'service', 'price'] },
                 linkToItem: true,
                 inlineConnect: true,
                 inlineCreate: { fields: ['subscription', 'service', 'price'] }
             }
         }),
-        amount: virtual({
-            label: 'Сумма',
-            // @ts-ignore
+        // @ts-ignore
+        amount: virtual<Lists.Cart.TypeInfo>({
+            label: 'Сумма в рублях',
             field: graphql.field({
                 type: graphql.Int,
-                async resolve(item: Lists.Cart.Item, arg, context) {
+                async resolve(item, arg, context) {
                     const cartItems = await context.query.CartItem.findMany({
                         where: { cart: { id: { equals: item.id } } },
                         query: `price`
                     });
                     if (cartItems) {
-                        return cartItems.reduce(
-                            (tally, item) => tally + item.price,
-                            0
-                        );
+                        return cartItems.reduce((tally, item) => tally + item.price, 0);
+                    }
+                    return;
+                }
+            })
+        }),
+        // @ts-ignore
+        amountUSD: virtual<Lists.Cart.TypeInfo>({
+            label: 'Сумма в долларах',
+            field: graphql.field({
+                type: graphql.Int,
+                async resolve(item, arg, context) {
+                    const cart = await context.query.Cart.findOne({
+                        where: { id: `${item.id}` },
+                        query: `amount`
+                    });
+                    if (cart) {
+                        const currencyUSD = await context.query.Currency.findOne({
+                            where: { charCode: 'USD' },
+                            query: `value`
+                        });
+                        const amountUsd = cart.amount / currencyUSD.value;
+                        return Math.ceil(amountUsd);
                     }
                     return;
                 }
@@ -97,8 +115,8 @@ export const Cart = list({
     access: {
         operation: {
             query: () => true,
-            create: ({ session }) => !!session,
-            update: ({ session }) => !!session,
+            create: () => true,
+            update: () => true,
             delete: ({ session }) => !!session && session.data.role === Roles.Admin
         }
     },

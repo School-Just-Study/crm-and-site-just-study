@@ -1,6 +1,6 @@
-import localeRU from "date-fns/locale/ru";
-import localeES from "date-fns/locale/es";
-import { enUS } from "date-fns/locale";
+import localeRU from 'date-fns/locale/ru';
+import localeES from 'date-fns/locale/es';
+import { enUS } from 'date-fns/locale';
 
 export const localeDate = (locale: string) => {
     switch (locale) {

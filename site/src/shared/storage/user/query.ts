@@ -46,6 +46,7 @@ export const CURRENT_USER_QUERY = gql`
                 cart {
                     id
                     amount
+                    amountUSD
                     currency
                     itemsCount
                     quantityPayments
@@ -67,6 +68,8 @@ export const CURRENT_USER_QUERY = gql`
                         }
                         price
                         originalPrice
+                        priceUSD
+                        originalPriceUSD
                     }
                 }
             }

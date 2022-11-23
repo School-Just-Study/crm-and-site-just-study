@@ -1,7 +1,6 @@
 import { SEO } from '@shared/components/SEO/SEO';
 import { Box, Container, Stack } from '@mui/material';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { useRouter } from 'next/router';
 import { transition } from '@src/shared/lib/transition';
@@ -17,18 +16,15 @@ import { useGate, useUnit } from 'effector-react';
 import { $user, authWithTokenFx, getAuthTokenWithEmailFx, getUserFx } from '@shared/storage/user';
 import '@src/pages/Checkout/Cart/model/init';
 import { CartGate, updateUserCartFx } from '@src/pages/Checkout/Cart/model';
-import debounce from '@mui/utils/debounce';
 
 const Checkout: NextPage = () => {
     const theme = useTheme();
     const { locale } = useRouter();
     const t = transition(cartPage, locale);
     const user = useUnit($user);
-    const [loading, setLoading] = useState(true);
     const fetching = useUnit(
         getUserFx.pending || getAuthTokenWithEmailFx.pending || authWithTokenFx.pending || updateUserCartFx.pending
     );
-    useEffect(() => debounce(() => setLoading(false), 700), [fetching]);
     useGate(CartGate);
 
     return (
@@ -36,7 +32,7 @@ const Checkout: NextPage = () => {
             <SEO title={t.title} noIndex />
             <Box bgcolor={theme.palette.primary.main} px={{ xs: 0.5, md: 6 }} py={{ xs: 2, md: 6 }}>
                 <Container maxWidth="md" sx={{ p: 0 }}>
-                    <SpinnerWrapper loading={loading || fetching} color="warning">
+                    <SpinnerWrapper loading={fetching} color="warning">
                         <Stack gap={3}>
                             {user?.id && <Orders userId={user.id} />}
                             {user?.cart?.items && user?.cart?.items?.length > 0 && <Cart />}

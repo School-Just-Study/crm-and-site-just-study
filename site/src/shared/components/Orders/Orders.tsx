@@ -33,7 +33,7 @@ export const Orders: FC<{ userId: string }> = ({ userId }) => {
                         px: { xs: 2, md: 6 }
                     }}>
                     <Stack gap={3}>
-                        <Typography variant="h1">🏁 {t.orderTitle}</Typography>
+                        <Typography variant="h2">🏁 {t.orderTitle}</Typography>
                         <Divider />
                         {data?.orders.map((order) => (
                             <OrderItem key={order.id} order={order} />

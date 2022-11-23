@@ -12,13 +12,21 @@ import { LoadingButton } from '@mui/lab';
 import { IAuthCartData } from './types';
 import { formatForm } from '@src/pages/Checkout/Cart/MakingOrder/lib';
 import { authForCartFx, updateUserCartFx } from '@src/pages/Checkout/Cart/model';
+import { authWithTokenFx, getAuthTokenWithEmailFx, getUserFx } from '@shared/storage/user';
 
 export const MakingOrder: FC = () => {
     const cart = useStore($cartItems);
     const { locale } = useRouter();
     const formContext = useForm<IAuthCartData>({ defaultValues: { language: locale } });
     const { handleSubmit } = formContext;
-    const loading = useUnit(authForCartFx.pending || updateUserCartFx.pending);
+    const loading = useUnit(
+        authForCartFx.pending ||
+            updateUserCartFx.pending ||
+            getUserFx.pending ||
+            getAuthTokenWithEmailFx.pending ||
+            authWithTokenFx.pending ||
+            updateUserCartFx.pending
+    );
 
     const onSubmit = handleSubmit(async (data) => {
         const formatData = formatForm(data);

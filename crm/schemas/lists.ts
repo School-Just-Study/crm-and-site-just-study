@@ -27,7 +27,8 @@ import { WorkTimeCutoff } from './workTimeCutoff.schema';
 import { WorkTime } from './workTime.schema';
 import { Lesson } from './lesson.schema';
 import { Mailing } from './mailing.schema';
-import { Image } from './image';
+import { Image } from './image.schema';
+import { Currency } from './currency.schema';
 
 export const lists = {
     Cart,
@@ -59,5 +60,6 @@ export const lists = {
     WorkTimeCutoff,
     Lesson,
     Mailing,
-    Image
+    Image,
+    Currency
 };

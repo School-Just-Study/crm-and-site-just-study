@@ -4,19 +4,19 @@ export const imageField = relationship({
     ref: 'Image',
     hooks: {
         beforeOperation: async ({ resolvedData, listKey, context }) => {
-            const imageId = resolvedData?.image?.connect?.id
+            const imageId = resolvedData?.image?.connect?.id;
 
             if (imageId) {
                 context.query.Image.updateOne({
                     where: { id: imageId },
                     data: {
-                        type: listKey,
-                    },
-                })
+                        type: listKey
+                    }
+                });
             }
-        },
+        }
     },
-    label: "Изображение",
+    label: 'Изображение',
     ui: {
         displayMode: 'cards',
         cardFields: ['image'],
@@ -24,8 +24,8 @@ export const imageField = relationship({
         linkToItem: true,
         inlineConnect: false,
         inlineCreate: { fields: ['image'] },
+        createView: { fieldMode: 'hidden' }
+    }
+});
 
-    },
-})
-
-export const imageStorageField = image({ storage: "storage_blog_image", label: "Изображение", })
+export const imageStorageField = image({ storage: 'storage_blog_image', label: 'Изображение' });

@@ -7,6 +7,7 @@ import { Lists } from '.keystone/types';
 import { createdAt } from '../fields/createdAt';
 import { lastModification } from '../fields/lastModification';
 import { LessonStatus } from '../enums/lesson-status';
+import { FRONTEND_URL } from '../config';
 
 export const UserSubscription = list({
     ui: {
@@ -31,6 +32,20 @@ export const UserSubscription = list({
     },
     fields: {
         name: text({ label: 'Название' }),
+        linkForUser: virtual({
+            label: 'Ссылка для записи на урок',
+            // @ts-ignore
+            field: graphql.field({
+                type: graphql.String,
+                async resolve(item: Lists.UserSubscription.Item, arg, context) {
+                    const user = await context.query.User.findOne({
+                        where: { id: `${item.studentId}` },
+                        query: 'email language'
+                    });
+                    return `${FRONTEND_URL}/${user.language}/profile/student?setEmail=${user.email}`;
+                }
+            })
+        }),
         visitCount: integer({ label: 'Количество занятий' }),
         unlimited: checkbox({
             defaultValue: false,

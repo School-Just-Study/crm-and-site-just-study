@@ -11,6 +11,7 @@ import { getManagers } from '../utils/getManagers';
 import { handlePayture } from '../utils/handlePayture';
 import { handleNotificationStudentMissYou } from '../utils/handleNotificationStudentMissYou';
 import { handleSyncCalendarManagers } from '../utils/handleSyncCalendarManagers';
+import { updateCurrency } from '../utils/updateCurrency';
 
 export const server: KeystoneConfig['server'] = {
     port: SERVER_PORT,
@@ -35,5 +36,6 @@ export const server: KeystoneConfig['server'] = {
         getManagers?.(app, createContext);
         handleNotificationStudentMissYou?.(app, createContext);
         handleSyncCalendarManagers?.(app, createContext);
+        updateCurrency?.(app, createContext);
     }
 };

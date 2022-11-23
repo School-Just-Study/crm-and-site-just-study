@@ -20,8 +20,9 @@ const PayPage: NextPage = () => {
 
     useEffect(() => {
         const orderId = query.orderid;
+        const currency = query.currency;
         if (orderId) {
-            pay({ variables: { orderId } });
+            pay({ variables: { orderId, currency } });
         }
     }, [query]);
 

@@ -51,9 +51,11 @@ export const Subscription: FC<{ subscription: UserSubscription }> = ({ subscript
                         <Typography>
                             Период: {start} - {end}
                         </Typography>
-                        <Button variant="contained" startIcon={<InfoIcon />}>
-                            Все уроки и записи
-                        </Button>
+                        {subscription?.lessons?.length !== 0 && (
+                            <Button variant="contained" startIcon={<InfoIcon />}>
+                                Все уроки и записи
+                            </Button>
+                        )}
                     </Stack>
                 </Stack>
             </CardHovered>
