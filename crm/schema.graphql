@@ -1381,6 +1381,7 @@ input SubscriptionCreateInput {
 type UserSubscription {
   id: ID!
   name: String
+  linkForUser: String
   visitCount: Int
   unlimited: Boolean
   originalPrice: Int
