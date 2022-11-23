@@ -1,7 +1,7 @@
 import { SEO } from '@shared/components/SEO/SEO';
 import { Box, Container, Stack } from '@mui/material';
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { useRouter } from 'next/router';
 import { transition } from '@src/shared/lib/transition';
@@ -28,7 +28,7 @@ const Checkout: NextPage = () => {
     const fetching = useUnit(
         getUserFx.pending || getAuthTokenWithEmailFx.pending || authWithTokenFx.pending || updateUserCartFx.pending
     );
-    useEffect(() => debounce(() => setLoading(false), 700), [fetching]);
+    debounce(() => setLoading(false), 700);
     useGate(CartGate);
 
     return (
