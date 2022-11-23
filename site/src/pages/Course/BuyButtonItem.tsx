@@ -7,11 +7,13 @@ import { Button, Stack } from '@mui/material';
 import { useUnit } from 'effector-react/effector-react.umd';
 import { $user } from '@shared/storage/user';
 import { $cartItems, setCartItem } from '@src/pages/Checkout/Cart/model';
+import { useRouter } from 'next/router';
 
 export const BuyButtonItem: FC<{ subscription: Subscription }> = ({ subscription }) => {
     const { id, trial } = subscription;
     const cartItems = useUnit($cartItems);
     const user = useUnit($user);
+    const { push } = useRouter();
     const [isAdded, setIsAdded] = useState<boolean | undefined>(undefined);
 
     useEffect(() => {
@@ -26,6 +28,7 @@ export const BuyButtonItem: FC<{ subscription: Subscription }> = ({ subscription
     const handleAddProduct = async () => {
         setCartItem({ subscriptionId: id, price });
         setIsAdded(true);
+        setTimeout(() => push(routes.checkout), 300);
     };
 
     const buttonText = isAdded ? '✅ Добавлено' : `Оплатить`;

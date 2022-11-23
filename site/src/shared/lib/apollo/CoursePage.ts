@@ -18,6 +18,7 @@ export const QUERY_COURSE = gql`
                 id
                 name
                 price
+                priceUSD
                 trial
             }
         }

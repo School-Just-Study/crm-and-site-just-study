@@ -14,24 +14,17 @@ export const Subscription = list({
         label: 'Шаблоны абонементов',
         labelField: 'label',
         listView: {
-            initialColumns: [
-                'id',
-                'label',
-                'language',
-                'statusView',
-                'visitCount',
-                'period'
-            ]
+            initialColumns: ['id', 'label', 'language', 'statusView', 'visitCount', 'period']
         },
         searchFields: ['name']
     },
     fields: {
         language,
-        label: virtual({
-            // @ts-ignore
+        // @ts-ignore
+        label: virtual<Lists.Subscription.TypeInfo>({
             field: graphql.field({
                 type: graphql.String,
-                resolve(item: Lists.Subscription.Item) {
+                resolve(item) {
                     if (!item) return;
                     return `${item.name} - ${item.price} ${getCurrencyForLanguage('ru')}`;
                 }
@@ -41,7 +34,6 @@ export const Subscription = list({
         name: text({ validation: { isRequired: true }, label: 'Название' }),
         visitCount: integer({
             defaultValue: 10,
-            validation: { isRequired: true },
             label: 'Количество занятий'
         }),
         unlimited: checkbox({
@@ -49,6 +41,24 @@ export const Subscription = list({
             label: 'Безлимитное количество занятий'
         }),
         price: integer({ validation: { isRequired: true }, label: 'Стоимость' }),
+        // @ts-ignore
+        priceUSD: virtual<Lists.Subscription.TypeInfo>({
+            label: 'Стоимость в долларах',
+            field: graphql.field({
+                type: graphql.Int,
+                async resolve(item, arg, context) {
+                    if (item.price) {
+                        const currencyUSD = await context.query.Currency.findOne({
+                            where: { charCode: 'USD' },
+                            query: `value`
+                        });
+                        const amountUsd = item.price / currencyUSD.value;
+                        return Math.ceil(amountUsd);
+                    }
+                    return;
+                }
+            })
+        }),
         period: integer({ defaultValue: 45, label: 'Длительность в днях' }),
         desc: content,
         trial: checkbox({

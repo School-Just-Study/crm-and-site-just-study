@@ -1,18 +1,19 @@
-import * as React from "react";
-import { FC, useEffect } from "react";
-import { Alert, Card, Stack, Typography } from "@mui/material";
-import { getTextCurrency } from "@src/shared/lib/currency";
-import { LoadingButton } from "@mui/lab";
-import { useTheme } from "@mui/material/styles";
-import { Order, PaymentResponse } from "@src/shared/lib/apollo/types";
-import { useRouter } from "next/router";
-import { useMutation } from "@apollo/client";
-import { transition } from "@src/shared/lib/transition";
-import { cartPage } from "@translations/cartPage";
-import { MUTATION_GET_PAY } from "@shared/components/Orders/query";
+import * as React from 'react';
+import { FC, useEffect } from 'react';
+import { Alert, Card, Stack, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { useTheme } from '@mui/material/styles';
+import { Order, PaymentResponse } from '@src/shared/lib/apollo/types';
+import { useRouter } from 'next/router';
+import { useMutation } from '@apollo/client';
+import { transition } from '@src/shared/lib/transition';
+import { cartPage } from '@translations/cartPage';
+import { MUTATION_GET_PAY } from '@shared/components/Orders/query';
+import { CurrencyAmount } from '../CurrencyAmount';
+import { Currency } from '@shared/enums/currency.enum';
 
 export const OrderItem: FC<{ order: Order }> = (props) => {
-    const { id, label, quantityPayments, nextPayment, amount, currency } = props.order;
+    const { id, label, quantityPayments, nextPayment, amount, amountUSD, nextPaymentUSD, leftPayments } = props.order;
     const theme = useTheme();
     const { locale, push } = useRouter();
     const t = transition(cartPage, locale);
@@ -42,18 +43,28 @@ export const OrderItem: FC<{ order: Order }> = (props) => {
                     </Typography>
                 )}
                 <Stack direction="row" gap={1}>
-                    <Typography color={theme.palette.primary.main} fontWeight="bold" fontSize="larger">
-                        {t.amount} {amount}
-                        {getTextCurrency(currency as string)}
+                    <Typography fontWeight="bold" fontSize="larger">
+                        {t.amount}
                     </Typography>
+                    <CurrencyAmount amount={amount!} amountUSD={amountUSD!} fontWeight="bold" />
                 </Stack>
                 {error && <Alert severity="error">{t.errorMessage}</Alert>}
-                <LoadingButton
-                    variant="contained"
-                    onClick={() => pay({ variables: { orderId: id } })}
-                    loading={loading}>
-                    Оплатить {nextPayment} {getTextCurrency(currency as string)}
-                </LoadingButton>
+                <Stack gap={2} direction={{ xs: 'column', sm: 'row' }}>
+                    {locale === 'ru' && (
+                        <LoadingButton
+                            variant="contained"
+                            onClick={() => pay({ variables: { orderId: id, currency: Currency.RUB } })}
+                            loading={loading}>
+                            Оплатить {nextPayment} ₽ картой 🇷🇺 Российского банка
+                        </LoadingButton>
+                    )}
+                    <LoadingButton
+                        variant="contained"
+                        onClick={() => pay({ variables: { orderId: id, currency: Currency.USD } })}
+                        loading={loading}>
+                        Pay {nextPaymentUSD} $
+                    </LoadingButton>
+                </Stack>
             </Stack>
         </Card>
     );

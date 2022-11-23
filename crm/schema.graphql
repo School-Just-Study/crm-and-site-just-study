@@ -10,6 +10,7 @@ type Cart {
   items(where: CartItemWhereInput! = {}, orderBy: [CartItemOrderByInput!]! = [], take: Int, skip: Int! = 0): [CartItem!]
   itemsCount(where: CartItemWhereInput! = {}): Int
   amount: Int
+  amountUSD: Int
   quantityPayments: Int
   lastModification: DateTime
 }
@@ -143,7 +144,9 @@ type CartItem {
   subscription: Subscription
   service: Service
   originalPrice: Int
+  originalPriceUSD: Int
   price: Int
+  priceUSD: Int
 }
 
 input CartItemWhereUniqueInput {
@@ -550,9 +553,11 @@ type Order {
   services(where: UserServiceWhereInput! = {}, orderBy: [UserServiceOrderByInput!]! = [], take: Int, skip: Int! = 0): [UserService!]
   servicesCount(where: UserServiceWhereInput! = {}): Int
   amount: Int
+  amountUSD: Int
   payed: Int
   dept: Int
   nextPayment: Int
+  nextPaymentUSD: Int
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -583,6 +588,7 @@ input OrderWhereInput {
   subscriptions: UserSubscriptionManyRelationFilter
   services: UserServiceManyRelationFilter
   amount: IntNullableFilter
+  amountUSD: IntNullableFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
@@ -630,6 +636,7 @@ input OrderOrderByInput {
   currency: OrderDirection
   status: OrderDirection
   amount: OrderDirection
+  amountUSD: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -644,6 +651,7 @@ input OrderUpdateInput {
   subscriptions: UserSubscriptionRelateToManyForUpdateInput
   services: UserServiceRelateToManyForUpdateInput
   amount: Int
+  amountUSD: Int
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -684,6 +692,7 @@ input OrderCreateInput {
   subscriptions: UserSubscriptionRelateToManyForCreateInput
   services: UserServiceRelateToManyForCreateInput
   amount: Int
+  amountUSD: Int
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -714,6 +723,7 @@ type Payment {
   currency: String
   student: User
   amount: Int
+  amountUSD: Int
   sessionId: String
   receiptId: String
   status: PaymentStatusType
@@ -741,6 +751,7 @@ input PaymentWhereInput {
   currency: StringFilter
   student: UserWhereInput
   amount: IntNullableFilter
+  amountUSD: IntNullableFilter
   sessionId: StringFilter
   receiptId: StringFilter
   status: PaymentStatusTypeNullableFilter
@@ -759,6 +770,7 @@ input PaymentOrderByInput {
   id: OrderDirection
   currency: OrderDirection
   amount: OrderDirection
+  amountUSD: OrderDirection
   sessionId: OrderDirection
   receiptId: OrderDirection
   status: OrderDirection
@@ -771,6 +783,7 @@ input PaymentUpdateInput {
   currency: String
   student: UserRelateToOneForUpdateInput
   amount: Int
+  amountUSD: Int
   sessionId: String
   receiptId: String
   status: PaymentStatusType
@@ -794,6 +807,7 @@ input PaymentCreateInput {
   currency: String
   student: UserRelateToOneForCreateInput
   amount: Int
+  amountUSD: Int
   sessionId: String
   receiptId: String
   status: PaymentStatusType
@@ -1293,6 +1307,7 @@ type Subscription {
   visitCount: Int
   unlimited: Boolean
   price: Int
+  priceUSD: Int
   period: Int
   desc: Subscription_desc_Document
   trial: Boolean
@@ -1316,7 +1331,7 @@ input SubscriptionWhereInput {
   language: StringFilter
   statusView: StringFilter
   name: StringFilter
-  visitCount: IntFilter
+  visitCount: IntNullableFilter
   unlimited: BooleanFilter
   price: IntFilter
   period: IntNullableFilter
@@ -1511,6 +1526,7 @@ type Service {
   categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0): [Category!]
   categoriesCount(where: CategoryWhereInput! = {}): Int
   price: Int
+  priceUSD: Int
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -2830,6 +2846,62 @@ input ImageCreateInput {
   image: ImageFieldInput
 }
 
+type Currency {
+  id: ID!
+  charCode: String
+  nominal: Int
+  value: Int
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input CurrencyWhereUniqueInput {
+  id: ID
+  charCode: String
+}
+
+input CurrencyWhereInput {
+  AND: [CurrencyWhereInput!]
+  OR: [CurrencyWhereInput!]
+  NOT: [CurrencyWhereInput!]
+  id: IDFilter
+  charCode: StringFilter
+  nominal: IntFilter
+  value: IntFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input CurrencyOrderByInput {
+  id: OrderDirection
+  charCode: OrderDirection
+  nominal: OrderDirection
+  value: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input CurrencyUpdateInput {
+  charCode: String
+  nominal: Int
+  value: Int
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input CurrencyUpdateArgs {
+  where: CurrencyWhereUniqueInput!
+  data: CurrencyUpdateInput!
+}
+
+input CurrencyCreateInput {
+  charCode: String
+  nominal: Int
+  value: Int
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -3014,6 +3086,12 @@ type Mutation {
   updateImages(data: [ImageUpdateArgs!]!): [Image]
   deleteImage(where: ImageWhereUniqueInput!): Image
   deleteImages(where: [ImageWhereUniqueInput!]!): [Image]
+  createCurrency(data: CurrencyCreateInput!): Currency
+  createCurrencies(data: [CurrencyCreateInput!]!): [Currency]
+  updateCurrency(where: CurrencyWhereUniqueInput!, data: CurrencyUpdateInput!): Currency
+  updateCurrencies(data: [CurrencyUpdateArgs!]!): [Currency]
+  deleteCurrency(where: CurrencyWhereUniqueInput!): Currency
+  deleteCurrencies(where: [CurrencyWhereUniqueInput!]!): [Currency]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -3021,7 +3099,7 @@ type Mutation {
   redeemUserMagicAuthToken(email: String!, token: String!): RedeemUserMagicAuthTokenResult!
   authWithEmail(email: String!): String
   checkout(userId: String!, currency: String!): PaymentResponse
-  payment(orderId: String!): PaymentResponse
+  payment(orderId: String!, currency: String): PaymentResponse
   cart(data: CartData!): PaymentResponse
   authCart(data: AuthCartData!): Client
 }
@@ -3153,6 +3231,9 @@ type Query {
   images(where: ImageWhereInput! = {}, orderBy: [ImageOrderByInput!]! = [], take: Int, skip: Int! = 0): [Image!]
   image(where: ImageWhereUniqueInput!): Image
   imagesCount(where: ImageWhereInput! = {}): Int
+  currencies(where: CurrencyWhereInput! = {}, orderBy: [CurrencyOrderByInput!]! = [], take: Int, skip: Int! = 0): [Currency!]
+  currency(where: CurrencyWhereUniqueInput!): Currency
+  currenciesCount(where: CurrencyWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
   checkPayment(paymentId: String!): Payment

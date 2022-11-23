@@ -2,41 +2,37 @@ import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
 import { gql } from './index';
 
 interface Arguments {
-  email: string;
+    email: string;
 }
 
-export const authWithEmail = async (
-  root: any,
-  { email }: Arguments,
-  context: KeystoneContext
-) => {
-  let user = await context.query.User.findOne({
-    where: { email },
-    query: `email id`,
-  });
-  if (!user) {
-    throw new Error("Sorry! The user does not exist");
-  }
-
-  const setMagicToken = gql`
-    mutation ($email: String!) {
-      sendUserMagicAuthLink(email: $email)
+export const authWithEmail = async (root: any, { email }: Arguments, context: KeystoneContext) => {
+    let user = await context.query.User.findOne({
+        where: { email },
+        query: `email id`
+    });
+    if (!user) {
+        throw new Error('Sorry! The user does not exist');
     }
-  `;
 
-  await context.graphql.raw({
-    query: setMagicToken,
-    variables: { email: user.email },
-  });
+    const setMagicToken = gql`
+        mutation ($email: String!) {
+            sendUserMagicAuthLink(email: $email)
+        }
+    `;
 
-  user = await context.query.User.findOne({
-    where: { email },
-    query: `email id magicLinkToken`,
-  });
+    await context.graphql.raw({
+        query: setMagicToken,
+        variables: { email: user.email }
+    });
 
-  if (user.magicLinkToken) {
-    return user.magicLinkToken;
-  } else {
-    throw new Error("Sorry! Authorization does not work");
-  }
+    user = await context.query.User.findOne({
+        where: { email },
+        query: `email id magicLinkToken`
+    });
+
+    if (user.magicLinkToken) {
+        return user.magicLinkToken;
+    } else {
+        throw new Error('Sorry! Authorization does not work');
+    }
 };

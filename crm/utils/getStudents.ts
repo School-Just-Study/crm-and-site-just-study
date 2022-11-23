@@ -1,10 +1,7 @@
 import { ServerConfig } from '@keystone-6/core/dist/declarations/src/types/config';
 import { Roles } from '../enums/roles.enum';
 
-export const getStudents: ServerConfig<any>['extendExpressApp'] = (
-    app,
-    createContext
-) => {
+export const getStudents: ServerConfig<any>['extendExpressApp'] = (app, createContext) => {
     app.get('/api/students', async (req, res) => {
         console.info(new Date(), 'get students');
 

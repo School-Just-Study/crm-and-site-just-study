@@ -1,16 +1,16 @@
+import * as React from 'react';
 import { FC, MouseEventHandler, useEffect, useState } from 'react';
-import { Avatar, Box, Card, Popover, Stack, Typography } from '@mui/material';
-import { getTextCurrency } from '@shared/lib/currency';
+import { Avatar, Box, Card, Popover, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import InfoIcon from '@mui/icons-material/Info';
 import { DocumentRenderer } from '@keystone-6/document-renderer';
-import { convertMoney } from '@shared/lib/convertMoney';
 import { smiles } from './const';
 import { CartItemProps } from './types';
+import { CurrencyAmount } from '@shared/components/CurrencyAmount';
 
-export const CartItem: FC<CartItemProps> = ({ item, currency, hideImage }) => {
+export const CartItem: FC<CartItemProps> = ({ item, hideImage }) => {
     const theme = useTheme();
-    const { subscription, service, originalPrice, price } = item;
+    const { subscription, service, originalPrice, price, priceUSD, originalPriceUSD } = item;
     const [numberSmile, setNumberSmile] = useState<number>(0);
     const [anchorEl, setAnchorEl] = useState<SVGSVGElement | null>(null);
 
@@ -54,18 +54,13 @@ export const CartItem: FC<CartItemProps> = ({ item, currency, hideImage }) => {
             )}
             <Box m={{ xs: 1, sm: 3 }}>
                 <Typography>{title}</Typography>
-                <Stack direction="row" gap={1}>
-                    {originalPrice !== price && (
-                        <Typography component="del">
-                            {convertMoney(originalPrice as number, currency)}
-                            {getTextCurrency(currency)}
-                        </Typography>
-                    )}
-                    <Typography color={theme.palette.primary.main} fontWeight="bold">
-                        {convertMoney(price as number, currency)}
-                        {getTextCurrency(currency)}
-                    </Typography>
-                </Stack>
+                <CurrencyAmount
+                    amount={originalPrice!}
+                    amountUSD={originalPriceUSD!}
+                    discount={price!}
+                    discountUSD={priceUSD!}
+                    variant="body1"
+                />
             </Box>
             {description && description.length >= 1 && (
                 <>

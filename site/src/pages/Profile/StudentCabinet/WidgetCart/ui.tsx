@@ -4,11 +4,9 @@ import { useUnit } from 'effector-react';
 import { $user } from '@shared/storage/user';
 import { CartItem as CartItemProps } from '@src/shared/lib/apollo/types';
 import PaymentIcon from '@mui/icons-material/Payment';
-import { getTextCurrency } from '@shared/lib/currency';
 import { useTheme } from '@mui/material/styles';
 import { Currency } from '@shared/enums/currency.enum';
 import { FormContainer } from 'react-hook-form-mui';
-import { convertMoney } from '@shared/lib/convertMoney';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { transition } from '@shared/lib/transition';
@@ -16,6 +14,7 @@ import { cartPage } from '@translations/cartPage';
 import Routes from '@src/routes';
 import { ICartForm } from '@src/pages/Checkout/Cart/types';
 import { CartItem } from '@src/pages/Checkout/Cart/CartItem';
+import { CurrencyAmount } from '@shared/components/CurrencyAmount';
 
 export const WidgetCart = () => {
     const user = useUnit($user);
@@ -37,18 +36,16 @@ export const WidgetCart = () => {
 
     return (
         <Card raised sx={{ p: 2 }}>
-            <Stack direction="row" gap={2} mb={2}>
+            <Stack direction="row" gap={2} mb={2} alignItems="center">
                 <Box bgcolor={theme.palette.warning.main} borderRadius="50%" p={1} display="flex" height="100%">
                     <PaymentIcon sx={{ color: 'white' }} fontSize="medium" />
                 </Box>
-                <Stack gap={1} alignItems="stretch" width="100%">
-                    <Typography fontWeight="bold">Оплатите новый заказ</Typography>
-                </Stack>
+                <Typography fontWeight="bold">Оплатите новый заказ</Typography>
             </Stack>
             <FormContainer formContext={formContext} handleSubmit={onSubmit}>
                 <Stack gap={1}>
                     {userCart.items?.map((item: CartItemProps) => (
-                        <CartItem item={item} key={item.id} currency={userCart.currency as Currency} hideImage />
+                        <CartItem item={item} key={item.id} hideImage />
                     ))}
                     {userCart.quantityPayments !== 1 && (
                         <Typography mt={2}>
@@ -58,20 +55,12 @@ export const WidgetCart = () => {
                     <Stack gap={2}>
                         <Box display="flex" justifyContent="space-between">
                             <Typography fontWeight="bold">Сумма:</Typography>
-                            <Stack direction="row" gap={1}>
-                                <Typography fontWeight="bold">
-                                    {user.cart.amount} {getTextCurrency(userCart?.currency as string)}
-                                </Typography>
-                                {locale === 'ru' && (
-                                    <Typography fontWeight="bold" color={theme.palette.grey.A400}>
-                                        / {convertMoney(user.cart.amount as number, 'USD')} {getTextCurrency('USD')}
-                                    </Typography>
-                                )}
-                            </Stack>
+                            <CurrencyAmount amount={userCart.amount!} amountUSD={userCart.amountUSD!} variant="body1" />
                         </Box>
-                        <Stack gap={1}>
+                        <Stack gap={2} direction={{ xs: 'column', sm: 'row' }} width="100%">
                             {locale === 'ru' && (
                                 <Button
+                                    fullWidth
                                     type="submit"
                                     variant="contained"
                                     onClick={() => setValue('currency', Currency.RUB)}>
@@ -79,6 +68,7 @@ export const WidgetCart = () => {
                                 </Button>
                             )}
                             <Button
+                                fullWidth
                                 type="submit"
                                 variant="contained"
                                 onClick={() => setValue('currency', Currency.USD)}>
