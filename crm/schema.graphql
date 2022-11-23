@@ -9,7 +9,8 @@ type Cart {
   currency: String
   items(where: CartItemWhereInput! = {}, orderBy: [CartItemOrderByInput!]! = [], take: Int, skip: Int! = 0): [CartItem!]
   itemsCount(where: CartItemWhereInput! = {}): Int
-  amount: Int
+  amountRUB: Int
+  amountUSD: Int
   quantityPayments: Int
   lastModification: DateTime
 }

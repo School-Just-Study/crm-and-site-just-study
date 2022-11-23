@@ -12,7 +12,7 @@ export const Cart = list({
         description: 'Корзина для клиентов',
         labelField: 'label',
         listView: {
-            initialColumns: ['label', 'quantityPayments', 'amount'],
+            initialColumns: ['label', 'quantityPayments', 'amountRUB'],
             pageSize: 20
         }
     },
@@ -58,8 +58,7 @@ export const Cart = list({
             label: 'Позиции в корзине',
             many: true,
             ui: {
-                description:
-                    'В каждом item может быть ВНИМАНИЕ! либо абонемент, либо услуга.',
+                description: 'В каждом item может быть ВНИМАНИЕ! либо абонемент, либо услуга.',
                 displayMode: 'cards',
                 cardFields: ['subscription', 'service', 'originalPrice', 'price'],
                 inlineEdit: { fields: ['subscription', 'service', 'price'] },
@@ -68,8 +67,8 @@ export const Cart = list({
                 inlineCreate: { fields: ['subscription', 'service', 'price'] }
             }
         }),
-        amount: virtual({
-            label: 'Сумма',
+        amountRUB: virtual({
+            label: 'Сумма в рублях',
             // @ts-ignore
             field: graphql.field({
                 type: graphql.Int,
@@ -79,10 +78,29 @@ export const Cart = list({
                         query: `price`
                     });
                     if (cartItems) {
-                        return cartItems.reduce(
-                            (tally, item) => tally + item.price,
-                            0
-                        );
+                        return cartItems.reduce((tally, item) => tally + item.price, 0);
+                    }
+                    return;
+                }
+            })
+        }),
+        amountUSD: virtual({
+            label: 'Сумма в долларах',
+            // @ts-ignore
+            field: graphql.field({
+                type: graphql.Int,
+                async resolve(item: Lists.Cart.Item, arg, context) {
+                    const cartItems = await context.query.CartItem.findMany({
+                        where: { cart: { id: { equals: item.id } } },
+                        query: `price`
+                    });
+                    if (cartItems) {
+                        const currencyUSD = await context.query.Currency.findOne({
+                            where: { charCode: 'USD' },
+                            query: `value`
+                        });
+                        const amount = cartItems.reduce((tally, item) => tally + item.price, 0);
+                        return Math.round(amount / currencyUSD.value);
                     }
                     return;
                 }
