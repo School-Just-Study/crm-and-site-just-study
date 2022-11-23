@@ -144,7 +144,9 @@ type CartItem {
   subscription: Subscription
   service: Service
   originalPrice: Int
+  originalPriceUSD: Int
   price: Int
+  priceUSD: Int
 }
 
 input CartItemWhereUniqueInput {
@@ -1305,6 +1307,7 @@ type Subscription {
   visitCount: Int
   unlimited: Boolean
   price: Int
+  priceUSD: Int
   period: Int
   desc: Subscription_desc_Document
   trial: Boolean
@@ -1523,6 +1526,7 @@ type Service {
   categories(where: CategoryWhereInput! = {}, orderBy: [CategoryOrderByInput!]! = [], take: Int, skip: Int! = 0): [Category!]
   categoriesCount(where: CategoryWhereInput! = {}): Int
   price: Int
+  priceUSD: Int
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -3095,7 +3099,7 @@ type Mutation {
   redeemUserMagicAuthToken(email: String!, token: String!): RedeemUserMagicAuthTokenResult!
   authWithEmail(email: String!): String
   checkout(userId: String!, currency: String!): PaymentResponse
-  payment(orderId: String!): PaymentResponse
+  payment(orderId: String!, currency: String): PaymentResponse
   cart(data: CartData!): PaymentResponse
   authCart(data: AuthCartData!): Client
 }

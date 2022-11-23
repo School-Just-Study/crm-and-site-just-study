@@ -10,15 +10,17 @@ const { paytureEnInit } = require('../utils/paytureEn');
 
 interface Arguments {
     orderId: string;
+    currency?: string;
 }
 
 /**
  * Создаем платеж и получаем ссылку на оплату
  * @param root
  * @param orderId
+ * @param currency
  * @param context
  */
-export const payment = async (root: any, { orderId }: Arguments, context: KeystoneContext) => {
+export const payment = async (root: any, { orderId, currency }: Arguments, context: KeystoneContext) => {
     const order = await context.query.Order.findOne({
         where: { id: orderId },
         query: `label currency amount nextPayment nextPaymentUSD status student { id name email }`
@@ -33,7 +35,7 @@ export const payment = async (root: any, { orderId }: Arguments, context: Keysto
     const payment = await context.query.Payment.createOne({
         data: {
             order: { connect: { id: orderId } },
-            currency: order.currency,
+            currency,
             student: { connect: { id: order.student.id } },
             amount: order.nextPayment,
             amountUSD: order.nextPaymentUSD
@@ -90,7 +92,8 @@ export const payment = async (root: any, { orderId }: Arguments, context: Keysto
             Amount: payment.amountUSD * 100,
             SessionType: 'Pay',
             Url: `${FRONTEND_URL}/checkout/result?orderid={orderid}`,
-            Product: order.label
+            Product: order.label,
+            Total: payment.amountUSD
         };
 
         const res = await paytureEnInit(paytureData);

@@ -61,7 +61,7 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = (schema) =>
             type Mutation {
                 authWithEmail(email: String!): String
                 checkout(userId: String!, currency: String!): PaymentResponse
-                payment(orderId: String!): PaymentResponse
+                payment(orderId: String!, currency: String): PaymentResponse
                 cart(data: CartData!): PaymentResponse
                 authCart(data: AuthCartData!): Client
             }

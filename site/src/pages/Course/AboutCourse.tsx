@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { transition } from '@src/shared/lib/transition';
 import { coursePage } from '@translations/coursePage';
 import { BuyButton } from '@src/pages/Course/BuyButton';
-import { getCurrencyForLanguage } from '@src/shared/lib/currency';
+import { CurrencyAmount } from '@shared/components/CurrencyAmount';
 
 export const AboutCourse: FC<{ product: Product }> = ({ product }) => {
     const { desc, subscriptions } = product;
@@ -30,22 +30,21 @@ export const AboutCourse: FC<{ product: Product }> = ({ product }) => {
                     )}
                     <Stack mt={5} gap={2}>
                         {idHideRecord &&
-                            subscriptions?.map(({ id, price, trial }) => (
+                            subscriptions?.map(({ id, price, priceUSD, trial }) => (
                                 <Stack key={id} direction="row" gap={1}>
                                     <Typography fontSize="x-large">Стоимость:</Typography>
                                     {trial ? (
                                         <>
-                                            <Typography component="del" fontSize="x-large">
-                                                {price} {getCurrencyForLanguage(locale as string)}
-                                            </Typography>
-                                            <Typography fontSize="x-large" fontWeight="bold">
-                                                499 {getCurrencyForLanguage(locale as string)}
-                                            </Typography>
+                                            <CurrencyAmount
+                                                amount={price!}
+                                                discount={499}
+                                                amountUSD={20}
+                                                discountUSD={9}
+                                                fontSize="x-large"
+                                            />
                                         </>
                                     ) : (
-                                        <Typography fontSize="x-large" fontWeight="bold">
-                                            {price} {getCurrencyForLanguage(locale as string)}
-                                        </Typography>
+                                        <CurrencyAmount amount={price!} amountUSD={priceUSD!} fontSize="x-large" />
                                     )}
                                 </Stack>
                             ))}

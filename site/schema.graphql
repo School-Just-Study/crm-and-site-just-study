@@ -73,6 +73,7 @@ input BooleanFilter {
 
 type Cart {
   amount: Int
+  amountUSD: Int
   currency: String
   id: ID!
   items(orderBy: [CartItemOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CartItemWhereInput! = {}): [CartItem!]
@@ -97,7 +98,9 @@ type CartItem {
   cart: Cart
   id: ID!
   originalPrice: Int
+  originalPriceUSD: Int
   price: Int
+  priceUSD: Int
   service: Service
   subscription: Subscription
 }
@@ -434,6 +437,62 @@ input CreateInitialUserInput {
   name: String
   password: String
   role: UserRoleType
+}
+
+type Currency {
+  charCode: String
+  createdAt: DateTime
+  id: ID!
+  lastModification: DateTime
+  nominal: Int
+  value: Int
+}
+
+input CurrencyCreateInput {
+  charCode: String
+  createdAt: DateTime
+  lastModification: DateTime
+  nominal: Int
+  value: Int
+}
+
+input CurrencyOrderByInput {
+  charCode: OrderDirection
+  createdAt: OrderDirection
+  id: OrderDirection
+  lastModification: OrderDirection
+  nominal: OrderDirection
+  value: OrderDirection
+}
+
+input CurrencyUpdateArgs {
+  data: CurrencyUpdateInput!
+  where: CurrencyWhereUniqueInput!
+}
+
+input CurrencyUpdateInput {
+  charCode: String
+  createdAt: DateTime
+  lastModification: DateTime
+  nominal: Int
+  value: Int
+}
+
+input CurrencyWhereInput {
+  AND: [CurrencyWhereInput!]
+  NOT: [CurrencyWhereInput!]
+  OR: [CurrencyWhereInput!]
+  charCode: StringFilter
+  createdAt: DateTimeFilter
+  id: IDFilter
+  lastModification: DateTimeFilter
+  nominal: IntFilter
+  value: IntFilter
+}
+
+input CurrencyWhereUniqueInput {
+  charCode: String
+  id: ID
 }
 
 scalar DateTime
@@ -1461,6 +1520,8 @@ type Mutation {
   createCategory(data: CategoryCreateInput!): Category
   createClient(data: ClientCreateInput!): Client
   createClients(data: [ClientCreateInput!]!): [Client]
+  createCurrencies(data: [CurrencyCreateInput!]!): [Currency]
+  createCurrency(data: CurrencyCreateInput!): Currency
   createDirection(data: DirectionCreateInput!): Direction
   createDirectionGoal(data: DirectionGoalCreateInput!): DirectionGoal
   createDirectionGoals(data: [DirectionGoalCreateInput!]!): [DirectionGoal]
@@ -1522,6 +1583,8 @@ type Mutation {
   deleteCategory(where: CategoryWhereUniqueInput!): Category
   deleteClient(where: ClientWhereUniqueInput!): Client
   deleteClients(where: [ClientWhereUniqueInput!]!): [Client]
+  deleteCurrencies(where: [CurrencyWhereUniqueInput!]!): [Currency]
+  deleteCurrency(where: CurrencyWhereUniqueInput!): Currency
   deleteDirection(where: DirectionWhereUniqueInput!): Direction
   deleteDirectionGoal(where: DirectionGoalWhereUniqueInput!): DirectionGoal
   deleteDirectionGoals(where: [DirectionGoalWhereUniqueInput!]!): [DirectionGoal]
@@ -1573,7 +1636,7 @@ type Mutation {
   deleteWorkTimeCutoffs(where: [WorkTimeCutoffWhereUniqueInput!]!): [WorkTimeCutoff]
   deleteWorkTimes(where: [WorkTimeWhereUniqueInput!]!): [WorkTime]
   endSession: Boolean!
-  payment(orderId: String!): PaymentResponse
+  payment(currency: String, orderId: String!): PaymentResponse
   redeemUserMagicAuthToken(email: String!, token: String!): RedeemUserMagicAuthTokenResult!
   sendUserMagicAuthLink(email: String!): Boolean!
   updateAvatarUser(data: AvatarUserUpdateInput!, where: AvatarUserWhereUniqueInput!): AvatarUser
@@ -1586,6 +1649,8 @@ type Mutation {
   updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
   updateClient(data: ClientUpdateInput!, where: ClientWhereUniqueInput!): Client
   updateClients(data: [ClientUpdateArgs!]!): [Client]
+  updateCurrencies(data: [CurrencyUpdateArgs!]!): [Currency]
+  updateCurrency(data: CurrencyUpdateInput!, where: CurrencyWhereUniqueInput!): Currency
   updateDirection(data: DirectionUpdateInput!, where: DirectionWhereUniqueInput!): Direction
   updateDirectionGoal(data: DirectionGoalUpdateInput!, where: DirectionGoalWhereUniqueInput!): DirectionGoal
   updateDirectionGoals(data: [DirectionGoalUpdateArgs!]!): [DirectionGoal]
@@ -1670,6 +1735,7 @@ scalar Object
 
 type Order {
   amount: Int
+  amountUSD: Int
   createdAt: DateTime
   currency: String
   dept: Int
@@ -1677,7 +1743,9 @@ type Order {
   label: String
   lastModification: DateTime
   leftPayments: Int
+  linkForUser: String
   nextPayment: Int
+  nextPaymentUSD: Int
   payed: Int
   payments(orderBy: [PaymentOrderByInput!]! = [], skip: Int! = 0, take: Int, where: PaymentWhereInput! = {}): [Payment!]
   paymentsCount(where: PaymentWhereInput! = {}): Int
@@ -1692,6 +1760,7 @@ type Order {
 
 input OrderCreateInput {
   amount: Int
+  amountUSD: Int
   createdAt: DateTime
   currency: String
   label: String
@@ -1711,6 +1780,7 @@ enum OrderDirection {
 
 input OrderOrderByInput {
   amount: OrderDirection
+  amountUSD: OrderDirection
   createdAt: OrderDirection
   currency: OrderDirection
   id: OrderDirection
@@ -1753,6 +1823,7 @@ input OrderUpdateArgs {
 
 input OrderUpdateInput {
   amount: Int
+  amountUSD: Int
   createdAt: DateTime
   currency: String
   label: String
@@ -1770,6 +1841,7 @@ input OrderWhereInput {
   NOT: [OrderWhereInput!]
   OR: [OrderWhereInput!]
   amount: IntNullableFilter
+  amountUSD: IntNullableFilter
   createdAt: DateTimeFilter
   currency: StringFilter
   id: IDFilter
@@ -1878,6 +1950,7 @@ type PasswordState {
 
 type Payment {
   amount: Int
+  amountUSD: Int
   createdAt: DateTime
   currency: String
   id: ID!
@@ -1891,6 +1964,7 @@ type Payment {
 
 input PaymentCreateInput {
   amount: Int
+  amountUSD: Int
   createdAt: DateTime
   currency: String
   lastModification: DateTime
@@ -1909,6 +1983,7 @@ input PaymentManyRelationFilter {
 
 input PaymentOrderByInput {
   amount: OrderDirection
+  amountUSD: OrderDirection
   createdAt: OrderDirection
   currency: OrderDirection
   id: OrderDirection
@@ -1956,6 +2031,7 @@ input PaymentUpdateArgs {
 
 input PaymentUpdateInput {
   amount: Int
+  amountUSD: Int
   createdAt: DateTime
   currency: String
   lastModification: DateTime
@@ -1971,6 +2047,7 @@ input PaymentWhereInput {
   NOT: [PaymentWhereInput!]
   OR: [PaymentWhereInput!]
   amount: IntNullableFilter
+  amountUSD: IntNullableFilter
   createdAt: DateTimeFilter
   currency: StringFilter
   id: IDFilter
@@ -2255,6 +2332,9 @@ type Query {
   client(where: ClientWhereUniqueInput!): Client
   clients(orderBy: [ClientOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ClientWhereInput! = {}): [Client!]
   clientsCount(where: ClientWhereInput! = {}): Int
+  currencies(orderBy: [CurrencyOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CurrencyWhereInput! = {}): [Currency!]
+  currenciesCount(where: CurrencyWhereInput! = {}): Int
+  currency(where: CurrencyWhereUniqueInput!): Currency
   direction(where: DirectionWhereUniqueInput!): Direction
   directionGoal(where: DirectionGoalWhereUniqueInput!): DirectionGoal
   directionGoals(orderBy: [DirectionGoalOrderByInput!]! = [], skip: Int! = 0, take: Int, where: DirectionGoalWhereInput! = {}): [DirectionGoal!]
@@ -2364,6 +2444,7 @@ type Service {
   lastModification: DateTime
   name: String
   price: Int
+  priceUSD: Int
   statusView: String
 }
 
@@ -2553,6 +2634,7 @@ type Subscription {
   name: String
   period: Int
   price: Int
+  priceUSD: Int
   statusView: String
   trial: Boolean
   unlimited: Boolean
@@ -2649,7 +2731,7 @@ input SubscriptionWhereInput {
   statusView: StringFilter
   trial: BooleanFilter
   unlimited: BooleanFilter
-  visitCount: IntFilter
+  visitCount: IntNullableFilter
 }
 
 input SubscriptionWhereUniqueInput {
@@ -2944,6 +3026,7 @@ type UserSubscription {
   lastModification: DateTime
   lessons(orderBy: [LessonOrderByInput!]! = [], skip: Int! = 0, take: Int, where: LessonWhereInput! = {}): [Lesson!]
   lessonsCount(where: LessonWhereInput! = {}): Int
+  linkForUser: String
   manager: User
   name: String
   originalPrice: Int

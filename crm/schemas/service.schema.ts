@@ -26,9 +26,7 @@ export const Service = list({
                 type: graphql.String,
                 resolve(item: Lists.Service.Item) {
                     if (!item) return;
-                    return `${item.name} - ${item.price} ${getCurrencyForLanguage(
-                        item.language
-                    )}`;
+                    return `${item.name} - ${item.price} ${getCurrencyForLanguage(item.language)}`;
                 }
             })
         }),
@@ -41,6 +39,24 @@ export const Service = list({
             label: 'Категории'
         }),
         price: integer({ defaultValue: 0, label: 'Цена' }),
+        // @ts-ignore
+        priceUSD: virtual<Lists.Service.TypeInfo>({
+            label: 'Стоимость в долларах',
+            field: graphql.field({
+                type: graphql.Int,
+                async resolve(item, arg, context) {
+                    if (item.price) {
+                        const currencyUSD = await context.query.Currency.findOne({
+                            where: { charCode: 'USD' },
+                            query: `value`
+                        });
+                        const amountUsd = item.price / currencyUSD.value;
+                        return Math.ceil(amountUsd);
+                    }
+                    return;
+                }
+            })
+        }),
         createdAt,
         lastModification
     },

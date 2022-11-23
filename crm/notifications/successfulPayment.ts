@@ -3,6 +3,7 @@ import { Roles } from '../enums/roles.enum';
 import { fieldsEmail } from '../lib/fieldsEmail';
 import { getTextCurrency } from '../lib/getCurrency';
 import { sendMessage } from './index';
+import { Currency } from '../enums/currency.enum';
 
 /**
  * Уведомление для студента об успешном платеже
@@ -25,10 +26,12 @@ export const notifySuccessfulPaymentForClient = async (
     });
     const payment = await ctx.query.Payment.findOne({
         where: { id: `${paymentId}` },
-        query: `amount currency`
+        query: `amount currency amountUSD`
     });
 
-    const amountText = `${payment.amount} ${getTextCurrency(payment.currency)}`;
+    const amountText = `${payment.currency === Currency.RUB ? payment.amount : payment.amountUSD} ${getTextCurrency(
+        payment.currency
+    )}`;
 
     const emailInfo = `
     <div style='display:flex; flex-direction: column; gap: 8px'>
@@ -57,11 +60,7 @@ export const notifySuccessfulPaymentForClient = async (
  * @param paymentId
  * @param ctx
  */
-export const notifySuccessfulPaymentForManagers = async (
-    clientId: string,
-    paymentId: number,
-    ctx: KeystoneContext
-) => {
+export const notifySuccessfulPaymentForManagers = async (clientId: string, paymentId: number, ctx: KeystoneContext) => {
     if (process.env.NODE_ENV === 'development') return;
 
     const client = await ctx.query.User.findOne({
@@ -70,7 +69,7 @@ export const notifySuccessfulPaymentForManagers = async (
     });
     const payment = await ctx.query.Payment.findOne({
         where: { id: `${paymentId}` },
-        query: `receiptId amount currency`
+        query: `receiptId amount amountUSD currency`
     });
     const managers = await ctx.query.User.findMany({
         where: { role: { in: [Roles.Admin, Roles.Manager] } },
@@ -78,15 +77,17 @@ export const notifySuccessfulPaymentForManagers = async (
     });
 
     const managersEmail = managers.map((user) => user.email);
-    const amountText = `${payment.amount} ${getTextCurrency(payment.currency)}`;
+    const amountText = `${payment.currency === Currency.RUB ? payment.amount : payment.amountUSD} ${getTextCurrency(
+        payment.currency
+    )}`;
 
     const emailInfo = `
-  <div style='display:flex; flex-direction: column; gap: 8px'>
-  <p>Поздравляем!</p>
-  <p>Поступил новый платеж от ${client.name} 😍</p>
-  ${fieldsEmail('Сумма платежа: ', amountText)}
-  <p>Чек уже отправлен клиенту на почту!</p>
-</div>
+      <div style='display:flex; flex-direction: column; gap: 8px'>
+      <p>Поздравляем!</p>
+      <p>Поступил новый платеж от ${client.name} 😍</p>
+      ${fieldsEmail('Сумма платежа: ', amountText)}
+      <p>Чек уже отправлен клиенту на почту!</p>
+    </div>
   `;
 
     await sendMessage({

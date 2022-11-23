@@ -60,7 +60,7 @@ export const Cart = list({
             ui: {
                 description: 'В каждом item может быть ВНИМАНИЕ! либо абонемент, либо услуга.',
                 displayMode: 'cards',
-                cardFields: ['subscription', 'service', 'originalPrice', 'price'],
+                cardFields: ['subscription', 'service', 'originalPrice', 'price', 'originalPriceUSD', 'priceUSD'],
                 inlineEdit: { fields: ['subscription', 'service', 'price'] },
                 linkToItem: true,
                 inlineConnect: true,

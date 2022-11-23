@@ -151,7 +151,7 @@ export const Order = list({
                         const payed = successPayed.reduce((tally, payment) => tally + payment.amount, 0);
                         if (item.amount && order.leftPayments >= 1) {
                             const dept = item.amount - payed;
-                            return Math.round(dept / order.leftPayments);
+                            return Math.ceil(dept / order.leftPayments);
                         } else {
                             return 0;
                         }

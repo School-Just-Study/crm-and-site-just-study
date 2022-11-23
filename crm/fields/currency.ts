@@ -5,7 +5,7 @@ import { Currency } from '../enums/currency.enum';
 export const currency = select({
     options: currencyOptions,
     defaultValue: Currency.RUB,
-    ui: { displayMode: 'segmented-control' },
+    ui: { displayMode: 'segmented-control', itemView: { fieldMode: 'read' } },
     label: 'Терминал',
     validation: { isRequired: true }
 });

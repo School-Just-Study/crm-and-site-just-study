@@ -9,8 +9,11 @@ export const QUERY_STUDENT_CABINET = gql`
             currency
             nextPayment
             quantityPayments
+            leftPayments
             payed
             dept
+            amountUSD
+            nextPaymentUSD
         }
 
         nextStudentLesson(studentId: $userId)
@@ -44,8 +47,8 @@ export const QUERY_STUDENT_CABINET = gql`
 `;
 
 export const MUTATION_GET_PAY = gql`
-    mutation ($orderId: String!) {
-        payment(orderId: $orderId) {
+    mutation ($orderId: String!, $currency: String) {
+        payment(orderId: $orderId, currency: $currency) {
             status
             redirectUrl
         }
