@@ -93,7 +93,23 @@ export const Order = list({
             label: 'Услуги'
         }),
         amount: integer({ label: 'Сумма' }),
-        amountUSD: integer({ label: 'Сумма' }),
+        amountUSD: virtual<Lists.Order.TypeInfo>({
+            label: 'Сумма в долларах',
+            field: graphql.field({
+                type: graphql.Int,
+                async resolve(item, arg, context) {
+                    if (item.amount) {
+                        const currencyUSD = await context.query.Currency.findOne({
+                            where: { charCode: 'USD' },
+                            query: `value`
+                        });
+                        const amountUsd = item.amount / currencyUSD.value;
+                        return Math.ceil(amountUsd);
+                    }
+                    return;
+                }
+            })
+        }),
         payed: virtual<Lists.Order.TypeInfo>({
             label: 'Оплачено',
             field: graphql.field({

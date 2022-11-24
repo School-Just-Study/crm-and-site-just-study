@@ -51,9 +51,7 @@ export const checkout = async (root: any, { userId, currency }: Arguments, conte
             currency,
             student: { connect: { id: userId } },
             quantityPayments: cart.quantityPayments,
-            amount: cart.amount,
-            amountUSD: cart.amountUSD
-
+            amount: cart.amount
         },
         query: `id`
     });
@@ -135,7 +133,6 @@ export const checkout = async (root: any, { userId, currency }: Arguments, conte
         query: gql`
             mutation ($orderId: String!, $currency: String) {
                 payment(orderId: $orderId, currency: $currency) {
-
                     status
                     redirectUrl
                 }

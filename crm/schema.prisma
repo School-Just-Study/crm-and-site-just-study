@@ -107,7 +107,6 @@ model Order {
   subscriptions    UserSubscription[] @relation("Order_subscriptions")
   services         UserService[]      @relation("Order_services")
   amount           Int?
-  amountUSD        Int?
   createdAt        DateTime           @default(now())
   lastModification DateTime           @default(now()) @updatedAt
 

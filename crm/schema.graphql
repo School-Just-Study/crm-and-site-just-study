@@ -588,7 +588,6 @@ input OrderWhereInput {
   subscriptions: UserSubscriptionManyRelationFilter
   services: UserServiceManyRelationFilter
   amount: IntNullableFilter
-  amountUSD: IntNullableFilter
   createdAt: DateTimeFilter
   lastModification: DateTimeFilter
 }
@@ -636,7 +635,6 @@ input OrderOrderByInput {
   currency: OrderDirection
   status: OrderDirection
   amount: OrderDirection
-  amountUSD: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
 }
@@ -651,7 +649,6 @@ input OrderUpdateInput {
   subscriptions: UserSubscriptionRelateToManyForUpdateInput
   services: UserServiceRelateToManyForUpdateInput
   amount: Int
-  amountUSD: Int
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -692,7 +689,6 @@ input OrderCreateInput {
   subscriptions: UserSubscriptionRelateToManyForCreateInput
   services: UserServiceRelateToManyForCreateInput
   amount: Int
-  amountUSD: Int
   createdAt: DateTime
   lastModification: DateTime
 }
