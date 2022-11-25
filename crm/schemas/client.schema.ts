@@ -13,15 +13,7 @@ export const Client = list({
     ui: {
         label: 'Лиды',
         listView: {
-            initialColumns: [
-                'id',
-                'name',
-                'language',
-                'email',
-                'phone',
-                'statusClient',
-                'comment'
-            ],
+            initialColumns: ['id', 'name', 'language', 'email', 'phone', 'statusClient', 'comment'],
             initialSort: {
                 field: 'lastModification',
                 direction: 'DESC'
@@ -58,13 +50,17 @@ export const Client = list({
             label: 'Источник',
             many: true
         }),
-        teachers: relationship({ ref: 'Manager', many: true, label: 'Учителя' }),
+        teachers: relationship({
+            ref: 'Manager',
+            many: true,
+            label: 'Учителя'
+        }),
         comment: text({
             ui: { displayMode: 'textarea' },
             db: { nativeType: 'VarChar(10000)' },
             label: 'Комментарий'
         }),
-        ymClientId: text({ label: 'ymClientId' }),
+        ymClientId: text({ label: 'ymClientId', ui: { itemView: { fieldMode: 'hidden' } } }),
         createdAt,
         lastModification
     },

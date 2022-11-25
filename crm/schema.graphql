@@ -1020,11 +1020,11 @@ type User {
   id: ID!
   language: String
   avatar: AvatarUser
+  linkForUser: String
   name: String
   email: String
   password: PasswordState
   role: UserRoleType
-  comment: String
   client: Client
   manager: Manager
   cart: Cart
@@ -1063,7 +1063,6 @@ input UserWhereInput {
   email: StringFilter
   password: PasswordFilter
   role: UserRoleTypeNullableFilter
-  comment: StringFilter
   client: ClientWhereInput
   manager: ManagerWhereInput
   cart: CartWhereInput
@@ -1103,7 +1102,6 @@ input UserOrderByInput {
   name: OrderDirection
   email: OrderDirection
   role: OrderDirection
-  comment: OrderDirection
   magicLinkToken: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
@@ -1118,7 +1116,6 @@ input UserUpdateInput {
   email: String
   password: String
   role: UserRoleType
-  comment: String
   client: ClientRelateToOneForUpdateInput
   manager: ManagerRelateToOneForUpdateInput
   cart: CartRelateToOneForUpdateInput
@@ -1160,7 +1157,6 @@ input UserCreateInput {
   email: String
   password: String
   role: UserRoleType
-  comment: String
   client: ClientRelateToOneForCreateInput
   manager: ManagerRelateToOneForCreateInput
   cart: CartRelateToOneForCreateInput
@@ -1607,8 +1603,8 @@ input CategoryRelateToManyForCreateInput {
 type UserService {
   id: ID!
   name: String
-  originalPrice: Int
   status: String
+  originalPrice: Int
   price: Int
   student: User
   manager: User
@@ -1626,8 +1622,8 @@ input UserServiceWhereInput {
   NOT: [UserServiceWhereInput!]
   id: IDFilter
   name: StringFilter
-  originalPrice: IntNullableFilter
   status: StringFilter
+  originalPrice: IntNullableFilter
   price: IntNullableFilter
   student: UserWhereInput
   manager: UserWhereInput
@@ -1638,8 +1634,8 @@ input UserServiceWhereInput {
 input UserServiceOrderByInput {
   id: OrderDirection
   name: OrderDirection
-  originalPrice: OrderDirection
   status: OrderDirection
+  originalPrice: OrderDirection
   price: OrderDirection
   createdAt: OrderDirection
   lastModification: OrderDirection
@@ -1647,8 +1643,8 @@ input UserServiceOrderByInput {
 
 input UserServiceUpdateInput {
   name: String
-  originalPrice: Int
   status: String
+  originalPrice: Int
   price: Int
   student: UserRelateToOneForUpdateInput
   manager: UserRelateToOneForUpdateInput
@@ -1663,8 +1659,8 @@ input UserServiceUpdateArgs {
 
 input UserServiceCreateInput {
   name: String
-  originalPrice: Int
   status: String
+  originalPrice: Int
   price: Int
   student: UserRelateToOneForCreateInput
   manager: UserRelateToOneForCreateInput
