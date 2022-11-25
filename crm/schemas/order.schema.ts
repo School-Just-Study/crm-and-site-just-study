@@ -9,6 +9,7 @@ import { lastModification } from '../fields/lastModification';
 import { currency } from '../fields/currency';
 import { handleOrderStatus } from '../lib/handleOrderStatus';
 import { FRONTEND_URL } from '../config';
+import { EditOnlyAdminForUi } from '../validation';
 
 export const Order = list({
     ui: {
@@ -45,7 +46,13 @@ export const Order = list({
                 }
             })
         }),
-        student: relationship({ ref: 'User', label: 'Клиент' }),
+        student: relationship({
+            ref: 'User',
+            label: 'Клиент',
+            ui: {
+                itemView: { fieldMode: EditOnlyAdminForUi }
+            }
+        }),
         quantityPayments: integer({
             validation: { isRequired: true },
             defaultValue: 1,
@@ -73,24 +80,35 @@ export const Order = list({
         payments: relationship({
             ref: 'Payment.order',
             many: true,
-            label: 'Платежи'
+            label: 'Платежи',
+            ui: {
+                displayMode: 'cards',
+                cardFields: ['status', 'amount', 'amountUSD'],
+                itemView: { fieldMode: EditOnlyAdminForUi }
+            }
         }),
         status: select({
             type: 'enum',
             label: 'Статус заказа',
             options: OrderStatusOptions,
-            ui: { displayMode: 'segmented-control' },
+            ui: { displayMode: 'segmented-control', itemView: { fieldMode: EditOnlyAdminForUi } },
             defaultValue: OrderStatus.Created
         }),
         subscriptions: relationship({
             ref: 'UserSubscription',
             many: true,
-            label: 'Абонементы'
+            label: 'Абонементы',
+            ui: {
+                itemView: { fieldMode: EditOnlyAdminForUi }
+            }
         }),
         services: relationship({
             ref: 'UserService',
             many: true,
-            label: 'Услуги'
+            label: 'Услуги',
+            ui: {
+                itemView: { fieldMode: EditOnlyAdminForUi }
+            }
         }),
         amount: integer({ label: 'Сумма' }),
         amountUSD: virtual<Lists.Order.TypeInfo>({

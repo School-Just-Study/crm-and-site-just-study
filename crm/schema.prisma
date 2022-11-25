@@ -183,7 +183,6 @@ model User {
   email                         String             @unique @default("")
   password                      String?
   role                          UserRoleType?      @default(student)
-  comment                       String             @default("") @mysql.VarChar(10000)
   client                        Client?            @relation("User_client", fields: [clientId], references: [id])
   clientId                      Int?               @map("client")
   manager                       Manager?           @relation("User_manager", fields: [managerId], references: [id])
@@ -300,8 +299,8 @@ model Service {
 model UserService {
   id                  Int      @id @default(autoincrement())
   name                String   @default("")
-  originalPrice       Int?
   status              String   @default("finished")
+  originalPrice       Int?
   price               Int?
   student             User?    @relation("UserService_student", fields: [studentId], references: [id])
   studentId           Int?     @map("student")

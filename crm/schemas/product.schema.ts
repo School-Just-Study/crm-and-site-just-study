@@ -13,7 +13,7 @@ export const Product = list({
         labelField: 'name',
         description: 'Курсы, которые публикуются на сайте',
         listView: {
-            initialColumns: ['language', 'name', 'statusView', 'desc', 'category'],
+            initialColumns: ['id', 'language', 'name', 'statusView', 'desc', 'category'],
             pageSize: 20
         }
     },
@@ -36,10 +36,15 @@ export const Product = list({
                 inlineEdit: { fields: ['language', 'name'] },
                 linkToItem: true,
                 inlineConnect: true,
-                inlineCreate: { fields: ['language', 'name'] }
+                inlineCreate: { fields: ['language', 'name'] },
+                createView: { fieldMode: 'hidden' }
             }
         }),
-        image: image({ storage: 'storage_product_image', label: 'Изображение' }),
+        image: image({
+            storage: 'storage_product_image',
+            label: 'Изображение',
+            ui: { createView: { fieldMode: 'hidden' } }
+        }),
         tags: relationship({
             label: 'Теги',
             ref: 'Tag',
@@ -50,13 +55,17 @@ export const Product = list({
                 inlineEdit: { fields: ['language', 'name'] },
                 linkToItem: true,
                 inlineConnect: true,
-                inlineCreate: { fields: ['language', 'name'] }
+                inlineCreate: { fields: ['language', 'name'] },
+                createView: { fieldMode: 'hidden' }
             }
         }),
         subscriptions: relationship({
             ref: 'Subscription',
             many: true,
-            label: 'Абонементы'
+            label: 'Абонементы',
+            ui: {
+                createView: { fieldMode: 'hidden' }
+            }
         }),
         createdAt,
         lastModification

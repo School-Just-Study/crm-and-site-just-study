@@ -8,6 +8,7 @@ import { createdAt } from '../fields/createdAt';
 import { lastModification } from '../fields/lastModification';
 import { LessonStatus } from '../enums/lesson-status';
 import { FRONTEND_URL } from '../config';
+import { EditOnlyAdminForUi } from '../validation';
 
 export const UserSubscription = list({
     ui: {
@@ -51,8 +52,18 @@ export const UserSubscription = list({
             defaultValue: false,
             label: 'Безлимитное количество занятий'
         }),
-        originalPrice: integer({ label: 'Оригинальная цена' }),
-        price: integer({ label: 'Цена продажи' }),
+        originalPrice: integer({
+            label: 'Оригинальная цена',
+            ui: {
+                itemView: { fieldMode: 'read' }
+            }
+        }),
+        price: integer({
+            label: 'Цена продажи',
+            ui: {
+                itemView: { fieldMode: 'read' }
+            }
+        }),
         status: select({
             options: StatusesOptions,
             ui: { displayMode: 'segmented-control' },
@@ -60,7 +71,7 @@ export const UserSubscription = list({
             validation: { isRequired: true },
             label: 'Статус абонемента'
         }),
-        student: relationship({ ref: 'User', label: 'Клиенты' }),
+        student: relationship({ ref: 'User', label: 'Клиенты', ui: { itemView: { fieldMode: EditOnlyAdminForUi } } }),
         beginDate: timestamp({
             defaultValue: { kind: 'now' },
             label: 'Дата начала'

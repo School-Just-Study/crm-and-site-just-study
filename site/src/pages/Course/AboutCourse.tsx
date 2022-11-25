@@ -31,8 +31,8 @@ export const AboutCourse: FC<{ product: Product }> = ({ product }) => {
                     <Stack mt={5} gap={2}>
                         {idHideRecord &&
                             subscriptions?.map(({ id, price, priceUSD, trial }) => (
-                                <Stack key={id} direction="row" gap={1}>
-                                    <Typography fontSize="x-large">Стоимость:</Typography>
+                                <Stack key={id} direction={{ xs: 'column', sm: 'row' }} gap={1}>
+                                    <Typography>Стоимость:</Typography>
                                     {trial ? (
                                         <>
                                             <CurrencyAmount
@@ -40,7 +40,6 @@ export const AboutCourse: FC<{ product: Product }> = ({ product }) => {
                                                 discount={499}
                                                 amountUSD={20}
                                                 discountUSD={9}
-                                                fontSize="x-large"
                                             />
                                         </>
                                     ) : (

@@ -5,6 +5,8 @@ import { Lists } from '.keystone/types';
 import { currency } from '../fields/currency';
 import { FRONTEND_URL } from '../config';
 import { Roles } from '../enums/roles.enum';
+import { ISession } from '../types';
+import { EditOnlyAdminForUi } from '../validation';
 
 export const Cart = list({
     ui: {
@@ -14,7 +16,9 @@ export const Cart = list({
         listView: {
             initialColumns: ['label', 'quantityPayments', 'amountRUB'],
             pageSize: 20
-        }
+        },
+        hideCreate: true,
+        hideDelete: ({ session }: { session: ISession }) => session?.data.role !== Roles.Admin
     },
     fields: {
         label: virtual({
@@ -35,7 +39,8 @@ export const Cart = list({
             ref: 'User.cart',
             label: 'Клиент',
             ui: {
-                hideCreate: true
+                hideCreate: true,
+                itemView: { fieldMode: EditOnlyAdminForUi }
             }
         }),
         linkForUser: virtual({
@@ -63,7 +68,6 @@ export const Cart = list({
                 cardFields: ['subscription', 'service', 'originalPrice', 'price', 'originalPriceUSD', 'priceUSD'],
                 inlineEdit: { fields: ['subscription', 'service', 'price'] },
                 linkToItem: true,
-                inlineConnect: true,
                 inlineCreate: { fields: ['subscription', 'service', 'price'] }
             }
         }),
