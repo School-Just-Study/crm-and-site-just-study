@@ -20,19 +20,22 @@
       "matchPackagePatterns": [
         "^eslint"
       ],
-      "groupName": "@ESLint"
+      "groupName": "@ESLint",
+      "automerge": true
     },
     {
       "matchPackagePatterns": [
         "^@types"
       ],
-      "groupName": "@types"
+      "groupName": "@types",
+      "automerge": true
     },
     {
       "matchPackagePatterns": [
         "^@semantic-release"
       ],
-      "groupName": "@semantic-release"
+      "groupName": "@semantic-release",
+      "automerge": true
     },
     {
       "matchPackagePatterns": [
@@ -50,7 +53,8 @@
       "matchPackagePatterns": [
         "^@graphql-codegen"
       ],
-      "groupName": "@graphql-codegen"
+      "groupName": "@graphql-codegen",
+      "automerge": true
     }
   ]
 }
