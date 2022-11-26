@@ -1919,20 +1919,20 @@
     "@keystone-ui/loading" "^6.0.2"
     react "^18.1.0"
 
-"@keystone-ui/core@5.0.1", "@keystone-ui/core@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/@keystone-ui/core/-/core-5.0.1.tgz#cff796451ba3dda3064651fc3bc9d157c61ad001"
-  integrity sha512-EXCZ6LCMxMot3IHSHNZiGUk6tE9ippvvtZE+9JU2K2SliqT5sn9RXbet0Bv/FukikUrSyV3azl5ES902swaQdA==
+"@keystone-ui/core@5.0.2", "@keystone-ui/core@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@keystone-ui/core/-/core-5.0.2.tgz#d56af8d7a18afbf608c85f3236424eeb34a325bd"
+  integrity sha512-0/rh2nhuQDyio1I8HWfeHUhHP3Adf9+RcsrtpJfcv+U6W3NsJnL/hX68WOYOSF7vYhFgtnuCx8a57xrK1xTsEQ==
   dependencies:
     "@babel/runtime" "^7.16.3"
     "@emotion/react" "^11.7.1"
     "@types/facepaint" "^1.2.2"
     facepaint "^1.2.1"
 
-"@keystone-ui/core@^5.0.2":
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/@keystone-ui/core/-/core-5.0.2.tgz#d56af8d7a18afbf608c85f3236424eeb34a325bd"
-  integrity sha512-0/rh2nhuQDyio1I8HWfeHUhHP3Adf9+RcsrtpJfcv+U6W3NsJnL/hX68WOYOSF7vYhFgtnuCx8a57xrK1xTsEQ==
+"@keystone-ui/core@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@keystone-ui/core/-/core-5.0.1.tgz#cff796451ba3dda3064651fc3bc9d157c61ad001"
+  integrity sha512-EXCZ6LCMxMot3IHSHNZiGUk6tE9ippvvtZE+9JU2K2SliqT5sn9RXbet0Bv/FukikUrSyV3azl5ES902swaQdA==
   dependencies:
     "@babel/runtime" "^7.16.3"
     "@emotion/react" "^11.7.1"
