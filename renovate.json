@@ -5,17 +5,52 @@
   "extends": [
     "config:base"
   ],
-  "schedule": "every weekend",
   "packageRules": [
     {
       "matchPackagePatterns": [
-        "^@keystone-6/"
+        "^@keystone"
       ],
       "groupName": "@keystonejs"
     },
     {
       "matchPackagePatterns": ["^@mui"],
       "groupName": "@mui"
+    },
+    {
+      "matchPackagePatterns": [
+        "^eslint"
+      ],
+      "groupName": "@ESLint"
+    },
+    {
+      "matchPackagePatterns": [
+        "^@types"
+      ],
+      "groupName": "@types"
+    },
+    {
+      "matchPackagePatterns": [
+        "^@semantic-release"
+      ],
+      "groupName": "@semantic-release"
+    },
+    {
+      "matchPackagePatterns": [
+        "^effector"
+      ],
+      "groupName": "@effector"
+    },
+    {
+      "matchPackagePatterns": [
+        "^@emotion"
+      ],
+      "groupName": "@emotion"
+    },
+    {
+      "matchPackagePatterns": [
+        "^@graphql-codegen"
+      ],
+      "groupName": "@graphql-codegen"
     }
   ]
 }

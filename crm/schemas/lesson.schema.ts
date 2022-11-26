@@ -11,15 +11,7 @@ export const Lesson = list({
     ui: {
         label: 'Уроки',
         listView: {
-            initialColumns: [
-                'id',
-                'students',
-                'statusLesson',
-                'startTime',
-                'endTime',
-                'trial',
-                'timeZone'
-            ],
+            initialColumns: ['id', 'students', 'statusLesson', 'startTime', 'endTime', 'trial', 'timeZone'],
             initialSort: { field: 'statusLesson', direction: 'DESC' }
         }
     },

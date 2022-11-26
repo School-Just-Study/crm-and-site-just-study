@@ -10,7 +10,6 @@ export const Direction = list({
     ui: {
         label: 'Направления курсов',
         labelField: 'name',
-        description: 'Направления курсов',
         listView: {
             initialColumns: ['id', 'name', 'description', 'statusView', 'language']
         }

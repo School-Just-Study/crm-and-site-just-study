@@ -3,11 +3,14 @@ import { integer, text } from '@keystone-6/core/fields';
 import { isAdmin } from '../validation';
 import { createdAt } from '../fields/createdAt';
 import { lastModification } from '../fields/lastModification';
+import { ISession } from '../types';
+import { Roles } from '../enums/roles.enum';
 
 export const Currency = list({
     ui: {
-        isHidden: !isAdmin,
-        label: 'Валюты'
+        isHidden: ({ session }: { session: ISession }) => session?.data.role !== Roles.Admin,
+        label: 'Валюты',
+        hideCreate: ({ session }: { session: ISession }) => session?.data.role !== Roles.Admin
     },
     fields: {
         charCode: text({
