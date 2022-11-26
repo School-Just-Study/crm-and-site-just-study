@@ -10,11 +10,12 @@ import { currency } from '../fields/currency';
 import { handleOrderStatus } from '../lib/handleOrderStatus';
 import { FRONTEND_URL } from '../config';
 import { EditOnlyAdminForUi } from '../validation';
+import { ISession } from '../types';
+import { Roles } from '../enums/roles.enum';
 
 export const Order = list({
     ui: {
         label: 'Заказы',
-        description: 'Список заказов клиентов',
         listView: {
             initialColumns: [
                 'id',
@@ -29,7 +30,8 @@ export const Order = list({
             ],
             initialSort: { field: 'status', direction: 'ASC' },
             pageSize: 20
-        }
+        },
+        hideCreate: ({ session }: { session: ISession }) => session?.data.role !== Roles.Admin
     },
     fields: {
         label: text({ label: 'Название заказа' }),

@@ -11,13 +11,12 @@ import { EditOnlyAdminForUi } from '../validation';
 export const Cart = list({
     ui: {
         label: 'Корзины',
-        description: 'Корзина для клиентов',
         labelField: 'label',
         listView: {
             initialColumns: ['label', 'quantityPayments', 'amountRUB'],
             pageSize: 20
         },
-        hideCreate: true,
+        hideCreate: ({ session }: { session: ISession }) => session?.data.role !== Roles.Admin,
         hideDelete: ({ session }: { session: ISession }) => session?.data.role !== Roles.Admin
     },
     fields: {

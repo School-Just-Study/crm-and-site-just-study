@@ -1897,18 +1897,7 @@
     slate-history "^0.66.0"
     slate-react "^0.81.0"
 
-"@keystone-ui/button@7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@keystone-ui/button/-/button-7.0.1.tgz#3a43127d3124b118744d394359bacfc5fc71b7b7"
-  integrity sha512-eA9qSX+Uh2S/6PO7TCcmvtyjtYKDbkHD7l9uTAIsNIKR4YGkSvPUcYBpdSQLPrr1H5aHHhgl+oOiiMiNw4Xudw==
-  dependencies:
-    "@babel/runtime" "^7.16.3"
-    "@keystone-ui/core" "^5.0.1"
-    "@keystone-ui/icons" "^6.0.1"
-    "@keystone-ui/loading" "^6.0.1"
-    react "^18.1.0"
-
-"@keystone-ui/button@^7.0.2":
+"@keystone-ui/button@7.0.2", "@keystone-ui/button@^7.0.2":
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/@keystone-ui/button/-/button-7.0.2.tgz#6f3be63b54b517eddd101b3f2d3bb47e281e84f5"
   integrity sha512-bFuT3WtLRFWXGP0lMPRIxYG22u2BEvjP9blSeGGXQSvl3hC5Zh2r/BlylHeYaWFChcaRYRU2G/2QSLoPAvyDGQ==
@@ -1919,17 +1908,7 @@
     "@keystone-ui/loading" "^6.0.2"
     react "^18.1.0"
 
-"@keystone-ui/core@5.0.1", "@keystone-ui/core@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/@keystone-ui/core/-/core-5.0.1.tgz#cff796451ba3dda3064651fc3bc9d157c61ad001"
-  integrity sha512-EXCZ6LCMxMot3IHSHNZiGUk6tE9ippvvtZE+9JU2K2SliqT5sn9RXbet0Bv/FukikUrSyV3azl5ES902swaQdA==
-  dependencies:
-    "@babel/runtime" "^7.16.3"
-    "@emotion/react" "^11.7.1"
-    "@types/facepaint" "^1.2.2"
-    facepaint "^1.2.1"
-
-"@keystone-ui/core@^5.0.2":
+"@keystone-ui/core@5.0.2", "@keystone-ui/core@^5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@keystone-ui/core/-/core-5.0.2.tgz#d56af8d7a18afbf608c85f3236424eeb34a325bd"
   integrity sha512-0/rh2nhuQDyio1I8HWfeHUhHP3Adf9+RcsrtpJfcv+U6W3NsJnL/hX68WOYOSF7vYhFgtnuCx8a57xrK1xTsEQ==
@@ -1939,22 +1918,7 @@
     "@types/facepaint" "^1.2.2"
     facepaint "^1.2.1"
 
-"@keystone-ui/fields@7.1.1":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@keystone-ui/fields/-/fields-7.1.1.tgz#70c5d20b9935b0347c261d3d7aa7dadb57f3c4ad"
-  integrity sha512-ld1XfQYdmq8gIDtTtGRLvIM4YmQ288QJR8/H8Vw1z/YYHnDdIWucY+6QaqZ3uP5K9nGhXk6L+6OInj2uxRklzw==
-  dependencies:
-    "@babel/runtime" "^7.16.3"
-    "@keystone-ui/core" "^5.0.1"
-    "@keystone-ui/icons" "^6.0.1"
-    "@keystone-ui/popover" "^6.0.1"
-    date-fns "^2.26.0"
-    react "^18.1.0"
-    react-day-picker "^8.0.4"
-    react-focus-lock "^2.7.1"
-    react-select "^5.2.1"
-
-"@keystone-ui/fields@^7.1.2":
+"@keystone-ui/fields@7.1.2", "@keystone-ui/fields@^7.1.2":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@keystone-ui/fields/-/fields-7.1.2.tgz#cb9328096f056b7c6343f1e7e64ef3e4246404b5"
   integrity sha512-3/PTPTXFu7Iy80KxzRBXjVrdGfWqObpI4rs1dkHdKJoq8TWFWrrcEaglxY9o1GA3v7kClCIBplOIy/PHl+mmBA==
@@ -1969,30 +1933,13 @@
     react-focus-lock "^2.7.1"
     react-select "^5.2.1"
 
-"@keystone-ui/icons@6.0.1", "@keystone-ui/icons@^6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@keystone-ui/icons/-/icons-6.0.1.tgz#3ba3c0d71973af4cbb2de69d34f746caf34a7bd3"
-  integrity sha512-qxuOV/hlShNR84NGfUKiaeoXQAjR+tCJiuRTdspiFfwg8Wzuconr6wq2xlPr6eawTNK/V63ffGsv2rwYqY6UEw==
-  dependencies:
-    "@babel/runtime" "^7.16.3"
-    "@keystone-ui/core" "^5.0.1"
-
-"@keystone-ui/icons@^6.0.2":
+"@keystone-ui/icons@6.0.2", "@keystone-ui/icons@^6.0.2":
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/@keystone-ui/icons/-/icons-6.0.2.tgz#fb3b6b9a330c9a5244d80e1b8a3a8c8199050c9e"
   integrity sha512-myJ8AoLxJrcLYAVgH3u+hO6wO/ZeidraLzlwxOyLMgLLBJsWwOOYVRZv2nHp6S/G/gIa6UaCQKC4VI8wjvieVg==
   dependencies:
     "@babel/runtime" "^7.16.3"
     "@keystone-ui/core" "^5.0.2"
-
-"@keystone-ui/loading@^6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@keystone-ui/loading/-/loading-6.0.1.tgz#f67e4f3f43392a5dab1067f7fde7bed3b2b9a094"
-  integrity sha512-ZP2CAAsAWKdzYPOMMoeGGLNeSKJBRrChV2Bp4mqFDPRYtFhyxELzMLjLtFmhOEHKJYFrZOmXP4/GaOJgRthtpA==
-  dependencies:
-    "@babel/runtime" "^7.16.3"
-    "@keystone-ui/core" "^5.0.1"
-    react "^18.1.0"
 
 "@keystone-ui/loading@^6.0.2":
   version "6.0.2"
@@ -2047,17 +1994,6 @@
     "@keystone-ui/core" "^5.0.2"
     "@keystone-ui/icons" "^6.0.2"
 
-"@keystone-ui/popover@^6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@keystone-ui/popover/-/popover-6.0.1.tgz#b06033ad4f34ae83abde23f43ac5eeb84a751519"
-  integrity sha512-TxoSqXYSyxA57nkJzsuNQCncFwqCsc/cM9nxzhI3pBoAmAaoR28tO4TDQeYpIWouUg9/eAFK+F/mZQS/fkLfog==
-  dependencies:
-    "@babel/runtime" "^7.16.3"
-    "@keystone-ui/core" "^5.0.1"
-    "@popperjs/core" "^2.10.2"
-    focus-trap "^6.7.1"
-    react-popper "^2.2.5"
-
 "@keystone-ui/popover@^6.0.2":
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/@keystone-ui/popover/-/popover-6.0.2.tgz#353d2abea1b4b3397d3bec6631d82edd58ae87c9"
@@ -2086,17 +2022,7 @@
     "@keystone-ui/core" "^5.0.2"
     "@keystone-ui/icons" "^6.0.2"
 
-"@keystone-ui/tooltip@6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@keystone-ui/tooltip/-/tooltip-6.0.1.tgz#897b8ee8ee19195e709add60be04e6bcf234ff90"
-  integrity sha512-6BJMjmvqVVJNUIQqzPuMc9+hY4mcyWD6EJfolOYKDfzUCgZLa+TsSk8wOB61AxDMumWh9H+Uh1F4Gw8uA6cMHg==
-  dependencies:
-    "@babel/runtime" "^7.16.3"
-    "@keystone-ui/core" "^5.0.1"
-    "@keystone-ui/popover" "^6.0.1"
-    apply-ref "^1.0.0"
-
-"@keystone-ui/tooltip@^6.0.2":
+"@keystone-ui/tooltip@6.0.2", "@keystone-ui/tooltip@^6.0.2":
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/@keystone-ui/tooltip/-/tooltip-6.0.2.tgz#f3fd9b068fdf5d0ba011c110a23fdb0aabf106ed"
   integrity sha512-lB+1TCcXvM2R8wKg7Wd7VIY10RaKjQXR/BKUf+trozl9v/NuFEX3Ym5GvanDQXyQgwfUC6xvUX3IuHjdhCrJIw==
@@ -4891,13 +4817,6 @@ focus-lock@^0.11.2:
   integrity sha512-4n0pYcPTa/uI7Q66BZna61nRT7lDhnuJ9PJr6wiDjx4uStg491ks41y7uOG+s0umaaa+hulNKSldU9aTg9/yVg==
   dependencies:
     tslib "^2.0.3"
-
-focus-trap@^6.7.1:
-  version "6.9.4"
-  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-6.9.4.tgz#436da1a1d935c48b97da63cd8f361c6f3aa16444"
-  integrity sha512-v2NTsZe2FF59Y+sDykKY+XjqZ0cPfhq/hikWVL88BqLivnNiEffAsac6rP6H45ff9wG9LL5ToiDqrLEP9GX9mw==
-  dependencies:
-    tabbable "^5.3.3"
 
 focus-trap@^7.0.0:
   version "7.1.0"
@@ -8511,11 +8430,6 @@ symbol-observable@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-4.0.0.tgz#5b425f192279e87f2f9b937ac8540d1984b39205"
   integrity sha512-b19dMThMV4HVFynSAM1++gBHAbk2Tc/osgLIBZMKsyqh34jb2e8Os7T6ZW/Bt3pJFdBTd2JwAnAAEQV7rSNvcQ==
-
-tabbable@^5.3.3:
-  version "5.3.3"
-  resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-5.3.3.tgz#aac0ff88c73b22d6c3c5a50b1586310006b47fbf"
-  integrity sha512-QD9qKY3StfbZqWOPLp0++pOrAVb/HbUi5xCc8cUo4XjP19808oaMiDzn0leBY5mCespIBM0CIZePzZjgzR83kA==
 
 tabbable@^6.0.1:
   version "6.0.1"

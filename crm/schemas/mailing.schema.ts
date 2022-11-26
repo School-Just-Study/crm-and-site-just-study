@@ -14,13 +14,7 @@ export const Mailing = list({
     ui: {
         label: 'Рассылки',
         listView: {
-            initialColumns: [
-                'id',
-                'status',
-                'content',
-                'statusClient',
-                'clients'
-            ],
+            initialColumns: ['id', 'status', 'content', 'statusClient', 'clients'],
             initialSort: {
                 field: 'status',
                 direction: 'ASC'

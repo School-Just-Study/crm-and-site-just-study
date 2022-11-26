@@ -7,15 +7,18 @@ import { createdAt } from '../fields/createdAt';
 import { lastModification } from '../fields/lastModification';
 import { currency } from '../fields/currency';
 import { handleOrderStatusAfterPayment } from '../lib/handleOrderStatusAfterPayment';
+import { ISession } from '../types';
+import { Roles } from '../enums/roles.enum';
 
 export const Payment = list({
     ui: {
         label: 'Платежи',
         listView: {
             initialColumns: ['id', 'order', 'status', 'amount', 'currency'],
-            pageSize: 20
+            pageSize: 20,
+            initialSort: { field: 'id', direction: 'DESC' }
         },
-        isHidden: true
+        isHidden: ({ session }: { session: ISession }) => session?.data.role !== Roles.Admin
     },
     fields: {
         order: relationship({ ref: 'Order.payments', label: 'Заказ' }),
