@@ -2086,17 +2086,7 @@
     "@keystone-ui/core" "^5.0.2"
     "@keystone-ui/icons" "^6.0.2"
 
-"@keystone-ui/tooltip@6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@keystone-ui/tooltip/-/tooltip-6.0.1.tgz#897b8ee8ee19195e709add60be04e6bcf234ff90"
-  integrity sha512-6BJMjmvqVVJNUIQqzPuMc9+hY4mcyWD6EJfolOYKDfzUCgZLa+TsSk8wOB61AxDMumWh9H+Uh1F4Gw8uA6cMHg==
-  dependencies:
-    "@babel/runtime" "^7.16.3"
-    "@keystone-ui/core" "^5.0.1"
-    "@keystone-ui/popover" "^6.0.1"
-    apply-ref "^1.0.0"
-
-"@keystone-ui/tooltip@^6.0.2":
+"@keystone-ui/tooltip@6.0.2", "@keystone-ui/tooltip@^6.0.2":
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/@keystone-ui/tooltip/-/tooltip-6.0.2.tgz#f3fd9b068fdf5d0ba011c110a23fdb0aabf106ed"
   integrity sha512-lB+1TCcXvM2R8wKg7Wd7VIY10RaKjQXR/BKUf+trozl9v/NuFEX3Ym5GvanDQXyQgwfUC6xvUX3IuHjdhCrJIw==
