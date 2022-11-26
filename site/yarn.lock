@@ -808,7 +808,7 @@
   dependencies:
     tslib "^2.1.0"
 
-"@fullcalendar/daygrid@6.0.0-beta.1", "@fullcalendar/daygrid@^6.0.0-beta.1":
+"@fullcalendar/daygrid@6.0.0-beta.1":
   version "6.0.0-beta.1"
   resolved "https://registry.yarnpkg.com/@fullcalendar/daygrid/-/daygrid-6.0.0-beta.1.tgz#cf95c16430f0231e07d28ad82f422bb8efb2f57f"
   integrity sha512-0/iiWIydCBJDORKAwDded9UHxwVTy6PB2MQZO/AiF7d/stN5i2LrWFDzPgWWovNYZxljrnQ4DTAo/FAnYgBMaw==
@@ -816,7 +816,7 @@
     "@fullcalendar/common" "6.0.0-beta.1"
     tslib "^2.1.0"
 
-"@fullcalendar/interaction@^6.0.0-beta.1":
+"@fullcalendar/interaction@6.0.0-beta.1":
   version "6.0.0-beta.1"
   resolved "https://registry.yarnpkg.com/@fullcalendar/interaction/-/interaction-6.0.0-beta.1.tgz#3b104f59a8df1ecdbb4e954afc9cebf558d8074a"
   integrity sha512-j3ImYMEJ4AXAozwCY9I0jL9VJdZf36qDaa+widzpVFkXH+mKGiTAcRgoItpBJdximvgx30wHOSyFu48oFicdbQ==
@@ -824,7 +824,7 @@
     "@fullcalendar/common" "6.0.0-beta.1"
     tslib "^2.1.0"
 
-"@fullcalendar/react@^6.0.0-beta.1":
+"@fullcalendar/react@6.0.0-beta.1":
   version "6.0.0-beta.1"
   resolved "https://registry.yarnpkg.com/@fullcalendar/react/-/react-6.0.0-beta.1.tgz#67eef9d2d5439f4efa3ffd59de1334cb1b0c14c3"
   integrity sha512-jpny5LNmc7htZP1pNy7M7MxwYu2Lz30+8+IbdVQSOWJVDiYUW8cWk+7qMpiZjxfO5TLCTfJb8kVEODXU78x0uw==
@@ -832,7 +832,7 @@
     "@fullcalendar/common" "6.0.0-beta.1"
     tslib "^2.1.0"
 
-"@fullcalendar/timegrid@^6.0.0-beta.1":
+"@fullcalendar/timegrid@6.0.0-beta.1":
   version "6.0.0-beta.1"
   resolved "https://registry.yarnpkg.com/@fullcalendar/timegrid/-/timegrid-6.0.0-beta.1.tgz#bda067402f9ac51520aedcbb80b69618053556e4"
   integrity sha512-KwDtUv9n3H867zC/9Mq82grHhcHZ2byXXL4+/Ui9+zqR84ZAWBZe+FfjnHh5zuGW/X5Qs0QdGeBr4+nteQrz1w==
@@ -1818,7 +1818,7 @@
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.5.tgz"
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
 
-"@types/react-datepicker@^4.4.2":
+"@types/react-datepicker@4.4.2":
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/@types/react-datepicker/-/react-datepicker-4.4.2.tgz#13ab25a5fff7f3da4c5380c471efd8b38f53010e"
   integrity sha512-g8DhWvYmaIMLzVrIEVLXncylyImyBaoPsEUr3yR13JDaaHoebhDorqnVv4tLkNGa8SjBB8SAOQvxD5jaPNBX8A==
@@ -1835,7 +1835,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-gtm-module@^2.0.1":
+"@types/react-gtm-module@2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@types/react-gtm-module/-/react-gtm-module-2.0.1.tgz#b2c6cd14ec251d6ae7fa576edf1d43825908a378"
   integrity sha512-T/DN9gAbCYk5wJ1nxf4pSwmXz4d1iVjM++OoG+mwMfz9STMAotGjSb65gJHOS5bPvl6vLSsJnuC+y/43OQrltg==
@@ -2125,7 +2125,7 @@ anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-apollo3-cache-persist@^0.14.1:
+apollo3-cache-persist@0.14.1:
   version "0.14.1"
   resolved "https://registry.yarnpkg.com/apollo3-cache-persist/-/apollo3-cache-persist-0.14.1.tgz#8f4c016b4d413aa28f68429b37c8d12524b5983b"
   integrity sha512-p/jNzN/MmSd0TmY7/ts0B3qi0SdQ3w9yNLQdKqB3GGb9xATUlAum2v4hSrTeWd/DZKK2Z7Xg5kFXTH6nNVnKSQ==
@@ -2764,7 +2764,7 @@ dataloader@2.1.0:
   resolved "https://registry.npmjs.org/dataloader/-/dataloader-2.1.0.tgz"
   integrity sha512-qTcEYLen3r7ojZNgVUaRggOI+KM7jrKxXeSHhogh/TWxYMeONEMqY+hmkobiYQozsGIyg9OYVzO4ZIfoB4I0pQ==
 
-date-fns-tz@^1.3.7:
+date-fns-tz@1.3.7:
   version "1.3.7"
   resolved "https://registry.yarnpkg.com/date-fns-tz/-/date-fns-tz-1.3.7.tgz#e8e9d2aaceba5f1cc0e677631563081fdcb0e69a"
   integrity sha512-1t1b8zyJo+UI8aR+g3iqr5fkUHWpd58VBx8J/ZSQ+w7YrGlw80Ag4sA86qkfCXRBLmMc4I2US+aPMd4uKvwj5g==
@@ -4456,9 +4456,9 @@ lodash.startswith@^4.2.1:
   resolved "https://registry.npmjs.org/lodash.startswith/-/lodash.startswith-4.2.1.tgz"
   integrity sha512-XClYR1h4/fJ7H+mmCKppbiBmljN/nGs73iq2SjCT9SF4CBPoUHzLvWmH1GtZMhMBZSiRkHXfeA2RY1eIlJ75ww==
 
-lodash@^4.17.20, lodash@^4.17.21, lodash@~4.17.0:
+lodash@4.17.21, lodash@^4.17.20, lodash@^4.17.21, lodash@~4.17.0:
   version "4.17.21"
-  resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 log-symbols@^4.0.0, log-symbols@^4.1.0:
@@ -4641,7 +4641,7 @@ next-cookies@^2.0.3:
   dependencies:
     universal-cookie "^4.0.2"
 
-next-http-proxy-middleware@^1.2.4:
+next-http-proxy-middleware@1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/next-http-proxy-middleware/-/next-http-proxy-middleware-1.2.4.tgz#4b6fb209f776434d517826a05376b6ce810ad3fa"
   integrity sha512-4ScStkj08nFL2IX0doJq8Hwrk1zOdKaOkxFGxRmV+lN4Oh/d6qDSqUKxfSew676qA07bhncj6vbKBVVpLKfZBA==
@@ -5246,7 +5246,7 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-datepicker@^4.8.0:
+react-datepicker@4.8.0:
   version "4.8.0"
   resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-4.8.0.tgz#11b8918d085a1ce4781eee4c8e4641b3cd592010"
   integrity sha512-u69zXGHMpxAa4LeYR83vucQoUCJQ6m/WBsSxmUMu/M8ahTSVMMyiyQzauHgZA2NUr9y0FUgOAix71hGYUb6tvg==
@@ -5271,7 +5271,7 @@ react-fast-compare@^3.0.1:
   resolved "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.0.tgz"
   integrity sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==
 
-react-gtm-module@^2.0.11:
+react-gtm-module@2.0.11:
   version "2.0.11"
   resolved "https://registry.yarnpkg.com/react-gtm-module/-/react-gtm-module-2.0.11.tgz#14484dac8257acd93614e347c32da9c5ac524206"
   integrity sha512-8gyj4TTxeP7eEyc2QKawEuQoAZdjKvMY4pgWfycGmqGByhs17fR+zEBs0JUDq4US/l+vbTl+6zvUIx27iDo/Vw==
@@ -5610,7 +5610,7 @@ setimmediate@^1.0.5:
   resolved "https://registry.yarnpkg.com/setimmediate/-/setimmediate-1.0.5.tgz#290cbb232e306942d7d7ea9b83732ab7856f8285"
   integrity sha512-MATJdZp8sLqDl/68LfQmbP8zKPLQNV6BIZoIgrscFDQ+RsvK/BxeDQOgyxKKoh0y/8h3BqVFnCqQ/gd+reiIXA==
 
-sharp@^0.31.1:
+sharp@0.31.1:
   version "0.31.1"
   resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.31.1.tgz#b2f7076d381a120761aa93700cadefcf90a22458"
   integrity sha512-GR8M1wBwOiFKLkm9JPun27OQnNRZdHfSf9VwcdZX6UrRmM1/XnOrLFTF0GAil+y/YK4E6qcM/ugxs80QirsHxg==
@@ -5992,7 +5992,7 @@ tr46@~0.0.3:
   resolved "https://registry.npmjs.org/tr46/-/tr46-0.0.3.tgz"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
 
-ts-essentials@^9.3.0:
+ts-essentials@9.3.0:
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/ts-essentials/-/ts-essentials-9.3.0.tgz#7e639c1a76b1805c3c60d6e1b5178da2e70aea02"
   integrity sha512-XeiCboEyBG8UqXZtXl59bWEi4ZgOqRsogFDI6WDGIF1LmzbYiAkIwjkXN6zZWWl4re/lsOqMlYfe8KA0XiiEPw==
