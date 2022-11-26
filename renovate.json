@@ -37,12 +37,6 @@
     },
     {
       "matchPackagePatterns": [
-        "^@fullcalendar"
-      ],
-      "groupName": "@fullcalendar"
-    },
-    {
-      "matchPackagePatterns": [
         "^effector"
       ],
       "groupName": "@effector"
