@@ -1939,22 +1939,7 @@
     "@types/facepaint" "^1.2.2"
     facepaint "^1.2.1"
 
-"@keystone-ui/fields@7.1.1":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@keystone-ui/fields/-/fields-7.1.1.tgz#70c5d20b9935b0347c261d3d7aa7dadb57f3c4ad"
-  integrity sha512-ld1XfQYdmq8gIDtTtGRLvIM4YmQ288QJR8/H8Vw1z/YYHnDdIWucY+6QaqZ3uP5K9nGhXk6L+6OInj2uxRklzw==
-  dependencies:
-    "@babel/runtime" "^7.16.3"
-    "@keystone-ui/core" "^5.0.1"
-    "@keystone-ui/icons" "^6.0.1"
-    "@keystone-ui/popover" "^6.0.1"
-    date-fns "^2.26.0"
-    react "^18.1.0"
-    react-day-picker "^8.0.4"
-    react-focus-lock "^2.7.1"
-    react-select "^5.2.1"
-
-"@keystone-ui/fields@^7.1.2":
+"@keystone-ui/fields@7.1.2", "@keystone-ui/fields@^7.1.2":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@keystone-ui/fields/-/fields-7.1.2.tgz#cb9328096f056b7c6343f1e7e64ef3e4246404b5"
   integrity sha512-3/PTPTXFu7Iy80KxzRBXjVrdGfWqObpI4rs1dkHdKJoq8TWFWrrcEaglxY9o1GA3v7kClCIBplOIy/PHl+mmBA==
