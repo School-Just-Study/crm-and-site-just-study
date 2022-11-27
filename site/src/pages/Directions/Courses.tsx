@@ -14,8 +14,7 @@ export const Courses: FC = () => {
     const { locale } = useRouter();
     const t = transition(directionsPage, locale);
     const { data } = useQuery<{ directions: Direction[] }>(QUERY_DIRECTIONS, {
-        variables: { lang: locale },
-        fetchPolicy: 'cache-and-network'
+        variables: { lang: locale }
     });
 
     if (!data) return null;
