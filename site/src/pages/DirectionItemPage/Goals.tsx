@@ -23,6 +23,7 @@ export const Goals: FC<Pick<Direction, 'goals'>> = ({ goals }) => {
                             <Box key={id} textAlign="center">
                                 <Box position="relative" height={300} width="100%" minHeight={300}>
                                     <Image
+                                        priority
                                         src={image?.url as string}
                                         alt={name as string}
                                         width={500}
