@@ -10,7 +10,7 @@ COPY --from=dependencies /app/node_modules ./node_modules
 ENV NODE_ENV production
 RUN yarn build
 
-FROM node:18-alpine-alpine as runner
+FROM node:18-alpine as runner
 WORKDIR /app
 
 COPY --from=builder /app/package.json ./package.json
