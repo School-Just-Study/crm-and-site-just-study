@@ -11,7 +11,7 @@ export const QUERY_PAGE_PATHS = gql`
 
 export const QUERY_PAGE = gql`
     query ($slug: String!, $lang: String!) {
-        pages(where: { slug: { equals: $slug }, language: { equals: $lang } }) {
+        pages(where: { statusView: { equals: "show" }, slug: { equals: $slug }, language: { equals: $lang } }) {
             id
             language
             title
