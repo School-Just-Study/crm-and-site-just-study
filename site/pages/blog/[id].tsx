@@ -69,7 +69,6 @@ const PostBlogPage: NextPageWithLayout<{ data: Post }> = ({ data }) => {
                                 alt={title as string}
                                 width={700}
                                 height={475}
-                                priority
                                 style={{
                                     borderRadius: 20,
                                     width: '100%',

@@ -29,7 +29,6 @@ export const MainBanner: FC<Pick<Direction, 'name' | 'description' | 'image'>> =
                 image?.url && (
                     <Box position="relative" height="100%" width="100%" minHeight={350}>
                         <Image
-                            priority
                             src={image.url}
                             alt={name as string}
                             width={500}

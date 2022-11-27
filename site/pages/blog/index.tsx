@@ -44,7 +44,7 @@ const BlogPage: NextPageWithLayout = () => {
                             display="grid"
                             gridTemplateColumns={{ sm: '1fr', md: '1fr 1fr', lg: '1fr 1fr 1fr 1fr' }}
                             gap={{ xs: 3, md: 4 }}>
-                            {data?.posts.map(({ title, id, cover }, index) => (
+                            {data?.posts.map(({ title, id, cover }) => (
                                 <Card
                                     key={id}
                                     sx={{
@@ -63,7 +63,6 @@ const BlogPage: NextPageWithLayout = () => {
                                                 alt={title as string}
                                                 width={300}
                                                 height={270}
-                                                priority={index < 8}
                                                 style={{
                                                     objectFit: 'cover',
                                                     width: 'auto',

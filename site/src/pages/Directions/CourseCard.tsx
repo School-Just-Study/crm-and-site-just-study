@@ -21,7 +21,6 @@ export const CourseCard: FC<{ direction: Direction }> = ({ direction }) => {
             {image && (
                 <Card sx={{ height: 270, position: 'relative', bgcolor: theme.palette.warning.light }}>
                     <Image
-                        priority
                         src={image.url}
                         alt={name as string}
                         width={500}
