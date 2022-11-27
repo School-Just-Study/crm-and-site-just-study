@@ -20,16 +20,16 @@ export const image = component({
     schema: {
         imageAlt: fields.text({
             label: 'Image Alt',
-            defaultValue: '',
+            defaultValue: ''
         }),
         imageRel: fields.relationship({
             listKey: 'Image',
             label: 'Image Relation',
-            selection: 'id, image { width, height, url }',
+            selection: 'id, image { width, height, url }'
         }),
         image: imageForDocument({
-            listKey: 'Image',
-        }),
+            listKey: 'Image'
+        })
     },
-    chromeless: true,
+    chromeless: true
 });

@@ -1,60 +1,42 @@
 {
-  "baseBranches": [
-    "develop"
-  ],
-  "extends": [
-    "config:base"
-  ],
-  "packageRules": [
-    {
-      "matchPackagePatterns": [
-        "^@keystone"
-      ],
-      "groupName": "@keystonejs"
-    },
-    {
-      "matchPackagePatterns": ["^@mui"],
-      "groupName": "@mui"
-    },
-    {
-      "matchPackagePatterns": [
-        "^eslint"
-      ],
-      "groupName": "@ESLint",
-      "automerge": true
-    },
-    {
-      "matchPackagePatterns": [
-        "^@types"
-      ],
-      "groupName": "@types",
-      "automerge": true
-    },
-    {
-      "matchPackagePatterns": [
-        "^@semantic-release"
-      ],
-      "groupName": "@semantic-release",
-      "automerge": true
-    },
-    {
-      "matchPackagePatterns": [
-        "^effector"
-      ],
-      "groupName": "@effector"
-    },
-    {
-      "matchPackagePatterns": [
-        "^@emotion"
-      ],
-      "groupName": "@emotion"
-    },
-    {
-      "matchPackagePatterns": [
-        "^@graphql-codegen"
-      ],
-      "groupName": "@graphql-codegen",
-      "automerge": true
-    }
-  ]
+    "baseBranches": ["develop"],
+    "extends": ["config:base"],
+    "packageRules": [
+        {
+            "matchPackagePatterns": ["^@keystone"],
+            "groupName": "@keystonejs"
+        },
+        {
+            "matchPackagePatterns": ["^@mui"],
+            "groupName": "@mui"
+        },
+        {
+            "matchPackagePatterns": ["^eslint"],
+            "groupName": "@ESLint",
+            "automerge": true
+        },
+        {
+            "matchPackagePatterns": ["^@types"],
+            "groupName": "@types",
+            "automerge": true
+        },
+        {
+            "matchPackagePatterns": ["^@semantic-release"],
+            "groupName": "@semantic-release",
+            "automerge": true
+        },
+        {
+            "matchPackagePatterns": ["^effector"],
+            "groupName": "@effector"
+        },
+        {
+            "matchPackagePatterns": ["^@emotion"],
+            "groupName": "@emotion"
+        },
+        {
+            "matchPackagePatterns": ["^@graphql-codegen"],
+            "groupName": "@graphql-codegen",
+            "automerge": true
+        }
+    ]
 }

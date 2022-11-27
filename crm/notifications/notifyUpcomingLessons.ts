@@ -6,14 +6,9 @@ import { sendMessage } from './index';
 import { BACKEND_URL } from '../config';
 
 const infoForStudent = (lesson: any, student: Lists.User.Item) => {
-    const dateFormat = formatInTimeZone(
-        new Date(lesson.startTime),
-        lesson.timeZone,
-        'd MMMM yyyy HH:mm zzz',
-        {
-            locale: localeDate('ru')
-        }
-    );
+    const dateFormat = formatInTimeZone(new Date(lesson.startTime), lesson.timeZone, 'd MMMM yyyy HH:mm zzz', {
+        locale: localeDate('ru')
+    });
 
     return `
       <div style='display:flex; flex-direction: column;'>
@@ -30,10 +25,7 @@ const infoForStudent = (lesson: any, student: Lists.User.Item) => {
  * @param lessonId
  * @param ctx
  */
-export const notifyUpcomingLessons = async (
-    lessonId: Lists.Lesson.Item['id'],
-    ctx: KeystoneContext
-) => {
+export const notifyUpcomingLessons = async (lessonId: Lists.Lesson.Item['id'], ctx: KeystoneContext) => {
     const lesson = await ctx.query.Lesson.findOne({
         where: { id: `${lessonId}` },
         query: `id statusLesson startTime endTime teachers { id email name language linkOnlineLesson timeZone } students { id name email } timeZone subscription { name }`

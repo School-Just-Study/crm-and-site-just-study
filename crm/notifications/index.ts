@@ -21,4 +21,3 @@ export const sendMessage = async (config: SendMessageProps) => {
 
     return mq.sendMessage(params).promise();
 };
-

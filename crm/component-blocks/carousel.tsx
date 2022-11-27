@@ -7,15 +7,16 @@ import { imageForDocument } from './image/imageForDocument';
 import React from 'react';
 import { gql, useQuery } from '@keystone-6/core/admin-ui/apollo';
 
-const findImage   = gql`
-    query($id: ID!) {
-        image(where: {id: $id}) {
-            id image {
+const findImage = gql`
+    query ($id: ID!) {
+        image(where: { id: $id }) {
+            id
+            image {
                 url
             }
         }
     }
-`
+`;
 
 export const carousel = component({
     label: 'Carousel',
@@ -27,14 +28,13 @@ export const carousel = component({
                         overflowY: 'scroll',
                         display: 'flex',
                         scrollSnapType: 'y mandatory'
-                    }}
-                >
-                    {props.fields.items.elements.map(item => {
-                        const {data} = useQuery(findImage, {variables: {id: item?.fields?.image?.value?.id}})
+                    }}>
+                    {props.fields.items.elements.map((item) => {
+                        const { data } = useQuery(findImage, { variables: { id: item?.fields?.image?.value?.id } });
                         return (
                             <Box
                                 key={item.key}
-                                margin='xsmall'
+                                margin="xsmall"
                                 css={{
                                     minWidth: '61.8%',
                                     scrollSnapAlign: 'center',
@@ -44,21 +44,20 @@ export const carousel = component({
                                     boxSizing: 'border-box',
                                     borderRadius: 6,
                                     background: '#eff3f6'
-                                }}
-                            >
-                                {data &&
-                                <img
-                                    role='presentation'
-                                    src={data?.image.image.url}
-                                    css={{
-                                        objectFit: 'cover',
-                                        objectPosition: 'center center',
-                                        height: 240,
-                                        width: '100%',
-                                        borderRadius: 4
-                                    }}
-                                />
-                                }
+                                }}>
+                                {data && (
+                                    <img
+                                        role="presentation"
+                                        src={data?.image.image.url}
+                                        css={{
+                                            objectFit: 'cover',
+                                            objectPosition: 'center center',
+                                            height: 240,
+                                            width: '100%',
+                                            borderRadius: 4
+                                        }}
+                                    />
+                                )}
                                 <h1
                                     css={{
                                         '&&': {
@@ -66,8 +65,7 @@ export const carousel = component({
                                             lineHeight: 'unset',
                                             marginTop: 8
                                         }
-                                    }}
-                                >
+                                    }}>
                                     {item.fields.title.value}
                                 </h1>
                             </Box>
@@ -82,8 +80,8 @@ export const carousel = component({
             fields.object({
                 title: fields.text({ label: 'Title' }),
                 image: imageForDocument({
-                    listKey: 'Image',
-                }),
+                    listKey: 'Image'
+                })
             })
         )
     }

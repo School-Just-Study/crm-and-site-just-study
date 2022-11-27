@@ -10,10 +10,7 @@ import { BACKEND_URL } from '../config';
  * @param review
  * @param ctx
  */
-export const notifyNewReview = async (
-    review: Lists.ProductReview.Item,
-    ctx: KeystoneContext
-) => {
+export const notifyNewReview = async (review: Lists.ProductReview.Item, ctx: KeystoneContext) => {
     const managers = await ctx.query.User.findMany({
         where: { role: { in: [Roles.Admin, Roles.Manager] } },
         query: `email`

@@ -1,72 +1,72 @@
 [
-  {
-    "id": 121692,
-    "name": "Новый",
-    "stateOrder": 10,
-    "systemCode": "new",
-    "createdAt": "2021-12-20T15:19:53+00:00"
-  },
-  {
-    "id": 122532,
-    "name": "Первый звонок принят",
-    "stateOrder": 20,
-    "systemCode": null,
-    "createdAt": "2021-12-30T16:10:46+00:00"
-  },
-  {
-    "id": 126900,
-    "name": "Прохождение теста",
-    "stateOrder": 30,
-    "systemCode": null,
-    "createdAt": "2022-02-16T15:39:42+00:00"
-  },
-  {
-    "id": 122893,
-    "name": "Запись на пробное занятие",
-    "stateOrder": 40,
-    "systemCode": null,
-    "createdAt": "2022-01-06T15:09:51+00:00"
-  },
-  {
-    "id": 121693,
-    "name": "Пробное",
-    "stateOrder": 50,
-    "systemCode": null,
-    "createdAt": "2021-12-20T15:19:53+00:00"
-  },
-  {
-    "id": 121694,
-    "name": "Принимает решение после пробного",
-    "stateOrder": 60,
-    "systemCode": null,
-    "createdAt": "2021-12-20T15:19:53+00:00"
-  },
-  {
-    "id": 121695,
-    "name": "Некачественный лид",
-    "stateOrder": 89000,
-    "systemCode": "bad_lead",
-    "createdAt": "2021-12-20T15:19:53+00:00"
-  },
-  {
-    "id": 121696,
-    "name": "Клиент",
-    "stateOrder": 90000,
-    "systemCode": "client",
-    "createdAt": "2021-12-20T15:19:53+00:00"
-  },
-  {
-    "id": 121697,
-    "name": "Неактивный клиент",
-    "stateOrder": 99000,
-    "systemCode": "inactive_client",
-    "createdAt": "2021-12-20T15:19:53+00:00"
-  },
-  {
-    "id": 121698,
-    "name": "Отказ",
-    "stateOrder": 100000,
-    "systemCode": "reject",
-    "createdAt": "2021-12-20T15:19:53+00:00"
-  }
+    {
+        "id": 121692,
+        "name": "Новый",
+        "stateOrder": 10,
+        "systemCode": "new",
+        "createdAt": "2021-12-20T15:19:53+00:00"
+    },
+    {
+        "id": 122532,
+        "name": "Первый звонок принят",
+        "stateOrder": 20,
+        "systemCode": null,
+        "createdAt": "2021-12-30T16:10:46+00:00"
+    },
+    {
+        "id": 126900,
+        "name": "Прохождение теста",
+        "stateOrder": 30,
+        "systemCode": null,
+        "createdAt": "2022-02-16T15:39:42+00:00"
+    },
+    {
+        "id": 122893,
+        "name": "Запись на пробное занятие",
+        "stateOrder": 40,
+        "systemCode": null,
+        "createdAt": "2022-01-06T15:09:51+00:00"
+    },
+    {
+        "id": 121693,
+        "name": "Пробное",
+        "stateOrder": 50,
+        "systemCode": null,
+        "createdAt": "2021-12-20T15:19:53+00:00"
+    },
+    {
+        "id": 121694,
+        "name": "Принимает решение после пробного",
+        "stateOrder": 60,
+        "systemCode": null,
+        "createdAt": "2021-12-20T15:19:53+00:00"
+    },
+    {
+        "id": 121695,
+        "name": "Некачественный лид",
+        "stateOrder": 89000,
+        "systemCode": "bad_lead",
+        "createdAt": "2021-12-20T15:19:53+00:00"
+    },
+    {
+        "id": 121696,
+        "name": "Клиент",
+        "stateOrder": 90000,
+        "systemCode": "client",
+        "createdAt": "2021-12-20T15:19:53+00:00"
+    },
+    {
+        "id": 121697,
+        "name": "Неактивный клиент",
+        "stateOrder": 99000,
+        "systemCode": "inactive_client",
+        "createdAt": "2021-12-20T15:19:53+00:00"
+    },
+    {
+        "id": 121698,
+        "name": "Отказ",
+        "stateOrder": 100000,
+        "systemCode": "reject",
+        "createdAt": "2021-12-20T15:19:53+00:00"
+    }
 ]

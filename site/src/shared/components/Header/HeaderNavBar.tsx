@@ -1,22 +1,22 @@
-import * as React from "react";
-import { FC } from "react";
-import { alpha, styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Popper from "@mui/material/Popper";
-import Paper from "@mui/material/Paper";
-import { unstable_debounce as debounce } from "@mui/utils";
-import Fade from "@mui/material/Fade";
-import Typography from "@mui/material/Typography";
-import routes from "@src/routes";
-import Link from "@shared/ui/Link";
-import { useRouter } from "next/router";
-import { navigation } from "@translations/navigation";
-import WorkIcon from "@mui/icons-material/Work";
-import FlightIcon from "@mui/icons-material/Flight";
-import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import { transition } from "@src/shared/lib/transition";
-import { ILanguages } from "@src/shared/modules/constants";
-import { INavProps } from "@src/layouts/AppHeader";
+import * as React from 'react';
+import { FC } from 'react';
+import { alpha, styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Popper from '@mui/material/Popper';
+import Paper from '@mui/material/Paper';
+import { unstable_debounce as debounce } from '@mui/utils';
+import Fade from '@mui/material/Fade';
+import Typography from '@mui/material/Typography';
+import routes from '@src/routes';
+import Link from '@shared/ui/Link';
+import { useRouter } from 'next/router';
+import { navigation } from '@translations/navigation';
+import WorkIcon from '@mui/icons-material/Work';
+import FlightIcon from '@mui/icons-material/Flight';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import { transition } from '@src/shared/lib/transition';
+import { ILanguages } from '@src/shared/modules/constants';
+import { INavProps } from '@src/layouts/AppHeader';
 
 const Navigation = styled('nav')(({ theme }) => ({
     '& ul': {

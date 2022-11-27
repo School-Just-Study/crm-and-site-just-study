@@ -1,4 +1,4 @@
 export enum LinkStatus {
-  Active = "active",
-  Disabled = "disabled",
+    Active = 'active',
+    Disabled = 'disabled'
 }

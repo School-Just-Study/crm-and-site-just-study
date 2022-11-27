@@ -31,8 +31,7 @@ export const quote = component({
                         left: 16,
                         fontSize: '4rem'
                     }
-                }}
-            >
+                }}>
                 <div css={{ fontStyle: 'italic', color: '#4A5568' }}>{props.fields.content.element}</div>
                 <div css={{ fontWeight: 'bold', color: '#47546b' }}>
                     <NotEditable>— </NotEditable>

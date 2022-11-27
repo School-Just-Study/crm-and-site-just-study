@@ -1,4 +1,4 @@
-import { createEvent, restore } from "effector";
+import { createEvent, restore } from 'effector';
 
 export const DEFAULT_MAX_TIME_RECORD = 0;
 

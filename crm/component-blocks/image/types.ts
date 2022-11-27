@@ -1,30 +1,28 @@
-import {
-    HydratedRelationshipData
-} from '@keystone-6/fields-document/dist/declarations/src/DocumentEditor/component-blocks/api';
+import { HydratedRelationshipData } from '@keystone-6/fields-document/dist/declarations/src/DocumentEditor/component-blocks/api';
 
 export type TImageListData = {
-    id?: string
+    id?: string;
     image?: {
-        url?: string
-    }
-}
+        url?: string;
+    };
+};
 
-export type TImageValue = TImageListData | null
+export type TImageValue = TImageListData | null;
 
 export interface IImageUploaderProps {
-    listKey: string
-    defaultValue?: TImageValue
-    imageAlt?: string
-    mode?: 'edit' | 'preview'
-    onChange?(value: TImageValue): void
-    onImageAltChange?(value: string): void
-    onRelationChange?(value: HydratedRelationshipData): void
+    listKey: string;
+    defaultValue?: TImageValue;
+    imageAlt?: string;
+    mode?: 'edit' | 'preview';
+    onChange?(value: TImageValue): void;
+    onImageAltChange?(value: string): void;
+    onRelationChange?(value: HydratedRelationshipData): void;
 }
 
 export interface IImageFieldInput {
-    id?: string
-    extension?: string
-    filesize?: number
-    height?: number
-    width?: number
+    id?: string;
+    extension?: string;
+    filesize?: number;
+    height?: number;
+    width?: number;
 }
