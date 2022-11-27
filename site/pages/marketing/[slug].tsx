@@ -15,6 +15,7 @@ import SvgJustStudyLogo from '@src/shared/icons/SvgJustStudyLogo';
 import { QUERY_MARKETING_PAGE, QUERY_MARKETINGS } from '@src/shared/lib/apollo/marketingPage';
 import { ViewStatus } from '@shared/enums/view-status';
 import { DISABLED_BUILD_STATIC_PATHS } from '../../config';
+import Image from 'next/image';
 
 interface IQueryMarketingPage {
     marketing: Marketing;
@@ -61,12 +62,12 @@ const MarketingPage: NextPage<{ data: IQueryMarketingPage }> = ({ data }) => {
                     marketing?.image?.url && (
                         <InstagramAvatar>
                             <div>
-                                <img
+                                <Image
                                     src={marketing.image.url}
                                     alt={marketing.title as string}
-                                    width="100%"
-                                    height="100%"
-                                    style={{ objectFit: 'contain' }}
+                                    width={300}
+                                    height={300}
+                                    style={{ objectFit: 'contain', width: '100%', height: '100%' }}
                                 />
                             </div>
                         </InstagramAvatar>
