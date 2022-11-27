@@ -15,12 +15,13 @@ import { DISABLED_BUILD_STATIC_PATHS } from '../../config';
 
 const CMSPage: NextPageWithLayout<{ data: Page }> = ({ data }) => {
     const { isFallback } = useRouter();
-    const { title, content, description, language } = data;
     const theme = useTheme();
 
     if (isFallback) {
         return <SpinnerWrapper loading centerMode />;
     }
+
+    const { title, content, description, language } = data;
 
     return (
         <>
