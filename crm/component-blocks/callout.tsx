@@ -77,16 +77,14 @@ export const callout = component({
                 }}
                 style={{
                     background: intentConfig.background
-                }}
-            >
+                }}>
                 <NotEditable>
                     <div
                         css={{
                             color: intentConfig.foreground,
                             marginRight: spacing.small,
                             marginTop: '1em'
-                        }}
-                    >
+                        }}>
                         <intentConfig.icon />
                     </div>
                 </NotEditable>
@@ -97,20 +95,19 @@ export const callout = component({
     toolbar: function CalloutToolbar({ props, onRemove }) {
         return (
             <ToolbarGroup>
-                {props.fields.intent.options.map(opt => {
+                {props.fields.intent.options.map((opt) => {
                     const Icon = calloutIconMap[opt.value];
 
                     return (
-                        <Tooltip key={opt.value} content={opt.label} weight='subtle'>
-                            {attrs => (
+                        <Tooltip key={opt.value} content={opt.label} weight="subtle">
+                            {(attrs) => (
                                 <ToolbarButton
                                     isSelected={props.fields.intent.value === opt.value}
                                     onClick={() => {
                                         props.fields.intent.onChange(opt.value);
                                     }}
-                                    {...attrs}
-                                >
-                                    <Icon size='small' />
+                                    {...attrs}>
+                                    <Icon size="small" />
                                 </ToolbarButton>
                             )}
                         </Tooltip>
@@ -119,10 +116,10 @@ export const callout = component({
 
                 <ToolbarSeparator />
 
-                <Tooltip content='Remove' weight='subtle'>
-                    {attrs => (
-                        <ToolbarButton variant='destructive' onClick={onRemove} {...attrs}>
-                            <Trash2Icon size='small' />
+                <Tooltip content="Remove" weight="subtle">
+                    {(attrs) => (
+                        <ToolbarButton variant="destructive" onClick={onRemove} {...attrs}>
+                            <Trash2Icon size="small" />
                         </ToolbarButton>
                     )}
                 </Tooltip>

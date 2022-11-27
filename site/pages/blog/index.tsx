@@ -13,7 +13,6 @@ import { MainLayout } from '@src/layouts/MainLayout';
 import { QUERY_BLOG_PAGE } from '@src/shared/lib/apollo/blogPage';
 import { useQuery } from '@apollo/client';
 import { SpinnerWrapper } from '@shared/ui/SpinnerWrapper';
-import Image from 'next/image';
 
 interface IQueryBlogPage {
     posts: Post[];
@@ -44,7 +43,7 @@ const BlogPage: NextPageWithLayout = () => {
                             display="grid"
                             gridTemplateColumns={{ sm: '1fr', md: '1fr 1fr', lg: '1fr 1fr 1fr 1fr' }}
                             gap={{ xs: 3, md: 4 }}>
-                            {data?.posts.map(({ title, id, cover }, index) => (
+                            {data?.posts.map(({ title, id, cover }) => (
                                 <Card
                                     key={id}
                                     sx={{
@@ -58,17 +57,12 @@ const BlogPage: NextPageWithLayout = () => {
                                         sx={{ cursor: 'pointer' }}
                                         onClick={() => push(`${routes.blog}/${id}`)}>
                                         {cover && (
-                                            <Image
-                                                src={cover.image?.url as string}
+                                            <img
+                                                src={cover.image?.url}
                                                 alt={title as string}
-                                                width={300}
+                                                width="100%"
                                                 height={270}
-                                                priority={index < 8}
-                                                style={{
-                                                    objectFit: 'cover',
-                                                    width: 'auto',
-                                                    height: '270px'
-                                                }}
+                                                style={{ objectFit: 'cover' }}
                                             />
                                         )}
                                         <Typography fontSize={20} fontWeight="bold" p={2} pt={0}>

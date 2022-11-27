@@ -5,27 +5,15 @@ import { localeDate } from '../lib/localeDate';
 import { sendMessage } from './index';
 
 const infoForTeacher = (lesson: any, teacher: Lists.Manager.Item) => {
-    const dateFormatStart = formatInTimeZone(
-        new Date(lesson.startTime),
-        teacher.timeZone,
-        'd MMMM yyyy HH:mm zzz',
-        {
-            locale: localeDate(teacher.language)
-        }
-    );
+    const dateFormatStart = formatInTimeZone(new Date(lesson.startTime), teacher.timeZone, 'd MMMM yyyy HH:mm zzz', {
+        locale: localeDate(teacher.language)
+    });
 
-    const dateFormatEnd = formatInTimeZone(
-        new Date(lesson.endTime),
-        teacher.timeZone,
-        'd MMMM yyyy HH:mm zzz',
-        {
-            locale: localeDate(teacher.language)
-        }
-    );
+    const dateFormatEnd = formatInTimeZone(new Date(lesson.endTime), teacher.timeZone, 'd MMMM yyyy HH:mm zzz', {
+        locale: localeDate(teacher.language)
+    });
 
-    const studentsName = lesson.students.map(
-        (student: Lists.User.Item) => student.name
-    );
+    const studentsName = lesson.students.map((student: Lists.User.Item) => student.name);
 
     return `
       <div style='display:flex; flex-direction: column;'>
@@ -42,10 +30,7 @@ const infoForTeacher = (lesson: any, teacher: Lists.Manager.Item) => {
  * @param lessonId
  * @param ctx
  */
-export const notifyLessonCanceled = async (
-    lessonId: Lists.Lesson.Item['id'],
-    ctx: KeystoneContext
-) => {
+export const notifyLessonCanceled = async (lessonId: Lists.Lesson.Item['id'], ctx: KeystoneContext) => {
     const lesson = await ctx.query.Lesson.findOne({
         where: { id: `${lessonId}` },
         query: `id statusLesson startTime endTime teachers { id email name language timeZone } students { id name email }`

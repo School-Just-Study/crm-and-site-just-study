@@ -10,10 +10,7 @@ import { sendMessage } from './index';
  * @param client
  * @param ctx
  */
-export const notifyNewClient = async (
-    client: Lists.Client.Item,
-    ctx: KeystoneContext
-) => {
+export const notifyNewClient = async (client: Lists.Client.Item, ctx: KeystoneContext) => {
     const managers = await ctx.query.User.findMany({
         where: { role: { in: [Roles.Admin, Roles.Manager] } },
         query: `email`
@@ -25,13 +22,7 @@ export const notifyNewClient = async (
     <div style='display:flex; flex-direction: column'>
     ${fieldsEmail('Имя', client.name)}
     ${fieldsEmail('Телефон', `${client.phone}`)}
-    ${fieldsEmail(
-        'Дата',
-        `${format(
-            new Date(client.createdAt as unknown as string),
-            'dd.MM.yyyy HH:mm'
-        )}`
-    )}
+    ${fieldsEmail('Дата', `${format(new Date(client.createdAt as unknown as string), 'dd.MM.yyyy HH:mm')}`)}
     ${fieldsEmail('Email', client.email)}
     ${fieldsEmail('Коммент', client.comment)}
 </div>

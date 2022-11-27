@@ -3,9 +3,9 @@ import { ViewStatusOptions } from '../consts/view-status-options';
 import { ViewStatus } from '../enums/view-status.enum';
 
 export const statusView = select({
-  options: ViewStatusOptions,
-  defaultValue: ViewStatus.Show,
-  ui: { displayMode: "segmented-control" },
-  validation: { isRequired: true },
-  label: "Статус",
+    options: ViewStatusOptions,
+    defaultValue: ViewStatus.Show,
+    ui: { displayMode: 'segmented-control' },
+    validation: { isRequired: true },
+    label: 'Статус'
 });

@@ -1,11 +1,11 @@
-import { gql } from "@apollo/client";
-import { GetServerSideProps } from "next";
-import client from "@src/shared/lib/apollo/apolloClient";
-import { Query } from "@src/shared/lib/apollo/types";
-import { ISitemapField } from "next-sitemap/dist/@types/interface";
-import { FRONTEND_URL } from "../../config";
-import routes from "@src/routes";
-import { getServerSideSitemap } from "next-sitemap";
+import { gql } from '@apollo/client';
+import { GetServerSideProps } from 'next';
+import client from '@src/shared/lib/apollo/apolloClient';
+import { Query } from '@src/shared/lib/apollo/types';
+import { ISitemapField } from 'next-sitemap/dist/@types/interface';
+import { FRONTEND_URL } from '../../config';
+import routes from '@src/routes';
+import { getServerSideSitemap } from 'next-sitemap';
 
 export const GET_ALL_POSTS = gql`
     query {

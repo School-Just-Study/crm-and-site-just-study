@@ -11,7 +11,6 @@ import { transition } from '@src/shared/lib/transition';
 import { blogPage } from '@translations/blogPage';
 import { useQuery } from '@apollo/client';
 import { QUERY_LAST_POSTS } from '@shared/components/LastPosts/query';
-import Image from 'next/image';
 
 export const LastPosts: FC = () => {
     const theme = useTheme();
@@ -47,16 +46,12 @@ export const LastPosts: FC = () => {
                         }}>
                         <Stack gap={1} sx={{ cursor: 'pointer' }} onClick={() => push(`${routes.blog}/${id}`)}>
                             {cover && (
-                                <Image
-                                    src={cover.image?.url as string}
+                                <img
+                                    src={cover.image?.url}
                                     alt={title as string}
-                                    width={300}
+                                    width="100%"
                                     height={270}
-                                    style={{
-                                        objectFit: 'cover',
-                                        width: 'auto',
-                                        height: '270px'
-                                    }}
+                                    style={{ objectFit: 'cover' }}
                                 />
                             )}
                             <Typography fontSize={20} fontWeight="bold" p={2} pt={0}>

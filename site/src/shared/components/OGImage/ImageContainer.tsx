@@ -1,5 +1,5 @@
-import { ImageWrapper } from "@shared/components/OGImage/styles";
-import { useTheme } from "@mui/material/styles";
+import { ImageWrapper } from '@shared/components/OGImage/styles';
+import { useTheme } from '@mui/material/styles';
 
 export const ImageContainer = () => {
     const theme = useTheme();

@@ -9,8 +9,8 @@ import { IImageUploaderProps } from './types';
 
 export const ImageUploader: FC<IImageUploaderProps> = (props) => {
     const { altText, imageSrc, loading, isShowLabel, isShowImage, handleAltTextChange, handleUploadChange } =
-        useBase(props)
-    const { mode } = props
+        useBase(props);
+    const { mode } = props;
 
     return (
         <div css={styles.container(mode)}>
@@ -34,15 +34,21 @@ export const ImageUploader: FC<IImageUploaderProps> = (props) => {
             {mode === 'preview' && (
                 <div css={styles.inputWrapper}>
                     <label>Image Alt:</label>
-                    <input type="text" placeholder="" css={styles.textInput} value={altText} onChange={handleAltTextChange} />
+                    <input
+                        type="text"
+                        placeholder=""
+                        css={styles.textInput}
+                        value={altText}
+                        onChange={handleAltTextChange}
+                    />
                 </div>
             )}
         </div>
-    )
-}
+    );
+};
 
 ImageUploader.defaultProps = {
     defaultValue: null,
     imageAlt: '',
-    mode: 'preview',
-}
+    mode: 'preview'
+};

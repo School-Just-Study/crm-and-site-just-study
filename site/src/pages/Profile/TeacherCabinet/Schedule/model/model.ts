@@ -1,6 +1,6 @@
-import { createEvent, createStore, restore } from "effector";
-import { GetTeacherScheduleData } from "./types";
-import { GetTeacherScheduleResponse } from "@src/shared/lib/apollo/types";
+import { createEvent, createStore, restore } from 'effector';
+import { GetTeacherScheduleData } from './types';
+import { GetTeacherScheduleResponse } from '@src/shared/lib/apollo/types';
 
 export const setScheduleParams = createEvent<GetTeacherScheduleData>();
 export const againGetScheduleParams = createEvent();

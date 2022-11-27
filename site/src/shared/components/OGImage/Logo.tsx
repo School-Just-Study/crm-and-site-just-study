@@ -1,7 +1,7 @@
-import { Box, Stack, Typography } from "@mui/material";
-import SvgJustStudyLogo from "@src/shared/icons/SvgJustStudyLogo";
-import * as React from "react";
-import { useTheme } from "@mui/material/styles";
+import { Box, Stack, Typography } from '@mui/material';
+import SvgJustStudyLogo from '@src/shared/icons/SvgJustStudyLogo';
+import * as React from 'react';
+import { useTheme } from '@mui/material/styles';
 
 export const Logo = () => {
     const theme = useTheme();

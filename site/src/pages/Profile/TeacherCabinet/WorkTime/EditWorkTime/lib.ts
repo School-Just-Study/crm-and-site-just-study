@@ -1,6 +1,6 @@
-import { UseFormGetValues } from "react-hook-form/dist/types/form";
-import { WorKCalendarForm } from "../types";
-import { WorkTimeCreateInput, WorkTimeUpdateArgs } from "@src/shared/lib/apollo/types";
+import { UseFormGetValues } from 'react-hook-form/dist/types/form';
+import { WorKCalendarForm } from '../types';
+import { WorkTimeCreateInput, WorkTimeUpdateArgs } from '@src/shared/lib/apollo/types';
 
 /**
  * Удаляем у выходных дней время работы

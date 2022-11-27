@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { default as NextImage } from 'next/image';
 
 interface ImageProps {
     imageAlt: string;
@@ -19,15 +18,13 @@ interface ImageProps {
 
 export const Image: FC<ImageProps> = ({ imageRel, imageAlt }) => {
     return (
-        <NextImage
-            src={imageRel?.data?.image?.url as string}
+        <img
+            src={imageRel.data.image.url}
             alt={imageAlt || 'image'}
-            width={500}
-            height={500}
+            width="100%"
+            height="100%"
             style={{
-                borderRadius: 20,
-                width: '100%',
-                height: 'auto'
+                borderRadius: 20
             }}
         />
     );
