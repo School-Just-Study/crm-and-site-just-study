@@ -1,11 +1,12 @@
-import { FC } from "react";
-import { Direction } from "@src/shared/lib/apollo/types";
-import { Box, Container, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import { useRouter } from "next/router";
-import { transition } from "@src/shared/lib/transition";
-import { directionPage } from "@translations/directionPage";
-import { ILanguages } from "@src/shared/modules/constants";
+import { FC } from 'react';
+import { Direction } from '@src/shared/lib/apollo/types';
+import { Box, Container, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { useRouter } from 'next/router';
+import { transition } from '@src/shared/lib/transition';
+import { directionPage } from '@translations/directionPage';
+import { ILanguages } from '@src/shared/modules/constants';
+import Image from 'next/image';
 
 export const Goals: FC<Pick<Direction, 'goals'>> = ({ goals }) => {
     const theme = useTheme();
@@ -21,12 +22,12 @@ export const Goals: FC<Pick<Direction, 'goals'>> = ({ goals }) => {
                         {goals?.map(({ name, image, id }) => (
                             <Box key={id} textAlign="center">
                                 <Box position="relative" height={300} width="100%" minHeight={300}>
-                                    <img
+                                    <Image
                                         src={image?.url as string}
                                         alt={name as string}
-                                        width="100%"
-                                        height="100%"
-                                        style={{ objectFit: 'contain' }}
+                                        width={500}
+                                        height={500}
+                                        style={{ objectFit: 'contain', width: '100%', height: '100%' }}
                                     />
                                 </Box>
                                 <Typography variant="h6">{name}</Typography>

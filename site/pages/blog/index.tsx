@@ -13,6 +13,7 @@ import { MainLayout } from '@src/layouts/MainLayout';
 import { QUERY_BLOG_PAGE } from '@src/shared/lib/apollo/blogPage';
 import { useQuery } from '@apollo/client';
 import { SpinnerWrapper } from '@shared/ui/SpinnerWrapper';
+import Image from 'next/image';
 
 interface IQueryBlogPage {
     posts: Post[];
@@ -57,12 +58,16 @@ const BlogPage: NextPageWithLayout = () => {
                                         sx={{ cursor: 'pointer' }}
                                         onClick={() => push(`${routes.blog}/${id}`)}>
                                         {cover && (
-                                            <img
-                                                src={cover.image?.url}
+                                            <Image
+                                                src={cover.image?.url as string}
                                                 alt={title as string}
-                                                width="100%"
+                                                width={300}
                                                 height={270}
-                                                style={{ objectFit: 'cover' }}
+                                                style={{
+                                                    objectFit: 'cover',
+                                                    width: 'auto',
+                                                    height: '270px'
+                                                }}
                                             />
                                         )}
                                         <Typography fontSize={20} fontWeight="bold" p={2} pt={0}>
