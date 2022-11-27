@@ -5,18 +5,18 @@ import { useToasts } from '@keystone-ui/toast';
 import { IImageUploaderProps } from './types';
 
 const useBase = ({
-                     listKey,
-                     defaultValue,
-                     imageAlt,
-                     onChange,
-                     onImageAltChange,
-                     onRelationChange,
-                 }: IImageUploaderProps) => {
-    const [altText, setAltText] = useState(imageAlt ?? '')
-    const [imageSrc, setImageSrc] = useState(defaultValue?.image?.url ?? '')
+    listKey,
+    defaultValue,
+    imageAlt,
+    onChange,
+    onImageAltChange,
+    onRelationChange
+}: IImageUploaderProps) => {
+    const [altText, setAltText] = useState(imageAlt ?? '');
+    const [imageSrc, setImageSrc] = useState(defaultValue?.image?.url ?? '');
 
-    const list = useList(listKey)
-    const toasts = useToasts()
+    const list = useList(listKey);
+    const toasts = useToasts();
 
     const UPLOAD_IMAGE = gql`
         mutation ${list.gqlNames.createMutationName}($file: Upload!) {
@@ -26,56 +26,57 @@ const useBase = ({
         }
     `;
 
-    const [uploadImage, { loading }] = useMutation(UPLOAD_IMAGE)
+    const [uploadImage, { loading }] = useMutation(UPLOAD_IMAGE);
 
     const uploadFile = useCallback(
         async (file: File) => {
             try {
                 return await uploadImage({
-                    variables: { file },
-                })
+                    variables: { file }
+                });
             } catch (err: any) {
                 toasts.addToast({
                     title: `Failed to upload file: ${file.name}`,
                     tone: 'negative',
-                    message: err.message,
-                })
+                    message: err.message
+                });
             }
 
-            return null
+            return null;
         },
-        [toasts, uploadImage],
-    )
+        [toasts, uploadImage]
+    );
 
     const handleAltTextChange = useCallback(
         async (e: ChangeEvent<HTMLInputElement>) => {
-            const { value } = e.currentTarget
-            setAltText(value)
-            onImageAltChange?.(value)
+            const { value } = e.currentTarget;
+            setAltText(value);
+            onImageAltChange?.(value);
         },
-        [onImageAltChange],
-    )
+        [onImageAltChange]
+    );
 
     const handleUploadChange = useCallback(
         async (e: ChangeEvent<HTMLInputElement>) => {
-            const selectedFile = e.currentTarget.files?.[0]
-            const src = selectedFile ? URL.createObjectURL(selectedFile) : ''
-            setImageSrc(src)
+            const selectedFile = e.currentTarget.files?.[0];
+            const src = selectedFile ? URL.createObjectURL(selectedFile) : '';
+            setImageSrc(src);
 
             if (selectedFile) {
-                const result = await uploadFile(selectedFile)
-                const uploadedImage = result?.data?.createImage
-                onChange?.({ id: uploadedImage.id })
+                const result = await uploadFile(selectedFile);
+                const uploadedImage = result?.data?.createImage;
+                onChange?.({ id: uploadedImage.id });
                 if (onRelationChange) {
                     setTimeout(
-                        () => onRelationChange({ id: uploadedImage.id, label: uploadedImage.name, data: uploadedImage }),
-                        0,
-                    )
+                        () =>
+                            onRelationChange({ id: uploadedImage.id, label: uploadedImage.name, data: uploadedImage }),
+                        0
+                    );
                 }
             }
         },
-        [onChange, onRelationChange],
-    )
+        [onChange, onRelationChange]
+    );
 
     return {
         altText,
@@ -84,8 +85,8 @@ const useBase = ({
         isShowLabel: !loading && !imageSrc,
         isShowImage: !loading && !!imageSrc,
         handleAltTextChange,
-        handleUploadChange,
-    }
-}
+        handleUploadChange
+    };
+};
 
-export default useBase
+export default useBase;

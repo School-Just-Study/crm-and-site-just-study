@@ -1,13 +1,13 @@
-import { useRouter } from "next/router";
-import { transition } from "@src/shared/lib/transition";
-import { faq } from "@translations/faq";
-import { ILanguages } from "@src/shared/modules/constants";
-import { Typography } from "@mui/material";
-import Stack from "@mui/material/Stack";
-import IconButton from "@mui/material/IconButton";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import TelegramIcon from "@mui/icons-material/Telegram";
-import * as React from "react";
+import { useRouter } from 'next/router';
+import { transition } from '@src/shared/lib/transition';
+import { faq } from '@translations/faq';
+import { ILanguages } from '@src/shared/modules/constants';
+import { Typography } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import * as React from 'react';
 
 export const Help = () => {
     const { locale } = useRouter();

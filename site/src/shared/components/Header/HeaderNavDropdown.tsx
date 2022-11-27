@@ -1,18 +1,18 @@
-import * as React from "react";
-import { FC } from "react";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import ClickAwayListener from "@mui/base/ClickAwayListener";
-import IconButton from "@mui/material/IconButton";
-import Link from "@shared/ui/Link";
-import routes from "@src/routes";
-import { useRouter } from "next/router";
-import { transition } from "@src/shared/lib/transition";
-import { navigation } from "@translations/navigation";
-import { ILanguages } from "@src/shared/modules/constants";
-import { INavProps } from "@src/layouts/AppHeader";
-import MenuIcon from "@mui/icons-material/Menu";
+import * as React from 'react';
+import { FC } from 'react';
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Collapse from '@mui/material/Collapse';
+import ClickAwayListener from '@mui/base/ClickAwayListener';
+import IconButton from '@mui/material/IconButton';
+import Link from '@shared/ui/Link';
+import routes from '@src/routes';
+import { useRouter } from 'next/router';
+import { transition } from '@src/shared/lib/transition';
+import { navigation } from '@translations/navigation';
+import { ILanguages } from '@src/shared/modules/constants';
+import { INavProps } from '@src/layouts/AppHeader';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const Anchor = styled('a')<{ component?: React.ElementType; noLinkStyle?: boolean }>(({ theme }) => ({
     ...theme.typography.body2,

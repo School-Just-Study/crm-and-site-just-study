@@ -1,431 +1,354 @@
 [
-  {
-    "id": 61153,
-    "name": "Английский индивидуальный",
-    "yield": 15000,
-    "price": 0,
-    "period": null,
-    "courses": [],
-    "classes": [],
-    "visitCount": 1,
-    "useDiscount": false,
-    "useLeftovers": false,
-    "burnLeftovers": true,
-    "subscriptionGroupingId": null,
-    "filialIds": [
-      0
-    ],
-    "filialId": null,
-    "params": {
-      "courseIds": [],
-      "classIds": []
+    {
+        "id": 61153,
+        "name": "Английский индивидуальный",
+        "yield": 15000,
+        "price": 0,
+        "period": null,
+        "courses": [],
+        "classes": [],
+        "visitCount": 1,
+        "useDiscount": false,
+        "useLeftovers": false,
+        "burnLeftovers": true,
+        "subscriptionGroupingId": null,
+        "filialIds": [0],
+        "filialId": null,
+        "params": {
+            "courseIds": [],
+            "classIds": []
+        },
+        "createdAt": "2021-12-27T15:56:36+00:00",
+        "updatedAt": "2021-12-27T15:56:36+00:00"
     },
-    "createdAt": "2021-12-27T15:56:36+00:00",
-    "updatedAt": "2021-12-27T15:56:36+00:00"
-  },
-  {
-    "id": 61270,
-    "name": "Пробный урок",
-    "yield": 499,
-    "price": 499,
-    "period": null,
-    "courses": [],
-    "classes": [],
-    "visitCount": 1,
-    "useDiscount": false,
-    "useLeftovers": true,
-    "burnLeftovers": true,
-    "subscriptionGroupingId": null,
-    "filialIds": [
-      0
-    ],
-    "filialId": null,
-    "params": {
-      "courseIds": [],
-      "classIds": [
-        220881
-      ]
+    {
+        "id": 61270,
+        "name": "Пробный урок",
+        "yield": 499,
+        "price": 499,
+        "period": null,
+        "courses": [],
+        "classes": [],
+        "visitCount": 1,
+        "useDiscount": false,
+        "useLeftovers": true,
+        "burnLeftovers": true,
+        "subscriptionGroupingId": null,
+        "filialIds": [0],
+        "filialId": null,
+        "params": {
+            "courseIds": [],
+            "classIds": [220881]
+        },
+        "createdAt": "2021-12-30T14:01:59+00:00",
+        "updatedAt": "2021-12-30T14:06:07+00:00"
     },
-    "createdAt": "2021-12-30T14:01:59+00:00",
-    "updatedAt": "2021-12-30T14:06:07+00:00"
-  },
-  {
-    "id": 61293,
-    "name": "Группа - Стандартный",
-    "yield": 800,
-    "price": 10000,
-    "period": "45 day",
-    "courses": [],
-    "classes": [],
-    "visitCount": 10,
-    "useDiscount": false,
-    "useLeftovers": true,
-    "burnLeftovers": true,
-    "subscriptionGroupingId": null,
-    "filialIds": [
-      0
-    ],
-    "filialId": null,
-    "params": {
-      "courseIds": [
-        72251,
-        72254,
-        72253
-      ],
-      "classIds": [
-        219238,
-        221212,
-        226320,
-        221224
-      ]
+    {
+        "id": 61293,
+        "name": "Группа - Стандартный",
+        "yield": 800,
+        "price": 10000,
+        "period": "45 day",
+        "courses": [],
+        "classes": [],
+        "visitCount": 10,
+        "useDiscount": false,
+        "useLeftovers": true,
+        "burnLeftovers": true,
+        "subscriptionGroupingId": null,
+        "filialIds": [0],
+        "filialId": null,
+        "params": {
+            "courseIds": [72251, 72254, 72253],
+            "classIds": [219238, 221212, 226320, 221224]
+        },
+        "createdAt": "2021-12-31T08:56:41+00:00",
+        "updatedAt": "2022-06-18T09:02:18+00:00"
     },
-    "createdAt": "2021-12-31T08:56:41+00:00",
-    "updatedAt": "2022-06-18T09:02:18+00:00"
-  },
-  {
-    "id": 61296,
-    "name": "Индивидуальный - Продвинутый",
-    "yield": 1800,
-    "price": 20000,
-    "period": "45 day",
-    "courses": [],
-    "classes": [],
-    "visitCount": 10,
-    "useDiscount": false,
-    "useLeftovers": true,
-    "burnLeftovers": true,
-    "subscriptionGroupingId": null,
-    "filialIds": [
-      0
-    ],
-    "filialId": null,
-    "params": {
-      "courseIds": [],
-      "classIds": [
-        220206
-      ]
+    {
+        "id": 61296,
+        "name": "Индивидуальный - Продвинутый",
+        "yield": 1800,
+        "price": 20000,
+        "period": "45 day",
+        "courses": [],
+        "classes": [],
+        "visitCount": 10,
+        "useDiscount": false,
+        "useLeftovers": true,
+        "burnLeftovers": true,
+        "subscriptionGroupingId": null,
+        "filialIds": [0],
+        "filialId": null,
+        "params": {
+            "courseIds": [],
+            "classIds": [220206]
+        },
+        "createdAt": "2021-12-31T09:09:25+00:00",
+        "updatedAt": "2022-06-23T16:23:05+00:00"
     },
-    "createdAt": "2021-12-31T09:09:25+00:00",
-    "updatedAt": "2022-06-23T16:23:05+00:00"
-  },
-  {
-    "id": 61298,
-    "name": "Индивидуальный - Базовый",
-    "yield": 1400,
-    "price": 15000,
-    "period": "45 day",
-    "courses": [],
-    "classes": [],
-    "visitCount": 10,
-    "useDiscount": false,
-    "useLeftovers": true,
-    "burnLeftovers": true,
-    "subscriptionGroupingId": null,
-    "filialIds": [
-      0
-    ],
-    "filialId": null,
-    "params": {
-      "courseIds": [],
-      "classIds": [
-        220206
-      ]
+    {
+        "id": 61298,
+        "name": "Индивидуальный - Базовый",
+        "yield": 1400,
+        "price": 15000,
+        "period": "45 day",
+        "courses": [],
+        "classes": [],
+        "visitCount": 10,
+        "useDiscount": false,
+        "useLeftovers": true,
+        "burnLeftovers": true,
+        "subscriptionGroupingId": null,
+        "filialIds": [0],
+        "filialId": null,
+        "params": {
+            "courseIds": [],
+            "classIds": [220206]
+        },
+        "createdAt": "2021-12-31T09:10:54+00:00",
+        "updatedAt": "2022-06-18T09:03:05+00:00"
     },
-    "createdAt": "2021-12-31T09:10:54+00:00",
-    "updatedAt": "2022-06-18T09:03:05+00:00"
-  },
-  {
-    "id": 61299,
-    "name": "Подготовка к собеседованию",
-    "yield": 2750,
-    "price": 5500,
-    "period": "45 day",
-    "courses": [],
-    "classes": [],
-    "visitCount": 2,
-    "useDiscount": false,
-    "useLeftovers": true,
-    "burnLeftovers": true,
-    "subscriptionGroupingId": null,
-    "filialIds": [
-      0
-    ],
-    "filialId": null,
-    "params": {
-      "courseIds": [
-        72252
-      ],
-      "classIds": []
+    {
+        "id": 61299,
+        "name": "Подготовка к собеседованию",
+        "yield": 2750,
+        "price": 5500,
+        "period": "45 day",
+        "courses": [],
+        "classes": [],
+        "visitCount": 2,
+        "useDiscount": false,
+        "useLeftovers": true,
+        "burnLeftovers": true,
+        "subscriptionGroupingId": null,
+        "filialIds": [0],
+        "filialId": null,
+        "params": {
+            "courseIds": [72252],
+            "classIds": []
+        },
+        "createdAt": "2021-12-31T09:17:43+00:00",
+        "updatedAt": "2022-05-24T09:09:25+00:00"
     },
-    "createdAt": "2021-12-31T09:17:43+00:00",
-    "updatedAt": "2022-05-24T09:09:25+00:00"
-  },
-  {
-    "id": 61300,
-    "name": "Подготовка к ICAO",
-    "yield": 1700,
-    "price": 17000,
-    "period": "45 day",
-    "courses": [],
-    "classes": [],
-    "visitCount": 10,
-    "useDiscount": false,
-    "useLeftovers": true,
-    "burnLeftovers": true,
-    "subscriptionGroupingId": null,
-    "filialIds": [
-      0
-    ],
-    "filialId": null,
-    "params": {
-      "courseIds": [
-        72255
-      ],
-      "classIds": []
+    {
+        "id": 61300,
+        "name": "Подготовка к ICAO",
+        "yield": 1700,
+        "price": 17000,
+        "period": "45 day",
+        "courses": [],
+        "classes": [],
+        "visitCount": 10,
+        "useDiscount": false,
+        "useLeftovers": true,
+        "burnLeftovers": true,
+        "subscriptionGroupingId": null,
+        "filialIds": [0],
+        "filialId": null,
+        "params": {
+            "courseIds": [72255],
+            "classIds": []
+        },
+        "createdAt": "2021-12-31T09:19:42+00:00",
+        "updatedAt": "2022-06-18T09:03:44+00:00"
     },
-    "createdAt": "2021-12-31T09:19:42+00:00",
-    "updatedAt": "2022-06-18T09:03:44+00:00"
-  },
-  {
-    "id": 63185,
-    "name": "Консультации для педагогов",
-    "yield": 2000,
-    "price": 10000,
-    "period": "1 month",
-    "courses": [],
-    "classes": [],
-    "visitCount": 5,
-    "useDiscount": false,
-    "useLeftovers": true,
-    "burnLeftovers": true,
-    "subscriptionGroupingId": null,
-    "filialIds": [
-      0
-    ],
-    "filialId": null,
-    "params": {
-      "courseIds": [],
-      "classIds": [
-        220206
-      ]
+    {
+        "id": 63185,
+        "name": "Консультации для педагогов",
+        "yield": 2000,
+        "price": 10000,
+        "period": "1 month",
+        "courses": [],
+        "classes": [],
+        "visitCount": 5,
+        "useDiscount": false,
+        "useLeftovers": true,
+        "burnLeftovers": true,
+        "subscriptionGroupingId": null,
+        "filialIds": [0],
+        "filialId": null,
+        "params": {
+            "courseIds": [],
+            "classIds": [220206]
+        },
+        "createdAt": "2022-01-31T18:21:38+00:00",
+        "updatedAt": "2022-01-31T18:21:38+00:00"
     },
-    "createdAt": "2022-01-31T18:21:38+00:00",
-    "updatedAt": "2022-01-31T18:21:38+00:00"
-  },
-  {
-    "id": 64491,
-    "name": "Тест ICAO",
-    "yield": 499,
-    "price": 499,
-    "period": null,
-    "courses": [],
-    "classes": [],
-    "visitCount": 1,
-    "useDiscount": false,
-    "useLeftovers": true,
-    "burnLeftovers": true,
-    "subscriptionGroupingId": null,
-    "filialIds": [
-      0
-    ],
-    "filialId": null,
-    "params": {
-      "courseIds": [],
-      "classIds": [
-        220881
-      ]
+    {
+        "id": 64491,
+        "name": "Тест ICAO",
+        "yield": 499,
+        "price": 499,
+        "period": null,
+        "courses": [],
+        "classes": [],
+        "visitCount": 1,
+        "useDiscount": false,
+        "useLeftovers": true,
+        "burnLeftovers": true,
+        "subscriptionGroupingId": null,
+        "filialIds": [0],
+        "filialId": null,
+        "params": {
+            "courseIds": [],
+            "classIds": [220881]
+        },
+        "createdAt": "2022-02-18T10:13:15+00:00",
+        "updatedAt": "2022-02-18T10:13:15+00:00"
     },
-    "createdAt": "2022-02-18T10:13:15+00:00",
-    "updatedAt": "2022-02-18T10:13:15+00:00"
-  },
-  {
-    "id": 67186,
-    "name": "Индивидуальный - VIP",
-    "yield": 1563,
-    "price": 50000,
-    "period": "2 month",
-    "courses": [],
-    "classes": [],
-    "visitCount": 0,
-    "useDiscount": false,
-    "useLeftovers": true,
-    "burnLeftovers": true,
-    "subscriptionGroupingId": null,
-    "filialIds": [
-      0
-    ],
-    "filialId": null,
-    "params": {
-      "courseIds": [],
-      "classIds": [
-        220206
-      ]
+    {
+        "id": 67186,
+        "name": "Индивидуальный - VIP",
+        "yield": 1563,
+        "price": 50000,
+        "period": "2 month",
+        "courses": [],
+        "classes": [],
+        "visitCount": 0,
+        "useDiscount": false,
+        "useLeftovers": true,
+        "burnLeftovers": true,
+        "subscriptionGroupingId": null,
+        "filialIds": [0],
+        "filialId": null,
+        "params": {
+            "courseIds": [],
+            "classIds": [220206]
+        },
+        "createdAt": "2022-03-31T14:36:45+00:00",
+        "updatedAt": "2022-06-18T09:02:36+00:00"
     },
-    "createdAt": "2022-03-31T14:36:45+00:00",
-    "updatedAt": "2022-06-18T09:02:36+00:00"
-  },
-  {
-    "id": 68404,
-    "name": "Индивидуальный - 10 консультаций",
-    "yield": 2500,
-    "price": 25000,
-    "period": "45 day",
-    "courses": [],
-    "classes": [],
-    "visitCount": 10,
-    "useDiscount": false,
-    "useLeftovers": true,
-    "burnLeftovers": true,
-    "subscriptionGroupingId": null,
-    "filialIds": [
-      0
-    ],
-    "filialId": null,
-    "params": {
-      "courseIds": [],
-      "classIds": [
-        220206
-      ]
+    {
+        "id": 68404,
+        "name": "Индивидуальный - 10 консультаций",
+        "yield": 2500,
+        "price": 25000,
+        "period": "45 day",
+        "courses": [],
+        "classes": [],
+        "visitCount": 10,
+        "useDiscount": false,
+        "useLeftovers": true,
+        "burnLeftovers": true,
+        "subscriptionGroupingId": null,
+        "filialIds": [0],
+        "filialId": null,
+        "params": {
+            "courseIds": [],
+            "classIds": [220206]
+        },
+        "createdAt": "2022-04-14T18:13:14+00:00",
+        "updatedAt": "2022-06-18T09:02:25+00:00"
     },
-    "createdAt": "2022-04-14T18:13:14+00:00",
-    "updatedAt": "2022-06-18T09:02:25+00:00"
-  },
-  {
-    "id": 69153,
-    "name": "Английский индивидуальный",
-    "yield": 6500,
-    "price": 0,
-    "period": null,
-    "courses": [],
-    "classes": [],
-    "visitCount": 1,
-    "useDiscount": false,
-    "useLeftovers": false,
-    "burnLeftovers": true,
-    "subscriptionGroupingId": null,
-    "filialIds": [
-      0
-    ],
-    "filialId": null,
-    "params": {
-      "courseIds": [],
-      "classIds": []
+    {
+        "id": 69153,
+        "name": "Английский индивидуальный",
+        "yield": 6500,
+        "price": 0,
+        "period": null,
+        "courses": [],
+        "classes": [],
+        "visitCount": 1,
+        "useDiscount": false,
+        "useLeftovers": false,
+        "burnLeftovers": true,
+        "subscriptionGroupingId": null,
+        "filialIds": [0],
+        "filialId": null,
+        "params": {
+            "courseIds": [],
+            "classIds": []
+        },
+        "createdAt": "2022-04-30T14:49:50+00:00",
+        "updatedAt": "2022-04-30T14:49:50+00:00"
     },
-    "createdAt": "2022-04-30T14:49:50+00:00",
-    "updatedAt": "2022-04-30T14:49:50+00:00"
-  },
-  {
-    "id": 69874,
-    "name": "Индивидуальный разговорный - 4 урока",
-    "yield": 1250,
-    "price": 5000,
-    "period": "45 day",
-    "courses": [],
-    "classes": [],
-    "visitCount": 4,
-    "useDiscount": false,
-    "useLeftovers": true,
-    "burnLeftovers": true,
-    "subscriptionGroupingId": null,
-    "filialIds": [
-      0
-    ],
-    "filialId": null,
-    "params": {
-      "courseIds": [],
-      "classIds": [
-        220206
-      ]
+    {
+        "id": 69874,
+        "name": "Индивидуальный разговорный - 4 урока",
+        "yield": 1250,
+        "price": 5000,
+        "period": "45 day",
+        "courses": [],
+        "classes": [],
+        "visitCount": 4,
+        "useDiscount": false,
+        "useLeftovers": true,
+        "burnLeftovers": true,
+        "subscriptionGroupingId": null,
+        "filialIds": [0],
+        "filialId": null,
+        "params": {
+            "courseIds": [],
+            "classIds": [220206]
+        },
+        "createdAt": "2022-05-14T18:43:35+00:00",
+        "updatedAt": "2022-06-18T09:03:25+00:00"
     },
-    "createdAt": "2022-05-14T18:43:35+00:00",
-    "updatedAt": "2022-06-18T09:03:25+00:00"
-  },
-  {
-    "id": 70001,
-    "name": "Английский индивидуальный",
-    "yield": 1500,
-    "price": 0,
-    "period": null,
-    "courses": [],
-    "classes": [],
-    "visitCount": 1,
-    "useDiscount": false,
-    "useLeftovers": false,
-    "burnLeftovers": true,
-    "subscriptionGroupingId": null,
-    "filialIds": [
-      0
-    ],
-    "filialId": null,
-    "params": {
-      "courseIds": [],
-      "classIds": []
+    {
+        "id": 70001,
+        "name": "Английский индивидуальный",
+        "yield": 1500,
+        "price": 0,
+        "period": null,
+        "courses": [],
+        "classes": [],
+        "visitCount": 1,
+        "useDiscount": false,
+        "useLeftovers": false,
+        "burnLeftovers": true,
+        "subscriptionGroupingId": null,
+        "filialIds": [0],
+        "filialId": null,
+        "params": {
+            "courseIds": [],
+            "classIds": []
+        },
+        "createdAt": "2022-05-17T12:28:13+00:00",
+        "updatedAt": "2022-05-17T12:28:13+00:00"
     },
-    "createdAt": "2022-05-17T12:28:13+00:00",
-    "updatedAt": "2022-05-17T12:28:13+00:00"
-  },
-  {
-    "id": 70942,
-    "name": "Индивидуальный урок",
-    "yield": 1500,
-    "price": 1800,
-    "period": null,
-    "courses": [],
-    "classes": [],
-    "visitCount": 1,
-    "useDiscount": false,
-    "useLeftovers": true,
-    "burnLeftovers": true,
-    "subscriptionGroupingId": null,
-    "filialIds": [
-      0
-    ],
-    "filialId": null,
-    "params": {
-      "courseIds": [],
-      "classIds": [
-        220206
-      ]
+    {
+        "id": 70942,
+        "name": "Индивидуальный урок",
+        "yield": 1500,
+        "price": 1800,
+        "period": null,
+        "courses": [],
+        "classes": [],
+        "visitCount": 1,
+        "useDiscount": false,
+        "useLeftovers": true,
+        "burnLeftovers": true,
+        "subscriptionGroupingId": null,
+        "filialIds": [0],
+        "filialId": null,
+        "params": {
+            "courseIds": [],
+            "classIds": [220206]
+        },
+        "createdAt": "2022-06-01T08:07:01+00:00",
+        "updatedAt": "2022-07-25T09:33:17+00:00"
     },
-    "createdAt": "2022-06-01T08:07:01+00:00",
-    "updatedAt": "2022-07-25T09:33:17+00:00"
-  },
-  {
-    "id": 74712,
-    "name": "Индивидуальные консультации",
-    "yield": 5000,
-    "price": 20000,
-    "period": "1 month",
-    "courses": [],
-    "classes": [],
-    "visitCount": 4,
-    "useDiscount": false,
-    "useLeftovers": true,
-    "burnLeftovers": true,
-    "subscriptionGroupingId": null,
-    "filialIds": [
-      0
-    ],
-    "filialId": null,
-    "params": {
-      "courseIds": [
-        -1,
-        72251,
-        72252,
-        72254,
-        72253,
-        72255,
-        72256,
-        0,
-        78168
-      ],
-      "classIds": [
-        220206,
-        220881,
-        244557
-      ]
-    },
-    "createdAt": "2022-08-02T12:57:05+00:00",
-    "updatedAt": "2022-08-02T12:57:05+00:00"
-  }
+    {
+        "id": 74712,
+        "name": "Индивидуальные консультации",
+        "yield": 5000,
+        "price": 20000,
+        "period": "1 month",
+        "courses": [],
+        "classes": [],
+        "visitCount": 4,
+        "useDiscount": false,
+        "useLeftovers": true,
+        "burnLeftovers": true,
+        "subscriptionGroupingId": null,
+        "filialIds": [0],
+        "filialId": null,
+        "params": {
+            "courseIds": [-1, 72251, 72252, 72254, 72253, 72255, 72256, 0, 78168],
+            "classIds": [220206, 220881, 244557]
+        },
+        "createdAt": "2022-08-02T12:57:05+00:00",
+        "updatedAt": "2022-08-02T12:57:05+00:00"
+    }
 ]

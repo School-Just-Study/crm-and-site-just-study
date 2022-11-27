@@ -1,19 +1,19 @@
-import { FC, useEffect, useState } from "react";
-import { Banner } from "@shared/components/Banner/Banner";
-import travel from "./travel.png";
-import talk from "./talk.png";
-import avia from "./avia.png";
-import med from "./med.png";
-import it from "./it.png";
-import forYou from "./foryou.png";
-import work from "./work.png";
-import Image, { StaticImageData } from "next/image";
-import { DescWrapper, PictureWrapper } from "@src/pages/Home/MainBanner/style";
-import "slick-carousel/slick/slick.css";
-import { useRouter } from "next/router";
-import { transition } from "@src/shared/lib/transition";
-import { ILanguages } from "@src/shared/modules/constants";
-import { mainBlock } from "@translations/mainBlock";
+import { FC, useEffect, useState } from 'react';
+import { Banner } from '@shared/components/Banner/Banner';
+import travel from './travel.png';
+import talk from './talk.png';
+import avia from './avia.png';
+import med from './med.png';
+import it from './it.png';
+import forYou from './foryou.png';
+import work from './work.png';
+import Image, { StaticImageData } from 'next/image';
+import { DescWrapper, PictureWrapper } from '@src/pages/Home/MainBanner/style';
+import 'slick-carousel/slick/slick.css';
+import { useRouter } from 'next/router';
+import { transition } from '@src/shared/lib/transition';
+import { ILanguages } from '@src/shared/modules/constants';
+import { mainBlock } from '@translations/mainBlock';
 
 export interface ISlide {
     title: string;

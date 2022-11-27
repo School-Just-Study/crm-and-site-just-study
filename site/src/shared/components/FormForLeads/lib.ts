@@ -1,4 +1,4 @@
-import { ILidForm } from "@shared/components/FormForLeads/types";
+import { ILidForm } from '@shared/components/FormForLeads/types';
 
 export const formatForm = (data: ILidForm) => {
     return {

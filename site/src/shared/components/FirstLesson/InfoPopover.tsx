@@ -1,7 +1,7 @@
-import * as React from "react";
-import { FC, MouseEventHandler, useState } from "react";
-import { Box, Popover, Typography } from "@mui/material";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import * as React from 'react';
+import { FC, MouseEventHandler, useState } from 'react';
+import { Box, Popover, Typography } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 export const InfoPopover: FC = () => {
     const [anchorEl, setAnchorEl] = useState<SVGSVGElement | null>(null);

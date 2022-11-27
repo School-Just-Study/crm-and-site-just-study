@@ -1,6 +1,6 @@
-import { sample } from "effector";
-import { $schedule, $scheduleParams, againGetScheduleParams, setScheduleParams } from "./model";
-import { getScheduleFx } from "@src/pages/Profile/TeacherCabinet/Schedule/model/effects";
+import { sample } from 'effector';
+import { $schedule, $scheduleParams, againGetScheduleParams, setScheduleParams } from './model';
+import { getScheduleFx } from '@src/pages/Profile/TeacherCabinet/Schedule/model/effects';
 
 sample({
     clock: setScheduleParams,

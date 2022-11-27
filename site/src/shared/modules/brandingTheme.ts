@@ -469,7 +469,7 @@ export function getThemedComponents(theme: Theme): { components: Theme['componen
                         '&[href]': {
                             textDecorationLine: 'none'
                         }
-                    },
+                    }
                 }
             },
             MuiCard: {
