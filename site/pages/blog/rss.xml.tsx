@@ -61,7 +61,7 @@ const getRssXml = (blogPosts: Post[]) => {
               <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
                 <channel>
                     <title>Онлайн-школа английского Just Study</title>
-                    <link>https://juststudy.online/ru/blog</link>
+                    <link>${FRONTEND_URL}/ru/blog</link>
                     <atom:link href="${FRONTEND_URL}/ru/blog/rss.xml" rel="self"></atom:link>
                     <description>Рассказываем лайфхаки в обучении, полезные советы и т.д.</description>
                     <language>ru</language>

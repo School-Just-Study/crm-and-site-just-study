@@ -14,9 +14,9 @@ export const QUERY_BLOG_PAGE_FOR_RSS = gql`
                 document(hydrateRelationships: true)
             }
             cover {
-                url
-                width
-                height
+                image {
+                    url
+                }
             }
         }
         tags(where: { language: { equals: $lang } }) {
