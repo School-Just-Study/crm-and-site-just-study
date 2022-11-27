@@ -1,14 +1,4 @@
-const excludePages = [
-    '/profile',
-    '/profile/*',
-    '/sitemap/*',
-    '/marketing/*',
-    '/success',
-    '/checkout',
-    '/checkout/*',
-    '/api/*',
-    '/l/*'
-];
+const excludePages = ['/marketing/*', '/success', '/checkout', '/checkout/*', '/l/*'];
 
 const sitemaps = ['directions.xml', 'pages.xml', 'posts.xml', 'courses.xml'];
 
