@@ -9,7 +9,7 @@ import { content } from '../fields/document';
 
 export const Product = list({
     ui: {
-        label: 'Курсы',
+        label: '🔥Курсы',
         labelField: 'name',
         description: 'Курсы, которые публикуются на сайте',
         listView: {

@@ -9,7 +9,7 @@ import { EditOnlyAdminForUi } from '../validation';
 
 export const UserService = list({
     ui: {
-        label: 'Студенты: услуги',
+        label: '🤙🏻Студенты: услуги',
         listView: {
             initialColumns: ['id', 'name', 'originalPrice', 'price', 'student', 'manager'],
             pageSize: 20

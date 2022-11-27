@@ -9,7 +9,7 @@ import format from 'date-fns/format';
 export const WorkTimeCutoff = list({
     ui: {
         isHidden: true,
-        label: 'Часы неработы',
+        label: '👀Часы неработы',
         listView: {
             initialColumns: ['id', 'statusView', 'startTime', 'endTime']
         }

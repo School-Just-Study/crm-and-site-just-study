@@ -11,7 +11,7 @@ import { content } from '../fields/document';
 
 export const Subscription = list({
     ui: {
-        label: 'Шаблоны абонементов',
+        label: '🐣Шаблоны абонементов',
         labelField: 'label',
         listView: {
             initialColumns: ['id', 'label', 'language', 'statusView', 'visitCount', 'period']

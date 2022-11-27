@@ -7,7 +7,7 @@ import { Roles } from '../enums/roles.enum';
 
 export const DirectionResult = list({
     ui: {
-        label: 'Результат направления',
+        label: '✅Результат направления',
         description: 'Блок: Чему вы научитесь',
         isHidden: true,
         labelField: 'name'

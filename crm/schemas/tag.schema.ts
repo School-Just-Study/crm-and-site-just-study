@@ -6,7 +6,7 @@ import { text } from '@keystone-6/core/fields';
 
 export const Tag = list({
     ui: {
-        label: 'Теги',
+        label: '🏷️Теги',
         isHidden: true,
         labelField: 'name',
         listView: { initialColumns: ['name', 'language'] }

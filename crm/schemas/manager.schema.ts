@@ -8,7 +8,7 @@ import { TimezoneOptionsConst } from '../consts/timezone-options.const';
 
 export const Manager = list({
     ui: {
-        label: 'Работники',
+        label: '🧑🏻‍🏫Работники',
         listView: {
             initialColumns: ['id', 'name', 'email', 'phone', 'work', 'teacher', 'comment'],
             pageSize: 20

@@ -9,7 +9,7 @@ import { content } from '../fields/document';
 
 export const Page = list({
     ui: {
-        label: 'Страницы',
+        label: '📃Страницы',
         labelField: 'title',
         listView: {
             initialColumns: ['title', 'language', 'statusView', 'tag', 'author'],

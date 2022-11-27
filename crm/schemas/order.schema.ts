@@ -15,7 +15,7 @@ import { Roles } from '../enums/roles.enum';
 
 export const Order = list({
     ui: {
-        label: 'Заказы',
+        label: '🥰Заказы',
         listView: {
             initialColumns: [
                 'id',

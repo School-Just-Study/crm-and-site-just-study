@@ -9,7 +9,7 @@ import { TimezoneOptionsConst } from '../consts/timezone-options.const';
 
 export const Lesson = list({
     ui: {
-        label: 'Уроки',
+        label: '📚Уроки',
         listView: {
             initialColumns: ['id', 'students', 'statusLesson', 'startTime', 'endTime', 'trial', 'timeZone'],
             initialSort: { field: 'statusLesson', direction: 'DESC' }

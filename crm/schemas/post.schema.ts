@@ -9,7 +9,7 @@ import { imageField } from '../fields/imageField';
 
 export const Post = list({
     ui: {
-        label: 'Блог',
+        label: '⭐️Блог',
         labelField: 'title',
         listView: {
             initialColumns: ['title', 'language', 'statusView', 'tag', 'author'],

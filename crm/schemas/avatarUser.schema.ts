@@ -5,7 +5,7 @@ import { lastModification } from '../fields/lastModification';
 
 export const AvatarUser = list({
     ui: {
-        label: 'Аватарки пользователей',
+        label: '💁🏼‍♂️Аватарки пользователей',
         isHidden: true
     },
     fields: {
