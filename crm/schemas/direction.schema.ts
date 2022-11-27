@@ -8,7 +8,7 @@ import { Roles } from '../enums/roles.enum';
 
 export const Direction = list({
     ui: {
-        label: 'Направления курсов',
+        label: '🧭Направления курсов',
         labelField: 'name',
         listView: {
             initialColumns: ['id', 'name', 'description', 'statusView', 'language']

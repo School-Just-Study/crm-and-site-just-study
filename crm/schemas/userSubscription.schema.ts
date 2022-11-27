@@ -12,7 +12,7 @@ import { EditOnlyAdminForUi } from '../validation';
 
 export const UserSubscription = list({
     ui: {
-        label: 'Студенты: абонементы',
+        label: '🫶🏻Студенты: абонементы',
         labelField: 'name',
         listView: {
             initialColumns: [

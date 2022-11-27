@@ -9,7 +9,7 @@ import { Roles } from '../enums/roles.enum';
 export const Currency = list({
     ui: {
         isHidden: ({ session }: { session: ISession }) => session?.data.role !== Roles.Admin,
-        label: 'Валюты',
+        label: '💸Валюты',
         hideCreate: ({ session }: { session: ISession }) => session?.data.role !== Roles.Admin
     },
     fields: {

@@ -9,7 +9,7 @@ export const CartItem = list({
         listView: {
             initialColumns: ['cart', 'originalPrice', 'price', 'service', 'subscription']
         },
-        label: 'Позиция в корзине'
+        label: '🤌🏻Позиция в корзине'
     },
     fields: {
         cart: relationship({ ref: 'Cart.items', label: 'Корзина' }),

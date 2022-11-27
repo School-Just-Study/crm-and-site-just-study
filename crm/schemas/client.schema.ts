@@ -11,7 +11,7 @@ import { handleCreateUserWithEmailClient } from '../lib/handleCreateUserWithEmai
 
 export const Client = list({
     ui: {
-        label: 'Лиды',
+        label: '🤓Лиды',
         listView: {
             initialColumns: ['id', 'name', 'language', 'email', 'phone', 'statusClient', 'comment'],
             initialSort: {

@@ -6,7 +6,7 @@ import { lastModification } from '../fields/lastModification';
 
 export const SourceClient = list({
     ui: {
-        label: 'Источники клиентов',
+        label: 'ℹ️Источники клиентов',
         isHidden: true,
         labelField: 'name',
         listView: { initialColumns: ['name', 'parent'] }

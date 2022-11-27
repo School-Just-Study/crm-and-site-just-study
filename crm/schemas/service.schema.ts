@@ -11,7 +11,7 @@ import { Lists } from '.keystone/types';
 
 export const Service = list({
     ui: {
-        label: 'Шаблоны услуг',
+        label: '🧑🏼‍🔧Шаблоны услуг',
         labelField: 'label',
         listView: {
             initialColumns: ['id', 'label', 'language', 'statusView', 'categories']

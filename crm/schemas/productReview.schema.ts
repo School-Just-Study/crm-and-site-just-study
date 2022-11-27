@@ -9,7 +9,7 @@ import { handleNotificationManagerNewReview } from '../lib/handleNotificationMan
 
 export const ProductReview = list({
     ui: {
-        label: 'Отзывы студентов',
+        label: '🙈Отзывы студентов',
         listView: {
             initialColumns: ['id', 'student', 'statusView', 'products', 'desc'],
             initialSort: { field: 'statusView', direction: 'ASC' },

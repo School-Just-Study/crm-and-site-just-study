@@ -10,7 +10,7 @@ import { EditOnlyAdminForUi } from '../validation';
 
 export const Cart = list({
     ui: {
-        label: 'Корзины',
+        label: '🛒Корзины',
         labelField: 'label',
         listView: {
             initialColumns: ['label', 'quantityPayments', 'amountRUB'],

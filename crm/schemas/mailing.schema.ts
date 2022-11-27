@@ -12,7 +12,7 @@ import { document } from '@keystone-6/fields-document';
 
 export const Mailing = list({
     ui: {
-        label: 'Рассылки',
+        label: '💌Рассылки',
         listView: {
             initialColumns: ['id', 'status', 'content', 'statusClient', 'clients'],
             initialSort: {

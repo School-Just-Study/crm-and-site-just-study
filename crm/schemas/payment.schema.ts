@@ -12,7 +12,7 @@ import { Roles } from '../enums/roles.enum';
 
 export const Payment = list({
     ui: {
-        label: 'Платежи',
+        label: '❤️Платежи',
         listView: {
             initialColumns: ['id', 'order', 'status', 'amount', 'currency'],
             pageSize: 20,

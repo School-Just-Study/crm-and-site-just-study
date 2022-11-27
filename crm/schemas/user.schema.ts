@@ -11,7 +11,7 @@ import { Lists } from '.keystone/types';
 
 export const User = list({
     ui: {
-        label: 'Клиенты',
+        label: '😻Клиенты',
         listView: {
             initialColumns: ['id', 'name', 'language', 'email', 'role'],
             initialSort: {

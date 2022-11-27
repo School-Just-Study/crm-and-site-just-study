@@ -9,7 +9,7 @@ import { Roles } from '../enums/roles.enum';
 
 export const Link = list({
     ui: {
-        label: 'Сокращатель ссылок',
+        label: '🔗Сокращатель ссылок',
         description: 'Утилита позволяет сократить длинные ссылки',
         isHidden: ({ session }) => !!session && session.data.role === Roles.Admin
     },

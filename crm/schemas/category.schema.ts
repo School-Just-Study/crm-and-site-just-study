@@ -7,7 +7,7 @@ import { lastModification } from '../fields/lastModification';
 
 export const Category = list({
     ui: {
-        label: 'Категории курсов',
+        label: '✨Категории курсов',
         labelField: 'name',
         isHidden: true,
         listView: { initialColumns: ['id', 'name', 'language', 'products'] }

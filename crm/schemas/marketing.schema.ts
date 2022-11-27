@@ -11,7 +11,7 @@ import { Lists } from '.keystone/types';
 
 export const Marketing = list({
     ui: {
-        label: 'Лендинги',
+        label: '📈Лендинги',
         labelField: 'title',
         listView: {
             initialColumns: ['language', 'title', 'statusView', 'slug', 'description']
