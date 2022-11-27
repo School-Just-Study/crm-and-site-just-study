@@ -5,7 +5,10 @@
   "scripts": {
     "run-dev-crm": "cd crm && yarn dev-crm",
     "run-dev-site": "cd site && yarn dev-site",
-    "run-all-dev": "yarn run-dev-crm & yarn run-dev-site"
+    "run-all-dev": "yarn run-dev-crm & yarn run-dev-site",
+    "lint": "next lint",
+    "eslint": "eslint --fix .",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
   },
   "devDependencies": {
     "@semantic-release/commit-analyzer": "9.0.2",
