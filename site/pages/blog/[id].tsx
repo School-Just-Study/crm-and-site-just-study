@@ -17,7 +17,6 @@ import { QUERY_ALL_POST, QUERY_POST } from '@src/shared/lib/apollo/postPage';
 import { SpinnerWrapper } from '@shared/ui/SpinnerWrapper';
 import { DISABLED_BUILD_STATIC_PATHS } from '../../config';
 import { CustomRenderer } from '@shared/component-blocks/CustomRenderer/CustomRenderer';
-import Image from 'next/image';
 
 const PostBlogPage: NextPageWithLayout<{ data: Post }> = ({ data }) => {
     const { locale, isFallback } = useRouter();
@@ -47,13 +46,7 @@ const PostBlogPage: NextPageWithLayout<{ data: Post }> = ({ data }) => {
                 px={{ xs: 0.5, md: 6 }}
                 py={{ xs: 2, md: 6 }}>
                 <Container maxWidth="md" sx={{ p: 0 }}>
-                    <Card
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            py: { xs: 3, md: 6 },
-                            px: { xs: 2, md: 6 }
-                        }}>
+                    <Card sx={{ display: 'flex', flexDirection: 'column', py: { xs: 3, md: 6 }, px: { xs: 2, md: 6 } }}>
                         <Typography variant="h1" mb={{ xs: 1, md: 3 }} style={{ wordBreak: 'break-word' }}>
                             {title}
                         </Typography>
@@ -64,16 +57,12 @@ const PostBlogPage: NextPageWithLayout<{ data: Post }> = ({ data }) => {
                             </Typography>
                         )}
                         {cover && (
-                            <Image
-                                src={cover.image?.url as string}
+                            <img
+                                src={cover.image?.url}
                                 alt={title as string}
-                                width={700}
-                                height={475}
-                                style={{
-                                    borderRadius: 20,
-                                    width: '100%',
-                                    height: 'auto'
-                                }}
+                                width="100%"
+                                height="100%"
+                                style={{ borderRadius: 20 }}
                             />
                         )}
                         {content && <CustomRenderer document={content.document} />}

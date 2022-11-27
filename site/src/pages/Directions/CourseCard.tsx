@@ -7,7 +7,6 @@ import Link from '@shared/ui/Link';
 import { useRouter } from 'next/router';
 import { transition } from '@src/shared/lib/transition';
 import { directionsPage } from '@translations/directionsPage';
-import Image from 'next/image';
 
 export const CourseCard: FC<{ direction: Direction }> = ({ direction }) => {
     const { push } = useRouter();
@@ -20,12 +19,12 @@ export const CourseCard: FC<{ direction: Direction }> = ({ direction }) => {
         <Card sx={{ width: '100%', cursor: 'pointer' }} onClick={() => push(`${routes.directions}/${slug}`)}>
             {image && (
                 <Card sx={{ height: 270, position: 'relative', bgcolor: theme.palette.warning.light }}>
-                    <Image
+                    <img
                         src={image.url}
                         alt={name as string}
-                        width={500}
-                        height={500}
-                        style={{ objectFit: 'contain', width: '100%', height: '100%' }}
+                        width="100%"
+                        height="100%"
+                        style={{ objectFit: 'contain' }}
                     />
                 </Card>
             )}
