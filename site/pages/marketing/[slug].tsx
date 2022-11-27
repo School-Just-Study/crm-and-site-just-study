@@ -67,6 +67,7 @@ const MarketingPage: NextPage<{ data: IQueryMarketingPage }> = ({ data }) => {
                                     alt={marketing.title as string}
                                     width={300}
                                     height={300}
+                                    priority
                                     style={{ objectFit: 'contain', width: '100%', height: '100%' }}
                                 />
                             </div>
