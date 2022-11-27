@@ -9,6 +9,7 @@ import { format } from 'date-fns';
 import { localeDate } from '@src/shared/lib/localeDate';
 import { useRouter } from 'next/router';
 import { useTheme } from '@mui/material/styles';
+import Image from 'next/image';
 
 export const ReviewItem: FC<{ review: ProductReview }> = ({ review }) => {
     const { student, desc, createdAt } = review;
@@ -21,7 +22,12 @@ export const ReviewItem: FC<{ review: ProductReview }> = ({ review }) => {
             <Card sx={{ height: 'auto', p: 3 }}>
                 <Box display="grid" gridTemplateColumns={{ md: '1fr', lg: '80px 1fr' }} gap={2} alignItems="center">
                     {student?.avatar ? (
-                        <Avatar src={student?.avatar?.image?.url} alt="photo student" sx={{ width: 80, height: 80 }} />
+                        <Image
+                            src={student?.avatar?.image?.url as string}
+                            alt={`photo student ${student?.name}`}
+                            height={80}
+                            width={80}
+                        />
                     ) : (
                         <Avatar
                             {...stringAvatar(student?.name as string)}
