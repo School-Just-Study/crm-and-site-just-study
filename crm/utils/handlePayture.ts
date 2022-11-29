@@ -6,6 +6,7 @@ export const handlePayture: ServerConfig<any>['extendExpressApp'] = (app, create
 
         console.log('body', '/api/payture', req.body);
         console.log('query', '/api/payture', req.query);
+        console.log('params', '/api/payture', req.params);
 
         res.sendStatus(200);
     });
