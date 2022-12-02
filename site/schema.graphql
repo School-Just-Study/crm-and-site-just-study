@@ -81,6 +81,8 @@ type Cart {
   label: String
   lastModification: DateTime
   linkForUser: String
+  nextPayment: Int
+  nextPaymentUSD: Int
   quantityPayments: Int
   user: User
 }
@@ -953,6 +955,12 @@ type KeystoneAdminMeta {
   lists: [KeystoneAdminUIListMeta!]!
 }
 
+type KeystoneAdminUIFieldGroupMeta {
+  description: String
+  fields: [KeystoneAdminUIFieldMeta!]!
+  label: String!
+}
+
 type KeystoneAdminUIFieldMeta {
   createView: KeystoneAdminUIFieldMetaCreateView!
   customViewsIndex: Int
@@ -979,12 +987,18 @@ enum KeystoneAdminUIFieldMetaCreateViewFieldMode {
 
 type KeystoneAdminUIFieldMetaItemView {
   fieldMode: KeystoneAdminUIFieldMetaItemViewFieldMode
+  fieldPosition: KeystoneAdminUIFieldMetaItemViewFieldPosition
 }
 
 enum KeystoneAdminUIFieldMetaItemViewFieldMode {
   edit
   hidden
   read
+}
+
+enum KeystoneAdminUIFieldMetaItemViewFieldPosition {
+  form
+  sidebar
 }
 
 type KeystoneAdminUIFieldMetaListView {
@@ -999,12 +1013,13 @@ enum KeystoneAdminUIFieldMetaListViewFieldMode {
 type KeystoneAdminUIListMeta {
   description: String
   fields: [KeystoneAdminUIFieldMeta!]!
+  groups: [KeystoneAdminUIFieldGroupMeta!]!
   hideCreate: Boolean!
   hideDelete: Boolean!
   initialColumns: [String!]!
   initialSort: KeystoneAdminUISort
   isHidden: Boolean!
-  isSingleton: Boolean
+  isSingleton: Boolean!
   itemQueryName: String!
   key: String!
   label: String!
@@ -1760,7 +1775,6 @@ type Order {
 
 input OrderCreateInput {
   amount: Int
-  amountUSD: Int
   createdAt: DateTime
   currency: String
   label: String
@@ -1780,7 +1794,6 @@ enum OrderDirection {
 
 input OrderOrderByInput {
   amount: OrderDirection
-  amountUSD: OrderDirection
   createdAt: OrderDirection
   currency: OrderDirection
   id: OrderDirection
@@ -1823,7 +1836,6 @@ input OrderUpdateArgs {
 
 input OrderUpdateInput {
   amount: Int
-  amountUSD: Int
   createdAt: DateTime
   currency: String
   label: String
@@ -1841,7 +1853,6 @@ input OrderWhereInput {
   NOT: [OrderWhereInput!]
   OR: [OrderWhereInput!]
   amount: IntNullableFilter
-  amountUSD: IntNullableFilter
   createdAt: DateTimeFilter
   currency: StringFilter
   id: IDFilter
@@ -2827,12 +2838,12 @@ type User {
   avatar: AvatarUser
   cart: Cart
   client: Client
-  comment: String
   createdAt: DateTime
   email: String
   id: ID!
   language: String
   lastModification: DateTime
+  linkForUser: String
   magicAuthIssuedAt: DateTime
   magicAuthRedeemedAt: DateTime
   magicAuthToken: PasswordState
@@ -2858,7 +2869,6 @@ input UserCreateInput {
   avatar: AvatarUserRelateToOneForCreateInput
   cart: CartRelateToOneForCreateInput
   client: ClientRelateToOneForCreateInput
-  comment: String
   createdAt: DateTime
   email: String
   language: String
@@ -2880,7 +2890,6 @@ input UserManyRelationFilter {
 }
 
 input UserOrderByInput {
-  comment: OrderDirection
   createdAt: OrderDirection
   email: OrderDirection
   id: OrderDirection
@@ -3160,7 +3169,6 @@ input UserUpdateInput {
   avatar: AvatarUserRelateToOneForUpdateInput
   cart: CartRelateToOneForUpdateInput
   client: ClientRelateToOneForUpdateInput
-  comment: String
   createdAt: DateTime
   email: String
   language: String
@@ -3182,7 +3190,6 @@ input UserWhereInput {
   avatar: AvatarUserWhereInput
   cart: CartWhereInput
   client: ClientWhereInput
-  comment: StringFilter
   createdAt: DateTimeFilter
   email: StringFilter
   id: IDFilter
