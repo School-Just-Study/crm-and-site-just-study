@@ -12,6 +12,8 @@ type Cart {
   amount: Int
   amountUSD: Int
   quantityPayments: Int
+  nextPayment: Int
+  nextPaymentUSD: Int
   lastModification: DateTime
 }
 

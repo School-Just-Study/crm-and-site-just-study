@@ -66,15 +66,27 @@ export const Cart: FC = () => {
                     <FormContainer formContext={formContext} handleSubmit={onSubmit}>
                         <Stack gap={1}>
                             <ClientDetails />
-                            {userCart?.quantityPayments !== 1 && (
-                                <Typography variant="h6">
-                                    {t.quantityPayments} {userCart?.quantityPayments} шт.
-                                </Typography>
-                            )}
                             <Box display="flex" justifyContent="space-between">
                                 <Typography variant="h6">{t.amount}</Typography>
                                 <CurrencyAmount amount={userCart.amount!} amountUSD={userCart.amountUSD!} />
                             </Box>
+                            {userCart?.quantityPayments !== 1 && (
+                                <>
+                                    <Box display="flex" justifyContent="space-between">
+                                        <Typography variant="h6">{t.quantityPayments}</Typography>
+                                        <Typography variant="h6">{userCart?.quantityPayments} шт.</Typography>
+                                    </Box>
+
+                                    <Box display="flex" justifyContent="space-between">
+                                        <Typography variant="h6">К оплате</Typography>
+                                        <CurrencyAmount
+                                            amount={userCart.nextPayment!}
+                                            amountUSD={userCart.nextPaymentUSD!}
+                                        />
+                                    </Box>
+                                </>
+                            )}
+
                             {error && <Alert severity="error">{t.errorMessage}</Alert>}
                             <Stack gap={2} direction={{ xs: 'column', sm: 'row' }} width="100%">
                                 {locale === 'ru' && (

@@ -50,6 +50,8 @@ export const CURRENT_USER_QUERY = gql`
                     currency
                     itemsCount
                     quantityPayments
+                    nextPayment
+                    nextPaymentUSD
                     items {
                         id
                         subscription {

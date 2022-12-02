@@ -26,7 +26,6 @@ export const UserSubscription = list({
                 'endDate',
                 'lastCount'
             ],
-            pageSize: 20,
             initialSort: { field: 'status', direction: 'ASC' }
         },
         searchFields: ['name']

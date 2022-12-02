@@ -113,6 +113,44 @@ export const Cart = list({
             defaultValue: 1,
             label: 'Количество платежей'
         }),
+        // @ts-ignore
+        nextPayment: virtual<Lists.Cart.TypeInfo>({
+            label: 'Следующая оплата в рублях',
+            field: graphql.field({
+                type: graphql.Int,
+                async resolve(item, arg, context) {
+                    const cart = await context.query.Cart.findOne({
+                        where: { id: `${item.id}` },
+                        query: `amount`
+                    });
+                    const quantityPayments = item.quantityPayments;
+
+                    if (cart.amount && quantityPayments) {
+                        return Math.ceil(cart.amount / quantityPayments);
+                    }
+                    return;
+                }
+            })
+        }),
+        // @ts-ignore
+        nextPaymentUSD: virtual<Lists.Cart.TypeInfo>({
+            label: 'Следующая оплата в долларах',
+            field: graphql.field({
+                type: graphql.Int,
+                async resolve(item, arg, context) {
+                    const cart = await context.query.Cart.findOne({
+                        where: { id: `${item.id}` },
+                        query: `amountUSD`
+                    });
+                    const quantityPayments = item.quantityPayments;
+
+                    if (cart.amountUSD && quantityPayments) {
+                        return Math.ceil(cart.amountUSD / quantityPayments);
+                    }
+                    return;
+                }
+            })
+        }),
         lastModification
     },
     access: {
