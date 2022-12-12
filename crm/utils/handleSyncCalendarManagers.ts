@@ -67,8 +67,6 @@ export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] =
                     isWithinInterval(new Date(event.startTime), { start: new Date(), end: addDays(new Date(), 20) })
                 );
 
-                res.send(filterCutoff);
-
                 await context.query.WorkTimeCutoff.createMany({
                     data: filterCutoff
                 });
