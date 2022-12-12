@@ -2,12 +2,13 @@ import { ServerConfig } from '@keystone-6/core/types';
 import { Lists, WorkTimeCutoffCreateInput } from '.keystone/types';
 import ical, { VEvent } from 'node-ical';
 import { addDays, addMinutes, differenceInMinutes, isWithinInterval } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
 
 /**
  * Синхронизируем календари менеджеров и учителей
  * Скрипт запускается по cron каждый день
  * @param app
- * @param createContext
+ * @param context
  */
 export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] = async (app, context) => {
     app.get('/api/sync-calendar', async (req, res) => {
@@ -27,44 +28,55 @@ export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] =
                 where: cutoffForDeleteIds
             });
 
-            const webEvents = await ical.async.fromURL(manager.calendar);
-            const events = Object.values(webEvents)?.filter((event) => event.type === 'VEVENT') as VEvent[];
+            try {
+                const webEvents = await ical.async.fromURL(manager.calendar);
+                const events = Object.values(webEvents)?.filter((event) => event.type === 'VEVENT') as VEvent[];
 
-            const workTimeCutoff: WorkTimeCutoffCreateInput[] = [];
+                const workTimeCutoff: WorkTimeCutoffCreateInput[] = [];
 
-            events.forEach((event) => {
-                if (event.rrule) {
-                    const repeat = event.rrule?.all();
-                    const duration = differenceInMinutes(new Date(event.end), new Date(event.start));
-                    repeat.forEach((date) => {
+                events.forEach((event) => {
+                    if (event.rrule) {
+                        const repeat = event.rrule?.all();
+                        const duration = differenceInMinutes(new Date(event.end), new Date(event.start));
+                        repeat.forEach((date) => {
+                            const dateWithTimeZone = utcToZonedTime(
+                                new Date(date),
+                                event?.rrule?.origOptions.tzid || 'Europe/Moscow'
+                            );
+
+                            workTimeCutoff.push({
+                                manager: { connect: { id: `${manager.id}` } },
+                                title: event.summary,
+                                startTime: dateWithTimeZone,
+                                endTime: addMinutes(new Date(dateWithTimeZone), duration),
+                                uid: event.uid
+                            });
+                        });
+                    } else {
                         workTimeCutoff.push({
                             manager: { connect: { id: `${manager.id}` } },
                             title: event.summary,
-                            startTime: date,
-                            endTime: addMinutes(new Date(date), duration),
+                            startTime: new Date(event.start),
+                            endTime: new Date(event.end),
                             uid: event.uid
                         });
-                    });
-                } else {
-                    workTimeCutoff.push({
-                        manager: { connect: { id: `${manager.id}` } },
-                        title: event.summary,
-                        startTime: event.start,
-                        endTime: event.end,
-                        uid: event.uid
-                    });
-                }
-            });
+                    }
+                });
 
-            const filterCutoff = workTimeCutoff.filter((event) =>
-                isWithinInterval(new Date(event.startTime), { start: new Date(), end: addDays(new Date(), 20) })
-            );
+                const filterCutoff = workTimeCutoff.filter((event) =>
+                    isWithinInterval(new Date(event.startTime), { start: new Date(), end: addDays(new Date(), 20) })
+                );
 
-            await context.query.WorkTimeCutoff.createMany({
-                data: filterCutoff
-            });
+                res.send(filterCutoff);
+
+                await context.query.WorkTimeCutoff.createMany({
+                    data: filterCutoff
+                });
+            } catch (e) {
+                console.error(e.message);
+            }
         }
 
-        res.sendStatus(200);
+        // res.sendStatus(200);
     });
 };
