@@ -1,8 +1,7 @@
 import { ServerConfig } from '@keystone-6/core/types';
 import { Lists, WorkTimeCutoffCreateInput } from '.keystone/types';
-import { WebEventsData } from '../types';
-
-const ical = require('node-ical');
+import ical, { VEvent } from 'node-ical';
+import { addDays, addMinutes, differenceInMinutes, isWithinInterval } from 'date-fns';
 
 /**
  * Синхронизируем календари менеджеров и учителей
@@ -10,9 +9,8 @@ const ical = require('node-ical');
  * @param app
  * @param createContext
  */
-export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] = async (app, createContext) => {
+export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] = async (app, context) => {
     app.get('/api/sync-calendar', async (req, res) => {
-        const context = await createContext(req, res);
         console.info(new Date(), 'sync calendars');
 
         const managers = (await context.query.Manager.findMany({
@@ -22,29 +20,48 @@ export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] =
 
         for (const manager of managers) {
             const cutoffForDeleteIds = await context.query.WorkTimeCutoff.findMany({
-                where: { uid: { not: { equals: 'manual' } } },
+                where: { uid: { not: { equals: 'manual' } }, manager: { id: { equals: manager.id } } },
                 query: 'id'
             });
             await context.query.WorkTimeCutoff.deleteMany({
                 where: cutoffForDeleteIds
             });
 
-            const webEvents = (await ical.async.fromURL(manager.calendar)) as WebEventsData[];
-            const events = Object.values(webEvents)?.filter((event) => event.type === 'VEVENT');
+            const webEvents = await ical.async.fromURL(manager.calendar);
+            const events = Object.values(webEvents)?.filter((event) => event.type === 'VEVENT') as VEvent[];
 
-            const data: WorkTimeCutoffCreateInput[] = [];
+            const workTimeCutoff: WorkTimeCutoffCreateInput[] = [];
+
             events.forEach((event) => {
-                data.push({
-                    manager: { connect: { id: `${manager.id}` } },
-                    title: event.summary,
-                    startTime: event.start,
-                    endTime: event.end,
-                    uid: event.uid
-                });
+                if (event.rrule) {
+                    const repeat = event.rrule?.all();
+                    const duration = differenceInMinutes(new Date(event.end), new Date(event.start));
+                    repeat.forEach((date) => {
+                        workTimeCutoff.push({
+                            manager: { connect: { id: `${manager.id}` } },
+                            title: event.summary,
+                            startTime: date,
+                            endTime: addMinutes(new Date(date), duration),
+                            uid: event.uid
+                        });
+                    });
+                } else {
+                    workTimeCutoff.push({
+                        manager: { connect: { id: `${manager.id}` } },
+                        title: event.summary,
+                        startTime: event.start,
+                        endTime: event.end,
+                        uid: event.uid
+                    });
+                }
             });
 
+            const filterCutoff = workTimeCutoff.filter((event) =>
+                isWithinInterval(new Date(event.startTime), { start: new Date(), end: addDays(new Date(), 20) })
+            );
+
             await context.query.WorkTimeCutoff.createMany({
-                data
+                data: filterCutoff
             });
         }
 
