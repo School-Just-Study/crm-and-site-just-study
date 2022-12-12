@@ -1,7 +1,7 @@
 import { ServerConfig } from '@keystone-6/core/types';
 import { Lists, WorkTimeCutoffCreateInput } from '.keystone/types';
 import ical, { VEvent } from 'node-ical';
-import { addMinutes, differenceInMinutes, isThisQuarter } from 'date-fns';
+import { addDays, addMinutes, differenceInMinutes, isWithinInterval } from 'date-fns';
 
 /**
  * Синхронизируем календари менеджеров и учителей
@@ -56,7 +56,9 @@ export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] =
                 }
             });
 
-            const filterCutoff = workTimeCutoff.filter((event) => isThisQuarter(new Date(event.startTime)));
+            const filterCutoff = workTimeCutoff.filter((event) =>
+                isWithinInterval(new Date(event.startTime), { start: new Date(), end: addDays(new Date(), 20) })
+            );
 
             await context.query.WorkTimeCutoff.createMany({
                 data: filterCutoff
