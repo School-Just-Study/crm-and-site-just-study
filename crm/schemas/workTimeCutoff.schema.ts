@@ -5,10 +5,12 @@ import { lastModification } from '../fields/lastModification';
 import { statusView } from '../fields/statusView';
 import { Lists } from '.keystone/types';
 import format from 'date-fns/format';
+import { ISession } from '../types';
+import { Roles } from '../enums/roles.enum';
 
 export const WorkTimeCutoff = list({
     ui: {
-        isHidden: true,
+        isHidden: ({ session }: { session: ISession }) => session?.data.role !== Roles.Admin,
         label: '👀Часы неработы',
         listView: {
             initialColumns: ['id', 'statusView', 'startTime', 'endTime']

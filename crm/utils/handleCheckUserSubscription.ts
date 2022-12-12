@@ -8,9 +8,8 @@ import { Statuses } from '../enums/statuses.enum';
  * @param app
  * @param createContext
  */
-export const handleCheckUserSubscription: ServerConfig<any>['extendExpressApp'] = async (app, createContext) => {
+export const handleCheckUserSubscription: ServerConfig<any>['extendExpressApp'] = async (app, context) => {
     app.get('/api/check-subscriptions', async (req, res) => {
-        const context = await createContext(req, res);
         console.info(new Date(), 'check subscription');
 
         const subscriptions = await context.query.UserSubscription.findMany({

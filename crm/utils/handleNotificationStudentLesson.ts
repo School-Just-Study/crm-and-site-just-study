@@ -9,9 +9,8 @@ import { addHours, isAfter } from 'date-fns';
  * @param app
  * @param createContext
  */
-export const handleNotificationStudentLesson: ServerConfig<any>['extendExpressApp'] = async (app, createContext) => {
+export const handleNotificationStudentLesson: ServerConfig<any>['extendExpressApp'] = async (app, context) => {
     app.get('/api/check-lessons', async (req, res) => {
-        const context = await createContext(req, res);
         console.info(new Date(), 'check lessons');
 
         const lessons = await context.query.Lesson.findMany({

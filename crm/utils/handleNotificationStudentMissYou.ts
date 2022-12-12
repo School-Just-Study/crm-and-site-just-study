@@ -9,9 +9,8 @@ import { sendMessage } from '../notifications';
  * @param app
  * @param createContext
  */
-export const handleNotificationStudentMissYou: ServerConfig<any>['extendExpressApp'] = async (app, createContext) => {
+export const handleNotificationStudentMissYou: ServerConfig<any>['extendExpressApp'] = async (app, context) => {
     app.get('/api/check-records', async (req, res) => {
-        const context = await createContext(req, res);
         console.info(new Date(), 'check records');
 
         const userSubscription = await context.query.UserSubscription.findMany({

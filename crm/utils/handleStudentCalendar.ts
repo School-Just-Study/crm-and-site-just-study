@@ -2,12 +2,11 @@ import { ServerConfig } from '@keystone-6/core/dist/declarations/src/types/confi
 import ical, { ICalAlarmType } from 'ical-generator';
 import { LessonStatus } from '../enums/lesson-status';
 
-export const handleStudentCalendar: ServerConfig<any>['extendExpressApp'] = (app, createContext) => {
+export const handleStudentCalendar: ServerConfig<any>['extendExpressApp'] = (app, context) => {
     app.get('/api/student/:id/lessons.ical', async (req, res) => {
         const studentId = req.params.id;
         console.info(new Date(), 'get students calendar', studentId);
 
-        const context = await createContext(req, res);
         const calendar = ical({ name: 'Just Study - online english school' });
 
         const lessons = await context.query.Lesson.findMany({

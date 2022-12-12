@@ -3,10 +3,9 @@ import fetch from 'node-fetch';
 
 const convert = require('xml-js');
 
-export const updateCurrency: ServerConfig<any>['extendExpressApp'] = (app, createContext) => {
+export const updateCurrency: ServerConfig<any>['extendExpressApp'] = (app, context) => {
     app.get('/api/update-currency', async (req, res) => {
         console.info(new Date(), 'update currency');
-        const context = await createContext(req, res);
 
         const response = await fetch('https://www.cbr.ru/scripts/XML_daily.asp');
 

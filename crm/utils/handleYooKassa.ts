@@ -2,11 +2,9 @@ import { ServerConfig } from '@keystone-6/core/dist/declarations/src/types/confi
 import { Payment } from '@a2seven/yoo-checkout';
 import { getStatusPayment } from '../lib/getStatusPayment';
 
-export const handleYooKassa: ServerConfig<any>['extendExpressApp'] = (app, createContext) => {
+export const handleYooKassa: ServerConfig<any>['extendExpressApp'] = (app, context) => {
     app.post('/api/yookassa', async (req, res) => {
         console.info(new Date(), 'post yooKassa');
-
-        const context = await createContext(req, res);
 
         const paymentYooKassa: Payment = req.body.object;
         const paymentId = paymentYooKassa.metadata.paymentId;
