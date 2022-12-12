@@ -77,6 +77,6 @@ export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] =
             }
         }
 
-        // res.sendStatus(200);
+        res.sendStatus(200);
     });
 };
