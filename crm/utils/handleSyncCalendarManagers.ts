@@ -56,8 +56,8 @@ export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] =
                         workTimeCutoff.push({
                             manager: { connect: { id: `${manager.id}` } },
                             title: event.summary,
-                            startTime: new Date(event.start),
-                            endTime: new Date(event.end),
+                            startTime: event.start,
+                            endTime: event.end,
                             uid: event.uid
                         });
                     }
