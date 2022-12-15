@@ -3,12 +3,11 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
-FROM node:18-alpine as builder
+FROM node:16-alpine as builder
 WORKDIR /app
 COPY . .
 COPY --from=dependencies /app/node_modules ./node_modules
 ENV NODE_ENV production
-RUN apt-get update && apt-get install libssl1.0.0 libssl-dev
 RUN yarn build
 
 FROM node:18-alpine as runner
