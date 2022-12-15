@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 COPY --from=dependencies /app/node_modules ./node_modules
 ENV NODE_ENV production
-RUN apt install libssl-dev
+RUN apt-get update && apt-get install libssl1.0.0 libssl-dev
 RUN yarn build
 
 FROM node:18-alpine as runner
