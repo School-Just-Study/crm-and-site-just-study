@@ -243,6 +243,7 @@ model Subscription {
   statusView                 String     @default("show")
   name                       String     @default("")
   visitCount                 Int?       @default(10)
+  durationLessons            Json       @default("[60]")
   unlimited                  Boolean    @default(false)
   price                      Int
   period                     Int?       @default(45)
@@ -263,7 +264,7 @@ model UserSubscription {
   unlimited                Boolean   @default(false)
   originalPrice            Int?
   price                    Int?
-  status                   String    @default("active")
+  status                   String    @default("inactive")
   student                  User?     @relation("UserSubscription_student", fields: [studentId], references: [id])
   studentId                Int?      @map("student")
   beginDate                DateTime? @default(now())
@@ -271,6 +272,7 @@ model UserSubscription {
   customVisited            Int?      @default(0)
   lessons                  Lesson[]  @relation("Lesson_subscription")
   trial                    Boolean   @default(false)
+  durationLessons          Json      @default("[60]")
   manager                  User?     @relation("UserSubscription_manager", fields: [managerId], references: [id])
   managerId                Int?      @map("manager")
   createdAt                DateTime  @default(now())

@@ -2638,6 +2638,7 @@ input StringNullableFilter {
 type Subscription {
   createdAt: DateTime
   desc: Subscription_desc_Document
+  durationLessons: [Int!]
   id: ID!
   label: String
   language: String
@@ -2655,6 +2656,7 @@ type Subscription {
 input SubscriptionCreateInput {
   createdAt: DateTime
   desc: JSON
+  durationLessons: [Int!]
   language: String
   lastModification: DateTime
   name: String
@@ -2717,6 +2719,7 @@ input SubscriptionUpdateArgs {
 input SubscriptionUpdateInput {
   createdAt: DateTime
   desc: JSON
+  durationLessons: [Int!]
   language: String
   lastModification: DateTime
   name: String
@@ -3029,6 +3032,7 @@ type UserSubscription {
   beginDate: DateTime
   createdAt: DateTime
   customVisited: Int
+  durationLessons: [Int!]
   endDate: DateTime
   id: ID!
   lastCount: Int
@@ -3052,6 +3056,7 @@ input UserSubscriptionCreateInput {
   beginDate: DateTime
   createdAt: DateTime
   customVisited: Int
+  durationLessons: [Int!]
   endDate: DateTime
   lastModification: DateTime
   lessons: LessonRelateToManyForCreateInput
@@ -3120,6 +3125,7 @@ input UserSubscriptionUpdateInput {
   beginDate: DateTime
   createdAt: DateTime
   customVisited: Int
+  durationLessons: [Int!]
   endDate: DateTime
   lastModification: DateTime
   lessons: LessonRelateToManyForUpdateInput

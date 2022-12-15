@@ -12,12 +12,16 @@ import {
 
 const durationsOptions = [30, 60, 90];
 
-export const Duration: FC = () => {
+export const Duration: FC<{ duration?: number[] }> = ({ duration = durationsOptions }) => {
     const { getValues, setValue } = useFormContext<LessonForm>();
     // @ts-ignore
     const lessonDuration = getValues('duration');
 
     const variant = (duration: number) => (duration === lessonDuration ? 'contained' : 'text');
+
+    useEffect(() => {
+        if (duration.length === 1) setValue('duration', duration[0]);
+    }, [duration]);
 
     useEffect(() => {
         if (lessonDuration) nextActiveStep();
@@ -35,7 +39,7 @@ export const Duration: FC = () => {
             </StepLabel>
             <StepContent>
                 <ButtonGroup sx={{ my: 2 }} variant="text" color="secondary">
-                    {durationsOptions.map((duration) => (
+                    {duration?.map((duration) => (
                         <Button
                             key={duration}
                             sx={{ px: 3 }}

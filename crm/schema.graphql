@@ -1299,6 +1299,7 @@ type Subscription {
   statusView: String
   name: String
   visitCount: Int
+  durationLessons: [Int!]
   unlimited: Boolean
   price: Int
   priceUSD: Int
@@ -1358,6 +1359,7 @@ input SubscriptionUpdateInput {
   statusView: String
   name: String
   visitCount: Int
+  durationLessons: [Int!]
   unlimited: Boolean
   price: Int
   period: Int
@@ -1377,6 +1379,7 @@ input SubscriptionCreateInput {
   statusView: String
   name: String
   visitCount: Int
+  durationLessons: [Int!]
   unlimited: Boolean
   price: Int
   period: Int
@@ -1404,6 +1407,7 @@ type UserSubscription {
   lessons(where: LessonWhereInput! = {}, orderBy: [LessonOrderByInput!]! = [], take: Int, skip: Int! = 0): [Lesson!]
   lessonsCount(where: LessonWhereInput! = {}): Int
   trial: Boolean
+  durationLessons: [Int!]
   manager: User
   createdAt: DateTime
   lastModification: DateTime
@@ -1470,6 +1474,7 @@ input UserSubscriptionUpdateInput {
   customVisited: Int
   lessons: LessonRelateToManyForUpdateInput
   trial: Boolean
+  durationLessons: [Int!]
   manager: UserRelateToOneForUpdateInput
   createdAt: DateTime
   lastModification: DateTime
@@ -1500,6 +1505,7 @@ input UserSubscriptionCreateInput {
   customVisited: Int
   lessons: LessonRelateToManyForCreateInput
   trial: Boolean
+  durationLessons: [Int!]
   manager: UserRelateToOneForCreateInput
   createdAt: DateTime
   lastModification: DateTime

@@ -1,5 +1,14 @@
 import { graphql, list } from '@keystone-6/core';
-import { checkbox, integer, relationship, select, text, timestamp, virtual } from '@keystone-6/core/fields';
+import {
+    checkbox,
+    integer,
+    multiselect,
+    relationship,
+    select,
+    text,
+    timestamp,
+    virtual
+} from '@keystone-6/core/fields';
 import { Roles } from '../enums/roles.enum';
 import { StatusesOptions } from '../consts/statuses-options.const';
 import { Statuses } from '../enums/statuses.enum';
@@ -9,6 +18,9 @@ import { lastModification } from '../fields/lastModification';
 import { LessonStatus } from '../enums/lesson-status';
 import { FRONTEND_URL } from '../config';
 import { EditOnlyAdminForUi } from '../validation';
+import { durationLessonsOptionConst } from '../consts/duration-lessons-option.const';
+import { DurationLessons } from '../enums/duration-lessons.enum';
+import { handleCreateUserSubscriptionsAfterOrderPayments } from '../lib/handleUpdateClientStatusAfterActiveSubscription';
 
 export const UserSubscription = list({
     ui: {
@@ -66,7 +78,7 @@ export const UserSubscription = list({
         status: select({
             options: StatusesOptions,
             ui: { displayMode: 'segmented-control' },
-            defaultValue: Statuses.Active,
+            defaultValue: Statuses.Inactive,
             validation: { isRequired: true },
             label: 'Статус абонемента'
         }),
@@ -129,9 +141,18 @@ export const UserSubscription = list({
             defaultValue: false,
             label: 'Пробный урок'
         }),
+        durationLessons: multiselect({
+            type: 'integer',
+            options: durationLessonsOptionConst,
+            label: 'Длительность занятий',
+            defaultValue: [DurationLessons.M]
+        }),
         manager: relationship({ ref: 'User' }),
         createdAt,
         lastModification
+    },
+    hooks: {
+        afterOperation: handleCreateUserSubscriptionsAfterOrderPayments
     },
     access: {
         operation: {
