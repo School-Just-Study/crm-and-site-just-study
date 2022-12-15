@@ -60,7 +60,7 @@ export const checkout = async (root: any, { userId, currency }: Arguments, conte
         subscriptionsIds.map(async ({ id, price }: { id: string; price: number }) => {
             const subscriptionTemplate = await context.query.Subscription.findOne({
                 where: { id },
-                query: `name visitCount price period trial unlimited`
+                query: `name visitCount price period trial unlimited durationLessons`
             });
 
             const endDate = addDays(new Date(), subscriptionTemplate.period);
@@ -72,6 +72,7 @@ export const checkout = async (root: any, { userId, currency }: Arguments, conte
                     originalPrice: subscriptionTemplate.price,
                     price,
                     endDate,
+                    durationLessons: subscriptionTemplate.durationLessons,
                     trial: subscriptionTemplate.trial,
                     unlimited: subscriptionTemplate.unlimited,
                     student: { connect: { id: userId } }

@@ -80,7 +80,12 @@ export const RecordForLesson: FC<RecordForLessonProps> = ({ handleClose }) => {
                                 <Teacher />
                             </Step>
                             <Step>
-                                <Duration />
+                                <Duration
+                                    duration={
+                                        (userSubscriptions?.data?.userSubscriptions?.[0]
+                                            ?.durationLessons as number[]) || undefined
+                                    }
+                                />
                             </Step>
                             <Step>
                                 <DateLesson />

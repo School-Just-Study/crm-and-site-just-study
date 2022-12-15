@@ -4593,6 +4593,7 @@ export type Subscription = {
   __typename?: 'Subscription';
   createdAt?: Maybe<Scalars['DateTime']>;
   desc?: Maybe<Subscription_Desc_Document>;
+  durationLessons?: Maybe<Array<Scalars['Int']>>;
   id: Scalars['ID'];
   label?: Maybe<Scalars['String']>;
   language?: Maybe<Scalars['String']>;
@@ -4610,6 +4611,7 @@ export type Subscription = {
 export type SubscriptionCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']>;
   desc?: InputMaybe<Scalars['JSON']>;
+  durationLessons?: InputMaybe<Array<Scalars['Int']>>;
   language?: InputMaybe<Scalars['String']>;
   lastModification?: InputMaybe<Scalars['DateTime']>;
   name?: InputMaybe<Scalars['String']>;
@@ -4672,6 +4674,7 @@ export type SubscriptionUpdateArgs = {
 export type SubscriptionUpdateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']>;
   desc?: InputMaybe<Scalars['JSON']>;
+  durationLessons?: InputMaybe<Array<Scalars['Int']>>;
   language?: InputMaybe<Scalars['String']>;
   lastModification?: InputMaybe<Scalars['DateTime']>;
   name?: InputMaybe<Scalars['String']>;
@@ -4994,6 +4997,7 @@ export type UserSubscription = {
   beginDate?: Maybe<Scalars['DateTime']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   customVisited?: Maybe<Scalars['Int']>;
+  durationLessons?: Maybe<Array<Scalars['Int']>>;
   endDate?: Maybe<Scalars['DateTime']>;
   id: Scalars['ID'];
   lastCount?: Maybe<Scalars['Int']>;
@@ -5030,6 +5034,7 @@ export type UserSubscriptionCreateInput = {
   beginDate?: InputMaybe<Scalars['DateTime']>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   customVisited?: InputMaybe<Scalars['Int']>;
+  durationLessons?: InputMaybe<Array<Scalars['Int']>>;
   endDate?: InputMaybe<Scalars['DateTime']>;
   lastModification?: InputMaybe<Scalars['DateTime']>;
   lessons?: InputMaybe<LessonRelateToManyForCreateInput>;
@@ -5098,6 +5103,7 @@ export type UserSubscriptionUpdateInput = {
   beginDate?: InputMaybe<Scalars['DateTime']>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   customVisited?: InputMaybe<Scalars['Int']>;
+  durationLessons?: InputMaybe<Array<Scalars['Int']>>;
   endDate?: InputMaybe<Scalars['DateTime']>;
   lastModification?: InputMaybe<Scalars['DateTime']>;
   lessons?: InputMaybe<LessonRelateToManyForUpdateInput>;
