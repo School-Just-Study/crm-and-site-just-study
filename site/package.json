@@ -5,14 +5,14 @@
     "proxy": "http://localhost:8000",
     "scripts": {
         "dev-site": "next dev",
-        "build": "DISABLE_BUILD_STATIC_PATHS=true next build && yarn run postbuild",
+        "build": "next build && yarn run postbuild",
         "build:dev": "DISABLE_BUILD_STATIC_PATHS=true yarn build",
         "postbuild": "next-sitemap --config=next-sitemap.config.js",
         "start": "next start -p 80",
         "generate": "graphql-codegen"
     },
     "dependencies": {
-        "@apollo/client": "3.7.2",
+        "@apollo/client": "3.7.3",
         "@egjs/react-flicking": "4.10.5",
         "@emotion/cache": "11.10.5",
         "@emotion/react": "11.10.5",
