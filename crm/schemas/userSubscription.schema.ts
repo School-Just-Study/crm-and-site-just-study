@@ -20,6 +20,7 @@ import { FRONTEND_URL } from '../config';
 import { EditOnlyAdminForUi } from '../validation';
 import { durationLessonsOptionConst } from '../consts/duration-lessons-option.const';
 import { DurationLessons } from '../enums/duration-lessons.enum';
+import { handleCreateUserSubscriptionsAfterOrderPayments } from '../lib/handleUpdateClientStatusAfterActiveSubscription';
 
 export const UserSubscription = list({
     ui: {
@@ -77,7 +78,7 @@ export const UserSubscription = list({
         status: select({
             options: StatusesOptions,
             ui: { displayMode: 'segmented-control' },
-            defaultValue: Statuses.Active,
+            defaultValue: Statuses.Inactive,
             validation: { isRequired: true },
             label: 'Статус абонемента'
         }),
@@ -149,6 +150,9 @@ export const UserSubscription = list({
         manager: relationship({ ref: 'User' }),
         createdAt,
         lastModification
+    },
+    hooks: {
+        afterOperation: handleCreateUserSubscriptionsAfterOrderPayments
     },
     access: {
         operation: {
