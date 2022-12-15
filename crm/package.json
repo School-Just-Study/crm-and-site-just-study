@@ -12,7 +12,7 @@
         "@a2seven/yoo-checkout": "1.1.4",
         "@graphql-tools/schema": "9.0.12",
         "@keystone-6/auth": "6.0.0",
-        "@keystone-6/core": "4.0.1",
+        "@keystone-6/core": "4.0.0",
         "@keystone-6/fields-document": "6.0.0",
         "@keystone-ui/button": "7.0.2",
         "@keystone-ui/core": "5.0.2",
@@ -29,7 +29,6 @@
         "node-fetch": "2.6.7",
         "node-ical": "^0.15.2",
         "payture-official": "0.0.6",
-        "prisma": "4.7.1",
         "react": "18.2.0",
         "typescript": "4.9.4",
         "xml-js": "1.6.11"
