@@ -1,4 +1,4 @@
-FROM node:18-alpine as dependencies
+FROM node:18 as dependencies
 WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
@@ -10,7 +10,7 @@ COPY --from=dependencies /app/node_modules ./node_modules
 ENV NODE_ENV production
 RUN yarn build
 
-FROM node:18-alpine as runner
+FROM node:18 as runner
 WORKDIR /app
 
 COPY --from=builder /app/package.json ./package.json
