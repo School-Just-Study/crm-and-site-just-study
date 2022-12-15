@@ -12,6 +12,7 @@ import { FRONTEND_URL } from '../config';
 import { EditOnlyAdminForUi } from '../validation';
 import { ISession } from '../types';
 import { Roles } from '../enums/roles.enum';
+import { handleCreateUserSubscriptionsAfterOrderPayments } from '../lib/handleCreateUserSubscriptionsAfterOrderPayments';
 
 export const Order = list({
     ui: {
@@ -221,7 +222,8 @@ export const Order = list({
         lastModification
     },
     hooks: {
-        resolveInput: handleOrderStatus
+        resolveInput: handleOrderStatus,
+        afterOperation: handleCreateUserSubscriptionsAfterOrderPayments
     },
     access: {
         operation: {

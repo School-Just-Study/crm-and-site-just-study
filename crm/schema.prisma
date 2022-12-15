@@ -264,7 +264,7 @@ model UserSubscription {
   unlimited                Boolean   @default(false)
   originalPrice            Int?
   price                    Int?
-  status                   String    @default("active")
+  status                   String    @default("inactive")
   student                  User?     @relation("UserSubscription_student", fields: [studentId], references: [id])
   studentId                Int?      @map("student")
   beginDate                DateTime? @default(now())
