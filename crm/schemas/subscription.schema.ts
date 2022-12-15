@@ -1,5 +1,5 @@
 import { graphql, list } from '@keystone-6/core';
-import { checkbox, integer, text, virtual } from '@keystone-6/core/fields';
+import { checkbox, integer, multiselect, text, virtual } from '@keystone-6/core/fields';
 import { Roles } from '../enums/roles.enum';
 import { language } from '../fields/language';
 import { createdAt } from '../fields/createdAt';
@@ -8,6 +8,8 @@ import { statusView } from '../fields/statusView';
 import { Lists } from '.keystone/types';
 import { getCurrencyForLanguage } from '../lib/getCurrency';
 import { content } from '../fields/document';
+import { durationLessonsOptionConst } from '../consts/duration-lessons-option.const';
+import { DurationLessons } from '../enums/duration-lessons.enum';
 
 export const Subscription = list({
     ui: {
@@ -35,6 +37,12 @@ export const Subscription = list({
         visitCount: integer({
             defaultValue: 10,
             label: 'Количество занятий'
+        }),
+        durationLessons: multiselect({
+            type: 'integer',
+            options: durationLessonsOptionConst,
+            label: 'Длительность занятий',
+            defaultValue: [DurationLessons.M]
         }),
         unlimited: checkbox({
             defaultValue: false,

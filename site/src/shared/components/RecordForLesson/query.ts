@@ -17,6 +17,7 @@ export const QUERY_SUBSCRIPTION_ACTIVE = gql`
         ) {
             id
             beginDate
+            durationLessons
         }
     }
 `;
