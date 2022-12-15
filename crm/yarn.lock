@@ -2394,6 +2394,11 @@
   resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-4.3.1.tgz#fb0ad69eded13827fb4cd81995a351c234e8327f"
   integrity sha512-4JF/uMaEDAPdcdZNOrnzE3BvrbGpjgV0FcPT3EVoi6I86fWkloqqxBt+KcK/+fIRR0Pxj66uGR9wVH8U1Y13JA==
 
+"@prisma/engines@4.7.1":
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-4.7.1.tgz#d657d4d05724158140022fa00614e143643090c2"
+  integrity sha512-zWabHosTdLpXXlMefHmnouhXMoTB1+SCbUU3t4FCmdrtIOZcarPKU3Alto7gm/pZ9vHlGOXHCfVZ1G7OIrSbog==
+
 "@prisma/fetch-engine@4.3.1":
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/@prisma/fetch-engine/-/fetch-engine-4.3.1.tgz#dc6144e6f46ec6e1d65315a69c64c2e4fc082c8b"
@@ -7158,6 +7163,13 @@ prisma@4.3.1:
   integrity sha512-90xo06wtqil76Xsi3mNpc4Js3SdDRR5g4qb9h+4VWY4Y8iImJY6xc3PX+C9xxTSt1lr0Q89A0MLkJjd8ax6KiQ==
   dependencies:
     "@prisma/engines" "4.3.1"
+
+prisma@4.7.1:
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/prisma/-/prisma-4.7.1.tgz#0a1beac26abdc4421e496b75eb50413f3ee3b0ba"
+  integrity sha512-CCQP+m+1qZOGIZlvnL6T3ZwaU0LAleIHYFPN9tFSzjs/KL6vH9rlYbGOkTuG9Q1s6Ki5D0LJlYlW18Z9EBUpGg==
+  dependencies:
+    "@prisma/engines" "4.7.1"
 
 proc-log@^2.0.0, proc-log@^2.0.1:
   version "2.0.1"
