@@ -2626,10 +2626,10 @@ effector-next@1.3.3:
   dependencies:
     next-cookies "^2.0.3"
 
-effector-react@22.3.4:
-  version "22.3.4"
-  resolved "https://registry.yarnpkg.com/effector-react/-/effector-react-22.3.4.tgz#d9020eeb0203729833472807f76d90b180b05b63"
-  integrity sha512-iyPMjnIW7pUoSuvxumAu4oRan4d8sbXmYPTlRXR75HOag2aH805m+xElyhyXCsQMXxQebjk7/GSC8Caeriv/+A==
+effector-react@22.4.0:
+  version "22.4.0"
+  resolved "https://registry.yarnpkg.com/effector-react/-/effector-react-22.4.0.tgz#ac36cf3db3d4464744cca246baacfb1bfece25f7"
+  integrity sha512-flyx22WCc8a525KW9cR/T0eAZCR3Ej75phafuSmlpsYwlRlImAmOXN2AsmxknCS2zlBbwAGmISbpu+YVeIdz+g==
   dependencies:
     use-sync-external-store "^1.0.0"
 
