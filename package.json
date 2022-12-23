@@ -1,6 +1,6 @@
 {
     "name": "just-study",
-    "version": "2.25.2",
+    "version": "2.32.14",
     "private": true,
     "scripts": {
         "run-dev-crm": "cd crm && yarn dev-crm",
