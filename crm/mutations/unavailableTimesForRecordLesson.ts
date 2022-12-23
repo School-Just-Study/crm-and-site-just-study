@@ -1,7 +1,7 @@
 import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
 import { LessonStatus } from '../enums/lesson-status';
 import { ViewStatus } from '../enums/view-status.enum';
-import { isSameDay } from 'date-fns';
+import { isWithinInterval } from 'date-fns';
 
 interface Arguments {
     date: string;
@@ -34,5 +34,7 @@ export const unavailableTimesForRecordLesson = async (
     });
     allTimes.push(...cutoff);
 
-    return allTimes.filter(({ startTime }) => isSameDay(new Date(date), new Date(startTime)));
+    return allTimes.filter(({ startTime, endTime }) =>
+        isWithinInterval(new Date(date), { start: new Date(startTime), end: new Date(endTime) })
+    );
 };
