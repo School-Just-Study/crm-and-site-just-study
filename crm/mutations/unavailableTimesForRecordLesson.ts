@@ -1,7 +1,7 @@
 import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
 import { LessonStatus } from '../enums/lesson-status';
 import { ViewStatus } from '../enums/view-status.enum';
-import { isWithinInterval } from 'date-fns';
+import { addDays, areIntervalsOverlapping } from 'date-fns';
 
 interface Arguments {
     date: string;
@@ -35,6 +35,9 @@ export const unavailableTimesForRecordLesson = async (
     allTimes.push(...cutoff);
 
     return allTimes.filter(({ startTime, endTime }) =>
-        isWithinInterval(new Date(date), { start: new Date(startTime), end: new Date(endTime) })
+        areIntervalsOverlapping(
+            { start: new Date(date), end: addDays(new Date(date), 1) },
+            { start: new Date(startTime), end: new Date(endTime) }
+        )
     );
 };
