@@ -73,7 +73,11 @@ export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] =
                 await context.query.WorkTimeCutoff.createMany({
                     data: filterCutoff
                 });
+                await context.query.WorkTimeCutoff.deleteMany({
+                    where: cutoffForDeleteIds
+                });
             } catch (e) {
+                // @ts-ignore
                 console.error(e.message);
             }
         }
