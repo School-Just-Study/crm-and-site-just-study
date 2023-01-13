@@ -19,7 +19,7 @@
         "@keystone-ui/fields": "7.1.2",
         "@keystone-ui/icons": "6.0.2",
         "@keystone-ui/tooltip": "6.0.2",
-        "@semantic-release/npm": "9.0.1",
+        "@semantic-release/npm": "9.0.2",
         "aws-sdk": "2.1290.0",
         "body-parser": "1.20.1",
         "date-fns": "2.29.3",
