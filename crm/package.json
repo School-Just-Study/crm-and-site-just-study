@@ -10,7 +10,7 @@
     },
     "dependencies": {
         "@a2seven/yoo-checkout": "1.1.4",
-        "@graphql-tools/schema": "9.0.15",
+        "@graphql-tools/schema": "9.0.16",
         "@keystone-6/auth": "6.0.0",
         "@keystone-6/core": "4.0.1",
         "@keystone-6/fields-document": "6.0.0",
