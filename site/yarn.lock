@@ -4191,10 +4191,10 @@ react-gtm-module@2.0.11:
   resolved "https://registry.yarnpkg.com/react-gtm-module/-/react-gtm-module-2.0.11.tgz#14484dac8257acd93614e347c32da9c5ac524206"
   integrity sha512-8gyj4TTxeP7eEyc2QKawEuQoAZdjKvMY4pgWfycGmqGByhs17fR+zEBs0JUDq4US/l+vbTl+6zvUIx27iDo/Vw==
 
-react-hook-form-mui@5.12.3:
-  version "5.12.3"
-  resolved "https://registry.yarnpkg.com/react-hook-form-mui/-/react-hook-form-mui-5.12.3.tgz#cbf3e0f78c330963b8ded440dd2be7a39804e2a7"
-  integrity sha512-W7OnpBrWd0L0SJydAQaNcbeXXzWBsGjtg0Lx7U5IwwmpBZAS/xyVNXOGvH+SgsYkaukmtu5806TV+5r2VH9zDw==
+react-hook-form-mui@5.13.1:
+  version "5.13.1"
+  resolved "https://registry.yarnpkg.com/react-hook-form-mui/-/react-hook-form-mui-5.13.1.tgz#ffe742c6ac329be3298aa471ad335eff3f7d8b47"
+  integrity sha512-9JZb7UlgWHRFI3W2H9nRacB+H7xdrXhC+vTr2Y8NI6teE5b/daeN272PX+FsQRB5ZH4feSQT92lXiITxapJG/A==
 
 react-hook-form@7.43.0:
   version "7.43.0"
