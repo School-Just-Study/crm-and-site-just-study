@@ -1,7 +1,8 @@
 FROM node:18-alpine3.16 as dependencies
 WORKDIR /app
 COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+RUN --mount=type=cache,target=/app/.yarn \
+     yarn install --frozen-lockfile
 
 FROM node:18-alpine3.16 as builder
 WORKDIR /app
