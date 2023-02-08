@@ -29,5 +29,8 @@
     },
     "dependencies": {
         "typescript": "^4.9.3"
+    },
+    "engines": {
+        "node": "16 || 18"
     }
 }
