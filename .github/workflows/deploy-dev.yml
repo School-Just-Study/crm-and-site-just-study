@@ -51,9 +51,9 @@ jobs:
       - name: Create env file
         run: |
           touch .env
-          echo NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID >> .env
-          echo FRONTEND_URL=$FRONTEND_URL >> .env
-          echo NEXT_PUBLIC_FRONTEND_URL=$FRONTEND_URL >> .env
+          echo NEXT_PUBLIC_GA_ID=${{env.NEXT_PUBLIC_GA_ID}} >> .env
+          echo FRONTEND_URL=${{env.FRONTEND_URL}} >> .env
+          echo NEXT_PUBLIC_FRONTEND_URL=${{env.FRONTEND_URL}} >> .env
           cat .env
 
       - name: Login to Yandex Cloud Container Registry
