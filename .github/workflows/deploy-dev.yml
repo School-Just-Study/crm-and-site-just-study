@@ -51,9 +51,9 @@ jobs:
       - name: Create env file
         run: |
           touch .env
-          echo NEXT_PUBLIC_GA_ID=${{ secrets.NEXT_PUBLIC_GA_ID }} >> .env
-          echo FRONTEND_URL=${{ secrets.FRONTEND_URL }} >> .env
-          echo NEXT_PUBLIC_FRONTEND_URL=${{ secrets.FRONTEND_URL }} >> .env
+          echo NEXT_PUBLIC_GA_ID=${{ env.NEXT_PUBLIC_GA_ID }} >> .env
+          echo FRONTEND_URL=${{ env.FRONTEND_URL }} >> .env
+          echo NEXT_PUBLIC_FRONTEND_URL=${{ env.FRONTEND_URL }} >> .env
           cat .env
 
       - name: Login to Yandex Cloud Container Registry
@@ -115,13 +115,13 @@ jobs:
           NODE_ENV: production
           SKIP_NALOG: true
           TEST_EMAIL: true
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
-          SERVICE_KEY_ID: ${{ secrets.SERVICE_KEY_ID }}
-          SERVICE_KEY_SECRET: ${{ secrets.SERVICE_KEY_SECRET }}
+          DATABASE_URL: ${{ env.DATABASE_URL }}
+          FRONTEND_URL: ${{ env.FRONTEND_URL }}
+          SERVICE_KEY_ID: ${{ env.SERVICE_KEY_ID }}
+          SERVICE_KEY_SECRET: ${{ env.SERVICE_KEY_SECRET }}
           NGINX_CERT: ${{ secrets.NGINX_CERT }}
           NGINX_CERT_KEY: ${{ secrets.NGINX_CERT_KEY }}
-          YC_GROUP_ID: ${{ secrets.YC_GROUP_ID }}
+          YC_GROUP_ID: ${{ env.YC_GROUP_ID }}
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           folder-id: b1g4s4k8tj83buc1hdoq
