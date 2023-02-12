@@ -51,7 +51,6 @@ jobs:
       - name: Create env file
         run: |
           touch .env
-          echo NEXT_PUBLIC_GA_ID=${{vars.NEXT_PUBLIC_GA_ID}} >> .env
           echo FRONTEND_URL=${{vars.FRONTEND_URL}} >> .env
           echo NEXT_PUBLIC_FRONTEND_URL=${{vars.FRONTEND_URL}} >> .env
           cat .env
