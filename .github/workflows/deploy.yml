@@ -50,8 +50,8 @@ jobs:
         run: |
           touch .env
           echo NEXT_PUBLIC_GA_ID=${{ secrets.NEXT_PUBLIC_GA_ID }} >> .env
-          echo FRONTEND_URL=${{ secrets.FRONTEND_URL }} >> .env
-          echo NEXT_PUBLIC_FRONTEND_URL=${{ secrets.FRONTEND_URL }} >> .env
+          echo FRONTEND_URL=${{ vars.FRONTEND_URL }} >> .env
+          echo NEXT_PUBLIC_FRONTEND_URL=${{ vars.FRONTEND_URL }} >> .env
           cat .env
 
       - name: Login to Yandex Cloud Container Registry
@@ -96,7 +96,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: prod
-      url: https://juststudy.online
+      url: ${{ vars.FRONTEND_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -111,17 +111,17 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-          FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
-          BACKEND_URL: ${{ secrets.BACKEND_URL }}
-          PAYTURE_URL: ${{ secrets.PAYTURE_URL }}
-          PAYTURE_TERMINAL_RUB: ${{ secrets.PAYTURE_TERMINAL_RUB }}
-          PAYTURE_TERMINAL_USD: ${{ secrets.PAYTURE_TERMINAL_USD }}
+          FRONTEND_URL: ${{ vars.FRONTEND_URL }}
+          BACKEND_URL: ${{ vars.BACKEND_URL }}
+          PAYTURE_URL: ${{ vars.PAYTURE_URL }}
+          PAYTURE_TERMINAL_RUB: ${{ vars.PAYTURE_TERMINAL_RUB }}
+          PAYTURE_TERMINAL_USD: ${{ vars.PAYTURE_TERMINAL_USD }}
           PAYTURE_TERMINAL_PASSWORD: ${{ secrets.PAYTURE_TERMINAL_PASSWORD }}
-          NALOG_INN: ${{ secrets.NALOG_INN }}
+          NALOG_INN: ${{ vars.NALOG_INN }}
           NALOG_PASSWORD: ${{ secrets.NALOG_PASSWORD }}
-          YOOKASSA_ID: ${{ secrets.YOOKASSA_ID }}
+          YOOKASSA_ID: ${{ vars.YOOKASSA_ID }}
           YOOKASSA_SECRET: ${{ secrets.YOOKASSA_SECRET }}
-          SERVICE_KEY_ID: ${{ secrets.SERVICE_KEY_ID }}
+          SERVICE_KEY_ID: ${{ vars.SERVICE_KEY_ID }}
           SERVICE_KEY_SECRET: ${{ secrets.SERVICE_KEY_SECRET }}
           NGINX_CERT: ${{ secrets.NGINX_CERT }}
           NGINX_CERT_KEY: ${{ secrets.NGINX_CERT_KEY }}
