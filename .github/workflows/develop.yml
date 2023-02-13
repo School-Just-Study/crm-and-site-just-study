@@ -10,6 +10,18 @@ on:
     branches: [ "develop" ]
 
 jobs:
+  install:
+    name: Install dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: yarn
+          node-version: 18
+          cache-dependency-path: 'yarn.lock'
+      - run: yarn install --frozen-lockfile
+
   test-crm:
     name: Build CRM
     runs-on: ubuntu-latest
@@ -23,8 +35,7 @@ jobs:
         with:
           cache: yarn
           node-version: 18
-          cache-dependency-path: '**/yarn.lock'
-      - run: yarn install --frozen-lockfile
+          cache-dependency-path: '../yarn.lock'
       - run: yarn build --ignore-scripts
 
   test-site:
@@ -50,6 +61,5 @@ jobs:
         with:
           cache: yarn
           node-version: 18
-          cache-dependency-path: '**/yarn.lock'
-      - run: yarn install --frozen-lockfile
+          cache-dependency-path: '../yarn.lock'
       - run: yarn build:dev --ignore-scripts
