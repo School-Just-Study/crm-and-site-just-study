@@ -648,10 +648,10 @@
   resolved "https://registry.npmjs.org/@egjs/component/-/component-3.0.2.tgz"
   integrity sha512-Mze3mwEE19+dERrimg0JVLtpOHG4AC+LOuKqvF4qGZjn0k23ZbNI7b/gy1LFR63LigC2b8k70aDjy8xoT+WNPA==
 
-"@egjs/flicking@~4.10.5":
-  version "4.10.5"
-  resolved "https://registry.yarnpkg.com/@egjs/flicking/-/flicking-4.10.5.tgz#38187dfde1ae8feb126c28cf7549dab4ac001440"
-  integrity sha512-R19xZAwXKIhdwmMq+m6xIGI5Zw7f14EsmV9owcesqTK+Hw2eGvcrkfAYazaO6YeKm39WOxoy80WLhN4kCDnXfw==
+"@egjs/flicking@~4.10.6":
+  version "4.10.6"
+  resolved "https://registry.yarnpkg.com/@egjs/flicking/-/flicking-4.10.6.tgz#6f64b4b3f8a2d0a7438ce28bb51dc7bedf7b1dec"
+  integrity sha512-DmzkGroItTC3U+H7t7AWlP+0ELT6d6cOlr7rQk+8IzmPtVonJT8/L4Roq3JCBAyCIsMwkpVoLoikOr547QLLng==
   dependencies:
     "@egjs/axes" "^3.8.3"
     "@egjs/component" "^3.0.1"
@@ -670,13 +670,13 @@
   resolved "https://registry.npmjs.org/@egjs/list-differ/-/list-differ-1.0.0.tgz"
   integrity sha512-HsbMKc0ZAQH+EUeCmI/2PvTYSybmkaWwakU8QGDYYgMVIg9BQ5sM0A0Nnombjxo2+JzXHxmH+jw//yGX+y6GYw==
 
-"@egjs/react-flicking@4.10.6":
-  version "4.10.6"
-  resolved "https://registry.yarnpkg.com/@egjs/react-flicking/-/react-flicking-4.10.6.tgz#e7b598609c4c35d0084a360efb14be5a523c522a"
-  integrity sha512-AlOMQFoQdxjwfuk+FT0eXpSZZ3lVmFsg/OWlmJ2y3qs7OckOKcr+WBq6uqQD2EyYA7+//vjd8sistJkkLxqBWQ==
+"@egjs/react-flicking@4.10.7":
+  version "4.10.7"
+  resolved "https://registry.yarnpkg.com/@egjs/react-flicking/-/react-flicking-4.10.7.tgz#97ad9874fc56c1292ffdfb0f2e2eff3207fa1499"
+  integrity sha512-zPCv2daY8c+wpyHi4mXXl5vk6tGIPe2l/ZJmSN6IciqcsA1UssflfY9dAJuku6olxi4A/+iIm/sIVQM4cz1UmA==
   dependencies:
     "@egjs/component" "^3.0.2"
-    "@egjs/flicking" "~4.10.5"
+    "@egjs/flicking" "~4.10.6"
     "@egjs/list-differ" "^1.0.0"
 
 "@emotion/babel-plugin@^11.10.5":
