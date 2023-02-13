@@ -35,7 +35,6 @@ jobs:
         with:
           cache: yarn
           node-version: 18
-          cache-dependency-path: '../yarn.lock'
       - run: yarn build --ignore-scripts
 
   test-site:
@@ -61,5 +60,4 @@ jobs:
         with:
           cache: yarn
           node-version: 18
-          cache-dependency-path: '../yarn.lock'
       - run: yarn build:dev --ignore-scripts
