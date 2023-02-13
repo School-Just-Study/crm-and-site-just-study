@@ -3,17 +3,13 @@
     "version": "2.32.17",
     "private": true,
     "scripts": {
-        "run-dev-crm": "yarn --cwd crm dev-crm",
-        "run-dev-site": "yarn --cwd site dev-site",
+        "run-dev-crm": "cd crm && yarn dev-crm",
+        "run-dev-site": "cd site && yarn dev-site",
         "run-all-dev": "yarn run-dev-crm & yarn run-dev-site",
         "lint": "next lint",
         "eslint": "eslint --fix .",
         "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
     },
-    "workspaces": [
-        "crm/*",
-        "site/*"
-    ],
     "devDependencies": {
         "@semantic-release/commit-analyzer": "9.0.2",
         "@semantic-release/git": "10.0.1",
