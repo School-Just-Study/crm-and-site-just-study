@@ -34,44 +34,44 @@ export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] =
 
                 const workTimeCutoff: WorkTimeCutoffCreateInput[] = [];
 
-                events.forEach((event) => {
-                    if (event.rrule) {
-                        const repeat = event.rrule?.all();
-                        const duration = differenceInMinutes(new Date(event.end), new Date(event.start));
-                        repeat.forEach((date) => {
-                            const dateWithTimeZone = utcToZonedTime(
-                                new Date(date),
-                                event?.rrule?.origOptions.tzid || 'Europe/Moscow'
-                            );
+                events
+                    .filter((event) =>
+                        isWithinInterval(new Date(event.end), {
+                            start: addDays(new Date(), -1),
+                            end: addDays(new Date(), 20)
+                        })
+                    )
+                    .forEach((event) => {
+                        if (event.rrule) {
+                            const repeat = event.rrule?.all();
+                            const duration = differenceInMinutes(new Date(event.end), new Date(event.start));
+                            repeat.forEach((date) => {
+                                const dateWithTimeZone = utcToZonedTime(
+                                    new Date(date),
+                                    event?.rrule?.origOptions.tzid || 'Europe/Moscow'
+                                );
 
+                                workTimeCutoff.push({
+                                    manager: { connect: { id: `${manager.id}` } },
+                                    title: event.summary,
+                                    startTime: dateWithTimeZone,
+                                    endTime: addMinutes(new Date(dateWithTimeZone), duration),
+                                    uid: event.uid
+                                });
+                            });
+                        } else {
                             workTimeCutoff.push({
                                 manager: { connect: { id: `${manager.id}` } },
                                 title: event.summary,
-                                startTime: dateWithTimeZone,
-                                endTime: addMinutes(new Date(dateWithTimeZone), duration),
+                                startTime: event.start,
+                                endTime: event.end,
                                 uid: event.uid
                             });
-                        });
-                    } else {
-                        workTimeCutoff.push({
-                            manager: { connect: { id: `${manager.id}` } },
-                            title: event.summary,
-                            startTime: event.start,
-                            endTime: event.end,
-                            uid: event.uid
-                        });
-                    }
-                });
-
-                const filterCutoff = workTimeCutoff.filter((event) =>
-                    isWithinInterval(new Date(event.endTime), {
-                        start: addDays(new Date(), -1),
-                        end: addDays(new Date(), 20)
-                    })
-                );
+                        }
+                    });
 
                 await context.query.WorkTimeCutoff.createMany({
-                    data: filterCutoff
+                    data: workTimeCutoff
                 });
                 await context.query.WorkTimeCutoff.deleteMany({
                     where: cutoffForDeleteIds

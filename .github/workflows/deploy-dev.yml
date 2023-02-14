@@ -51,9 +51,8 @@ jobs:
       - name: Create env file
         run: |
           touch .env
-          echo NEXT_PUBLIC_GA_ID=${{ secrets.NEXT_PUBLIC_GA_ID }} >> .env
-          echo FRONTEND_URL=${{ secrets.FRONTEND_URL }} >> .env
-          echo NEXT_PUBLIC_FRONTEND_URL=${{ secrets.FRONTEND_URL }} >> .env
+          echo FRONTEND_URL=${{vars.FRONTEND_URL}} >> .env
+          echo NEXT_PUBLIC_FRONTEND_URL=${{vars.FRONTEND_URL}} >> .env
           cat .env
 
       - name: Login to Yandex Cloud Container Registry
@@ -108,20 +107,20 @@ jobs:
         id: deploy-coi
         uses: yc-actions/yc-coi-deploy@v1.2.0
         env:
-          BACKEND_IMAGE: ${{ env.BACKEND_IMAGE }}
-          SITE_IMAGE: ${{ env.SITE_IMAGE }}
-          NGINX_IMAGE: ${{ env.NGINX_IMAGE }}
+          BACKEND_IMAGE: ${{ vars.BACKEND_IMAGE }}
+          SITE_IMAGE: ${{ vars.SITE_IMAGE }}
+          NGINX_IMAGE: ${{ vars.NGINX_IMAGE }}
           SSH_KEY: ${{ secrets.SSH_KEY }}
           NODE_ENV: production
           SKIP_NALOG: true
           TEST_EMAIL: true
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
-          SERVICE_KEY_ID: ${{ secrets.SERVICE_KEY_ID }}
-          SERVICE_KEY_SECRET: ${{ secrets.SERVICE_KEY_SECRET }}
+          DATABASE_URL: ${{ vars.DATABASE_URL }}
+          FRONTEND_URL: ${{ vars.FRONTEND_URL }}
+          SERVICE_KEY_ID: ${{ vars.SERVICE_KEY_ID }}
+          SERVICE_KEY_SECRET: ${{ vars.SERVICE_KEY_SECRET }}
           NGINX_CERT: ${{ secrets.NGINX_CERT }}
           NGINX_CERT_KEY: ${{ secrets.NGINX_CERT_KEY }}
-          YC_GROUP_ID: ${{ secrets.YC_GROUP_ID }}
+          YC_GROUP_ID: ${{ vars.YC_GROUP_ID }}
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           folder-id: b1g4s4k8tj83buc1hdoq
