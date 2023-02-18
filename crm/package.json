@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "dev-crm": "SKIP_NALOG=true TEST_EMAIL=true keystone dev",
+        "dev-crm": "NODE_OPTIONS='--max-old-space-size=4096' SKIP_NALOG=true TEST_EMAIL=true keystone dev",
         "seed-data": "keystone --seed-data",
         "start": "keystone start",
         "build": "keystone build"
