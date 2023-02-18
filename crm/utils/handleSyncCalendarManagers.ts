@@ -40,8 +40,6 @@ export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] =
 
                 const workTimeCutoff: WorkTimeCutoffCreateInput[] = [];
 
-                console.log('events', filteredEvents.length);
-
                 filteredEvents.forEach((event) => {
                     if (event.rrule) {
                         const repeat = event.rrule?.all();
@@ -52,13 +50,22 @@ export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] =
                                 event?.rrule?.origOptions.tzid || 'Europe/Moscow'
                             );
 
-                            workTimeCutoff.push({
-                                manager: { connect: { id: `${manager.id}` } },
-                                title: event.summary,
-                                startTime: dateWithTimeZone,
-                                endTime: addMinutes(new Date(dateWithTimeZone), duration),
-                                uid: event.uid
+                            const endTime = addMinutes(new Date(dateWithTimeZone), duration);
+
+                            const filterEvent = isWithinInterval(endTime, {
+                                start: addDays(new Date(), -1),
+                                end: addDays(new Date(), 20)
                             });
+
+                            if (filterEvent) {
+                                workTimeCutoff.push({
+                                    manager: { connect: { id: `${manager.id}` } },
+                                    title: event.summary,
+                                    startTime: dateWithTimeZone,
+                                    endTime: endTime,
+                                    uid: event.uid
+                                });
+                            }
                         });
                     } else {
                         workTimeCutoff.push({
