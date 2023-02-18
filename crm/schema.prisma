@@ -566,6 +566,7 @@ enum UserRoleType {
 enum ClientStatusClientType {
   new
   firstCall
+  payedFirstLesson
   recordFirstLesson
   trialLesson
   decisionAfterTrialLesson
