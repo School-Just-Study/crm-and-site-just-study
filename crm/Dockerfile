@@ -22,4 +22,6 @@ COPY --from=builder /app/node_modules ./node_modules
 
 ENV PORT 80
 EXPOSE 80
+ENV NODE_OPTIONS '--max-old-space-size=8192'
+
 CMD ["yarn", "start"]
