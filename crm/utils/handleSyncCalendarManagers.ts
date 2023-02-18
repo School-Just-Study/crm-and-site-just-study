@@ -42,7 +42,7 @@ export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] =
 
                 filteredEvents.forEach((event) => {
                     if (event.rrule) {
-                        const repeat = event.rrule?.all();
+                        const repeat = event.rrule?.between(addDays(new Date(), -1), addDays(new Date(), 20));
                         const duration = differenceInMinutes(new Date(event.end), new Date(event.start));
                         repeat.forEach((date) => {
                             const dateWithTimeZone = utcToZonedTime(
@@ -52,20 +52,13 @@ export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] =
 
                             const endTime = addMinutes(new Date(dateWithTimeZone), duration);
 
-                            const filterEvent = isWithinInterval(endTime, {
-                                start: addDays(new Date(), -1),
-                                end: addDays(new Date(), 20)
+                            workTimeCutoff.push({
+                                manager: { connect: { id: `${manager.id}` } },
+                                title: event.summary,
+                                startTime: dateWithTimeZone,
+                                endTime: endTime,
+                                uid: event.uid
                             });
-
-                            if (filterEvent) {
-                                workTimeCutoff.push({
-                                    manager: { connect: { id: `${manager.id}` } },
-                                    title: event.summary,
-                                    startTime: dateWithTimeZone,
-                                    endTime: endTime,
-                                    uid: event.uid
-                                });
-                            }
                         });
                     } else {
                         workTimeCutoff.push({

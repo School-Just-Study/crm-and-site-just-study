@@ -2124,6 +2124,7 @@ scalar Decimal
 enum ClientStatusClientType {
   new
   firstCall
+  payedFirstLesson
   recordFirstLesson
   trialLesson
   decisionAfterTrialLesson
@@ -2702,6 +2703,7 @@ type Mailing {
 enum MailingStatusClientType {
   new
   firstCall
+  payedFirstLesson
   recordFirstLesson
   trialLesson
   decisionAfterTrialLesson
