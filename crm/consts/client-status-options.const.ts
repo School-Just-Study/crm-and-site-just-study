@@ -4,10 +4,14 @@ export const ClientStatusOptionsConst = [
     { label: '🎉Новый', value: ClientStatus.New },
     { label: '☎️Первый звонок принят', value: ClientStatus.FirstCall },
     {
-        label: '📝Запись на первый урок',
+        label: '💰Оплатил первый урок',
+        value: ClientStatus.PayedFirstLesson
+    },
+    {
+        label: '📝Запиcался на первый урок',
         value: ClientStatus.RecordFirstLesson
     },
-    { label: '🙏🏻Пробный урок', value: ClientStatus.TrialLesson },
+    { label: '🙏🏻Посетил первый урок', value: ClientStatus.TrialLesson },
     {
         label: '🤔Принимает решение после пробного',
         value: ClientStatus.DecisionAfterTrialLesson

@@ -1,6 +1,7 @@
 export enum ClientStatus {
     New = 'new',
     FirstCall = 'firstCall',
+    PayedFirstLesson = 'payedFirstLesson',
     RecordFirstLesson = 'recordFirstLesson',
     TrialLesson = 'trialLesson',
     DecisionAfterTrialLesson = 'decisionAfterTrialLesson',
