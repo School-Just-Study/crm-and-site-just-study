@@ -73,9 +73,27 @@ export const User = list({
             label: 'Лид',
             ui: {
                 displayMode: 'cards',
-                cardFields: ['statusClient', 'phone', 'levelStudent', 'profession', 'goal', 'teachers', 'comment'],
+                cardFields: [
+                    'statusClient',
+                    'phone',
+                    'levelStudent',
+                    'profession',
+                    'goal',
+                    'teachers',
+                    'source',
+                    'comment'
+                ],
                 inlineEdit: {
-                    fields: ['statusClient', 'phone', 'levelStudent', 'profession', 'goal', 'teachers', 'comment']
+                    fields: [
+                        'statusClient',
+                        'phone',
+                        'levelStudent',
+                        'profession',
+                        'goal',
+                        'teachers',
+                        'source',
+                        'comment'
+                    ]
                 },
                 linkToItem: true,
                 removeMode: 'none'
