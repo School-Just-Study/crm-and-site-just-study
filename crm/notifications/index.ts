@@ -11,7 +11,7 @@ export const sendMessage = async (config: SendMessageProps) => {
     const email = process.env.TEST_EMAIL === 'true' ? 'pucks.favours-0f@icloud.com' : config.email;
 
     if (process.env.TEST_EMAIL === 'true') {
-        console.debug('sendMessage for', config.email);
+        return console.debug('sendMessage for', config.email);
     }
 
     const params = {
