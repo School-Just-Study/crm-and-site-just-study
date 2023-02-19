@@ -4,7 +4,7 @@ import { Button, ButtonGroup, StepContent, StepLabel, Typography } from '@mui/ma
 import { Buttons } from '@shared/components/RecordForLesson/Buttons';
 import { useFormContext } from 'react-hook-form';
 import { LessonForm } from '@shared/components/RecordForLesson/types';
-import { nextActiveStep } from '@shared/components/RecordForLesson';
+import { setActiveStep } from '@shared/components/RecordForLesson';
 import {
     DEFAULT_MAX_TIME_RECORD,
     setMaxTimeForRecord
@@ -13,9 +13,9 @@ import {
 const durationsOptions = [30, 60, 90];
 
 export const Duration: FC<{ duration?: number[] }> = ({ duration = durationsOptions }) => {
-    const { getValues, setValue } = useFormContext<LessonForm>();
+    const { watch, setValue } = useFormContext<LessonForm>();
     // @ts-ignore
-    const lessonDuration = getValues('duration');
+    const lessonDuration = watch('duration');
 
     const variant = (duration: number) => (duration === lessonDuration ? 'contained' : 'text');
 
@@ -24,7 +24,7 @@ export const Duration: FC<{ duration?: number[] }> = ({ duration = durationsOpti
     }, [duration]);
 
     useEffect(() => {
-        if (lessonDuration) nextActiveStep();
+        if (lessonDuration) setActiveStep(2);
     }, [lessonDuration]);
 
     const handleChange = (duration: number) => {
