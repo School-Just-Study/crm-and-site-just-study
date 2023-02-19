@@ -12,7 +12,7 @@ import { LessonForm } from '@shared/components/RecordForLesson/types';
 import { shouldDisableDate } from '@shared/components/RecordForLesson/Steps/Date/utilis';
 import { CalendarPickerProps } from '@mui/x-date-pickers/CalendarPicker/CalendarPicker';
 import { addDays, format } from 'date-fns';
-import { nextActiveStep } from '@shared/components/RecordForLesson';
+import { setActiveStep } from '@shared/components/RecordForLesson';
 
 export const DateLesson = () => {
     const { getValues, setValue } = useFormContext<LessonForm>();
@@ -24,7 +24,7 @@ export const DateLesson = () => {
     const cutoffDays = schedule?.filter((day) => day.isDayOff).map((day) => day.dayOfWeek);
 
     useEffect(() => {
-        if (date) nextActiveStep();
+        if (date) setActiveStep(3);
     }, [date, getValues]);
 
     const localeForDate = localeDate(locale || 'en');

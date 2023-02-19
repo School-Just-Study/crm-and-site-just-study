@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 import { Buttons } from '@shared/components/RecordForLesson/Buttons';
 import { Manager } from '@src/shared/lib/apollo/types';
 import { stringAvatar } from '@src/shared/lib/textAvatar';
-import { nextActiveStep } from '@shared/components/RecordForLesson/model/model';
+import { setActiveStep } from '@shared/components/RecordForLesson/model/model';
 import { useQuery } from '@apollo/client';
 import { TEACHERS_QUERY } from './queryTeachers';
 import { useFormContext } from 'react-hook-form';
@@ -31,7 +31,7 @@ export const Teacher = () => {
     }, [data]);
 
     useEffect(() => {
-        if (teacher) nextActiveStep();
+        if (teacher) setActiveStep(1);
     }, [getValues, teacher]);
 
     return (

@@ -5,7 +5,7 @@ import { Buttons } from '@shared/components/RecordForLesson/Buttons';
 import { useRouter } from 'next/router';
 import { localeDate } from '@src/shared/lib/localeDate';
 import { format } from 'date-fns';
-import { nextActiveStep } from '@shared/components/RecordForLesson/model/model';
+import { setActiveStep } from '@shared/components/RecordForLesson/model/model';
 import { useFormContext } from 'react-hook-form';
 import { LessonForm } from '@shared/components/RecordForLesson/types';
 import { getScheduleToday } from '@shared/components/RecordForLesson/Steps/TIme/utils';
@@ -32,7 +32,7 @@ export const Time: FC<TimeProps> = ({ noFilter }) => {
     const [unavailableTimesLoading, setUnavailableTimesLoading] = useState(false);
 
     useEffect(() => {
-        if (time) nextActiveStep();
+        if (time) setActiveStep(3);
     }, [time]);
 
     useEffect(() => {
