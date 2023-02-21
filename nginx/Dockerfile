@@ -2,9 +2,8 @@ FROM nginx:alpine
 
 RUN rm -f /etc/nginx/conf.d/default.conf
 
-COPY /nginx.conf /etc/nginx/nginx.conf
-COPY /site.conf /etc/nginx/conf.d/site.conf
-COPY /crm.conf /etc/nginx/conf.d/crm.conf
+COPY nginx.conf ssl.conf /etc/nginx/
+COPY /site.conf /crm.conf /gzip.conf /etc/nginx/conf.d/
 
 COPY /start-nginx.sh /start-nginx.sh
 
