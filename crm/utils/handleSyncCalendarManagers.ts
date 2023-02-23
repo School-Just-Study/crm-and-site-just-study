@@ -31,16 +31,10 @@ export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] =
             try {
                 const webEvents = await ical.async.fromURL(manager.calendar);
                 const events = Object.values(webEvents)?.filter((event) => event.type === 'VEVENT') as VEvent[];
-                const filteredEvents = events.filter((event) =>
-                    isWithinInterval(new Date(event.end), {
-                        start: addDays(new Date(), -5),
-                        end: addDays(new Date(), 20)
-                    })
-                );
 
                 const workTimeCutoff: WorkTimeCutoffCreateInput[] = [];
 
-                filteredEvents.forEach((event) => {
+                events.forEach((event) => {
                     if (event.rrule) {
                         const repeat = event.rrule.between(addDays(new Date(), -8), addDays(new Date(), 20));
                         const duration = differenceInMinutes(new Date(event.end), new Date(event.start));
@@ -71,8 +65,15 @@ export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] =
                     }
                 });
 
+                const filteredEvents = workTimeCutoff.filter((event) =>
+                    isWithinInterval(new Date(event.endTime), {
+                        start: addDays(new Date(), -5),
+                        end: addDays(new Date(), 20)
+                    })
+                );
+
                 await context.query.WorkTimeCutoff.createMany({
-                    data: workTimeCutoff
+                    data: filteredEvents
                 });
                 await context.query.WorkTimeCutoff.deleteMany({
                     where: cutoffForDeleteIds
