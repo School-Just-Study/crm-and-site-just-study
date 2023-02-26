@@ -36,7 +36,7 @@ export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] =
 
                 events.forEach((event) => {
                     if (event.rrule) {
-                        const repeat = event.rrule.between(addDays(new Date(), -8), addDays(new Date(), 20));
+                        const repeat = event.rrule.between(addDays(new Date(), -1), addDays(new Date(), 20));
                         const duration = differenceInMinutes(new Date(event.end), new Date(event.start));
                         repeat.forEach((date) => {
                             const dateWithTimeZone = utcToZonedTime(
@@ -67,7 +67,7 @@ export const handleSyncCalendarManagers: ServerConfig<any>['extendExpressApp'] =
 
                 const filteredEvents = workTimeCutoff.filter((event) =>
                     isWithinInterval(new Date(event.endTime), {
-                        start: addDays(new Date(), -5),
+                        start: addDays(new Date(), -1),
                         end: addDays(new Date(), 20)
                     })
                 );
