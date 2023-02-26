@@ -2783,10 +2783,10 @@ effector-storage@5.0.1:
   resolved "https://registry.yarnpkg.com/effector-storage/-/effector-storage-5.0.1.tgz#c5cbaffafd068852ae1105e406e230df2500bd62"
   integrity sha512-XJQTLEKUoO8vZROyxtY1J6SfK5Z0YdDGcwEYjhQNOiMtE6HcdJ9cagiCK2r0unsq8eEIS2GzB8cWPrIWJRepxA==
 
-effector@22.5.0:
-  version "22.5.0"
-  resolved "https://registry.yarnpkg.com/effector/-/effector-22.5.0.tgz#be024d5145fb648c797e58f73b28b9bdef20563a"
-  integrity sha512-D96eCtD2onWS9jcVPM3Xcdmi/6/cXHFPlBK09HpKJTG5+u5YsN3KiQVC/IublX3EEwHnYkteY7wwqCgdXd6KXg==
+effector@22.5.1:
+  version "22.5.1"
+  resolved "https://registry.yarnpkg.com/effector/-/effector-22.5.1.tgz#006cc3922da895a7b6c3d2bc2266eb653188128e"
+  integrity sha512-phVtHus3in4dcyytVnu3JYE1X3kA2PSbl8ucp98WAeAkFv+hHs7TxqLOxpSJaZ7Ntk0cJgEryvktMlqHjtwEKg==
 
 electron-to-chromium@^1.4.172:
   version "1.4.185"
