@@ -39,7 +39,7 @@
         "lodash": "4.17.21",
         "next": "13.2.1",
         "next-http-proxy-middleware": "1.2.5",
-        "next-sitemap": "3.1.52",
+        "next-sitemap": "3.1.53",
         "nextjs-progressbar": "0.0.16",
         "notistack": "2.0.8",
         "puppeteer": "19.7.2",
