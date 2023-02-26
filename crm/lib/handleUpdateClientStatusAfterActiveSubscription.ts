@@ -13,7 +13,14 @@ export const handleCreateUserSubscriptionsAfterOrderPayments: ListHooks<Lists.Us
                 where: { id: `${user.client.id}` },
                 query: `statusClient`
             });
-            if (client.statusClient !== ClientStatus.Client) {
+            if (item.trial && client.statusClient !== ClientStatus.Client) {
+                await context.query.Client.updateOne({
+                    where: { id: `${user.client.id}` },
+                    data: {
+                        statusClient: ClientStatus.PayedFirstLesson
+                    }
+                });
+            } else if (client.statusClient !== ClientStatus.Client) {
                 await context.query.Client.updateOne({
                     where: { id: `${user.client.id}` },
                     data: {
