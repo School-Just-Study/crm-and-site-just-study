@@ -21,6 +21,10 @@ export const checkout = async (root: any, { userId, currency }: Arguments, conte
         query: `id items { id subscription { id name } service { id name } price } quantityPayments amount amountUSD`
     });
 
+    if (cart.items.length === 0) {
+        throw new Error('Sorry! The cart is empty!');
+    }
+
     const subscriptionsIds = cart.items
         .filter((item: any) => item.subscription)
         .map((item: any) => {
