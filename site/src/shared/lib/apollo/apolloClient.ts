@@ -10,12 +10,7 @@ function createApolloClient() {
     return new ApolloClient({
         uri: BACKEND_URL_GRAPHQL,
         cache,
-        ssrMode: typeof window === 'undefined',
-        defaultOptions: {
-            watchQuery: {
-                fetchPolicy: 'cache-and-network'
-            }
-        }
+        ssrMode: typeof window === 'undefined'
     });
 }
 
