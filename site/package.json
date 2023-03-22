@@ -27,7 +27,6 @@
         "@mui/lab": "5.0.0-alpha.122",
         "@mui/material": "5.11.12",
         "@mui/x-date-pickers": "5.0.20",
-        "apollo3-cache-persist": "0.14.1",
         "date-fns": "2.29.3",
         "date-fns-tz": "2.0.0",
         "effector": "22.5.2",

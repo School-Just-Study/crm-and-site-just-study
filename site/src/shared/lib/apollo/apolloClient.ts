@@ -1,18 +1,10 @@
 import { ApolloClient, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
 import { BACKEND_URL_GRAPHQL } from '../../../../config';
 import { useMemo } from 'react';
-import { LocalStorageWrapper, persistCache } from 'apollo3-cache-persist';
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 
 const cache = new InMemoryCache();
-
-if (typeof window !== 'undefined') {
-    persistCache({
-        cache,
-        storage: new LocalStorageWrapper(window.localStorage)
-    });
-}
 
 function createApolloClient() {
     return new ApolloClient({
