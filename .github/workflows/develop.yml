@@ -20,19 +20,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v3
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          node-version: 18
+          cache: yarn
+          cache-dependency-path: '**/yarn.lock'
 
-      - uses: actions/setup-node@v3
       - run: yarn install --frozen-lockfile
       - run: yarn build
 
@@ -55,22 +49,12 @@ jobs:
           echo NEXT_PUBLIC_FRONTEND_URL=${{ vars.FRONTEND_URL }} >> .env
           cat .env
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v3
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - uses: actions/setup-node@v3
-        with:
-          cache: yarn
           node-version: 18
+          cache: yarn
           cache-dependency-path: '**/yarn.lock'
+
       - run: yarn install --frozen-lockfile
       - run: yarn build:dev
