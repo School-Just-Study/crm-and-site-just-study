@@ -11,10 +11,10 @@ export const handleCheckBookingLesson: ListHooks<Lists.Lesson.TypeInfo>['validat
     addValidationError,
     item
 }) => {
-    if (resolvedData.startTime || resolvedData.endTime) {
+    if (resolvedData?.startTime || resolvedData?.endTime) {
         const lessons = (await context.query.Lesson.findMany({
             where: {
-                ...(item && { id: { not: { equals: `${item?.id}` } } }),
+                ...(item?.id && { id: { not: { equals: `${item?.id}` } } }),
                 statusLesson: { equals: LessonStatus.Created }
             },
             query: `startTime endTime teachers { id }`
