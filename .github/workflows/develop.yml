@@ -25,6 +25,7 @@ jobs:
         with:
           node-version: 18
           cache: yarn
+          cache-dependency-path: '**/yarn.lock'
 
       - run: yarn install --frozen-lockfile
       - run: yarn build
@@ -53,6 +54,7 @@ jobs:
         with:
           node-version: 18
           cache: yarn
+          cache-dependency-path: '**/yarn.lock'
 
       - run: yarn install --frozen-lockfile
       - run: yarn build:dev
