@@ -1,7 +1,7 @@
 import { KeystoneConfig } from '@keystone-6/core/dist/declarations/src/types/config';
 import { Roles } from '../enums/roles.enum';
 
-const accessRoles = [Roles.Admin, Roles.Manager];
+const accessRoles = [Roles.Admin, Roles.Manager, Roles.Teacher];
 
 export const ui: KeystoneConfig['ui'] = {
     isAccessAllowed: async (ctx) => {
