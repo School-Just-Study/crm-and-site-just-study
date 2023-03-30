@@ -20,6 +20,9 @@ export const handleCheckBookingLesson: ListHooks<Lists.Lesson.TypeInfo>['validat
             query: `startTime endTime teachers { id }`
         })) as Lesson[];
 
+        const newStartTime = resolvedData.startTime || item?.startTime;
+        const newEndTime = resolvedData.endTime || item?.endTime;
+
         for (const { startTime, endTime, teachers } of lessons) {
             const teachersId = teachers?.map(({ id }) => id);
 
@@ -35,8 +38,8 @@ export const handleCheckBookingLesson: ListHooks<Lists.Lesson.TypeInfo>['validat
                 return areIntervalsOverlapping(
                     { start: new Date(cutoff.startTime), end: new Date(cutoff.endTime) },
                     {
-                        start: new Date(resolvedData.startTime as string),
-                        end: new Date(resolvedData.endTime as string)
+                        start: new Date(newStartTime as string),
+                        end: new Date(newEndTime as string)
                     }
                 );
             });
@@ -44,8 +47,8 @@ export const handleCheckBookingLesson: ListHooks<Lists.Lesson.TypeInfo>['validat
             const invalidTime = areIntervalsOverlapping(
                 { start: new Date(startTime), end: new Date(endTime) },
                 {
-                    start: new Date(resolvedData.startTime as string),
-                    end: new Date(resolvedData.endTime as string)
+                    start: new Date(newStartTime as string),
+                    end: new Date(newEndTime as string)
                 }
             );
 
