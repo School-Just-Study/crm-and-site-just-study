@@ -56,7 +56,7 @@ const MarketingPage: NextPage<{ data: IQueryMarketingPage }> = ({ data }) => {
                         {marketing.description}
                     </Typography>
                 }
-                buttonText="Получить скидку"
+                buttonText="Оставить заявку"
                 picture={
                     marketing?.image?.url && (
                         <InstagramAvatar>
@@ -73,7 +73,7 @@ const MarketingPage: NextPage<{ data: IQueryMarketingPage }> = ({ data }) => {
                     )
                 }
             />
-            <FormForLeads />
+            <FormForLeads title={'Запишись и получи бонусы!'} />
             {marketing.aboutGeorge && <AboutGeorge />}
             {marketing.advantages && <Advantages />}
             {marketing.reviews && <Reviews />}

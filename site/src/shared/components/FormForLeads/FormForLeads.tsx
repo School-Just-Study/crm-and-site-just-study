@@ -8,7 +8,11 @@ import { IconImage } from '@shared/ui/IconImage/iconImage';
 import { Form } from './Form';
 import { formLeadsListIcons } from '@shared/components/FormForLeads/const';
 
-export const FormForLeads: FC = () => {
+interface FormForLeadsProps {
+    title?: string;
+}
+
+export const FormForLeads: FC<FormForLeadsProps> = ({ title }) => {
     const theme = useTheme();
     const { locale } = useRouter();
     const t = transition(formLeadsList, locale);
@@ -24,7 +28,7 @@ export const FormForLeads: FC = () => {
                         }}>
                         <Box display="grid" gridTemplateColumns={{ xs: '1fr', md: '1fr 1fr' }} alignItems="center">
                             <Box py={3} px={{ xs: 2, md: 8 }}>
-                                <Typography variant="h2">{t.title}</Typography>
+                                <Typography variant="h2">{title || t.title}</Typography>
                                 <List sx={{ my: 3 }}>
                                     {t.list.map((text: string, index: number) => (
                                         <ListItem disablePadding sx={{ py: 1 }} key={index}>
