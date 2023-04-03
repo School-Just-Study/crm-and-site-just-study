@@ -1,5 +1,6 @@
 import { Marketing } from '@src/shared/lib/apollo/types';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { SEO } from '@src/shared/components/SEO/SEO';
 import { Banner } from '@shared/components/Banner/Banner';
 import { Box, Container, Stack, Typography } from '@mui/material';
