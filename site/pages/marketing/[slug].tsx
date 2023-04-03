@@ -1,5 +1,6 @@
 import { Marketing } from '@src/shared/lib/apollo/types';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { SEO } from '@src/shared/components/SEO/SEO';
 import { Banner } from '@shared/components/Banner/Banner';
 import { Box, Container, Stack, Typography } from '@mui/material';
@@ -15,6 +16,7 @@ import SvgJustStudyLogo from '@src/shared/icons/SvgJustStudyLogo';
 import { QUERY_MARKETING_PAGE, QUERY_MARKETINGS } from '@src/shared/lib/apollo/marketingPage';
 import { ViewStatus } from '@shared/enums/view-status';
 import { DISABLED_BUILD_STATIC_PATHS } from '../../config';
+import routes from '@src/routes';
 
 interface IQueryMarketingPage {
     marketing: Marketing;
@@ -22,6 +24,7 @@ interface IQueryMarketingPage {
 
 const MarketingPage: NextPage<{ data: IQueryMarketingPage }> = ({ data }) => {
     const theme = useTheme();
+    const { push } = useRouter();
     const { marketing } = data;
 
     return (
@@ -41,6 +44,7 @@ const MarketingPage: NextPage<{ data: IQueryMarketingPage }> = ({ data }) => {
                             direction="row"
                             p={1}
                             bgcolor={theme.palette.background.paper}
+                            onClick={() => push(routes.home)}
                             borderRadius={20}>
                             <SvgJustStudyLogo width={40} />
                             <Typography variant="h2">Just Study</Typography>
