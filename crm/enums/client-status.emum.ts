@@ -9,5 +9,6 @@ export enum ClientStatus {
     Client = 'client',
     DisabledClient = 'disabledClient',
     FinishedClient = 'finishedClient',
-    Rejection = 'rejection'
+    Rejection = 'rejection',
+    SpeakingClub = 'speakingClub'
 }

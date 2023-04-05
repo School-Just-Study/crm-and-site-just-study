@@ -20,5 +20,6 @@ export const ClientStatusOptionsConst = [
     { label: '✅Клиент', value: ClientStatus.Client },
     { label: '🏁Закончил обучение', value: ClientStatus.FinishedClient },
     { label: '😴Неактивный клиент', value: ClientStatus.DisabledClient },
-    { label: '🙅‍♂️Отказ', value: ClientStatus.Rejection }
+    { label: '🙅‍♂️Отказ', value: ClientStatus.Rejection },
+    { label: '🗣️Разговорный клуб', value: ClientStatus.SpeakingClub }
 ];
