@@ -15,6 +15,7 @@ import { InfoPopover } from '@shared/components/FirstLesson/InfoPopover';
 import { DocumentRenderer } from '@keystone-6/document-renderer';
 import { BuyButtonItem } from '@src/pages/Course/BuyButtonItem';
 import { CurrencyAmount } from '@shared/components/CurrencyAmount';
+import { Reviews } from '@shared/components/Reviews/Reviews';
 
 export const FirstLesson: FC = () => {
     const { data } = useQuery<{ subscriptions: Subscription[] }>(QUERY_TRIAL_LESSON);
@@ -59,6 +60,7 @@ export const FirstLesson: FC = () => {
                         </Card>
                     );
                 })}
+                <Reviews productId={['1']} />
             </Card>
         </Container>
     );
