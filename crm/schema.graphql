@@ -2133,6 +2133,7 @@ enum ClientStatusClientType {
   finishedClient
   disabledClient
   rejection
+  speakingClub
 }
 
 enum ClientLevelStudentType {
@@ -2712,6 +2713,7 @@ enum MailingStatusClientType {
   finishedClient
   disabledClient
   rejection
+  speakingClub
 }
 
 type Mailing_content_Document {
