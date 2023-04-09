@@ -51,9 +51,9 @@ export const Lesson = list({
             type: 'string',
             validation: { isRequired: true },
             defaultValue: 'Europe/Moscow',
-            label: 'Часовой пояс'
+            label: 'ДЛЯ УВЕДОМЛЕНИЯ В ПИСЬМЕ Часовой пояс'
         }),
-        notified: checkbox({ label: 'Уведомление о начале урока' }),
+        notified: checkbox({ label: 'ДОСТАВЛЕНО уведомление о начале урока' }),
         createdAt,
         lastModification
     },
