@@ -6,7 +6,7 @@ import { statusLesson } from '../fields/statusLesson';
 import { handleNotificationStudentAndTeacherLesson } from '../lib/handleNotificationStudentAndTeacherLesson';
 import { handleCheckBookingLesson } from '../lib/handleCheckBookingLesson';
 import { TimezoneOptionsConst } from '../consts/timezone-options.const';
-import { EditOnlyAdminForUi } from '../validation';
+import { createOnlyAdminForUi, EditOnlyAdminForUi } from '../validation';
 
 export const Lesson = list({
     ui: {
@@ -54,13 +54,15 @@ export const Lesson = list({
             defaultValue: 'Europe/Moscow',
             label: 'ДЛЯ УВЕДОМЛЕНИЯ В ПИСЬМЕ Часовой пояс',
             ui: {
-                itemView: { fieldMode: EditOnlyAdminForUi }
+                itemView: { fieldMode: EditOnlyAdminForUi },
+                createView: { fieldMode: createOnlyAdminForUi }
             }
         }),
         notified: checkbox({
             label: 'ДОСТАВЛЕНО уведомление о начале урока',
             ui: {
-                itemView: { fieldMode: EditOnlyAdminForUi }
+                itemView: { fieldMode: EditOnlyAdminForUi },
+                createView: { fieldMode: createOnlyAdminForUi }
             }
         }),
         createdAt,

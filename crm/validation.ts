@@ -7,3 +7,6 @@ export const isAdmin = ({ session }: { session: ISession }) => session?.data.rol
 
 export const EditOnlyAdminForUi = ({ session }: { session: ISession }) =>
     session?.data.role === Roles.Admin ? 'edit' : 'read';
+
+export const createOnlyAdminForUi = ({ session }: { session: ISession }) =>
+    session?.data.role === Roles.Admin ? 'edit' : 'hidden';
