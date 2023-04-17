@@ -24,7 +24,7 @@ export const Page = list({
         slug: text({
             isIndexed: true,
             isFilterable: true,
-            label: 'Путь к странице'
+            label: 'Путь к странице '
         }),
         description: text({
             ui: {
