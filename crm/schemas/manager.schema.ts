@@ -25,7 +25,7 @@ export const Manager = list({
         }),
         work: checkbox({ defaultValue: true, label: 'Работает' }),
         teacher: checkbox({ defaultValue: true, label: 'Преподает' }),
-        linkOnlineLesson: text({ label: 'Ссылка на онлайн урок' }),
+        linkOnlineLesson: text({ label: 'Ссылка на онлайн урок', ui: { createView: { fieldMode: 'hidden' } } }),
         workTime: relationship({
             ref: 'WorkTime.manager',
             many: true,
@@ -36,6 +36,7 @@ export const Manager = list({
                 inlineEdit: {
                     fields: ['dayOfWeek', 'startTime', 'endTime', 'isDayOff']
                 },
+                createView: { fieldMode: 'hidden' },
                 linkToItem: true,
                 inlineConnect: true,
                 inlineCreate: {
@@ -49,7 +50,8 @@ export const Manager = list({
             label: 'Часы неработы',
             ui: {
                 listView: { fieldMode: 'hidden' },
-                itemView: { fieldMode: 'hidden' }
+                itemView: { fieldMode: 'hidden' },
+                createView: { fieldMode: 'hidden' }
             }
         }),
         timeZone: select({
@@ -59,7 +61,7 @@ export const Manager = list({
             defaultValue: 'Europe/Moscow',
             label: 'Часовой пояс'
         }),
-        calendar: text({ label: 'Ссылка на календарь' }),
+        calendar: text({ label: 'Ссылка на календарь', ui: { createView: { fieldMode: 'hidden' } } }),
         comment: text({
             ui: { displayMode: 'textarea' },
             db: { nativeType: 'VarChar(10000)' },
