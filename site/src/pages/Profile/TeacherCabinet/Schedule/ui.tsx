@@ -22,6 +22,7 @@ import {
 import { NotifyOtherTimeZone } from './NotifyOtherTimeZone';
 import { AddCutoff } from '@src/pages/Profile/TeacherCabinet/Schedule/AddCutoff';
 import jstz from 'jstz';
+import { getScheduleFx } from '@src/pages/Profile/TeacherCabinet/Schedule/model/effects';
 
 export const Schedule = () => {
     const [businessHours, setBusinessHours] = useState<BusinessHoursInput | undefined>();
@@ -31,6 +32,7 @@ export const Schedule = () => {
     const user = useUnit($user);
     const schedule = useUnit($schedule);
     const queryTeacher = useQuery<Query>(QUERY_TEACHER, { variables: { id: user?.manager?.id } });
+    const loading = useUnit(getScheduleFx.pending);
 
     useEffect(() => {
         if (user?.manager?.id) {
@@ -79,6 +81,7 @@ export const Schedule = () => {
             <FullCalendar
                 plugins={[timeGridPlugin, interactionPlugin]}
                 initialView={initialView}
+                loading={() => loading}
                 headerToolbar={{ center: 'today prev,next', end: 'timeGridDay,timeGridWeek' }}
                 locale="ru"
                 height="100%"
