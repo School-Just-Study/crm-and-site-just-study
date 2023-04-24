@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { Authorization } from '@shared/components/Authorization';
 import { AccountWrapper } from '@src/layouts/AccountWrapper';
 import { Card } from '@mui/material';
-import { TeacherCabinet } from '@shared/components/../../../src/pages/Profile/TeacherCabinet';
+import { TeacherCabinet } from '@src/pages/Profile/TeacherCabinet';
 
 const TeacherCabinetPage: NextPage = () => {
     return (

@@ -10,9 +10,9 @@
     },
     "dependencies": {
         "@a2seven/yoo-checkout": "1.1.4",
-        "@graphql-tools/schema": "9.0.16",
+        "@graphql-tools/schema": "9.0.19",
         "@keystone-6/auth": "7.0.0",
-        "@keystone-6/core": "5.0.0",
+        "@keystone-6/core": "5.1.0",
         "@keystone-6/fields-document": "7.0.0",
         "@keystone-ui/button": "7.0.2",
         "@keystone-ui/core": "5.0.2",
@@ -34,7 +34,7 @@
         "xml-js": "1.6.11"
     },
     "devDependencies": {
-        "@types/node": "18.14.2",
+        "@types/node": "18.16.0",
         "@types/node-schedule": "2.1.0"
     },
     "engines": {

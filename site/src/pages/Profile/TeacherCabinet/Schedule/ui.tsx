@@ -1,44 +1,32 @@
-import FullCalendar, { BusinessHoursInput, EventSourceInput } from '@fullcalendar/react';
-import timeGridPlugin from '@fullcalendar/timegrid';
 import { Box, Button, Stack } from '@mui/material';
-import interactionPlugin from '@fullcalendar/interaction';
 import { useQuery } from '@apollo/client';
 import { Query } from '@src/shared/lib/apollo/types';
-import { QUERY_TEACHER } from '@src/pages/Profile/TeacherCabinet/Schedule/query';
+import { QUERY_TEACHER } from './query';
 import { useUnit } from 'effector-react';
 import { $user } from '@shared/storage/user';
-import { formatBusinessHours, formatSchedule } from '@src/pages/Profile/TeacherCabinet/Schedule/utils';
+import { formatBusinessHours, formatSchedule } from './utils';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { ScheduleData } from '@src/pages/Profile/TeacherCabinet/Schedule/types';
-import { setSettingsEvent } from '@src/pages/Profile/TeacherCabinet/Schedule/SettingEvent/model/model';
-import { SettingEvent } from '@src/pages/Profile/TeacherCabinet/Schedule/SettingEvent';
+import { setSettingsEvent } from './SettingEvent/model/model';
+import { SettingEvent } from './SettingEvent';
 import './model/init';
-import {
-    $schedule,
-    againGetScheduleParams,
-    setScheduleParams
-} from '@src/pages/Profile/TeacherCabinet/Schedule/model/model';
+import { $schedule, againGetScheduleParams, setScheduleParams } from './model/model';
 import { NotifyOtherTimeZone } from './NotifyOtherTimeZone';
-import { AddCutoff } from '@src/pages/Profile/TeacherCabinet/Schedule/AddCutoff';
+import { AddCutoff } from './AddCutoff';
 import jstz from 'jstz';
-import { getScheduleFx } from '@src/pages/Profile/TeacherCabinet/Schedule/model/effects';
+import { BusinessHoursInput, EventSourceInput } from '@fullcalendar/core';
+import FullCalendar from '@fullcalendar/react';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { ScheduleData } from '@src/pages/Profile/TeacherCabinet/Schedule/types';
 
 export const Schedule = () => {
     const [businessHours, setBusinessHours] = useState<BusinessHoursInput | undefined>();
     const [otherTimeZone, setOtherTimeZone] = useState(false);
     const [events, setEvents] = useState<EventSourceInput | undefined>();
-    const [period, setPeriod] = useState({ start: new Date(), end: new Date() });
     const user = useUnit($user);
     const schedule = useUnit($schedule);
     const queryTeacher = useQuery<Query>(QUERY_TEACHER, { variables: { id: user?.manager?.id } });
-    const loading = useUnit(getScheduleFx.pending);
-
-    useEffect(() => {
-        if (user?.manager?.id) {
-            setScheduleParams({ teacherId: user?.manager?.id, ...period });
-        }
-    }, [period, user?.manager?.id, queryTeacher.data]);
 
     useEffect(() => {
         setOtherTimeZone(jstz.determine().name() !== queryTeacher.data?.manager?.timeZone);
@@ -81,7 +69,6 @@ export const Schedule = () => {
             <FullCalendar
                 plugins={[timeGridPlugin, interactionPlugin]}
                 initialView={initialView}
-                loading={() => loading}
                 headerToolbar={{ center: 'today prev,next', end: 'timeGridDay,timeGridWeek' }}
                 locale="ru"
                 height="100%"
@@ -95,7 +82,7 @@ export const Schedule = () => {
                     setSettingsEvent({ id: event.id, type: event.extendedProps.type });
                 }}
                 datesSet={({ start, end }) => {
-                    setPeriod({ start, end });
+                    setScheduleParams({ start, end });
                 }}
             />
             <SettingEvent />
