@@ -634,15 +634,15 @@
   resolved "https://registry.npmjs.org/@egjs/component/-/component-3.0.2.tgz"
   integrity sha512-Mze3mwEE19+dERrimg0JVLtpOHG4AC+LOuKqvF4qGZjn0k23ZbNI7b/gy1LFR63LigC2b8k70aDjy8xoT+WNPA==
 
-"@egjs/flicking@~4.10.6":
-  version "4.10.6"
-  resolved "https://registry.yarnpkg.com/@egjs/flicking/-/flicking-4.10.6.tgz#6f64b4b3f8a2d0a7438ce28bb51dc7bedf7b1dec"
-  integrity sha512-DmzkGroItTC3U+H7t7AWlP+0ELT6d6cOlr7rQk+8IzmPtVonJT8/L4Roq3JCBAyCIsMwkpVoLoikOr547QLLng==
+"@egjs/flicking@~4.10.7":
+  version "4.10.7"
+  resolved "https://registry.yarnpkg.com/@egjs/flicking/-/flicking-4.10.7.tgz#4b85f5fd7f6fbf30f2c72c6ce120c2807059f52f"
+  integrity sha512-70Uf11TocsxU/UXPvB9g1IVVgYtXkNihMjTw3kl2WkKlnIvT4Akbr56IbAKhvS0Eqh3ScWp2ETxwo0wayPZBhQ==
   dependencies:
     "@egjs/axes" "^3.8.3"
     "@egjs/component" "^3.0.1"
     "@egjs/imready" "^1.3.1"
-    "@egjs/list-differ" "^1.0.0"
+    "@egjs/list-differ" "^1.0.1"
 
 "@egjs/imready@^1.3.1":
   version "1.3.1"
@@ -651,19 +651,19 @@
   dependencies:
     "@egjs/component" "^3.0.1"
 
-"@egjs/list-differ@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/@egjs/list-differ/-/list-differ-1.0.0.tgz"
-  integrity sha512-HsbMKc0ZAQH+EUeCmI/2PvTYSybmkaWwakU8QGDYYgMVIg9BQ5sM0A0Nnombjxo2+JzXHxmH+jw//yGX+y6GYw==
+"@egjs/list-differ@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@egjs/list-differ/-/list-differ-1.0.1.tgz#5772b0f8b87973bb67827f6c7d7df8d7f64a22eb"
+  integrity sha512-OTFTDQcWS+1ZREOdCWuk5hCBgYO4OsD30lXcOCyVOAjXMhgL5rBRDnt/otb6Nz8CzU0L/igdcaQBDLWc4t9gvg==
 
-"@egjs/react-flicking@4.10.7":
-  version "4.10.7"
-  resolved "https://registry.yarnpkg.com/@egjs/react-flicking/-/react-flicking-4.10.7.tgz#97ad9874fc56c1292ffdfb0f2e2eff3207fa1499"
-  integrity sha512-zPCv2daY8c+wpyHi4mXXl5vk6tGIPe2l/ZJmSN6IciqcsA1UssflfY9dAJuku6olxi4A/+iIm/sIVQM4cz1UmA==
+"@egjs/react-flicking@4.10.9":
+  version "4.10.9"
+  resolved "https://registry.yarnpkg.com/@egjs/react-flicking/-/react-flicking-4.10.9.tgz#4f9713a67caec3c0a5402c08b1675c303982c658"
+  integrity sha512-v8wq1T5VG9YEQsKQo+X/714fCqIHKZQGhXzKOVa5A448dIomMu5pio78rsr5mt3lctyDXqVF/Mzxs29t2IWX2g==
   dependencies:
     "@egjs/component" "^3.0.2"
-    "@egjs/flicking" "~4.10.6"
-    "@egjs/list-differ" "^1.0.0"
+    "@egjs/flicking" "~4.10.7"
+    "@egjs/list-differ" "^1.0.1"
 
 "@emotion/babel-plugin@^11.10.6":
   version "11.10.6"
