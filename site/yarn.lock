@@ -793,45 +793,34 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.3.0.tgz#ea89004119dc42db2e1dba0f97d553f7372f6fcb"
   integrity sha512-AHPmaAx+RYfZz0eYu6Gviiagpmiyw98ySSlQvCUhVGDRtDFe4DBS0x1bSjdF3gqUDYOczB+yYvBTtEylYSdRhg==
 
-"@fullcalendar/common@6.0.0-beta.1":
-  version "6.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@fullcalendar/common/-/common-6.0.0-beta.1.tgz#7a62e028bb0a9b09a0e0ef2f77635140f43dd0d4"
-  integrity sha512-1TQ/+s8XJzfUqmMH1v86Dh51Xf5xZu9lhdnpdxTNAaoD7f+BCYZb4z1X7n9JEXbToqEBrzMIbGoppn87vc5dGw==
+"@fullcalendar/core@6.1.6":
+  version "6.1.6"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/core/-/core-6.1.6.tgz#dba14c2e5a48044b7e932b0bcb20144b3699485c"
+  integrity sha512-Q/3pWgOv7qr/eVpuDz+05jxJZSg7Fdwh4XgQP8DlJFLp5aLlOiiKdkTUIO1BX7clQtYTm8P0v7FqMKbsFiQInw==
   dependencies:
-    tslib "^2.1.0"
+    preact "~10.12.1"
 
-"@fullcalendar/daygrid@6.0.0-beta.1":
-  version "6.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@fullcalendar/daygrid/-/daygrid-6.0.0-beta.1.tgz#cf95c16430f0231e07d28ad82f422bb8efb2f57f"
-  integrity sha512-0/iiWIydCBJDORKAwDded9UHxwVTy6PB2MQZO/AiF7d/stN5i2LrWFDzPgWWovNYZxljrnQ4DTAo/FAnYgBMaw==
-  dependencies:
-    "@fullcalendar/common" "6.0.0-beta.1"
-    tslib "^2.1.0"
+"@fullcalendar/daygrid@^6.1.6", "@fullcalendar/daygrid@~6.1.6":
+  version "6.1.6"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/daygrid/-/daygrid-6.1.6.tgz#b60c88ad686b2546daa7eb7ef2369996d14753d2"
+  integrity sha512-HKxprePWXRyg1Shn7p0CWgggFZVwvs+Pg0Z9uSvx6a58wP1yTbOoJHhSVv5CDsfjnq1a0y6DsJbPP/V2LDl6bg==
 
-"@fullcalendar/interaction@6.0.0-beta.1":
-  version "6.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@fullcalendar/interaction/-/interaction-6.0.0-beta.1.tgz#3b104f59a8df1ecdbb4e954afc9cebf558d8074a"
-  integrity sha512-j3ImYMEJ4AXAozwCY9I0jL9VJdZf36qDaa+widzpVFkXH+mKGiTAcRgoItpBJdximvgx30wHOSyFu48oFicdbQ==
-  dependencies:
-    "@fullcalendar/common" "6.0.0-beta.1"
-    tslib "^2.1.0"
+"@fullcalendar/interaction@^6.1.6":
+  version "6.1.6"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/interaction/-/interaction-6.1.6.tgz#9fe3f84a0b62e37013a5d842c8173fd5f72eb39a"
+  integrity sha512-6TjKbDHOkF3C9hIzIhxiTX5FCmNcaCeRk5CeKXHZiIi1Y8gQwIkUkwcZps5uj7PIvb3wNVw8FbF+RNRoloPUqQ==
 
-"@fullcalendar/react@6.0.0-beta.1":
-  version "6.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@fullcalendar/react/-/react-6.0.0-beta.1.tgz#67eef9d2d5439f4efa3ffd59de1334cb1b0c14c3"
-  integrity sha512-jpny5LNmc7htZP1pNy7M7MxwYu2Lz30+8+IbdVQSOWJVDiYUW8cWk+7qMpiZjxfO5TLCTfJb8kVEODXU78x0uw==
-  dependencies:
-    "@fullcalendar/common" "6.0.0-beta.1"
-    tslib "^2.1.0"
+"@fullcalendar/react@^6.1.6":
+  version "6.1.6"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/react/-/react-6.1.6.tgz#2fc0161bdc79aaa3cece12189bd87ea926abff33"
+  integrity sha512-Ib1jl+4SwlyzM5JsVkhBEoB45hL11sQaN9O600XAa39lK2vSL4d0+ZTBSsBBdmezcHd/iECFk64jS0e3agGPVg==
 
-"@fullcalendar/timegrid@6.0.0-beta.1":
-  version "6.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@fullcalendar/timegrid/-/timegrid-6.0.0-beta.1.tgz#bda067402f9ac51520aedcbb80b69618053556e4"
-  integrity sha512-KwDtUv9n3H867zC/9Mq82grHhcHZ2byXXL4+/Ui9+zqR84ZAWBZe+FfjnHh5zuGW/X5Qs0QdGeBr4+nteQrz1w==
+"@fullcalendar/timegrid@^6.1.6":
+  version "6.1.6"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/timegrid/-/timegrid-6.1.6.tgz#9a3cb0e1d68106094b0462c93c1e5a869b2209c0"
+  integrity sha512-WqiGGmzNJeeIt4QjXuBlYTGHp4B+OUb7pYwREt1fer+9keNyG7dd48367pBdia8USk9B3Ep2oHC0aGypJGUFdA==
   dependencies:
-    "@fullcalendar/common" "6.0.0-beta.1"
-    "@fullcalendar/daygrid" "6.0.0-beta.1"
-    tslib "^2.1.0"
+    "@fullcalendar/daygrid" "~6.1.6"
 
 "@graphql-codegen/add@4.0.1":
   version "4.0.1"
@@ -4015,6 +4004,11 @@ postcss@8.4.14:
     nanoid "^3.3.4"
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
+
+preact@~10.12.1:
+  version "10.12.1"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.12.1.tgz#8f9cb5442f560e532729b7d23d42fd1161354a21"
+  integrity sha512-l8386ixSsBdbreOAkqtrwqHwdvR35ID8c3rKPa8lCWuO86dBi32QWHV4vfsZK1utLLFMvw+Z5Ad4XLkZzchscg==
 
 prebuild-install@^7.1.1:
   version "7.1.1"

@@ -11,5 +11,5 @@ export const getScheduleFx = createEffect<
     ApolloQueryResult<{ getTeacherSchedule: GetTeacherScheduleResponse }>,
     ApolloError
 >(async (props) => {
-    return await client.query({ query: QUERY_SCHEDULE, variables: { data: props } });
+    return await client.query({ query: QUERY_SCHEDULE, variables: { data: props }, fetchPolicy: 'network-only' });
 });

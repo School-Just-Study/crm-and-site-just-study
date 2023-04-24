@@ -6,7 +6,6 @@ export const setScheduleParams = createEvent<GetTeacherScheduleData>();
 export const againGetScheduleParams = createEvent();
 
 export const $scheduleParams = restore(setScheduleParams, {
-    teacherId: '1',
     start: new Date(),
     end: new Date()
 });
