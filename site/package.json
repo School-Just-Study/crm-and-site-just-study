@@ -51,7 +51,7 @@
         "react-hook-form-mui": "5.15.1",
         "react-phone-input-2": "2.15.1",
         "react-slick": "0.29.0",
-        "sharp": "0.31.3",
+        "sharp": "0.32.0",
         "slick-carousel": "1.8.1",
         "ts-essentials": "9.3.1"
     },
