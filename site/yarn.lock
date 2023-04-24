@@ -2690,10 +2690,10 @@ effector-next@1.3.3:
   dependencies:
     next-cookies "^2.0.3"
 
-effector-react@22.5.0:
-  version "22.5.0"
-  resolved "https://registry.yarnpkg.com/effector-react/-/effector-react-22.5.0.tgz#97e6095c3410b1681036c6738c549e6e757a6b9d"
-  integrity sha512-f9aOWFKr4i6fhdoV1uHa2n89f9+9edmOJL9UhMgjUcs2al3fyh3R5j1WDx0cHU6TuFtrlnFsulbhd2D/8q7reQ==
+effector-react@22.5.1:
+  version "22.5.1"
+  resolved "https://registry.yarnpkg.com/effector-react/-/effector-react-22.5.1.tgz#09e7ef9a9328edf1ff4f4fcd50b0f4ff98980a52"
+  integrity sha512-Sy5b/sUEZoCuyoCr+SiHcgd0L+PQqnIGx+SuPCZ7MhECYxezkkeecsk0EVj9sykLL2qlEeg+rdiWvIATJgOTeA==
   dependencies:
     use-sync-external-store "^1.0.0"
 
@@ -2702,10 +2702,10 @@ effector-storage@5.0.1:
   resolved "https://registry.yarnpkg.com/effector-storage/-/effector-storage-5.0.1.tgz#c5cbaffafd068852ae1105e406e230df2500bd62"
   integrity sha512-XJQTLEKUoO8vZROyxtY1J6SfK5Z0YdDGcwEYjhQNOiMtE6HcdJ9cagiCK2r0unsq8eEIS2GzB8cWPrIWJRepxA==
 
-effector@22.5.2:
-  version "22.5.2"
-  resolved "https://registry.yarnpkg.com/effector/-/effector-22.5.2.tgz#1f0e6d44760c2c648670f5fa3dcec0218a912ac7"
-  integrity sha512-xEINDCZYZdtmyS9LbjaLMUF1PBmlm3LqPowaKP2sNdBUDHirfGXhWzczWkufdGTJFGBN5sB2pWipmSIUMprbPg==
+effector@22.8.1:
+  version "22.8.1"
+  resolved "https://registry.yarnpkg.com/effector/-/effector-22.8.1.tgz#a1bac860262e8d4301d9462d5000973810319def"
+  integrity sha512-368ysZBxxqr0ThVYElhmo8p8rT2wTZ0hF/BIg1FxNPSIdr/wvw4Hbnioy22CbgtU5d53CnadkJnSlKqfOICOwg==
 
 electron-to-chromium@^1.4.172:
   version "1.4.185"
