@@ -19,7 +19,7 @@
         "@keystone-ui/fields": "7.1.2",
         "@keystone-ui/icons": "6.0.2",
         "@keystone-ui/tooltip": "6.0.2",
-        "@semantic-release/npm": "9.0.2",
+        "@semantic-release/npm": "10.0.3",
         "aws-sdk": "2.1313.0",
         "body-parser": "1.20.2",
         "date-fns": "2.29.3",
@@ -34,7 +34,7 @@
         "xml-js": "1.6.11"
     },
     "devDependencies": {
-        "@types/node": "18.16.0",
+        "@types/node": "18.16.1",
         "@types/node-schedule": "2.1.0"
     },
     "engines": {

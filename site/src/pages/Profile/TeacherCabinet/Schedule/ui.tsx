@@ -18,7 +18,7 @@ import { BusinessHoursInput, EventSourceInput } from '@fullcalendar/core';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { ScheduleData } from '@src/pages/Profile/TeacherCabinet/Schedule/types';
+import { ScheduleData } from './types';
 
 export const Schedule = () => {
     const [businessHours, setBusinessHours] = useState<BusinessHoursInput | undefined>();
