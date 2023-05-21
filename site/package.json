@@ -53,7 +53,7 @@
         "react-slick": "0.29.0",
         "sharp": "0.32.0",
         "slick-carousel": "1.8.1",
-        "ts-essentials": "9.3.1"
+        "ts-essentials": "9.3.2"
     },
     "devDependencies": {
         "@graphql-codegen/add": "4.0.1",
