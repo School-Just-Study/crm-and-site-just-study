@@ -28,7 +28,7 @@
         "semantic-release": "21.0.2"
     },
     "dependencies": {
-        "typescript": "^4.9.3"
+        "typescript": "^5.0.0"
     },
     "engines": {
         "node": "16 || 18"

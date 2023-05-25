@@ -30,7 +30,7 @@
         "node-ical": "^0.16.0",
         "payture-official": "0.0.6",
         "react": "18.2.0",
-        "typescript": "4.9.5",
+        "typescript": "5.0.4",
         "xml-js": "1.6.11"
     },
     "devDependencies": {
