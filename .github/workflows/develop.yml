@@ -58,3 +58,19 @@ jobs:
 
       - run: yarn install --frozen-lockfile
       - run: yarn build:dev
+
+  release:
+    name: Release test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: yarn
+          node-version: 18
+          cache-dependency-path: '**/yarn.lock'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: yarn install --frozen-lockfile
+      - run: yarn semantic-release --dry-run
