@@ -27,7 +27,7 @@
         "@mui/icons-material": "5.11.16",
         "@mui/lab": "5.0.0-alpha.131",
         "@mui/material": "5.13.2",
-        "@mui/x-date-pickers": "6.5.0",
+        "@mui/x-date-pickers": "5.0.20",
         "date-fns": "2.29.3",
         "date-fns-tz": "2.0.0",
         "effector": "22.8.6",
