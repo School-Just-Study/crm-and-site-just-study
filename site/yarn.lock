@@ -505,7 +505,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.18.3", "@babel/runtime@^7.18.9":
+"@babel/runtime@^7.18.3":
   version "7.18.9"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.18.9.tgz#b4fcfce55db3d2e5e080d2490f608a3b9f407f4a"
   integrity sha512-lkqXDcvlFT5rvEjiu6+QYO+1GXrEHRo2LOtS7E4GtX5ESIZOgepqsZBVIj6Pv+a6zqsya9VCgiK1KAK4BvJDAw==
@@ -581,39 +581,6 @@
   version "4.0.43"
   resolved "https://registry.yarnpkg.com/@corex/deepmerge/-/deepmerge-4.0.43.tgz#9bd42559ebb41cc5a7fb7cfeea5f231c20977dca"
   integrity sha512-N8uEMrMPL0cu/bdboEWpQYb/0i2K5Qn8eCsxzOmxSggJbbQte7ljMRoXm917AbntqTGOzdTu+vP3KOOzoC70HQ==
-
-"@date-io/core@^2.15.0":
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/@date-io/core/-/core-2.15.0.tgz#8133860c8ce163b8d0cca3c1caed8d5d1fbfb14e"
-  integrity sha512-3CRvQUEK7aF87NUOwcTtmJ2Rc1kN0D4jFQUfRoanuAnE4o5HzHx4E2YenjaKjSPWeZYiWG6ZhDomx5hp1AaCJA==
-
-"@date-io/date-fns@^2.15.0":
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/@date-io/date-fns/-/date-fns-2.15.0.tgz#2541144f4fc40365efd7d0b7affa5d77dbe59102"
-  integrity sha512-hkVeLm0jijHS2F9YVQcf0LSlD55w9xPvvIfuxDE0XWNXOTcRAAhqw2aqOxyeGbmHxc5U4HqyPZaqs9tfeTsomQ==
-  dependencies:
-    "@date-io/core" "^2.15.0"
-
-"@date-io/dayjs@^2.15.0":
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/@date-io/dayjs/-/dayjs-2.15.0.tgz#474a42586e67be1108a6f68b0a2e5e6088620fb6"
-  integrity sha512-wgYzwaXr9KxkHNYxrOb1t8fYLfAdjIf0Q86qdVCwANObcvyGcPBm0uFtpPK7ApeE4DJUlbuG0IX75TtO+uITwQ==
-  dependencies:
-    "@date-io/core" "^2.15.0"
-
-"@date-io/luxon@^2.15.0":
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/@date-io/luxon/-/luxon-2.15.0.tgz#ad5bea9c46b46230bd780dc91413f31d1967830f"
-  integrity sha512-CxTRCo5AM96ainnYaTpe1NS9GiA78SIgXBScgeAresCS20AvMcOd5XKerDj+y/KLhbSQbU6WUDqG9QcsrImXyQ==
-  dependencies:
-    "@date-io/core" "^2.15.0"
-
-"@date-io/moment@^2.15.0":
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/@date-io/moment/-/moment-2.15.0.tgz#d6c2c88b58534d0c44644abcfefc27cb32182dd8"
-  integrity sha512-AcYBjl3EnEGsByaM5ir644CKbhgJsgc1iWFa9EXfdb4fQexxOC8oCdPAurK2ZDTwg62odyyKa/05YE7ElYh5ag==
-  dependencies:
-    "@date-io/core" "^2.15.0"
 
 "@egjs/agent@^2.2.1":
   version "2.4.2"
@@ -1650,18 +1617,7 @@
   resolved "https://registry.yarnpkg.com/@mui/types/-/types-7.2.4.tgz#b6fade19323b754c5c6de679a38f068fd50b9328"
   integrity sha512-LBcwa8rN84bKF+f5sDyku42w1NTxaPgPyYKODsh01U1fVstTClbUoSA96oyRBnSNyEiAVjKm6Gwx9vjR+xyqHA==
 
-"@mui/utils@^5.10.3":
-  version "5.10.3"
-  resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-5.10.3.tgz#ce2a96f31de2a5e717f507b5383dbabbddbc4dfc"
-  integrity sha512-4jXMDPfx6bpMVuheLaOpKTjpzw39ogAZLeaLj5+RJec3E37/hAZMYjURfblLfTWMMoGoqkY03mNsZaEwNobBow==
-  dependencies:
-    "@babel/runtime" "^7.18.9"
-    "@types/prop-types" "^15.7.5"
-    "@types/react-is" "^16.7.1 || ^17.0.0"
-    prop-types "^15.8.1"
-    react-is "^18.2.0"
-
-"@mui/utils@^5.13.1":
+"@mui/utils@^5.12.3", "@mui/utils@^5.13.1":
   version "5.13.1"
   resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-5.13.1.tgz#86199e46014215f95da046a5ec803f4a39c96eee"
   integrity sha512-6lXdWwmlUbEU2jUI8blw38Kt+3ly7xkmV9ljzY4Q20WhsJMWiNry9CX8M+TaP/HbtuyR8XKsdMgQW7h7MM3n3A==
@@ -1672,23 +1628,17 @@
     prop-types "^15.8.1"
     react-is "^18.2.0"
 
-"@mui/x-date-pickers@5.0.20":
-  version "5.0.20"
-  resolved "https://registry.yarnpkg.com/@mui/x-date-pickers/-/x-date-pickers-5.0.20.tgz#7b4e5b5a214a8095937ba7d82bb82acd6f270d72"
-  integrity sha512-ERukSeHIoNLbI1C2XRhF9wRhqfsr+Q4B1SAw2ZlU7CWgcG8UBOxgqRKDEOVAIoSWL+DWT6GRuQjOKvj6UXZceA==
+"@mui/x-date-pickers@6.5.0":
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/@mui/x-date-pickers/-/x-date-pickers-6.5.0.tgz#b71dbf9d8961fb34d9d829a4c6f9159ebb4e9206"
+  integrity sha512-dRCO1mzHjfOqsa4LdKxiXQnV0cuGiAkliyxSDCdRn6clK2WdF9Oj+1+4Mkx7fcJA61SV1eP4Yg29s0/VDsZKZw==
   dependencies:
-    "@babel/runtime" "^7.18.9"
-    "@date-io/core" "^2.15.0"
-    "@date-io/date-fns" "^2.15.0"
-    "@date-io/dayjs" "^2.15.0"
-    "@date-io/luxon" "^2.15.0"
-    "@date-io/moment" "^2.15.0"
-    "@mui/utils" "^5.10.3"
-    "@types/react-transition-group" "^4.4.5"
+    "@babel/runtime" "^7.21.0"
+    "@mui/utils" "^5.12.3"
+    "@types/react-transition-group" "^4.4.6"
     clsx "^1.2.1"
-    prop-types "^15.7.2"
+    prop-types "^15.8.1"
     react-transition-group "^4.4.5"
-    rifm "^0.12.1"
 
 "@n1ru4l/graphql-live-query@^0.9.0":
   version "0.9.0"
@@ -1906,13 +1856,6 @@
   resolved "https://registry.yarnpkg.com/@types/react-gtm-module/-/react-gtm-module-2.0.1.tgz#b2c6cd14ec251d6ae7fa576edf1d43825908a378"
   integrity sha512-T/DN9gAbCYk5wJ1nxf4pSwmXz4d1iVjM++OoG+mwMfz9STMAotGjSb65gJHOS5bPvl6vLSsJnuC+y/43OQrltg==
 
-"@types/react-is@^16.7.1 || ^17.0.0":
-  version "17.0.3"
-  resolved "https://registry.npmjs.org/@types/react-is/-/react-is-17.0.3.tgz"
-  integrity sha512-aBTIWg1emtu95bLTLx0cpkxwGW3ueZv71nE2YFBpL8k/z5czEW8yYpOo8Dp+UUAFAtKwNaOsh/ioSeQnWlZcfw==
-  dependencies:
-    "@types/react" "*"
-
 "@types/react-is@^18.2.0":
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/@types/react-is/-/react-is-18.2.0.tgz#2f5137853a46017b3d56447940fb3eb92bbf24a5"
@@ -1924,13 +1867,6 @@
   version "0.23.10"
   resolved "https://registry.npmjs.org/@types/react-slick/-/react-slick-0.23.10.tgz"
   integrity sha512-ZiqdencANDZy6sWOWJ54LDvebuXFEhDlHtXU9FFipQR2BcYU2QJxZhvJPW6YK7cocibUiNn+YvDTbt1HtCIBVA==
-  dependencies:
-    "@types/react" "*"
-
-"@types/react-transition-group@^4.4.5":
-  version "4.4.5"
-  resolved "https://registry.npmjs.org/@types/react-transition-group/-/react-transition-group-4.4.5.tgz"
-  integrity sha512-juKD/eiSM3/xZYzjuzH6ZwpP+/lejltmiS3QEzV/vmb/Q8+HfDmxu+Baga8UEMGBqV88Nbg4l2hY/K2DkyaLLA==
   dependencies:
     "@types/react" "*"
 
@@ -4391,11 +4327,6 @@ rfdc@^1.3.0:
   version "1.3.0"
   resolved "https://registry.npmjs.org/rfdc/-/rfdc-1.3.0.tgz"
   integrity sha512-V2hovdzFbOi77/WajaSMXk2OLm+xNIeQdMMuB7icj7bk6zi2F8GGAxigcnDFpJHbNyNcgyJDiP+8nOrY5cZGrA==
-
-rifm@^0.12.1:
-  version "0.12.1"
-  resolved "https://registry.npmjs.org/rifm/-/rifm-0.12.1.tgz"
-  integrity sha512-OGA1Bitg/dSJtI/c4dh90svzaUPt228kzFsUkJbtA2c964IqEAwWXeL9ZJi86xWv3j5SMqRvGULl7bA6cK0Bvg==
 
 rimraf@3.0.2:
   version "3.0.2"
