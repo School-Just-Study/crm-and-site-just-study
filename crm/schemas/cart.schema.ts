@@ -162,6 +162,8 @@ export const Cart = list({
         }
     },
     graphql: {
-        omit: ['create']
+        omit: {
+            create: true
+        }
     }
 });

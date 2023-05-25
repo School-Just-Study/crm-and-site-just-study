@@ -13,7 +13,7 @@ export const WorkTimeCutoff = list({
         isHidden: ({ session }: { session: ISession }) => session?.data.role !== Roles.Admin,
         label: '👀Часы неработы',
         listView: {
-            initialColumns: ['title', 'statusView', 'startTime', 'endTime']
+            initialColumns: ['title', 'statusView', 'startTime', 'endTime', 'manager']
         }
     },
     db: {
