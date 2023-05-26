@@ -16,7 +16,7 @@ import { formatDataUpdateLesson } from '@shared/components/ReschedulingLesson/ut
 import { useMutation } from '@apollo/client';
 import { MUTATION_UPDATE_LESSON } from './query';
 import { useSnackbar } from 'notistack';
-import { againGetScheduleParams } from '@shared/components/../../pages/Profile/TeacherCabinet/Schedule/model/model';
+import { againGetScheduleParams } from '@src/pages/Profile/TeacherCabinet/Schedule/model/model';
 import { QUERY_STUDENT_CABINET } from '@shared/components/Orders/query';
 
 export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClose, noFilter }) => {
@@ -47,7 +47,7 @@ export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClos
         <FormProvider {...methods}>
             <form onSubmit={onSubmit}>
                 <Stepper activeStep={activeStep} orientation="vertical">
-                    <Step hidden>
+                    <Step>
                         <Teacher />
                     </Step>
                     <Step>
