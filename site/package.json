@@ -33,7 +33,7 @@
         "effector": "22.8.6",
         "effector-next": "1.3.3",
         "effector-react": "22.5.3",
-        "effector-storage": "5.0.1",
+        "effector-storage": "6.0.1",
         "graphql": "16.6.0",
         "jstz": "^2.1.1",
         "lodash": "4.17.21",
