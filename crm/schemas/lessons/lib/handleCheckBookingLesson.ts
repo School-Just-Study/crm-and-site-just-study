@@ -1,9 +1,9 @@
 import { Lists } from '.keystone/types';
 import { KeystoneContextFromListTypeInfo, ListHooks } from '@keystone-6/core/types';
-import { LessonStatus } from '../enums/lesson-status';
+import { LessonStatus } from '../enum';
 import { areIntervalsOverlapping } from 'date-fns';
 import { Lesson, WorkTimeCutoff } from '@src/src/shared/lib/apollo/types';
-import { ViewStatus } from '../enums/view-status.enum';
+import { ViewStatus } from '../../../enums/view-status.enum';
 
 const checkAvailableTime = async (
     context: KeystoneContextFromListTypeInfo<Lists.Lesson.TypeInfo>,

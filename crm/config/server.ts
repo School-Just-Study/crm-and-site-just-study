@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import { handleYooKassa } from '../utils/handleYooKassa';
 import { handleStudentCalendar } from '../utils/handleStudentCalendar';
 import { handleTeacherCalendar } from '../utils/handleTeacherCalendar';
-import { handleNotificationStudentLesson } from '../utils/handleNotificationStudentLesson';
+import { handleNotificationStudentLesson } from '../schemas/lessons/notifications/handleNotificationStudentLesson';
 import { handleCheckUserSubscription } from '../utils/handleCheckUserSubscription';
 import { getStudents } from '../utils/getStudents';
 import { getManagers } from '../utils/getManagers';

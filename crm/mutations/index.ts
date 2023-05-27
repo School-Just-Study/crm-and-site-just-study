@@ -5,7 +5,7 @@ import { payment } from './payment';
 import { checkPayment } from './checkPayment';
 import { cart } from './cart';
 import { authCart } from './authCart';
-import { unavailableTimesForRecordLesson } from './unavailableTimesForRecordLesson';
+import { unavailableTimesForRecordLesson } from '../schemas/lessons/mutations/unavailableTimesForRecordLesson';
 import { nextStudentLesson } from './nextStudentLesson';
 import { getTeacherSchedule } from './getTeacherSchedule';
 import { mergeSchemas } from '@graphql-tools/schema';

@@ -1,4 +1,4 @@
-import { LessonStatus } from '../enums/lesson-status';
+import { LessonStatus } from '../schemas/lessons/enum';
 import { ViewStatus } from '../enums/view-status.enum';
 import { KeystoneContext } from '@keystone-6/core/types';
 import { Lists } from '.keystone/types';

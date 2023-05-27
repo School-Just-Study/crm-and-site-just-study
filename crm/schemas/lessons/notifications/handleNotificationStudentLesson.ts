@@ -1,6 +1,6 @@
 import { ServerConfig } from '@keystone-6/core/types';
-import { LessonStatus } from '../enums/lesson-status';
-import { notifyUpcomingLessons } from '../notifications/notifyUpcomingLessons';
+import { LessonStatus } from '../enum';
+import { notifyUpcomingLessons } from './notifyUpcomingLessons';
 import { addHours, isAfter } from 'date-fns';
 
 /**

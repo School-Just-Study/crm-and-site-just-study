@@ -15,7 +15,7 @@ import { Statuses } from '../enums/statuses.enum';
 import { Lists } from '.keystone/types';
 import { createdAt } from '../fields/createdAt';
 import { lastModification } from '../fields/lastModification';
-import { LessonStatus } from '../enums/lesson-status';
+import { LessonStatus } from './lessons/enum';
 import { FRONTEND_URL } from '../config';
 import { EditOnlyAdminForUi } from '../validation';
 import { durationLessonsOptionConst } from '../consts/duration-lessons-option.const';

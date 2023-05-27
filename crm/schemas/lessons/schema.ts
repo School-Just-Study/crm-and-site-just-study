@@ -1,12 +1,12 @@
 import { list } from '@keystone-6/core';
 import { checkbox, relationship, select, text, timestamp } from '@keystone-6/core/fields';
-import { createdAt } from '../fields/createdAt';
-import { lastModification } from '../fields/lastModification';
-import { statusLesson } from '../fields/statusLesson';
-import { handleNotificationStudentAndTeacherLesson } from '../lib/handleNotificationStudentAndTeacherLesson';
-import { handleCheckBookingLesson } from '../lib/handleCheckBookingLesson';
-import { TimezoneOptionsConst } from '../consts/timezone-options.const';
-import { createOnlyAdminForUi, EditOnlyAdminForUi } from '../validation';
+import { createdAt } from '../../fields/createdAt';
+import { lastModification } from '../../fields/lastModification';
+import { fields } from './fields';
+import { handleNotificationStudentAndTeacherLesson } from './notifications/handleNotificationStudentAndTeacherLesson';
+import { handleCheckBookingLesson } from './lib/handleCheckBookingLesson';
+import { TimezoneOptionsConst } from '../../consts/timezone-options.const';
+import { createOnlyAdminForUi, EditOnlyAdminForUi } from '../../validation';
 
 export const Lesson = list({
     ui: {
@@ -17,7 +17,7 @@ export const Lesson = list({
         }
     },
     fields: {
-        statusLesson,
+        statusLesson: fields,
         title: text({ label: 'Заголовок' }),
         description: text({ label: 'Описание' }),
         startTime: timestamp({

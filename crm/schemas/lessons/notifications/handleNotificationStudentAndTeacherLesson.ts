@@ -1,10 +1,10 @@
 import { Lists } from '.keystone/types';
 import { ListHooks } from '@keystone-6/core/types';
-import { notifyNewLesson } from '../notifications/notifyNewLessons';
-import { LessonStatus } from '../enums/lesson-status';
-import { Statuses } from '../enums/statuses.enum';
-import { notifyLessonCanceled } from '../notifications/notifyLessonCanceled';
-import { notifyLessonUpdated } from '../notifications/notifyLessonUpdated';
+import { notifyNewLesson } from './notifyNewLessons';
+import { LessonStatus } from '../enum';
+import { Statuses } from '../../../enums/statuses.enum';
+import { notifyLessonCanceled } from './notifyLessonCanceled';
+import { notifyLessonUpdated } from './notifyLessonUpdated';
 
 export const handleNotificationStudentAndTeacherLesson: ListHooks<Lists.Lesson.TypeInfo>['afterOperation'] = async ({
     context,
