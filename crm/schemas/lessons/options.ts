@@ -1,4 +1,4 @@
-import { LessonStatus } from '../enums/lesson-status';
+import { LessonStatus } from './enum';
 
 export const LessonStatusOptions = [
     { label: '📝Черновик', value: LessonStatus.Draft },

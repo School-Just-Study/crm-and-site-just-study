@@ -202,8 +202,9 @@ model User {
   from_UserService_manager      UserService[]      @relation("UserService_manager")
   from_Page_author              Page[]             @relation("Page_author")
   from_Post_author              Post[]             @relation("Post_author")
-  from_Lesson_students          Lesson[]           @relation("Lesson_students")
   from_Mailing_clients          Mailing[]          @relation("Mailing_clients")
+  from_Lesson_students          Lesson[]           @relation("Lesson_students")
+  from_LessonSchedule_students  LessonSchedule[]   @relation("LessonSchedule_students")
 
   @@index([language])
   @@index([clientId])
@@ -431,24 +432,25 @@ model Client {
 }
 
 model Manager {
-  id                   Int              @id @default(autoincrement())
-  language             String           @default("ru")
-  name                 String           @default("")
-  email                String           @default("")
-  phone                Decimal?         @mysql.Decimal(18, 0)
-  work                 Boolean          @default(true)
-  teacher              Boolean          @default(true)
-  linkOnlineLesson     String           @default("")
-  workTime             WorkTime[]       @relation("WorkTime_manager")
-  cutoff               WorkTimeCutoff[] @relation("WorkTimeCutoff_manager")
-  timeZone             String           @default("Europe/Moscow")
-  calendar             String           @default("")
-  comment              String           @default("") @mysql.VarChar(10000)
-  createdAt            DateTime         @default(now())
-  lastModification     DateTime         @default(now()) @updatedAt
-  from_User_manager    User[]           @relation("User_manager")
-  from_Client_teachers Client[]         @relation("Client_teachers")
-  from_Lesson_teachers Lesson[]         @relation("Lesson_teachers")
+  id                           Int              @id @default(autoincrement())
+  language                     String           @default("ru")
+  name                         String           @default("")
+  email                        String           @default("")
+  phone                        Decimal?         @mysql.Decimal(18, 0)
+  work                         Boolean          @default(true)
+  teacher                      Boolean          @default(true)
+  linkOnlineLesson             String           @default("")
+  workTime                     WorkTime[]       @relation("WorkTime_manager")
+  cutoff                       WorkTimeCutoff[] @relation("WorkTimeCutoff_manager")
+  timeZone                     String           @default("Europe/Moscow")
+  calendar                     String           @default("")
+  comment                      String           @default("") @mysql.VarChar(10000)
+  createdAt                    DateTime         @default(now())
+  lastModification             DateTime         @default(now()) @updatedAt
+  from_User_manager            User[]           @relation("User_manager")
+  from_Client_teachers         Client[]         @relation("Client_teachers")
+  from_Lesson_teachers         Lesson[]         @relation("Lesson_teachers")
+  from_LessonSchedule_teachers LessonSchedule[] @relation("LessonSchedule_teachers")
 
   @@index([language])
 }
@@ -480,28 +482,6 @@ model WorkTimeCutoff {
   lastModification DateTime @default(now()) @updatedAt
 
   @@index([managerId])
-}
-
-model Lesson {
-  id               Int               @id @default(autoincrement())
-  statusLesson     String            @default("created")
-  title            String            @default("")
-  description      String            @default("")
-  startTime        DateTime
-  endTime          DateTime
-  trial            Boolean           @default(false)
-  burned           Boolean           @default(false)
-  students         User[]            @relation("Lesson_students")
-  subscription     UserSubscription? @relation("Lesson_subscription", fields: [subscriptionId], references: [id])
-  subscriptionId   Int?              @map("subscription")
-  teachers         Manager[]         @relation("Lesson_teachers")
-  comment          String            @default("") @mysql.VarChar(10000)
-  timeZone         String            @default("Europe/Moscow")
-  notified         Boolean           @default(false)
-  createdAt        DateTime          @default(now())
-  lastModification DateTime          @default(now()) @updatedAt
-
-  @@index([subscriptionId])
 }
 
 model Mailing {
@@ -538,6 +518,53 @@ model Currency {
   value            Int
   createdAt        DateTime @default(now())
   lastModification DateTime @default(now()) @updatedAt
+}
+
+model Lesson {
+  id               Int               @id @default(autoincrement())
+  statusLesson     String            @default("created")
+  title            String            @default("")
+  description      String            @default("")
+  startTime        DateTime
+  endTime          DateTime
+  trial            Boolean           @default(false)
+  burned           Boolean           @default(false)
+  students         User[]            @relation("Lesson_students")
+  subscription     UserSubscription? @relation("Lesson_subscription", fields: [subscriptionId], references: [id])
+  subscriptionId   Int?              @map("subscription")
+  teachers         Manager[]         @relation("Lesson_teachers")
+  comment          String            @default("") @mysql.VarChar(10000)
+  timeZone         String            @default("Europe/Moscow")
+  notified         Boolean           @default(false)
+  notAlert         Boolean           @default(false)
+  createdAt        DateTime          @default(now())
+  lastModification DateTime          @default(now()) @updatedAt
+
+  @@index([subscriptionId])
+}
+
+model LessonSchedule {
+  id               Int                  @id @default(autoincrement())
+  statusView       String               @default("show")
+  students         User[]               @relation("LessonSchedule_students")
+  teachers         Manager[]            @relation("LessonSchedule_teachers")
+  schedule         LessonScheduleItem[] @relation("LessonSchedule_schedule")
+  startPeriod      DateTime             @mysql.Date
+  endPeriod        DateTime?            @mysql.Date
+  timeZone         String               @default("Europe/Moscow")
+  comment          String               @default("") @mysql.VarChar(10000)
+  createdAt        DateTime             @default(now())
+  lastModification DateTime             @default(now()) @updatedAt
+}
+
+model LessonScheduleItem {
+  id                           Int              @id @default(autoincrement())
+  dayOfWeek                    Int
+  startTime                    String           @default("00:00")
+  endTime                      String           @default("00:00")
+  createdAt                    DateTime         @default(now())
+  lastModification             DateTime         @default(now()) @updatedAt
+  from_LessonSchedule_schedule LessonSchedule[] @relation("LessonSchedule_schedule")
 }
 
 enum OrderStatusType {

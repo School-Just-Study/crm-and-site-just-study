@@ -1,6 +1,6 @@
 import { ServerConfig } from '@keystone-6/core/dist/declarations/src/types/config';
 import ical, { ICalAlarmType } from 'ical-generator';
-import { LessonStatus } from '../enums/lesson-status';
+import { LessonStatus } from '../schemas/lessons/enum';
 
 export const handleStudentCalendar: ServerConfig<any>['extendExpressApp'] = (app, context) => {
     app.get('/api/student/:id/lessons.ical', async (req, res) => {

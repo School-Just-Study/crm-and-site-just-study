@@ -1,3 +1,5 @@
+import * as process from 'process';
+
 export const SERVER_PORT = parseInt(process.env.PORT!) || 8000;
 
 export const DATABASE_URL = process.env.DATABASE_URL || 'mysql://root:root@localhost:8889/sitejuststudy';
@@ -20,3 +22,5 @@ export const PAYTURE_TERMINAL_PASSWORD = process.env.PAYTURE_TERMINAL_PASSWORD |
 
 export const YOOKASSA_SHOPID = process.env.YOOKASSA_ID || '933369';
 export const YOOKASSA_SECRET = process.env.YOOKASSA_SECRET || 'test_Wg58Q3yezKSNYZLwcj5wg0otQq4yi0_yCVgUdbM3sB0';
+
+export const IS_PROD = process.env.NODE_ENV === 'production';

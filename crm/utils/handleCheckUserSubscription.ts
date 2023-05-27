@@ -6,7 +6,7 @@ import { Statuses } from '../enums/statuses.enum';
  * Проверка даты действия абонемента
  * Скрипт запускается по cron каждый день
  * @param app
- * @param createContext
+ * @param context
  */
 export const handleCheckUserSubscription: ServerConfig<any>['extendExpressApp'] = async (app, context) => {
     app.get('/api/check-subscriptions', async (req, res) => {

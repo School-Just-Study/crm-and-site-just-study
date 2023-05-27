@@ -2555,139 +2555,6 @@ input WorkTimeCutoffCreateInput {
   lastModification: DateTime
 }
 
-type Lesson {
-  id: ID!
-  statusLesson: String
-  title: String
-  description: String
-  startTime: DateTime
-  endTime: DateTime
-  trial: Boolean
-  burned: Boolean
-  students(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
-  studentsCount(where: UserWhereInput! = {}): Int
-  subscription: UserSubscription
-  teachers(where: ManagerWhereInput! = {}, orderBy: [ManagerOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ManagerWhereUniqueInput): [Manager!]
-  teachersCount(where: ManagerWhereInput! = {}): Int
-  comment: String
-  timeZone: String
-  notified: Boolean
-  createdAt: DateTime
-  lastModification: DateTime
-}
-
-input LessonWhereUniqueInput {
-  id: ID
-}
-
-input LessonWhereInput {
-  AND: [LessonWhereInput!]
-  OR: [LessonWhereInput!]
-  NOT: [LessonWhereInput!]
-  id: IDFilter
-  statusLesson: StringFilter
-  title: StringFilter
-  description: StringFilter
-  startTime: DateTimeFilter
-  endTime: DateTimeFilter
-  trial: BooleanFilter
-  burned: BooleanFilter
-  students: UserManyRelationFilter
-  subscription: UserSubscriptionWhereInput
-  teachers: ManagerManyRelationFilter
-  comment: StringFilter
-  timeZone: StringFilter
-  notified: BooleanFilter
-  createdAt: DateTimeFilter
-  lastModification: DateTimeFilter
-}
-
-input UserManyRelationFilter {
-  every: UserWhereInput
-  some: UserWhereInput
-  none: UserWhereInput
-}
-
-input LessonOrderByInput {
-  id: OrderDirection
-  statusLesson: OrderDirection
-  title: OrderDirection
-  description: OrderDirection
-  startTime: OrderDirection
-  endTime: OrderDirection
-  trial: OrderDirection
-  burned: OrderDirection
-  comment: OrderDirection
-  timeZone: OrderDirection
-  notified: OrderDirection
-  createdAt: OrderDirection
-  lastModification: OrderDirection
-}
-
-input LessonUpdateInput {
-  statusLesson: String
-  title: String
-  description: String
-  startTime: DateTime
-  endTime: DateTime
-  trial: Boolean
-  burned: Boolean
-  students: UserRelateToManyForUpdateInput
-  subscription: UserSubscriptionRelateToOneForUpdateInput
-  teachers: ManagerRelateToManyForUpdateInput
-  comment: String
-  timeZone: String
-  notified: Boolean
-  createdAt: DateTime
-  lastModification: DateTime
-}
-
-input UserRelateToManyForUpdateInput {
-  disconnect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  create: [UserCreateInput!]
-  connect: [UserWhereUniqueInput!]
-}
-
-input UserSubscriptionRelateToOneForUpdateInput {
-  create: UserSubscriptionCreateInput
-  connect: UserSubscriptionWhereUniqueInput
-  disconnect: Boolean
-}
-
-input LessonUpdateArgs {
-  where: LessonWhereUniqueInput!
-  data: LessonUpdateInput!
-}
-
-input LessonCreateInput {
-  statusLesson: String
-  title: String
-  description: String
-  startTime: DateTime
-  endTime: DateTime
-  trial: Boolean
-  burned: Boolean
-  students: UserRelateToManyForCreateInput
-  subscription: UserSubscriptionRelateToOneForCreateInput
-  teachers: ManagerRelateToManyForCreateInput
-  comment: String
-  timeZone: String
-  notified: Boolean
-  createdAt: DateTime
-  lastModification: DateTime
-}
-
-input UserRelateToManyForCreateInput {
-  create: [UserCreateInput!]
-  connect: [UserWhereUniqueInput!]
-}
-
-input UserSubscriptionRelateToOneForCreateInput {
-  create: UserSubscriptionCreateInput
-  connect: UserSubscriptionWhereUniqueInput
-}
-
 type Mailing {
   id: ID!
   language: String
@@ -2737,6 +2604,12 @@ input MailingWhereInput {
   lastModification: DateTimeFilter
 }
 
+input UserManyRelationFilter {
+  every: UserWhereInput
+  some: UserWhereInput
+  none: UserWhereInput
+}
+
 input MailingOrderByInput {
   id: OrderDirection
   language: OrderDirection
@@ -2757,6 +2630,13 @@ input MailingUpdateInput {
   lastModification: DateTime
 }
 
+input UserRelateToManyForUpdateInput {
+  disconnect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
 input MailingUpdateArgs {
   where: MailingWhereUniqueInput!
   data: MailingUpdateInput!
@@ -2771,6 +2651,11 @@ input MailingCreateInput {
   content: JSON
   createdAt: DateTime
   lastModification: DateTime
+}
+
+input UserRelateToManyForCreateInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
 }
 
 type Image {
@@ -2902,6 +2787,303 @@ input CurrencyCreateInput {
   charCode: String
   nominal: Int
   value: Int
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+type Lesson {
+  id: ID!
+  statusLesson: String
+  title: String
+  description: String
+  startTime: DateTime
+  endTime: DateTime
+  trial: Boolean
+  burned: Boolean
+  students(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
+  studentsCount(where: UserWhereInput! = {}): Int
+  subscription: UserSubscription
+  teachers(where: ManagerWhereInput! = {}, orderBy: [ManagerOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ManagerWhereUniqueInput): [Manager!]
+  teachersCount(where: ManagerWhereInput! = {}): Int
+  comment: String
+  timeZone: String
+  notified: Boolean
+  notAlert: Boolean
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input LessonWhereUniqueInput {
+  id: ID
+}
+
+input LessonWhereInput {
+  AND: [LessonWhereInput!]
+  OR: [LessonWhereInput!]
+  NOT: [LessonWhereInput!]
+  id: IDFilter
+  statusLesson: StringFilter
+  title: StringFilter
+  description: StringFilter
+  startTime: DateTimeFilter
+  endTime: DateTimeFilter
+  trial: BooleanFilter
+  burned: BooleanFilter
+  students: UserManyRelationFilter
+  subscription: UserSubscriptionWhereInput
+  teachers: ManagerManyRelationFilter
+  comment: StringFilter
+  timeZone: StringFilter
+  notified: BooleanFilter
+  notAlert: BooleanFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input LessonOrderByInput {
+  id: OrderDirection
+  statusLesson: OrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  startTime: OrderDirection
+  endTime: OrderDirection
+  trial: OrderDirection
+  burned: OrderDirection
+  comment: OrderDirection
+  timeZone: OrderDirection
+  notified: OrderDirection
+  notAlert: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input LessonUpdateInput {
+  statusLesson: String
+  title: String
+  description: String
+  startTime: DateTime
+  endTime: DateTime
+  trial: Boolean
+  burned: Boolean
+  students: UserRelateToManyForUpdateInput
+  subscription: UserSubscriptionRelateToOneForUpdateInput
+  teachers: ManagerRelateToManyForUpdateInput
+  comment: String
+  timeZone: String
+  notified: Boolean
+  notAlert: Boolean
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input UserSubscriptionRelateToOneForUpdateInput {
+  create: UserSubscriptionCreateInput
+  connect: UserSubscriptionWhereUniqueInput
+  disconnect: Boolean
+}
+
+input LessonUpdateArgs {
+  where: LessonWhereUniqueInput!
+  data: LessonUpdateInput!
+}
+
+input LessonCreateInput {
+  statusLesson: String
+  title: String
+  description: String
+  startTime: DateTime
+  endTime: DateTime
+  trial: Boolean
+  burned: Boolean
+  students: UserRelateToManyForCreateInput
+  subscription: UserSubscriptionRelateToOneForCreateInput
+  teachers: ManagerRelateToManyForCreateInput
+  comment: String
+  timeZone: String
+  notified: Boolean
+  notAlert: Boolean
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input UserSubscriptionRelateToOneForCreateInput {
+  create: UserSubscriptionCreateInput
+  connect: UserSubscriptionWhereUniqueInput
+}
+
+type LessonSchedule {
+  id: ID!
+  statusView: String
+  students(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
+  studentsCount(where: UserWhereInput! = {}): Int
+  teachers(where: ManagerWhereInput! = {}, orderBy: [ManagerOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ManagerWhereUniqueInput): [Manager!]
+  teachersCount(where: ManagerWhereInput! = {}): Int
+  schedule(where: LessonScheduleItemWhereInput! = {}, orderBy: [LessonScheduleItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LessonScheduleItemWhereUniqueInput): [LessonScheduleItem!]
+  scheduleCount(where: LessonScheduleItemWhereInput! = {}): Int
+  startPeriod: CalendarDay
+  endPeriod: CalendarDay
+  timeZone: String
+  comment: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+scalar CalendarDay @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
+
+input LessonScheduleWhereUniqueInput {
+  id: ID
+}
+
+input LessonScheduleWhereInput {
+  AND: [LessonScheduleWhereInput!]
+  OR: [LessonScheduleWhereInput!]
+  NOT: [LessonScheduleWhereInput!]
+  id: IDFilter
+  statusView: StringFilter
+  students: UserManyRelationFilter
+  teachers: ManagerManyRelationFilter
+  schedule: LessonScheduleItemManyRelationFilter
+  startPeriod: CalendarDayFilter
+  endPeriod: CalendarDayNullableFilter
+  timeZone: StringFilter
+  comment: StringFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input LessonScheduleItemManyRelationFilter {
+  every: LessonScheduleItemWhereInput
+  some: LessonScheduleItemWhereInput
+  none: LessonScheduleItemWhereInput
+}
+
+input CalendarDayFilter {
+  equals: CalendarDay
+  in: [CalendarDay!]
+  notIn: [CalendarDay!]
+  lt: CalendarDay
+  lte: CalendarDay
+  gt: CalendarDay
+  gte: CalendarDay
+  not: CalendarDayFilter
+}
+
+input CalendarDayNullableFilter {
+  equals: CalendarDay
+  in: [CalendarDay!]
+  notIn: [CalendarDay!]
+  lt: CalendarDay
+  lte: CalendarDay
+  gt: CalendarDay
+  gte: CalendarDay
+  not: CalendarDayNullableFilter
+}
+
+input LessonScheduleOrderByInput {
+  id: OrderDirection
+  statusView: OrderDirection
+  startPeriod: OrderDirection
+  endPeriod: OrderDirection
+  timeZone: OrderDirection
+  comment: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input LessonScheduleUpdateInput {
+  statusView: String
+  students: UserRelateToManyForUpdateInput
+  teachers: ManagerRelateToManyForUpdateInput
+  schedule: LessonScheduleItemRelateToManyForUpdateInput
+  startPeriod: CalendarDay
+  endPeriod: CalendarDay
+  timeZone: String
+  comment: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input LessonScheduleItemRelateToManyForUpdateInput {
+  disconnect: [LessonScheduleItemWhereUniqueInput!]
+  set: [LessonScheduleItemWhereUniqueInput!]
+  create: [LessonScheduleItemCreateInput!]
+  connect: [LessonScheduleItemWhereUniqueInput!]
+}
+
+input LessonScheduleUpdateArgs {
+  where: LessonScheduleWhereUniqueInput!
+  data: LessonScheduleUpdateInput!
+}
+
+input LessonScheduleCreateInput {
+  statusView: String
+  students: UserRelateToManyForCreateInput
+  teachers: ManagerRelateToManyForCreateInput
+  schedule: LessonScheduleItemRelateToManyForCreateInput
+  startPeriod: CalendarDay
+  endPeriod: CalendarDay
+  timeZone: String
+  comment: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input LessonScheduleItemRelateToManyForCreateInput {
+  create: [LessonScheduleItemCreateInput!]
+  connect: [LessonScheduleItemWhereUniqueInput!]
+}
+
+type LessonScheduleItem {
+  id: ID!
+  dayOfWeek: Int
+  startTime: String
+  endTime: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input LessonScheduleItemWhereUniqueInput {
+  id: ID
+}
+
+input LessonScheduleItemWhereInput {
+  AND: [LessonScheduleItemWhereInput!]
+  OR: [LessonScheduleItemWhereInput!]
+  NOT: [LessonScheduleItemWhereInput!]
+  id: IDFilter
+  dayOfWeek: IntFilter
+  startTime: StringFilter
+  endTime: StringFilter
+  createdAt: DateTimeFilter
+  lastModification: DateTimeFilter
+}
+
+input LessonScheduleItemOrderByInput {
+  id: OrderDirection
+  dayOfWeek: OrderDirection
+  startTime: OrderDirection
+  endTime: OrderDirection
+  createdAt: OrderDirection
+  lastModification: OrderDirection
+}
+
+input LessonScheduleItemUpdateInput {
+  dayOfWeek: Int
+  startTime: String
+  endTime: String
+  createdAt: DateTime
+  lastModification: DateTime
+}
+
+input LessonScheduleItemUpdateArgs {
+  where: LessonScheduleItemWhereUniqueInput!
+  data: LessonScheduleItemUpdateInput!
+}
+
+input LessonScheduleItemCreateInput {
+  dayOfWeek: Int
+  startTime: String
+  endTime: String
   createdAt: DateTime
   lastModification: DateTime
 }
@@ -3072,12 +3254,6 @@ type Mutation {
   updateWorkTimeCutoffs(data: [WorkTimeCutoffUpdateArgs!]!): [WorkTimeCutoff]
   deleteWorkTimeCutoff(where: WorkTimeCutoffWhereUniqueInput!): WorkTimeCutoff
   deleteWorkTimeCutoffs(where: [WorkTimeCutoffWhereUniqueInput!]!): [WorkTimeCutoff]
-  createLesson(data: LessonCreateInput!): Lesson
-  createLessons(data: [LessonCreateInput!]!): [Lesson]
-  updateLesson(where: LessonWhereUniqueInput!, data: LessonUpdateInput!): Lesson
-  updateLessons(data: [LessonUpdateArgs!]!): [Lesson]
-  deleteLesson(where: LessonWhereUniqueInput!): Lesson
-  deleteLessons(where: [LessonWhereUniqueInput!]!): [Lesson]
   createMailing(data: MailingCreateInput!): Mailing
   createMailings(data: [MailingCreateInput!]!): [Mailing]
   updateMailing(where: MailingWhereUniqueInput!, data: MailingUpdateInput!): Mailing
@@ -3096,6 +3272,24 @@ type Mutation {
   updateCurrencies(data: [CurrencyUpdateArgs!]!): [Currency]
   deleteCurrency(where: CurrencyWhereUniqueInput!): Currency
   deleteCurrencies(where: [CurrencyWhereUniqueInput!]!): [Currency]
+  createLesson(data: LessonCreateInput!): Lesson
+  createLessons(data: [LessonCreateInput!]!): [Lesson]
+  updateLesson(where: LessonWhereUniqueInput!, data: LessonUpdateInput!): Lesson
+  updateLessons(data: [LessonUpdateArgs!]!): [Lesson]
+  deleteLesson(where: LessonWhereUniqueInput!): Lesson
+  deleteLessons(where: [LessonWhereUniqueInput!]!): [Lesson]
+  createLessonSchedule(data: LessonScheduleCreateInput!): LessonSchedule
+  createLessonSchedules(data: [LessonScheduleCreateInput!]!): [LessonSchedule]
+  updateLessonSchedule(where: LessonScheduleWhereUniqueInput!, data: LessonScheduleUpdateInput!): LessonSchedule
+  updateLessonSchedules(data: [LessonScheduleUpdateArgs!]!): [LessonSchedule]
+  deleteLessonSchedule(where: LessonScheduleWhereUniqueInput!): LessonSchedule
+  deleteLessonSchedules(where: [LessonScheduleWhereUniqueInput!]!): [LessonSchedule]
+  createLessonScheduleItem(data: LessonScheduleItemCreateInput!): LessonScheduleItem
+  createLessonScheduleItems(data: [LessonScheduleItemCreateInput!]!): [LessonScheduleItem]
+  updateLessonScheduleItem(where: LessonScheduleItemWhereUniqueInput!, data: LessonScheduleItemUpdateInput!): LessonScheduleItem
+  updateLessonScheduleItems(data: [LessonScheduleItemUpdateArgs!]!): [LessonScheduleItem]
+  deleteLessonScheduleItem(where: LessonScheduleItemWhereUniqueInput!): LessonScheduleItem
+  deleteLessonScheduleItems(where: [LessonScheduleItemWhereUniqueInput!]!): [LessonScheduleItem]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -3226,9 +3420,6 @@ type Query {
   workTimeCutoffs(where: WorkTimeCutoffWhereInput! = {}, orderBy: [WorkTimeCutoffOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: WorkTimeCutoffWhereUniqueInput): [WorkTimeCutoff!]
   workTimeCutoff(where: WorkTimeCutoffWhereUniqueInput!): WorkTimeCutoff
   workTimeCutoffsCount(where: WorkTimeCutoffWhereInput! = {}): Int
-  lessons(where: LessonWhereInput! = {}, orderBy: [LessonOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LessonWhereUniqueInput): [Lesson!]
-  lesson(where: LessonWhereUniqueInput!): Lesson
-  lessonsCount(where: LessonWhereInput! = {}): Int
   mailings(where: MailingWhereInput! = {}, orderBy: [MailingOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: MailingWhereUniqueInput): [Mailing!]
   mailing(where: MailingWhereUniqueInput!): Mailing
   mailingsCount(where: MailingWhereInput! = {}): Int
@@ -3238,6 +3429,15 @@ type Query {
   currencies(where: CurrencyWhereInput! = {}, orderBy: [CurrencyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CurrencyWhereUniqueInput): [Currency!]
   currency(where: CurrencyWhereUniqueInput!): Currency
   currenciesCount(where: CurrencyWhereInput! = {}): Int
+  lessons(where: LessonWhereInput! = {}, orderBy: [LessonOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LessonWhereUniqueInput): [Lesson!]
+  lesson(where: LessonWhereUniqueInput!): Lesson
+  lessonsCount(where: LessonWhereInput! = {}): Int
+  lessonSchedules(where: LessonScheduleWhereInput! = {}, orderBy: [LessonScheduleOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LessonScheduleWhereUniqueInput): [LessonSchedule!]
+  lessonSchedule(where: LessonScheduleWhereUniqueInput!): LessonSchedule
+  lessonSchedulesCount(where: LessonScheduleWhereInput! = {}): Int
+  lessonScheduleItems(where: LessonScheduleItemWhereInput! = {}, orderBy: [LessonScheduleItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LessonScheduleItemWhereUniqueInput): [LessonScheduleItem!]
+  lessonScheduleItem(where: LessonScheduleItemWhereUniqueInput!): LessonScheduleItem
+  lessonScheduleItemsCount(where: LessonScheduleItemWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
   checkPayment(paymentId: String!): Payment

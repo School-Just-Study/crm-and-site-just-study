@@ -1,8 +1,8 @@
 import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
 import { Lists } from '.keystone/types';
 import { formatInTimeZone } from 'date-fns-tz';
-import { localeDate } from '../lib/localeDate';
-import { sendMessage } from './index';
+import { localeDate } from '../../../lib/localeDate';
+import { sendMessage } from '../../../notifications';
 
 const infoForTeacher = (lesson: any, teacher: Lists.Manager.Item) => {
     const dateFormatStart = formatInTimeZone(new Date(lesson.startTime), teacher.timeZone, 'd MMMM yyyy HH:mm zzz', {
