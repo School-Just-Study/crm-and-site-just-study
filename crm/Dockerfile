@@ -23,4 +23,6 @@ COPY --from=builder /app/node_modules ./node_modules
 ENV PORT 80
 EXPOSE 80
 
+RUN yarn migrate-deploy
+
 CMD ["yarn", "start"]

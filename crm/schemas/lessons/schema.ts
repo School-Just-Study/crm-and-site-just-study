@@ -1,12 +1,16 @@
 import { list } from '@keystone-6/core';
 import { checkbox, relationship, select, text, timestamp } from '@keystone-6/core/fields';
-import { createdAt } from '../fields/createdAt';
-import { lastModification } from '../fields/lastModification';
-import { statusLesson } from '../fields/statusLesson';
-import { handleNotificationStudentAndTeacherLesson } from '../lib/handleNotificationStudentAndTeacherLesson';
-import { handleCheckBookingLesson } from '../lib/handleCheckBookingLesson';
-import { TimezoneOptionsConst } from '../consts/timezone-options.const';
-import { createOnlyAdminForUi, EditOnlyAdminForUi } from '../validation';
+import { createdAt } from '../../fields/createdAt';
+import { lastModification } from '../../fields/lastModification';
+import { fields } from './fields';
+import {
+    handleCheckBookingLesson,
+    handleNotificationStudentAndTeacherLesson,
+    handleSetSubscriptionIfEmpty
+} from './hooks';
+import { timezoneOptionsConst } from '../../consts/timezone-options.const';
+import { createOnlyAdminForUi, EditOnlyAdminForUi } from '../../validation';
+import { allowAll } from '@keystone-6/core/access';
 
 export const Lesson = list({
     ui: {
@@ -17,7 +21,7 @@ export const Lesson = list({
         }
     },
     fields: {
-        statusLesson,
+        statusLesson: fields,
         title: text({ label: 'Заголовок' }),
         description: text({ label: 'Описание' }),
         startTime: timestamp({
@@ -39,7 +43,10 @@ export const Lesson = list({
         students: relationship({ ref: 'User', many: true, label: 'Клиент' }),
         subscription: relationship({
             ref: 'UserSubscription.lessons',
-            label: 'Абонемент'
+            label: 'Абонемент',
+            ui: {
+                description: 'Не обязательно указывать, установится автоматически при наличии активного абонемента'
+            }
         }),
         teachers: relationship({ ref: 'Manager', many: true, label: 'Учителя' }),
         comment: text({
@@ -48,7 +55,7 @@ export const Lesson = list({
             label: 'Комментарий'
         }),
         timeZone: select({
-            options: TimezoneOptionsConst,
+            options: timezoneOptionsConst,
             type: 'string',
             validation: { isRequired: true },
             defaultValue: 'Europe/Moscow',
@@ -65,19 +72,20 @@ export const Lesson = list({
                 createView: { fieldMode: createOnlyAdminForUi }
             }
         }),
+        notAlert: checkbox({
+            label: 'Создано из графика',
+            ui: {
+                itemView: { fieldMode: EditOnlyAdminForUi },
+                createView: { fieldMode: createOnlyAdminForUi }
+            }
+        }),
         createdAt,
         lastModification
     },
     hooks: {
+        resolveInput: handleSetSubscriptionIfEmpty,
         validateInput: handleCheckBookingLesson,
         afterOperation: handleNotificationStudentAndTeacherLesson
     },
-    access: {
-        operation: {
-            query: () => true,
-            create: () => true,
-            update: () => true,
-            delete: () => true
-        }
-    }
+    access: allowAll
 });

@@ -1,8 +1,8 @@
 import { select } from '@keystone-6/core/fields';
-import { LessonStatusOptions } from '../consts/lesson-status-options';
-import { LessonStatus } from '../enums/lesson-status';
+import { LessonStatusOptions } from './options';
+import { LessonStatus } from './enum';
 
-export const statusLesson = select({
+export const fields = select({
     options: LessonStatusOptions,
     defaultValue: LessonStatus.Created,
     label: 'Статус урока',

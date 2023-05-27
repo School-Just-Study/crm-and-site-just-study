@@ -1,6 +1,6 @@
 import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
-import { LessonStatus } from '../enums/lesson-status';
-import { ViewStatus } from '../enums/view-status.enum';
+import { LessonStatus } from '../enum';
+import { ViewStatus } from '../../../enums/view-status.enum';
 import { addDays, areIntervalsOverlapping } from 'date-fns';
 
 interface Arguments {

@@ -33,11 +33,6 @@ export const WorkTime = list({
         lastModification
     },
     access: {
-        operation: {
-            query: () => true,
-            create: () => true,
-            update: () => true,
-            delete: () => true
-        }
+        operation: () => true
     }
 });

@@ -1,9 +1,9 @@
 import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
 import { Lists } from '.keystone/types';
 import { formatInTimeZone } from 'date-fns-tz';
-import { localeDate } from '../lib/localeDate';
-import { sendMessage } from './index';
-import { BACKEND_URL } from '../config';
+import { localeDate } from '../../../lib/localeDate';
+import { sendMessage } from '../../../notifications';
+import { BACKEND_URL } from '../../../config';
 
 const infoForStudent = (lesson: any, student: Lists.User.Item) => {
     const dateFormat = formatInTimeZone(new Date(lesson.startTime), lesson.timeZone, 'd MMMM yyyy HH:mm zzz', {
@@ -13,7 +13,7 @@ const infoForStudent = (lesson: any, student: Lists.User.Item) => {
     return `
       <div style='display:flex; flex-direction: column;'>
           <p>${student.name},</p>
-          <p>✅ Вы записались на обучение: ${lesson.subscription.name}</p>
+          <p>✅ Вы записались на обучение: ${lesson.subscription?.name}</p>
           <p>⏰ Дата: ${dateFormat}, ${lesson.timeZone}</p>
           <p>🏫 Ссылка на онлайн урок: ${lesson.teachers[0].linkOnlineLesson}</p>
       </div>

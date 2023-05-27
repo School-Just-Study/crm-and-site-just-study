@@ -11,6 +11,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  CalendarDay: any;
   DateTime: any;
   Decimal: any;
   JSON: any;
@@ -92,6 +93,28 @@ export type BooleanFilter = {
   not?: InputMaybe<BooleanFilter>;
 };
 
+export type CalendarDayFilter = {
+  equals?: InputMaybe<Scalars['CalendarDay']>;
+  gt?: InputMaybe<Scalars['CalendarDay']>;
+  gte?: InputMaybe<Scalars['CalendarDay']>;
+  in?: InputMaybe<Array<Scalars['CalendarDay']>>;
+  lt?: InputMaybe<Scalars['CalendarDay']>;
+  lte?: InputMaybe<Scalars['CalendarDay']>;
+  not?: InputMaybe<CalendarDayFilter>;
+  notIn?: InputMaybe<Array<Scalars['CalendarDay']>>;
+};
+
+export type CalendarDayNullableFilter = {
+  equals?: InputMaybe<Scalars['CalendarDay']>;
+  gt?: InputMaybe<Scalars['CalendarDay']>;
+  gte?: InputMaybe<Scalars['CalendarDay']>;
+  in?: InputMaybe<Array<Scalars['CalendarDay']>>;
+  lt?: InputMaybe<Scalars['CalendarDay']>;
+  lte?: InputMaybe<Scalars['CalendarDay']>;
+  not?: InputMaybe<CalendarDayNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['CalendarDay']>>;
+};
+
 export type Cart = {
   __typename?: 'Cart';
   amount?: Maybe<Scalars['Int']>;
@@ -111,6 +134,7 @@ export type Cart = {
 
 
 export type CartItemsArgs = {
+  cursor?: InputMaybe<CartItemWhereUniqueInput>;
   orderBy?: Array<CartItemOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -253,6 +277,7 @@ export type Category = {
 
 
 export type CategoryProductsArgs = {
+  cursor?: InputMaybe<ProductWhereUniqueInput>;
   orderBy?: Array<ProductOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -361,6 +386,7 @@ export type Client = {
 
 
 export type ClientSourceArgs = {
+  cursor?: InputMaybe<SourceClientWhereUniqueInput>;
   orderBy?: Array<SourceClientOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -374,6 +400,7 @@ export type ClientSourceCountArgs = {
 
 
 export type ClientTeachersArgs = {
+  cursor?: InputMaybe<ManagerWhereUniqueInput>;
   orderBy?: Array<ManagerOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -452,8 +479,10 @@ export enum ClientStatusClientType {
   FinishedClient = 'finishedClient',
   FirstCall = 'firstCall',
   New = 'new',
+  PayedFirstLesson = 'payedFirstLesson',
   RecordFirstLesson = 'recordFirstLesson',
   Rejection = 'rejection',
+  SpeakingClub = 'speakingClub',
   TrialLesson = 'trialLesson'
 }
 
@@ -629,6 +658,7 @@ export type Direction = {
 
 
 export type DirectionGoalsArgs = {
+  cursor?: InputMaybe<DirectionGoalWhereUniqueInput>;
   orderBy?: Array<DirectionGoalOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -642,6 +672,7 @@ export type DirectionGoalsCountArgs = {
 
 
 export type DirectionProductsArgs = {
+  cursor?: InputMaybe<ProductWhereUniqueInput>;
   orderBy?: Array<ProductOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -655,6 +686,7 @@ export type DirectionProductsCountArgs = {
 
 
 export type DirectionResultsArgs = {
+  cursor?: InputMaybe<DirectionResultWhereUniqueInput>;
   orderBy?: Array<DirectionResultOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -887,6 +919,7 @@ export type Faq = {
 
 
 export type FaqProductsArgs = {
+  cursor?: InputMaybe<ProductWhereUniqueInput>;
   orderBy?: Array<ProductOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -1103,6 +1136,7 @@ export type KeystoneAdminUiFieldMeta = {
   description?: Maybe<Scalars['String']>;
   fieldMeta?: Maybe<Scalars['JSON']>;
   isFilterable: Scalars['Boolean'];
+  isNonNull?: Maybe<Array<KeystoneAdminUiFieldMetaIsNonNull>>;
   isOrderable: Scalars['Boolean'];
   itemView?: Maybe<KeystoneAdminUiFieldMetaItemView>;
   label: Scalars['String'];
@@ -1125,6 +1159,12 @@ export type KeystoneAdminUiFieldMetaCreateView = {
 export enum KeystoneAdminUiFieldMetaCreateViewFieldMode {
   Edit = 'edit',
   Hidden = 'hidden'
+}
+
+export enum KeystoneAdminUiFieldMetaIsNonNull {
+  Create = 'create',
+  Read = 'read',
+  Update = 'update'
 }
 
 export type KeystoneAdminUiFieldMetaItemView = {
@@ -1201,6 +1241,7 @@ export type Lesson = {
   endTime?: Maybe<Scalars['DateTime']>;
   id: Scalars['ID'];
   lastModification?: Maybe<Scalars['DateTime']>;
+  notAlert?: Maybe<Scalars['Boolean']>;
   notified?: Maybe<Scalars['Boolean']>;
   startTime?: Maybe<Scalars['DateTime']>;
   statusLesson?: Maybe<Scalars['String']>;
@@ -1216,6 +1257,7 @@ export type Lesson = {
 
 
 export type LessonStudentsArgs = {
+  cursor?: InputMaybe<UserWhereUniqueInput>;
   orderBy?: Array<UserOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -1229,6 +1271,7 @@ export type LessonStudentsCountArgs = {
 
 
 export type LessonTeachersArgs = {
+  cursor?: InputMaybe<ManagerWhereUniqueInput>;
   orderBy?: Array<ManagerOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -1247,6 +1290,7 @@ export type LessonCreateInput = {
   description?: InputMaybe<Scalars['String']>;
   endTime?: InputMaybe<Scalars['DateTime']>;
   lastModification?: InputMaybe<Scalars['DateTime']>;
+  notAlert?: InputMaybe<Scalars['Boolean']>;
   notified?: InputMaybe<Scalars['Boolean']>;
   startTime?: InputMaybe<Scalars['DateTime']>;
   statusLesson?: InputMaybe<Scalars['String']>;
@@ -1272,6 +1316,7 @@ export type LessonOrderByInput = {
   endTime?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
   lastModification?: InputMaybe<OrderDirection>;
+  notAlert?: InputMaybe<OrderDirection>;
   notified?: InputMaybe<OrderDirection>;
   startTime?: InputMaybe<OrderDirection>;
   statusLesson?: InputMaybe<OrderDirection>;
@@ -1292,6 +1337,203 @@ export type LessonRelateToManyForUpdateInput = {
   set?: InputMaybe<Array<LessonWhereUniqueInput>>;
 };
 
+export type LessonSchedule = {
+  __typename?: 'LessonSchedule';
+  comment?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  endPeriod?: Maybe<Scalars['CalendarDay']>;
+  id: Scalars['ID'];
+  lastModification?: Maybe<Scalars['DateTime']>;
+  schedule?: Maybe<Array<LessonScheduleItem>>;
+  scheduleCount?: Maybe<Scalars['Int']>;
+  startPeriod?: Maybe<Scalars['CalendarDay']>;
+  statusView?: Maybe<Scalars['String']>;
+  students?: Maybe<Array<User>>;
+  studentsCount?: Maybe<Scalars['Int']>;
+  teachers?: Maybe<Array<Manager>>;
+  teachersCount?: Maybe<Scalars['Int']>;
+  timeZone?: Maybe<Scalars['String']>;
+};
+
+
+export type LessonScheduleScheduleArgs = {
+  cursor?: InputMaybe<LessonScheduleItemWhereUniqueInput>;
+  orderBy?: Array<LessonScheduleItemOrderByInput>;
+  skip?: Scalars['Int'];
+  take?: InputMaybe<Scalars['Int']>;
+  where?: LessonScheduleItemWhereInput;
+};
+
+
+export type LessonScheduleScheduleCountArgs = {
+  where?: LessonScheduleItemWhereInput;
+};
+
+
+export type LessonScheduleStudentsArgs = {
+  cursor?: InputMaybe<UserWhereUniqueInput>;
+  orderBy?: Array<UserOrderByInput>;
+  skip?: Scalars['Int'];
+  take?: InputMaybe<Scalars['Int']>;
+  where?: UserWhereInput;
+};
+
+
+export type LessonScheduleStudentsCountArgs = {
+  where?: UserWhereInput;
+};
+
+
+export type LessonScheduleTeachersArgs = {
+  cursor?: InputMaybe<ManagerWhereUniqueInput>;
+  orderBy?: Array<ManagerOrderByInput>;
+  skip?: Scalars['Int'];
+  take?: InputMaybe<Scalars['Int']>;
+  where?: ManagerWhereInput;
+};
+
+
+export type LessonScheduleTeachersCountArgs = {
+  where?: ManagerWhereInput;
+};
+
+export type LessonScheduleCreateInput = {
+  comment?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  endPeriod?: InputMaybe<Scalars['CalendarDay']>;
+  lastModification?: InputMaybe<Scalars['DateTime']>;
+  schedule?: InputMaybe<LessonScheduleItemRelateToManyForCreateInput>;
+  startPeriod?: InputMaybe<Scalars['CalendarDay']>;
+  statusView?: InputMaybe<Scalars['String']>;
+  students?: InputMaybe<UserRelateToManyForCreateInput>;
+  teachers?: InputMaybe<ManagerRelateToManyForCreateInput>;
+  timeZone?: InputMaybe<Scalars['String']>;
+};
+
+export type LessonScheduleItem = {
+  __typename?: 'LessonScheduleItem';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  dayOfWeek?: Maybe<Scalars['Int']>;
+  endTime?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  lastModification?: Maybe<Scalars['DateTime']>;
+  startTime?: Maybe<Scalars['String']>;
+};
+
+export type LessonScheduleItemCreateInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  dayOfWeek?: InputMaybe<Scalars['Int']>;
+  endTime?: InputMaybe<Scalars['String']>;
+  lastModification?: InputMaybe<Scalars['DateTime']>;
+  startTime?: InputMaybe<Scalars['String']>;
+};
+
+export type LessonScheduleItemManyRelationFilter = {
+  every?: InputMaybe<LessonScheduleItemWhereInput>;
+  none?: InputMaybe<LessonScheduleItemWhereInput>;
+  some?: InputMaybe<LessonScheduleItemWhereInput>;
+};
+
+export type LessonScheduleItemOrderByInput = {
+  createdAt?: InputMaybe<OrderDirection>;
+  dayOfWeek?: InputMaybe<OrderDirection>;
+  endTime?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  lastModification?: InputMaybe<OrderDirection>;
+  startTime?: InputMaybe<OrderDirection>;
+};
+
+export type LessonScheduleItemRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<LessonScheduleItemWhereUniqueInput>>;
+  create?: InputMaybe<Array<LessonScheduleItemCreateInput>>;
+};
+
+export type LessonScheduleItemRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<LessonScheduleItemWhereUniqueInput>>;
+  create?: InputMaybe<Array<LessonScheduleItemCreateInput>>;
+  disconnect?: InputMaybe<Array<LessonScheduleItemWhereUniqueInput>>;
+  set?: InputMaybe<Array<LessonScheduleItemWhereUniqueInput>>;
+};
+
+export type LessonScheduleItemUpdateArgs = {
+  data: LessonScheduleItemUpdateInput;
+  where: LessonScheduleItemWhereUniqueInput;
+};
+
+export type LessonScheduleItemUpdateInput = {
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  dayOfWeek?: InputMaybe<Scalars['Int']>;
+  endTime?: InputMaybe<Scalars['String']>;
+  lastModification?: InputMaybe<Scalars['DateTime']>;
+  startTime?: InputMaybe<Scalars['String']>;
+};
+
+export type LessonScheduleItemWhereInput = {
+  AND?: InputMaybe<Array<LessonScheduleItemWhereInput>>;
+  NOT?: InputMaybe<Array<LessonScheduleItemWhereInput>>;
+  OR?: InputMaybe<Array<LessonScheduleItemWhereInput>>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  dayOfWeek?: InputMaybe<IntFilter>;
+  endTime?: InputMaybe<StringFilter>;
+  id?: InputMaybe<IdFilter>;
+  lastModification?: InputMaybe<DateTimeFilter>;
+  startTime?: InputMaybe<StringFilter>;
+};
+
+export type LessonScheduleItemWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
+export type LessonScheduleOrderByInput = {
+  comment?: InputMaybe<OrderDirection>;
+  createdAt?: InputMaybe<OrderDirection>;
+  endPeriod?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  lastModification?: InputMaybe<OrderDirection>;
+  startPeriod?: InputMaybe<OrderDirection>;
+  statusView?: InputMaybe<OrderDirection>;
+  timeZone?: InputMaybe<OrderDirection>;
+};
+
+export type LessonScheduleUpdateArgs = {
+  data: LessonScheduleUpdateInput;
+  where: LessonScheduleWhereUniqueInput;
+};
+
+export type LessonScheduleUpdateInput = {
+  comment?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  endPeriod?: InputMaybe<Scalars['CalendarDay']>;
+  lastModification?: InputMaybe<Scalars['DateTime']>;
+  schedule?: InputMaybe<LessonScheduleItemRelateToManyForUpdateInput>;
+  startPeriod?: InputMaybe<Scalars['CalendarDay']>;
+  statusView?: InputMaybe<Scalars['String']>;
+  students?: InputMaybe<UserRelateToManyForUpdateInput>;
+  teachers?: InputMaybe<ManagerRelateToManyForUpdateInput>;
+  timeZone?: InputMaybe<Scalars['String']>;
+};
+
+export type LessonScheduleWhereInput = {
+  AND?: InputMaybe<Array<LessonScheduleWhereInput>>;
+  NOT?: InputMaybe<Array<LessonScheduleWhereInput>>;
+  OR?: InputMaybe<Array<LessonScheduleWhereInput>>;
+  comment?: InputMaybe<StringFilter>;
+  createdAt?: InputMaybe<DateTimeFilter>;
+  endPeriod?: InputMaybe<CalendarDayNullableFilter>;
+  id?: InputMaybe<IdFilter>;
+  lastModification?: InputMaybe<DateTimeFilter>;
+  schedule?: InputMaybe<LessonScheduleItemManyRelationFilter>;
+  startPeriod?: InputMaybe<CalendarDayFilter>;
+  statusView?: InputMaybe<StringFilter>;
+  students?: InputMaybe<UserManyRelationFilter>;
+  teachers?: InputMaybe<ManagerManyRelationFilter>;
+  timeZone?: InputMaybe<StringFilter>;
+};
+
+export type LessonScheduleWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
 export type LessonUpdateArgs = {
   data: LessonUpdateInput;
   where: LessonWhereUniqueInput;
@@ -1304,6 +1546,7 @@ export type LessonUpdateInput = {
   description?: InputMaybe<Scalars['String']>;
   endTime?: InputMaybe<Scalars['DateTime']>;
   lastModification?: InputMaybe<Scalars['DateTime']>;
+  notAlert?: InputMaybe<Scalars['Boolean']>;
   notified?: InputMaybe<Scalars['Boolean']>;
   startTime?: InputMaybe<Scalars['DateTime']>;
   statusLesson?: InputMaybe<Scalars['String']>;
@@ -1326,6 +1569,7 @@ export type LessonWhereInput = {
   endTime?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<IdFilter>;
   lastModification?: InputMaybe<DateTimeFilter>;
+  notAlert?: InputMaybe<BooleanFilter>;
   notified?: InputMaybe<BooleanFilter>;
   startTime?: InputMaybe<DateTimeFilter>;
   statusLesson?: InputMaybe<StringFilter>;
@@ -1415,6 +1659,7 @@ export type Mailing = {
 
 
 export type MailingClientsArgs = {
+  cursor?: InputMaybe<UserWhereUniqueInput>;
   orderBy?: Array<UserOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -1454,8 +1699,10 @@ export enum MailingStatusClientType {
   FinishedClient = 'finishedClient',
   FirstCall = 'firstCall',
   New = 'new',
+  PayedFirstLesson = 'payedFirstLesson',
   RecordFirstLesson = 'recordFirstLesson',
   Rejection = 'rejection',
+  SpeakingClub = 'speakingClub',
   TrialLesson = 'trialLesson'
 }
 
@@ -1525,6 +1772,7 @@ export type Manager = {
 
 
 export type ManagerCutoffArgs = {
+  cursor?: InputMaybe<WorkTimeCutoffWhereUniqueInput>;
   orderBy?: Array<WorkTimeCutoffOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -1538,6 +1786,7 @@ export type ManagerCutoffCountArgs = {
 
 
 export type ManagerWorkTimeArgs = {
+  cursor?: InputMaybe<WorkTimeWhereUniqueInput>;
   orderBy?: Array<WorkTimeOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -1660,8 +1909,8 @@ export type ManagerWhereUniqueInput = {
 
 export type Marketing = {
   __typename?: 'Marketing';
-  aboutGeorge: Scalars['Boolean'];
-  advantages: Scalars['Boolean'];
+  aboutGeorge?: Maybe<Scalars['Boolean']>;
+  advantages?: Maybe<Scalars['Boolean']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
@@ -1669,21 +1918,21 @@ export type Marketing = {
   language?: Maybe<Scalars['String']>;
   lastModification?: Maybe<Scalars['DateTime']>;
   link?: Maybe<Scalars['String']>;
-  reviews: Scalars['Boolean'];
+  reviews?: Maybe<Scalars['Boolean']>;
   slug?: Maybe<Scalars['String']>;
   statusView?: Maybe<Scalars['String']>;
   title?: Maybe<Scalars['String']>;
 };
 
 export type MarketingCreateInput = {
-  aboutGeorge?: Scalars['Boolean'];
-  advantages?: Scalars['Boolean'];
+  aboutGeorge?: InputMaybe<Scalars['Boolean']>;
+  advantages?: InputMaybe<Scalars['Boolean']>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   description?: InputMaybe<Scalars['String']>;
   image?: InputMaybe<ImageFieldInput>;
   language?: InputMaybe<Scalars['String']>;
   lastModification?: InputMaybe<Scalars['DateTime']>;
-  reviews?: Scalars['Boolean'];
+  reviews?: InputMaybe<Scalars['Boolean']>;
   slug?: InputMaybe<Scalars['String']>;
   statusView?: InputMaybe<Scalars['String']>;
   title?: InputMaybe<Scalars['String']>;
@@ -1773,6 +2022,10 @@ export type Mutation = {
   createImages?: Maybe<Array<Maybe<Image>>>;
   createInitialUser: UserAuthenticationWithPasswordSuccess;
   createLesson?: Maybe<Lesson>;
+  createLessonSchedule?: Maybe<LessonSchedule>;
+  createLessonScheduleItem?: Maybe<LessonScheduleItem>;
+  createLessonScheduleItems?: Maybe<Array<Maybe<LessonScheduleItem>>>;
+  createLessonSchedules?: Maybe<Array<Maybe<LessonSchedule>>>;
   createLessons?: Maybe<Array<Maybe<Lesson>>>;
   createLink?: Maybe<Link>;
   createLinks?: Maybe<Array<Maybe<Link>>>;
@@ -1835,6 +2088,10 @@ export type Mutation = {
   deleteImage?: Maybe<Image>;
   deleteImages?: Maybe<Array<Maybe<Image>>>;
   deleteLesson?: Maybe<Lesson>;
+  deleteLessonSchedule?: Maybe<LessonSchedule>;
+  deleteLessonScheduleItem?: Maybe<LessonScheduleItem>;
+  deleteLessonScheduleItems?: Maybe<Array<Maybe<LessonScheduleItem>>>;
+  deleteLessonSchedules?: Maybe<Array<Maybe<LessonSchedule>>>;
   deleteLessons?: Maybe<Array<Maybe<Lesson>>>;
   deleteLink?: Maybe<Link>;
   deleteLinks?: Maybe<Array<Maybe<Link>>>;
@@ -1901,6 +2158,10 @@ export type Mutation = {
   updateImage?: Maybe<Image>;
   updateImages?: Maybe<Array<Maybe<Image>>>;
   updateLesson?: Maybe<Lesson>;
+  updateLessonSchedule?: Maybe<LessonSchedule>;
+  updateLessonScheduleItem?: Maybe<LessonScheduleItem>;
+  updateLessonScheduleItems?: Maybe<Array<Maybe<LessonScheduleItem>>>;
+  updateLessonSchedules?: Maybe<Array<Maybe<LessonSchedule>>>;
   updateLessons?: Maybe<Array<Maybe<Lesson>>>;
   updateLink?: Maybe<Link>;
   updateLinks?: Maybe<Array<Maybe<Link>>>;
@@ -2077,6 +2338,26 @@ export type MutationCreateInitialUserArgs = {
 
 export type MutationCreateLessonArgs = {
   data: LessonCreateInput;
+};
+
+
+export type MutationCreateLessonScheduleArgs = {
+  data: LessonScheduleCreateInput;
+};
+
+
+export type MutationCreateLessonScheduleItemArgs = {
+  data: LessonScheduleItemCreateInput;
+};
+
+
+export type MutationCreateLessonScheduleItemsArgs = {
+  data: Array<LessonScheduleItemCreateInput>;
+};
+
+
+export type MutationCreateLessonSchedulesArgs = {
+  data: Array<LessonScheduleCreateInput>;
 };
 
 
@@ -2387,6 +2668,26 @@ export type MutationDeleteImagesArgs = {
 
 export type MutationDeleteLessonArgs = {
   where: LessonWhereUniqueInput;
+};
+
+
+export type MutationDeleteLessonScheduleArgs = {
+  where: LessonScheduleWhereUniqueInput;
+};
+
+
+export type MutationDeleteLessonScheduleItemArgs = {
+  where: LessonScheduleItemWhereUniqueInput;
+};
+
+
+export type MutationDeleteLessonScheduleItemsArgs = {
+  where: Array<LessonScheduleItemWhereUniqueInput>;
+};
+
+
+export type MutationDeleteLessonSchedulesArgs = {
+  where: Array<LessonScheduleWhereUniqueInput>;
 };
 
 
@@ -2729,6 +3030,28 @@ export type MutationUpdateLessonArgs = {
 };
 
 
+export type MutationUpdateLessonScheduleArgs = {
+  data: LessonScheduleUpdateInput;
+  where: LessonScheduleWhereUniqueInput;
+};
+
+
+export type MutationUpdateLessonScheduleItemArgs = {
+  data: LessonScheduleItemUpdateInput;
+  where: LessonScheduleItemWhereUniqueInput;
+};
+
+
+export type MutationUpdateLessonScheduleItemsArgs = {
+  data: Array<LessonScheduleItemUpdateArgs>;
+};
+
+
+export type MutationUpdateLessonSchedulesArgs = {
+  data: Array<LessonScheduleUpdateArgs>;
+};
+
+
 export type MutationUpdateLessonsArgs = {
   data: Array<LessonUpdateArgs>;
 };
@@ -2998,6 +3321,7 @@ export type Order = {
 
 
 export type OrderPaymentsArgs = {
+  cursor?: InputMaybe<PaymentWhereUniqueInput>;
   orderBy?: Array<PaymentOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3011,6 +3335,7 @@ export type OrderPaymentsCountArgs = {
 
 
 export type OrderServicesArgs = {
+  cursor?: InputMaybe<UserServiceWhereUniqueInput>;
   orderBy?: Array<UserServiceOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3024,6 +3349,7 @@ export type OrderServicesCountArgs = {
 
 
 export type OrderSubscriptionsArgs = {
+  cursor?: InputMaybe<UserSubscriptionWhereUniqueInput>;
   orderBy?: Array<UserSubscriptionOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3150,6 +3476,7 @@ export type Page = {
 
 
 export type PageTagArgs = {
+  cursor?: InputMaybe<TagWhereUniqueInput>;
   orderBy?: Array<TagOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3377,6 +3704,7 @@ export type Post = {
 
 
 export type PostTagArgs = {
+  cursor?: InputMaybe<TagWhereUniqueInput>;
   orderBy?: Array<TagOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3479,6 +3807,7 @@ export type Product = {
 
 
 export type ProductSubscriptionsArgs = {
+  cursor?: InputMaybe<SubscriptionWhereUniqueInput>;
   orderBy?: Array<SubscriptionOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3492,6 +3821,7 @@ export type ProductSubscriptionsCountArgs = {
 
 
 export type ProductTagsArgs = {
+  cursor?: InputMaybe<TagWhereUniqueInput>;
   orderBy?: Array<TagOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3561,6 +3891,7 @@ export type ProductReview = {
 
 
 export type ProductReviewProductsArgs = {
+  cursor?: InputMaybe<ProductWhereUniqueInput>;
   orderBy?: Array<ProductOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3717,6 +4048,12 @@ export type Query = {
   imagesCount?: Maybe<Scalars['Int']>;
   keystone: KeystoneMeta;
   lesson?: Maybe<Lesson>;
+  lessonSchedule?: Maybe<LessonSchedule>;
+  lessonScheduleItem?: Maybe<LessonScheduleItem>;
+  lessonScheduleItems?: Maybe<Array<LessonScheduleItem>>;
+  lessonScheduleItemsCount?: Maybe<Scalars['Int']>;
+  lessonSchedules?: Maybe<Array<LessonSchedule>>;
+  lessonSchedulesCount?: Maybe<Scalars['Int']>;
   lessons?: Maybe<Array<Lesson>>;
   lessonsCount?: Maybe<Scalars['Int']>;
   link?: Maybe<Link>;
@@ -3787,6 +4124,7 @@ export type QueryAvatarUserArgs = {
 
 
 export type QueryAvatarUsersArgs = {
+  cursor?: InputMaybe<AvatarUserWhereUniqueInput>;
   orderBy?: Array<AvatarUserOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3810,6 +4148,7 @@ export type QueryCartItemArgs = {
 
 
 export type QueryCartItemsArgs = {
+  cursor?: InputMaybe<CartItemWhereUniqueInput>;
   orderBy?: Array<CartItemOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3823,6 +4162,7 @@ export type QueryCartItemsCountArgs = {
 
 
 export type QueryCartsArgs = {
+  cursor?: InputMaybe<CartWhereUniqueInput>;
   orderBy?: Array<CartOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3836,6 +4176,7 @@ export type QueryCartsCountArgs = {
 
 
 export type QueryCategoriesArgs = {
+  cursor?: InputMaybe<CategoryWhereUniqueInput>;
   orderBy?: Array<CategoryOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3864,6 +4205,7 @@ export type QueryClientArgs = {
 
 
 export type QueryClientsArgs = {
+  cursor?: InputMaybe<ClientWhereUniqueInput>;
   orderBy?: Array<ClientOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3877,6 +4219,7 @@ export type QueryClientsCountArgs = {
 
 
 export type QueryCurrenciesArgs = {
+  cursor?: InputMaybe<CurrencyWhereUniqueInput>;
   orderBy?: Array<CurrencyOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3905,6 +4248,7 @@ export type QueryDirectionGoalArgs = {
 
 
 export type QueryDirectionGoalsArgs = {
+  cursor?: InputMaybe<DirectionGoalWhereUniqueInput>;
   orderBy?: Array<DirectionGoalOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3923,6 +4267,7 @@ export type QueryDirectionResultArgs = {
 
 
 export type QueryDirectionResultsArgs = {
+  cursor?: InputMaybe<DirectionResultWhereUniqueInput>;
   orderBy?: Array<DirectionResultOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3936,6 +4281,7 @@ export type QueryDirectionResultsCountArgs = {
 
 
 export type QueryDirectionsArgs = {
+  cursor?: InputMaybe<DirectionWhereUniqueInput>;
   orderBy?: Array<DirectionOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3954,6 +4300,7 @@ export type QueryFaqArgs = {
 
 
 export type QueryFaqsArgs = {
+  cursor?: InputMaybe<FaqWhereUniqueInput>;
   orderBy?: Array<FaqOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3977,6 +4324,7 @@ export type QueryImageArgs = {
 
 
 export type QueryImagesArgs = {
+  cursor?: InputMaybe<ImageWhereUniqueInput>;
   orderBy?: Array<ImageOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -3994,7 +4342,46 @@ export type QueryLessonArgs = {
 };
 
 
+export type QueryLessonScheduleArgs = {
+  where: LessonScheduleWhereUniqueInput;
+};
+
+
+export type QueryLessonScheduleItemArgs = {
+  where: LessonScheduleItemWhereUniqueInput;
+};
+
+
+export type QueryLessonScheduleItemsArgs = {
+  cursor?: InputMaybe<LessonScheduleItemWhereUniqueInput>;
+  orderBy?: Array<LessonScheduleItemOrderByInput>;
+  skip?: Scalars['Int'];
+  take?: InputMaybe<Scalars['Int']>;
+  where?: LessonScheduleItemWhereInput;
+};
+
+
+export type QueryLessonScheduleItemsCountArgs = {
+  where?: LessonScheduleItemWhereInput;
+};
+
+
+export type QueryLessonSchedulesArgs = {
+  cursor?: InputMaybe<LessonScheduleWhereUniqueInput>;
+  orderBy?: Array<LessonScheduleOrderByInput>;
+  skip?: Scalars['Int'];
+  take?: InputMaybe<Scalars['Int']>;
+  where?: LessonScheduleWhereInput;
+};
+
+
+export type QueryLessonSchedulesCountArgs = {
+  where?: LessonScheduleWhereInput;
+};
+
+
 export type QueryLessonsArgs = {
+  cursor?: InputMaybe<LessonWhereUniqueInput>;
   orderBy?: Array<LessonOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4013,6 +4400,7 @@ export type QueryLinkArgs = {
 
 
 export type QueryLinksArgs = {
+  cursor?: InputMaybe<LinkWhereUniqueInput>;
   orderBy?: Array<LinkOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4031,6 +4419,7 @@ export type QueryMailingArgs = {
 
 
 export type QueryMailingsArgs = {
+  cursor?: InputMaybe<MailingWhereUniqueInput>;
   orderBy?: Array<MailingOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4049,6 +4438,7 @@ export type QueryManagerArgs = {
 
 
 export type QueryManagersArgs = {
+  cursor?: InputMaybe<ManagerWhereUniqueInput>;
   orderBy?: Array<ManagerOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4067,6 +4457,7 @@ export type QueryMarketingArgs = {
 
 
 export type QueryMarketingsArgs = {
+  cursor?: InputMaybe<MarketingWhereUniqueInput>;
   orderBy?: Array<MarketingOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4090,6 +4481,7 @@ export type QueryOrderArgs = {
 
 
 export type QueryOrdersArgs = {
+  cursor?: InputMaybe<OrderWhereUniqueInput>;
   orderBy?: Array<OrderOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4108,6 +4500,7 @@ export type QueryPageArgs = {
 
 
 export type QueryPagesArgs = {
+  cursor?: InputMaybe<PageWhereUniqueInput>;
   orderBy?: Array<PageOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4126,6 +4519,7 @@ export type QueryPaymentArgs = {
 
 
 export type QueryPaymentsArgs = {
+  cursor?: InputMaybe<PaymentWhereUniqueInput>;
   orderBy?: Array<PaymentOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4144,6 +4538,7 @@ export type QueryPostArgs = {
 
 
 export type QueryPostsArgs = {
+  cursor?: InputMaybe<PostWhereUniqueInput>;
   orderBy?: Array<PostOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4167,6 +4562,7 @@ export type QueryProductReviewArgs = {
 
 
 export type QueryProductReviewsArgs = {
+  cursor?: InputMaybe<ProductReviewWhereUniqueInput>;
   orderBy?: Array<ProductReviewOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4180,6 +4576,7 @@ export type QueryProductReviewsCountArgs = {
 
 
 export type QueryProductsArgs = {
+  cursor?: InputMaybe<ProductWhereUniqueInput>;
   orderBy?: Array<ProductOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4198,6 +4595,7 @@ export type QueryServiceArgs = {
 
 
 export type QueryServicesArgs = {
+  cursor?: InputMaybe<ServiceWhereUniqueInput>;
   orderBy?: Array<ServiceOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4216,6 +4614,7 @@ export type QuerySourceClientArgs = {
 
 
 export type QuerySourceClientsArgs = {
+  cursor?: InputMaybe<SourceClientWhereUniqueInput>;
   orderBy?: Array<SourceClientOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4234,6 +4633,7 @@ export type QuerySubscriptionArgs = {
 
 
 export type QuerySubscriptionsArgs = {
+  cursor?: InputMaybe<SubscriptionWhereUniqueInput>;
   orderBy?: Array<SubscriptionOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4252,6 +4652,7 @@ export type QueryTagArgs = {
 
 
 export type QueryTagsArgs = {
+  cursor?: InputMaybe<TagWhereUniqueInput>;
   orderBy?: Array<TagOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4280,6 +4681,7 @@ export type QueryUserServiceArgs = {
 
 
 export type QueryUserServicesArgs = {
+  cursor?: InputMaybe<UserServiceWhereUniqueInput>;
   orderBy?: Array<UserServiceOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4298,6 +4700,7 @@ export type QueryUserSubscriptionArgs = {
 
 
 export type QueryUserSubscriptionsArgs = {
+  cursor?: InputMaybe<UserSubscriptionWhereUniqueInput>;
   orderBy?: Array<UserSubscriptionOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4311,6 +4714,7 @@ export type QueryUserSubscriptionsCountArgs = {
 
 
 export type QueryUsersArgs = {
+  cursor?: InputMaybe<UserWhereUniqueInput>;
   orderBy?: Array<UserOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4334,6 +4738,7 @@ export type QueryWorkTimeCutoffArgs = {
 
 
 export type QueryWorkTimeCutoffsArgs = {
+  cursor?: InputMaybe<WorkTimeCutoffWhereUniqueInput>;
   orderBy?: Array<WorkTimeCutoffOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4347,6 +4752,7 @@ export type QueryWorkTimeCutoffsCountArgs = {
 
 
 export type QueryWorkTimesArgs = {
+  cursor?: InputMaybe<WorkTimeWhereUniqueInput>;
   orderBy?: Array<WorkTimeOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -4395,6 +4801,7 @@ export type Service = {
 
 
 export type ServiceCategoriesArgs = {
+  cursor?: InputMaybe<CategoryWhereUniqueInput>;
   orderBy?: Array<CategoryOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;
@@ -5019,6 +5426,7 @@ export type UserSubscription = {
 
 
 export type UserSubscriptionLessonsArgs = {
+  cursor?: InputMaybe<LessonWhereUniqueInput>;
   orderBy?: Array<LessonOrderByInput>;
   skip?: Scalars['Int'];
   take?: InputMaybe<Scalars['Int']>;

@@ -1,9 +1,9 @@
 import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
 import { Lists } from '.keystone/types';
 import { formatInTimeZone } from 'date-fns-tz';
-import { localeDate } from '../lib/localeDate';
-import { sendMessage } from './index';
-import { BACKEND_URL } from '../config';
+import { localeDate } from '../../../lib/localeDate';
+import { sendMessage } from '../../../notifications';
+import { BACKEND_URL } from '../../../config';
 
 const infoForStudent = (lesson: any, student: Lists.User.Item) => {
     const dateFormat = formatInTimeZone(new Date(lesson.startTime), lesson.timeZone, 'd MMMM yyyy HH:mm zzz', {
@@ -39,8 +39,8 @@ export const notifyUpcomingLessons = async (lessonId: Lists.Lesson.Item['id'], c
             template: 'lesson',
             link: `${BACKEND_URL}/api/student/${user.id}/lessons.ical`
         }).then(async () => {
-            await ctx.query.Lesson.updateOne({
-                where: { id: `${lessonId}` },
+            await ctx.prisma.Lesson.update({
+                where: { id: Number(lessonId) },
                 data: { notified: true }
             });
         });

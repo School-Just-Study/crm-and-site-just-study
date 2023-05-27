@@ -1,6 +1,6 @@
 import { ServerConfig } from '@keystone-6/core/types';
 import { Statuses } from '../enums/statuses.enum';
-import { LessonStatus } from '../enums/lesson-status';
+import { LessonStatus } from '../schemas/lessons/enum';
 import { sendMessage } from '../notifications';
 
 /**

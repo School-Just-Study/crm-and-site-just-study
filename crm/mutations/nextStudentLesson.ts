@@ -1,5 +1,5 @@
 import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
-import { LessonStatus } from '../enums/lesson-status';
+import { LessonStatus } from '../schemas/lessons/enum';
 import { isPast } from 'date-fns';
 import { Lists } from '.keystone/types';
 
