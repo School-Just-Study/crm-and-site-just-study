@@ -5,7 +5,7 @@
     "scripts": {
         "dev-crm": "NODE_OPTIONS='--max-old-space-size=1024' SKIP_NALOG=true TEST_EMAIL=true keystone dev",
         "seed-data": "keystone --seed-data",
-        "start": "keystone start --with-migrations",
+        "start": "keystone start",
         "build": "keystone build",
         "migrate-dev": "keystone prisma migrate dev",
         "migrate-deploy": "keystone prisma migrate deploy"
