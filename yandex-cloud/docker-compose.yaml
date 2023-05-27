@@ -14,12 +14,12 @@ services:
     depends_on:
       - backend
       - site
-      - fluentbit
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: localhost:24224
-        tag: nginx.logs
+#      - fluentbit
+#    logging:
+#      driver: fluentd
+#      options:
+#        fluentd-address: localhost:24224
+#        tag: nginx.logs
 
   site:
     container_name: site
