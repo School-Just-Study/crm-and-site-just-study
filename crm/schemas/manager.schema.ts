@@ -4,7 +4,7 @@ import { checkbox, decimal, relationship, select, text } from '@keystone-6/core/
 import { createdAt } from '../fields/createdAt';
 import { lastModification } from '../fields/lastModification';
 import { handleCreateUserWithEmailManager } from '../lib/handleCreateUserWithEmailManager';
-import { TimezoneOptionsConst } from '../consts/timezone-options.const';
+import { timezoneOptionsConst } from '../consts/timezone-options.const';
 
 export const Manager = list({
     ui: {
@@ -55,7 +55,7 @@ export const Manager = list({
             }
         }),
         timeZone: select({
-            options: TimezoneOptionsConst,
+            options: timezoneOptionsConst,
             type: 'string',
             validation: { isRequired: true },
             defaultValue: 'Europe/Moscow',

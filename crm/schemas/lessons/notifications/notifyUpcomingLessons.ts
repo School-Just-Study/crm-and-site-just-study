@@ -39,8 +39,8 @@ export const notifyUpcomingLessons = async (lessonId: Lists.Lesson.Item['id'], c
             template: 'lesson',
             link: `${BACKEND_URL}/api/student/${user.id}/lessons.ical`
         }).then(async () => {
-            await ctx.query.Lesson.updateOne({
-                where: { id: `${lessonId}` },
+            await ctx.prisma.Lesson.update({
+                where: { id: Number(lessonId) },
                 data: { notified: true }
             });
         });

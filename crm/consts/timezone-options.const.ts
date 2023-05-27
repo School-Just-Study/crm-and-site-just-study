@@ -430,6 +430,6 @@ const timeZones = [
     'UTC'
 ];
 
-export const TimezoneOptionsConst = timeZones.map((timezone) => {
+export const timezoneOptionsConst = timeZones.map((timezone) => {
     return { label: timezone, value: timezone };
 });

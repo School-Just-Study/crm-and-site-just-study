@@ -13,7 +13,7 @@ const infoForStudent = (lesson: any, student: Lists.User.Item) => {
     return `
       <div style='display:flex; flex-direction: column;'>
           <p>${student.name},</p>
-          <p>✅ Вы записались на обучение: ${lesson.subscription.name}</p>
+          <p>✅ Вы записались на обучение: ${lesson.subscription?.name}</p>
           <p>⏰ Дата: ${dateFormat}, ${lesson.timeZone}</p>
           <p>🏫 Ссылка на онлайн урок: ${lesson.teachers[0].linkOnlineLesson}</p>
       </div>

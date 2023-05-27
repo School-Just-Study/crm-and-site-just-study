@@ -71,12 +71,36 @@ input BooleanFilter {
   not: BooleanFilter
 }
 
+scalar CalendarDay
+
+input CalendarDayFilter {
+  equals: CalendarDay
+  gt: CalendarDay
+  gte: CalendarDay
+  in: [CalendarDay!]
+  lt: CalendarDay
+  lte: CalendarDay
+  not: CalendarDayFilter
+  notIn: [CalendarDay!]
+}
+
+input CalendarDayNullableFilter {
+  equals: CalendarDay
+  gt: CalendarDay
+  gte: CalendarDay
+  in: [CalendarDay!]
+  lt: CalendarDay
+  lte: CalendarDay
+  not: CalendarDayNullableFilter
+  notIn: [CalendarDay!]
+}
+
 type Cart {
   amount: Int
   amountUSD: Int
   currency: String
   id: ID!
-  items(orderBy: [CartItemOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CartItemWhereInput! = {}): [CartItem!]
+  items(cursor: CartItemWhereUniqueInput, orderBy: [CartItemOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CartItemWhereInput! = {}): [CartItem!]
   itemsCount(where: CartItemWhereInput! = {}): Int
   label: String
   lastModification: DateTime
@@ -210,7 +234,7 @@ type Category {
   language: String
   lastModification: DateTime
   name: String
-  products(orderBy: [ProductOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductWhereInput! = {}): [Product!]
+  products(cursor: ProductWhereUniqueInput, orderBy: [ProductOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductWhereInput! = {}): [Product!]
   productsCount(where: ProductWhereInput! = {}): Int
 }
 
@@ -300,10 +324,10 @@ type Client {
   name: String
   phone: Decimal
   profession: String
-  source(orderBy: [SourceClientOrderByInput!]! = [], skip: Int! = 0, take: Int, where: SourceClientWhereInput! = {}): [SourceClient!]
+  source(cursor: SourceClientWhereUniqueInput, orderBy: [SourceClientOrderByInput!]! = [], skip: Int! = 0, take: Int, where: SourceClientWhereInput! = {}): [SourceClient!]
   sourceCount(where: SourceClientWhereInput! = {}): Int
   statusClient: ClientStatusClientType
-  teachers(orderBy: [ManagerOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ManagerWhereInput! = {}): [Manager!]
+  teachers(cursor: ManagerWhereUniqueInput, orderBy: [ManagerOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ManagerWhereInput! = {}): [Manager!]
   teachersCount(where: ManagerWhereInput! = {}): Int
   ymClientId: String
 }
@@ -375,8 +399,10 @@ enum ClientStatusClientType {
   finishedClient
   firstCall
   new
+  payedFirstLesson
   recordFirstLesson
   rejection
+  speakingClub
   trialLesson
 }
 
@@ -537,16 +563,16 @@ input DecimalNullableFilter {
 type Direction {
   createdAt: DateTime
   description: String
-  goals(orderBy: [DirectionGoalOrderByInput!]! = [], skip: Int! = 0, take: Int, where: DirectionGoalWhereInput! = {}): [DirectionGoal!]
+  goals(cursor: DirectionGoalWhereUniqueInput, orderBy: [DirectionGoalOrderByInput!]! = [], skip: Int! = 0, take: Int, where: DirectionGoalWhereInput! = {}): [DirectionGoal!]
   goalsCount(where: DirectionGoalWhereInput! = {}): Int
   id: ID!
   image: ImageFieldOutput
   language: String
   lastModification: DateTime
   name: String
-  products(orderBy: [ProductOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductWhereInput! = {}): [Product!]
+  products(cursor: ProductWhereUniqueInput, orderBy: [ProductOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductWhereInput! = {}): [Product!]
   productsCount(where: ProductWhereInput! = {}): Int
-  results(orderBy: [DirectionResultOrderByInput!]! = [], skip: Int! = 0, take: Int, where: DirectionResultWhereInput! = {}): [DirectionResult!]
+  results(cursor: DirectionResultWhereUniqueInput, orderBy: [DirectionResultOrderByInput!]! = [], skip: Int! = 0, take: Int, where: DirectionResultWhereInput! = {}): [DirectionResult!]
   resultsCount(where: DirectionResultWhereInput! = {}): Int
   slug: String
   statusView: String
@@ -762,7 +788,7 @@ type Faq {
   id: ID!
   language: String
   lastModification: DateTime
-  products(orderBy: [ProductOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductWhereInput! = {}): [Product!]
+  products(cursor: ProductWhereUniqueInput, orderBy: [ProductOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductWhereInput! = {}): [Product!]
   productsCount(where: ProductWhereInput! = {}): Int
   statusView: String
   title: String
@@ -967,6 +993,7 @@ type KeystoneAdminUIFieldMeta {
   description: String
   fieldMeta: JSON
   isFilterable: Boolean!
+  isNonNull: [KeystoneAdminUIFieldMetaIsNonNull!]
   isOrderable: Boolean!
   itemView(id: ID): KeystoneAdminUIFieldMetaItemView
   label: String!
@@ -983,6 +1010,12 @@ type KeystoneAdminUIFieldMetaCreateView {
 enum KeystoneAdminUIFieldMetaCreateViewFieldMode {
   edit
   hidden
+}
+
+enum KeystoneAdminUIFieldMetaIsNonNull {
+  create
+  read
+  update
 }
 
 type KeystoneAdminUIFieldMetaItemView {
@@ -1053,13 +1086,14 @@ type Lesson {
   endTime: DateTime
   id: ID!
   lastModification: DateTime
+  notAlert: Boolean
   notified: Boolean
   startTime: DateTime
   statusLesson: String
-  students(orderBy: [UserOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserWhereInput! = {}): [User!]
+  students(cursor: UserWhereUniqueInput, orderBy: [UserOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserWhereInput! = {}): [User!]
   studentsCount(where: UserWhereInput! = {}): Int
   subscription: UserSubscription
-  teachers(orderBy: [ManagerOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ManagerWhereInput! = {}): [Manager!]
+  teachers(cursor: ManagerWhereUniqueInput, orderBy: [ManagerOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ManagerWhereInput! = {}): [Manager!]
   teachersCount(where: ManagerWhereInput! = {}): Int
   timeZone: String
   title: String
@@ -1073,6 +1107,7 @@ input LessonCreateInput {
   description: String
   endTime: DateTime
   lastModification: DateTime
+  notAlert: Boolean
   notified: Boolean
   startTime: DateTime
   statusLesson: String
@@ -1098,6 +1133,7 @@ input LessonOrderByInput {
   endTime: OrderDirection
   id: OrderDirection
   lastModification: OrderDirection
+  notAlert: OrderDirection
   notified: OrderDirection
   startTime: OrderDirection
   statusLesson: OrderDirection
@@ -1118,6 +1154,159 @@ input LessonRelateToManyForUpdateInput {
   set: [LessonWhereUniqueInput!]
 }
 
+type LessonSchedule {
+  comment: String
+  createdAt: DateTime
+  endPeriod: CalendarDay
+  id: ID!
+  lastModification: DateTime
+  schedule(cursor: LessonScheduleItemWhereUniqueInput, orderBy: [LessonScheduleItemOrderByInput!]! = [], skip: Int! = 0, take: Int, where: LessonScheduleItemWhereInput! = {}): [LessonScheduleItem!]
+  scheduleCount(where: LessonScheduleItemWhereInput! = {}): Int
+  startPeriod: CalendarDay
+  statusView: String
+  students(cursor: UserWhereUniqueInput, orderBy: [UserOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserWhereInput! = {}): [User!]
+  studentsCount(where: UserWhereInput! = {}): Int
+  teachers(cursor: ManagerWhereUniqueInput, orderBy: [ManagerOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ManagerWhereInput! = {}): [Manager!]
+  teachersCount(where: ManagerWhereInput! = {}): Int
+  timeZone: String
+}
+
+input LessonScheduleCreateInput {
+  comment: String
+  createdAt: DateTime
+  endPeriod: CalendarDay
+  lastModification: DateTime
+  schedule: LessonScheduleItemRelateToManyForCreateInput
+  startPeriod: CalendarDay
+  statusView: String
+  students: UserRelateToManyForCreateInput
+  teachers: ManagerRelateToManyForCreateInput
+  timeZone: String
+}
+
+type LessonScheduleItem {
+  createdAt: DateTime
+  dayOfWeek: Int
+  endTime: String
+  id: ID!
+  lastModification: DateTime
+  startTime: String
+}
+
+input LessonScheduleItemCreateInput {
+  createdAt: DateTime
+  dayOfWeek: Int
+  endTime: String
+  lastModification: DateTime
+  startTime: String
+}
+
+input LessonScheduleItemManyRelationFilter {
+  every: LessonScheduleItemWhereInput
+  none: LessonScheduleItemWhereInput
+  some: LessonScheduleItemWhereInput
+}
+
+input LessonScheduleItemOrderByInput {
+  createdAt: OrderDirection
+  dayOfWeek: OrderDirection
+  endTime: OrderDirection
+  id: OrderDirection
+  lastModification: OrderDirection
+  startTime: OrderDirection
+}
+
+input LessonScheduleItemRelateToManyForCreateInput {
+  connect: [LessonScheduleItemWhereUniqueInput!]
+  create: [LessonScheduleItemCreateInput!]
+}
+
+input LessonScheduleItemRelateToManyForUpdateInput {
+  connect: [LessonScheduleItemWhereUniqueInput!]
+  create: [LessonScheduleItemCreateInput!]
+  disconnect: [LessonScheduleItemWhereUniqueInput!]
+  set: [LessonScheduleItemWhereUniqueInput!]
+}
+
+input LessonScheduleItemUpdateArgs {
+  data: LessonScheduleItemUpdateInput!
+  where: LessonScheduleItemWhereUniqueInput!
+}
+
+input LessonScheduleItemUpdateInput {
+  createdAt: DateTime
+  dayOfWeek: Int
+  endTime: String
+  lastModification: DateTime
+  startTime: String
+}
+
+input LessonScheduleItemWhereInput {
+  AND: [LessonScheduleItemWhereInput!]
+  NOT: [LessonScheduleItemWhereInput!]
+  OR: [LessonScheduleItemWhereInput!]
+  createdAt: DateTimeFilter
+  dayOfWeek: IntFilter
+  endTime: StringFilter
+  id: IDFilter
+  lastModification: DateTimeFilter
+  startTime: StringFilter
+}
+
+input LessonScheduleItemWhereUniqueInput {
+  id: ID
+}
+
+input LessonScheduleOrderByInput {
+  comment: OrderDirection
+  createdAt: OrderDirection
+  endPeriod: OrderDirection
+  id: OrderDirection
+  lastModification: OrderDirection
+  startPeriod: OrderDirection
+  statusView: OrderDirection
+  timeZone: OrderDirection
+}
+
+input LessonScheduleUpdateArgs {
+  data: LessonScheduleUpdateInput!
+  where: LessonScheduleWhereUniqueInput!
+}
+
+input LessonScheduleUpdateInput {
+  comment: String
+  createdAt: DateTime
+  endPeriod: CalendarDay
+  lastModification: DateTime
+  schedule: LessonScheduleItemRelateToManyForUpdateInput
+  startPeriod: CalendarDay
+  statusView: String
+  students: UserRelateToManyForUpdateInput
+  teachers: ManagerRelateToManyForUpdateInput
+  timeZone: String
+}
+
+input LessonScheduleWhereInput {
+  AND: [LessonScheduleWhereInput!]
+  NOT: [LessonScheduleWhereInput!]
+  OR: [LessonScheduleWhereInput!]
+  comment: StringFilter
+  createdAt: DateTimeFilter
+  endPeriod: CalendarDayNullableFilter
+  id: IDFilter
+  lastModification: DateTimeFilter
+  schedule: LessonScheduleItemManyRelationFilter
+  startPeriod: CalendarDayFilter
+  statusView: StringFilter
+  students: UserManyRelationFilter
+  teachers: ManagerManyRelationFilter
+  timeZone: StringFilter
+}
+
+input LessonScheduleWhereUniqueInput {
+  id: ID
+}
+
 input LessonUpdateArgs {
   data: LessonUpdateInput!
   where: LessonWhereUniqueInput!
@@ -1130,6 +1319,7 @@ input LessonUpdateInput {
   description: String
   endTime: DateTime
   lastModification: DateTime
+  notAlert: Boolean
   notified: Boolean
   startTime: DateTime
   statusLesson: String
@@ -1152,6 +1342,7 @@ input LessonWhereInput {
   endTime: DateTimeFilter
   id: IDFilter
   lastModification: DateTimeFilter
+  notAlert: BooleanFilter
   notified: BooleanFilter
   startTime: DateTimeFilter
   statusLesson: StringFilter
@@ -1225,7 +1416,7 @@ enum MagicLinkRedemptionErrorCode {
 }
 
 type Mailing {
-  clients(orderBy: [UserOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserWhereInput! = {}): [User!]
+  clients(cursor: UserWhereUniqueInput, orderBy: [UserOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserWhereInput! = {}): [User!]
   clientsCount(where: UserWhereInput! = {}): Int
   content: Mailing_content_Document
   createdAt: DateTime
@@ -1265,8 +1456,10 @@ enum MailingStatusClientType {
   finishedClient
   firstCall
   new
+  payedFirstLesson
   recordFirstLesson
   rejection
+  speakingClub
   trialLesson
 }
 
@@ -1311,7 +1504,7 @@ type Manager {
   calendar: String
   comment: String
   createdAt: DateTime
-  cutoff(orderBy: [WorkTimeCutoffOrderByInput!]! = [], skip: Int! = 0, take: Int, where: WorkTimeCutoffWhereInput! = {}): [WorkTimeCutoff!]
+  cutoff(cursor: WorkTimeCutoffWhereUniqueInput, orderBy: [WorkTimeCutoffOrderByInput!]! = [], skip: Int! = 0, take: Int, where: WorkTimeCutoffWhereInput! = {}): [WorkTimeCutoff!]
   cutoffCount(where: WorkTimeCutoffWhereInput! = {}): Int
   email: String
   id: ID!
@@ -1323,7 +1516,7 @@ type Manager {
   teacher: Boolean
   timeZone: String
   work: Boolean
-  workTime(orderBy: [WorkTimeOrderByInput!]! = [], skip: Int! = 0, take: Int, where: WorkTimeWhereInput! = {}): [WorkTime!]
+  workTime(cursor: WorkTimeWhereUniqueInput, orderBy: [WorkTimeOrderByInput!]! = [], skip: Int! = 0, take: Int, where: WorkTimeWhereInput! = {}): [WorkTime!]
   workTimeCount(where: WorkTimeWhereInput! = {}): Int
 }
 
@@ -1437,8 +1630,8 @@ input ManagerWhereUniqueInput {
 }
 
 type Marketing {
-  aboutGeorge: Boolean!
-  advantages: Boolean!
+  aboutGeorge: Boolean
+  advantages: Boolean
   createdAt: DateTime
   description: String
   id: ID!
@@ -1446,21 +1639,21 @@ type Marketing {
   language: String
   lastModification: DateTime
   link: String
-  reviews: Boolean!
+  reviews: Boolean
   slug: String
   statusView: String
   title: String
 }
 
 input MarketingCreateInput {
-  aboutGeorge: Boolean! = true
-  advantages: Boolean! = true
+  aboutGeorge: Boolean
+  advantages: Boolean
   createdAt: DateTime
   description: String
   image: ImageFieldInput
   language: String
   lastModification: DateTime
-  reviews: Boolean! = true
+  reviews: Boolean
   slug: String
   statusView: String
   title: String
@@ -1549,6 +1742,10 @@ type Mutation {
   createImages(data: [ImageCreateInput!]!): [Image]
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
   createLesson(data: LessonCreateInput!): Lesson
+  createLessonSchedule(data: LessonScheduleCreateInput!): LessonSchedule
+  createLessonScheduleItem(data: LessonScheduleItemCreateInput!): LessonScheduleItem
+  createLessonScheduleItems(data: [LessonScheduleItemCreateInput!]!): [LessonScheduleItem]
+  createLessonSchedules(data: [LessonScheduleCreateInput!]!): [LessonSchedule]
   createLessons(data: [LessonCreateInput!]!): [Lesson]
   createLink(data: LinkCreateInput!): Link
   createLinks(data: [LinkCreateInput!]!): [Link]
@@ -1611,6 +1808,10 @@ type Mutation {
   deleteImage(where: ImageWhereUniqueInput!): Image
   deleteImages(where: [ImageWhereUniqueInput!]!): [Image]
   deleteLesson(where: LessonWhereUniqueInput!): Lesson
+  deleteLessonSchedule(where: LessonScheduleWhereUniqueInput!): LessonSchedule
+  deleteLessonScheduleItem(where: LessonScheduleItemWhereUniqueInput!): LessonScheduleItem
+  deleteLessonScheduleItems(where: [LessonScheduleItemWhereUniqueInput!]!): [LessonScheduleItem]
+  deleteLessonSchedules(where: [LessonScheduleWhereUniqueInput!]!): [LessonSchedule]
   deleteLessons(where: [LessonWhereUniqueInput!]!): [Lesson]
   deleteLink(where: LinkWhereUniqueInput!): Link
   deleteLinks(where: [LinkWhereUniqueInput!]!): [Link]
@@ -1677,6 +1878,10 @@ type Mutation {
   updateImage(data: ImageUpdateInput!, where: ImageWhereUniqueInput!): Image
   updateImages(data: [ImageUpdateArgs!]!): [Image]
   updateLesson(data: LessonUpdateInput!, where: LessonWhereUniqueInput!): Lesson
+  updateLessonSchedule(data: LessonScheduleUpdateInput!, where: LessonScheduleWhereUniqueInput!): LessonSchedule
+  updateLessonScheduleItem(data: LessonScheduleItemUpdateInput!, where: LessonScheduleItemWhereUniqueInput!): LessonScheduleItem
+  updateLessonScheduleItems(data: [LessonScheduleItemUpdateArgs!]!): [LessonScheduleItem]
+  updateLessonSchedules(data: [LessonScheduleUpdateArgs!]!): [LessonSchedule]
   updateLessons(data: [LessonUpdateArgs!]!): [Lesson]
   updateLink(data: LinkUpdateInput!, where: LinkWhereUniqueInput!): Link
   updateLinks(data: [LinkUpdateArgs!]!): [Link]
@@ -1762,14 +1967,14 @@ type Order {
   nextPayment: Int
   nextPaymentUSD: Int
   payed: Int
-  payments(orderBy: [PaymentOrderByInput!]! = [], skip: Int! = 0, take: Int, where: PaymentWhereInput! = {}): [Payment!]
+  payments(cursor: PaymentWhereUniqueInput, orderBy: [PaymentOrderByInput!]! = [], skip: Int! = 0, take: Int, where: PaymentWhereInput! = {}): [Payment!]
   paymentsCount(where: PaymentWhereInput! = {}): Int
   quantityPayments: Int
-  services(orderBy: [UserServiceOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserServiceWhereInput! = {}): [UserService!]
+  services(cursor: UserServiceWhereUniqueInput, orderBy: [UserServiceOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserServiceWhereInput! = {}): [UserService!]
   servicesCount(where: UserServiceWhereInput! = {}): Int
   status: OrderStatusType
   student: User
-  subscriptions(orderBy: [UserSubscriptionOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserSubscriptionWhereInput! = {}): [UserSubscription!]
+  subscriptions(cursor: UserSubscriptionWhereUniqueInput, orderBy: [UserSubscriptionOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserSubscriptionWhereInput! = {}): [UserSubscription!]
   subscriptionsCount(where: UserSubscriptionWhereInput! = {}): Int
 }
 
@@ -1880,7 +2085,7 @@ type Page {
   lastModification: DateTime
   slug: String
   statusView: String
-  tag(orderBy: [TagOrderByInput!]! = [], skip: Int! = 0, take: Int, where: TagWhereInput! = {}): [Tag!]
+  tag(cursor: TagWhereUniqueInput, orderBy: [TagOrderByInput!]! = [], skip: Int! = 0, take: Int, where: TagWhereInput! = {}): [Tag!]
   tagCount(where: TagWhereInput! = {}): Int
   title: String
 }
@@ -2084,7 +2289,7 @@ type Post {
   language: String
   lastModification: DateTime
   statusView: String
-  tag(orderBy: [TagOrderByInput!]! = [], skip: Int! = 0, take: Int, where: TagWhereInput! = {}): [Tag!]
+  tag(cursor: TagWhereUniqueInput, orderBy: [TagOrderByInput!]! = [], skip: Int! = 0, take: Int, where: TagWhereInput! = {}): [Tag!]
   tagCount(where: TagWhereInput! = {}): Int
   title: String
 }
@@ -2165,9 +2370,9 @@ type Product {
   lastModification: DateTime
   name: String
   statusView: String
-  subscriptions(orderBy: [SubscriptionOrderByInput!]! = [], skip: Int! = 0, take: Int, where: SubscriptionWhereInput! = {}): [Subscription!]
+  subscriptions(cursor: SubscriptionWhereUniqueInput, orderBy: [SubscriptionOrderByInput!]! = [], skip: Int! = 0, take: Int, where: SubscriptionWhereInput! = {}): [Subscription!]
   subscriptionsCount(where: SubscriptionWhereInput! = {}): Int
-  tags(orderBy: [TagOrderByInput!]! = [], skip: Int! = 0, take: Int, where: TagWhereInput! = {}): [Tag!]
+  tags(cursor: TagWhereUniqueInput, orderBy: [TagOrderByInput!]! = [], skip: Int! = 0, take: Int, where: TagWhereInput! = {}): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
 }
 
@@ -2220,7 +2425,7 @@ type ProductReview {
   language: String
   lastModification: DateTime
   media: String
-  products(orderBy: [ProductOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductWhereInput! = {}): [Product!]
+  products(cursor: ProductWhereUniqueInput, orderBy: [ProductOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductWhereInput! = {}): [Product!]
   productsCount(where: ProductWhereInput! = {}): Int
   statusView: String
   student: User
@@ -2328,102 +2533,108 @@ type Product_desc_Document {
 type Query {
   authenticatedItem: AuthenticatedItem
   avatarUser(where: AvatarUserWhereUniqueInput!): AvatarUser
-  avatarUsers(orderBy: [AvatarUserOrderByInput!]! = [], skip: Int! = 0, take: Int, where: AvatarUserWhereInput! = {}): [AvatarUser!]
+  avatarUsers(cursor: AvatarUserWhereUniqueInput, orderBy: [AvatarUserOrderByInput!]! = [], skip: Int! = 0, take: Int, where: AvatarUserWhereInput! = {}): [AvatarUser!]
   avatarUsersCount(where: AvatarUserWhereInput! = {}): Int
   cart(where: CartWhereUniqueInput!): Cart
   cartItem(where: CartItemWhereUniqueInput!): CartItem
-  cartItems(orderBy: [CartItemOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CartItemWhereInput! = {}): [CartItem!]
+  cartItems(cursor: CartItemWhereUniqueInput, orderBy: [CartItemOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CartItemWhereInput! = {}): [CartItem!]
   cartItemsCount(where: CartItemWhereInput! = {}): Int
-  carts(orderBy: [CartOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CartWhereInput! = {}): [Cart!]
+  carts(cursor: CartWhereUniqueInput, orderBy: [CartOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CartWhereInput! = {}): [Cart!]
   cartsCount(where: CartWhereInput! = {}): Int
-  categories(orderBy: [CategoryOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CategoryWhereInput! = {}): [Category!]
+  categories(cursor: CategoryWhereUniqueInput, orderBy: [CategoryOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CategoryWhereInput! = {}): [Category!]
   categoriesCount(where: CategoryWhereInput! = {}): Int
   category(where: CategoryWhereUniqueInput!): Category
   checkPayment(paymentId: String!): Payment
   client(where: ClientWhereUniqueInput!): Client
-  clients(orderBy: [ClientOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ClientWhereInput! = {}): [Client!]
+  clients(cursor: ClientWhereUniqueInput, orderBy: [ClientOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ClientWhereInput! = {}): [Client!]
   clientsCount(where: ClientWhereInput! = {}): Int
-  currencies(orderBy: [CurrencyOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CurrencyWhereInput! = {}): [Currency!]
+  currencies(cursor: CurrencyWhereUniqueInput, orderBy: [CurrencyOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CurrencyWhereInput! = {}): [Currency!]
   currenciesCount(where: CurrencyWhereInput! = {}): Int
   currency(where: CurrencyWhereUniqueInput!): Currency
   direction(where: DirectionWhereUniqueInput!): Direction
   directionGoal(where: DirectionGoalWhereUniqueInput!): DirectionGoal
-  directionGoals(orderBy: [DirectionGoalOrderByInput!]! = [], skip: Int! = 0, take: Int, where: DirectionGoalWhereInput! = {}): [DirectionGoal!]
+  directionGoals(cursor: DirectionGoalWhereUniqueInput, orderBy: [DirectionGoalOrderByInput!]! = [], skip: Int! = 0, take: Int, where: DirectionGoalWhereInput! = {}): [DirectionGoal!]
   directionGoalsCount(where: DirectionGoalWhereInput! = {}): Int
   directionResult(where: DirectionResultWhereUniqueInput!): DirectionResult
-  directionResults(orderBy: [DirectionResultOrderByInput!]! = [], skip: Int! = 0, take: Int, where: DirectionResultWhereInput! = {}): [DirectionResult!]
+  directionResults(cursor: DirectionResultWhereUniqueInput, orderBy: [DirectionResultOrderByInput!]! = [], skip: Int! = 0, take: Int, where: DirectionResultWhereInput! = {}): [DirectionResult!]
   directionResultsCount(where: DirectionResultWhereInput! = {}): Int
-  directions(orderBy: [DirectionOrderByInput!]! = [], skip: Int! = 0, take: Int, where: DirectionWhereInput! = {}): [Direction!]
+  directions(cursor: DirectionWhereUniqueInput, orderBy: [DirectionOrderByInput!]! = [], skip: Int! = 0, take: Int, where: DirectionWhereInput! = {}): [Direction!]
   directionsCount(where: DirectionWhereInput! = {}): Int
   faq(where: FaqWhereUniqueInput!): Faq
-  faqs(orderBy: [FaqOrderByInput!]! = [], skip: Int! = 0, take: Int, where: FaqWhereInput! = {}): [Faq!]
+  faqs(cursor: FaqWhereUniqueInput, orderBy: [FaqOrderByInput!]! = [], skip: Int! = 0, take: Int, where: FaqWhereInput! = {}): [Faq!]
   faqsCount(where: FaqWhereInput! = {}): Int
   getTeacherSchedule(data: GetTeacherScheduleData!): GetTeacherScheduleResponse!
   image(where: ImageWhereUniqueInput!): Image
-  images(orderBy: [ImageOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ImageWhereInput! = {}): [Image!]
+  images(cursor: ImageWhereUniqueInput, orderBy: [ImageOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ImageWhereInput! = {}): [Image!]
   imagesCount(where: ImageWhereInput! = {}): Int
   keystone: KeystoneMeta!
   lesson(where: LessonWhereUniqueInput!): Lesson
-  lessons(orderBy: [LessonOrderByInput!]! = [], skip: Int! = 0, take: Int, where: LessonWhereInput! = {}): [Lesson!]
+  lessonSchedule(where: LessonScheduleWhereUniqueInput!): LessonSchedule
+  lessonScheduleItem(where: LessonScheduleItemWhereUniqueInput!): LessonScheduleItem
+  lessonScheduleItems(cursor: LessonScheduleItemWhereUniqueInput, orderBy: [LessonScheduleItemOrderByInput!]! = [], skip: Int! = 0, take: Int, where: LessonScheduleItemWhereInput! = {}): [LessonScheduleItem!]
+  lessonScheduleItemsCount(where: LessonScheduleItemWhereInput! = {}): Int
+  lessonSchedules(cursor: LessonScheduleWhereUniqueInput, orderBy: [LessonScheduleOrderByInput!]! = [], skip: Int! = 0, take: Int, where: LessonScheduleWhereInput! = {}): [LessonSchedule!]
+  lessonSchedulesCount(where: LessonScheduleWhereInput! = {}): Int
+  lessons(cursor: LessonWhereUniqueInput, orderBy: [LessonOrderByInput!]! = [], skip: Int! = 0, take: Int, where: LessonWhereInput! = {}): [Lesson!]
   lessonsCount(where: LessonWhereInput! = {}): Int
   link(where: LinkWhereUniqueInput!): Link
-  links(orderBy: [LinkOrderByInput!]! = [], skip: Int! = 0, take: Int, where: LinkWhereInput! = {}): [Link!]
+  links(cursor: LinkWhereUniqueInput, orderBy: [LinkOrderByInput!]! = [], skip: Int! = 0, take: Int, where: LinkWhereInput! = {}): [Link!]
   linksCount(where: LinkWhereInput! = {}): Int
   mailing(where: MailingWhereUniqueInput!): Mailing
-  mailings(orderBy: [MailingOrderByInput!]! = [], skip: Int! = 0, take: Int, where: MailingWhereInput! = {}): [Mailing!]
+  mailings(cursor: MailingWhereUniqueInput, orderBy: [MailingOrderByInput!]! = [], skip: Int! = 0, take: Int, where: MailingWhereInput! = {}): [Mailing!]
   mailingsCount(where: MailingWhereInput! = {}): Int
   manager(where: ManagerWhereUniqueInput!): Manager
-  managers(orderBy: [ManagerOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ManagerWhereInput! = {}): [Manager!]
+  managers(cursor: ManagerWhereUniqueInput, orderBy: [ManagerOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ManagerWhereInput! = {}): [Manager!]
   managersCount(where: ManagerWhereInput! = {}): Int
   marketing(where: MarketingWhereUniqueInput!): Marketing
-  marketings(orderBy: [MarketingOrderByInput!]! = [], skip: Int! = 0, take: Int, where: MarketingWhereInput! = {}): [Marketing!]
+  marketings(cursor: MarketingWhereUniqueInput, orderBy: [MarketingOrderByInput!]! = [], skip: Int! = 0, take: Int, where: MarketingWhereInput! = {}): [Marketing!]
   marketingsCount(where: MarketingWhereInput! = {}): Int
   nextStudentLesson(studentId: ID!): Object
   order(where: OrderWhereUniqueInput!): Order
-  orders(orderBy: [OrderOrderByInput!]! = [], skip: Int! = 0, take: Int, where: OrderWhereInput! = {}): [Order!]
+  orders(cursor: OrderWhereUniqueInput, orderBy: [OrderOrderByInput!]! = [], skip: Int! = 0, take: Int, where: OrderWhereInput! = {}): [Order!]
   ordersCount(where: OrderWhereInput! = {}): Int
   page(where: PageWhereUniqueInput!): Page
-  pages(orderBy: [PageOrderByInput!]! = [], skip: Int! = 0, take: Int, where: PageWhereInput! = {}): [Page!]
+  pages(cursor: PageWhereUniqueInput, orderBy: [PageOrderByInput!]! = [], skip: Int! = 0, take: Int, where: PageWhereInput! = {}): [Page!]
   pagesCount(where: PageWhereInput! = {}): Int
   payment(where: PaymentWhereUniqueInput!): Payment
-  payments(orderBy: [PaymentOrderByInput!]! = [], skip: Int! = 0, take: Int, where: PaymentWhereInput! = {}): [Payment!]
+  payments(cursor: PaymentWhereUniqueInput, orderBy: [PaymentOrderByInput!]! = [], skip: Int! = 0, take: Int, where: PaymentWhereInput! = {}): [Payment!]
   paymentsCount(where: PaymentWhereInput! = {}): Int
   post(where: PostWhereUniqueInput!): Post
-  posts(orderBy: [PostOrderByInput!]! = [], skip: Int! = 0, take: Int, where: PostWhereInput! = {}): [Post!]
+  posts(cursor: PostWhereUniqueInput, orderBy: [PostOrderByInput!]! = [], skip: Int! = 0, take: Int, where: PostWhereInput! = {}): [Post!]
   postsCount(where: PostWhereInput! = {}): Int
   product(where: ProductWhereUniqueInput!): Product
   productReview(where: ProductReviewWhereUniqueInput!): ProductReview
-  productReviews(orderBy: [ProductReviewOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductReviewWhereInput! = {}): [ProductReview!]
+  productReviews(cursor: ProductReviewWhereUniqueInput, orderBy: [ProductReviewOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductReviewWhereInput! = {}): [ProductReview!]
   productReviewsCount(where: ProductReviewWhereInput! = {}): Int
-  products(orderBy: [ProductOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductWhereInput! = {}): [Product!]
+  products(cursor: ProductWhereUniqueInput, orderBy: [ProductOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ProductWhereInput! = {}): [Product!]
   productsCount(where: ProductWhereInput! = {}): Int
   service(where: ServiceWhereUniqueInput!): Service
-  services(orderBy: [ServiceOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ServiceWhereInput! = {}): [Service!]
+  services(cursor: ServiceWhereUniqueInput, orderBy: [ServiceOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ServiceWhereInput! = {}): [Service!]
   servicesCount(where: ServiceWhereInput! = {}): Int
   sourceClient(where: SourceClientWhereUniqueInput!): SourceClient
-  sourceClients(orderBy: [SourceClientOrderByInput!]! = [], skip: Int! = 0, take: Int, where: SourceClientWhereInput! = {}): [SourceClient!]
+  sourceClients(cursor: SourceClientWhereUniqueInput, orderBy: [SourceClientOrderByInput!]! = [], skip: Int! = 0, take: Int, where: SourceClientWhereInput! = {}): [SourceClient!]
   sourceClientsCount(where: SourceClientWhereInput! = {}): Int
   subscription(where: SubscriptionWhereUniqueInput!): Subscription
-  subscriptions(orderBy: [SubscriptionOrderByInput!]! = [], skip: Int! = 0, take: Int, where: SubscriptionWhereInput! = {}): [Subscription!]
+  subscriptions(cursor: SubscriptionWhereUniqueInput, orderBy: [SubscriptionOrderByInput!]! = [], skip: Int! = 0, take: Int, where: SubscriptionWhereInput! = {}): [Subscription!]
   subscriptionsCount(where: SubscriptionWhereInput! = {}): Int
   tag(where: TagWhereUniqueInput!): Tag
-  tags(orderBy: [TagOrderByInput!]! = [], skip: Int! = 0, take: Int, where: TagWhereInput! = {}): [Tag!]
+  tags(cursor: TagWhereUniqueInput, orderBy: [TagOrderByInput!]! = [], skip: Int! = 0, take: Int, where: TagWhereInput! = {}): [Tag!]
   tagsCount(where: TagWhereInput! = {}): Int
   unavailableTimesForRecordLesson(data: UnavailableTimesForRecordLessonData!): [UnavailableTimesForRecordLessonResponse]
   user(where: UserWhereUniqueInput!): User
   userService(where: UserServiceWhereUniqueInput!): UserService
-  userServices(orderBy: [UserServiceOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserServiceWhereInput! = {}): [UserService!]
+  userServices(cursor: UserServiceWhereUniqueInput, orderBy: [UserServiceOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserServiceWhereInput! = {}): [UserService!]
   userServicesCount(where: UserServiceWhereInput! = {}): Int
   userSubscription(where: UserSubscriptionWhereUniqueInput!): UserSubscription
-  userSubscriptions(orderBy: [UserSubscriptionOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserSubscriptionWhereInput! = {}): [UserSubscription!]
+  userSubscriptions(cursor: UserSubscriptionWhereUniqueInput, orderBy: [UserSubscriptionOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserSubscriptionWhereInput! = {}): [UserSubscription!]
   userSubscriptionsCount(where: UserSubscriptionWhereInput! = {}): Int
-  users(orderBy: [UserOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserWhereInput! = {}): [User!]
+  users(cursor: UserWhereUniqueInput, orderBy: [UserOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserWhereInput! = {}): [User!]
   usersCount(where: UserWhereInput! = {}): Int
   workTime(where: WorkTimeWhereUniqueInput!): WorkTime
   workTimeCutoff(where: WorkTimeCutoffWhereUniqueInput!): WorkTimeCutoff
-  workTimeCutoffs(orderBy: [WorkTimeCutoffOrderByInput!]! = [], skip: Int! = 0, take: Int, where: WorkTimeCutoffWhereInput! = {}): [WorkTimeCutoff!]
+  workTimeCutoffs(cursor: WorkTimeCutoffWhereUniqueInput, orderBy: [WorkTimeCutoffOrderByInput!]! = [], skip: Int! = 0, take: Int, where: WorkTimeCutoffWhereInput! = {}): [WorkTimeCutoff!]
   workTimeCutoffsCount(where: WorkTimeCutoffWhereInput! = {}): Int
-  workTimes(orderBy: [WorkTimeOrderByInput!]! = [], skip: Int! = 0, take: Int, where: WorkTimeWhereInput! = {}): [WorkTime!]
+  workTimes(cursor: WorkTimeWhereUniqueInput, orderBy: [WorkTimeOrderByInput!]! = [], skip: Int! = 0, take: Int, where: WorkTimeWhereInput! = {}): [WorkTime!]
   workTimesCount(where: WorkTimeWhereInput! = {}): Int
 }
 
@@ -2445,7 +2656,7 @@ type RedeemUserMagicAuthTokenSuccess {
 }
 
 type Service {
-  categories(orderBy: [CategoryOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CategoryWhereInput! = {}): [Category!]
+  categories(cursor: CategoryWhereUniqueInput, orderBy: [CategoryOrderByInput!]! = [], skip: Int! = 0, take: Int, where: CategoryWhereInput! = {}): [Category!]
   categoriesCount(where: CategoryWhereInput! = {}): Int
   createdAt: DateTime
   description: Service_description_Document
@@ -3037,7 +3248,7 @@ type UserSubscription {
   id: ID!
   lastCount: Int
   lastModification: DateTime
-  lessons(orderBy: [LessonOrderByInput!]! = [], skip: Int! = 0, take: Int, where: LessonWhereInput! = {}): [Lesson!]
+  lessons(cursor: LessonWhereUniqueInput, orderBy: [LessonOrderByInput!]! = [], skip: Int! = 0, take: Int, where: LessonWhereInput! = {}): [Lesson!]
   lessonsCount(where: LessonWhereInput! = {}): Int
   linkForUser: String
   manager: User

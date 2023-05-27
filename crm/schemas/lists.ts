@@ -25,7 +25,7 @@ import { Client } from './client.schema';
 import { Manager } from './manager.schema';
 import { WorkTimeCutoff } from './workTimeCutoff.schema';
 import { WorkTime } from './workTime.schema';
-import { Lesson } from './lessons/schema';
+import Lessons from './lessons';
 import { Mailing } from './mailing.schema';
 import { Image } from './image.schema';
 import { Currency } from './currency.schema';
@@ -58,8 +58,8 @@ export const lists = {
     Manager,
     WorkTime,
     WorkTimeCutoff,
-    Lesson,
     Mailing,
     Image,
-    Currency
+    Currency,
+    ...Lessons
 };

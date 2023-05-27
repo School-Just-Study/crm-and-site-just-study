@@ -61,6 +61,10 @@ export const handleCheckBookingLesson: ListHooks<Lists.Lesson.TypeInfo>['validat
     item,
     operation
 }) => {
+    /**
+     * Проверяем корректность времени
+     */
+
     const initStartTime = resolvedData.startTime || item?.startTime;
     const initEndTime = resolvedData.endTime || item?.endTime;
 
@@ -81,4 +85,20 @@ export const handleCheckBookingLesson: ListHooks<Lists.Lesson.TypeInfo>['validat
 
     const error = await checkAvailableTime(context, item?.id, initStartTime, initEndTime, teachersId);
     if (error) addValidationError('Time is not available');
+
+    /**
+     * Проверяем наличие абонемента для завершения урока
+     */
+
+    if (resolvedData.statusLesson === LessonStatus.Completed && !item?.subscriptionId)
+        addValidationError('The student does not have an active subscription');
+
+    if (resolvedData.statusLesson === LessonStatus.Completed && item?.subscriptionId) {
+        const lastLessonsOfSub = await context.query.UserSubscription.findOne({
+            where: { id: `${item.subscriptionId}` },
+            query: `lastCount`
+        });
+        if (lastLessonsOfSub.lastCount === 0)
+            addValidationError("The student's subscription has run out of available lessons");
+    }
 };
