@@ -10,6 +10,7 @@ COPY . .
 COPY --from=dependencies /app/node_modules ./node_modules
 ENV NODE_ENV production
 RUN yarn build
+RUN yarn migrate-deploy
 
 FROM node:18-alpine3.16 as runner
 WORKDIR /app
@@ -23,6 +24,6 @@ COPY --from=builder /app/node_modules ./node_modules
 ENV PORT 80
 EXPOSE 80
 
-RUN yarn migrate-deploy
+
 
 CMD ["yarn", "start"]
