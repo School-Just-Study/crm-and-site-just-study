@@ -18,7 +18,7 @@ sample({
         const data: CartItemCreateInput[] = cartItems.map((item) => {
             return {
                 cart: { connect: { id: user?.cart?.id } },
-                subscription: { connect: { id: item.subscriptionId } },
+                subscriptions: { connect: [{ id: item.subscriptionId }] },
                 price: item.price
             };
         });

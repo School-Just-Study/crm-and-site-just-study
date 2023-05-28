@@ -1249,7 +1249,8 @@ export type Lesson = {
   statusLesson?: Maybe<Scalars['String']['output']>;
   students?: Maybe<Array<User>>;
   studentsCount?: Maybe<Scalars['Int']['output']>;
-  subscription?: Maybe<UserSubscription>;
+  subscriptions?: Maybe<Array<UserSubscription>>;
+  subscriptionsCount?: Maybe<Scalars['Int']['output']>;
   teachers?: Maybe<Array<Manager>>;
   teachersCount?: Maybe<Scalars['Int']['output']>;
   timeZone?: Maybe<Scalars['String']['output']>;
@@ -1269,6 +1270,20 @@ export type LessonStudentsArgs = {
 
 export type LessonStudentsCountArgs = {
   where?: UserWhereInput;
+};
+
+
+export type LessonSubscriptionsArgs = {
+  cursor?: InputMaybe<UserSubscriptionWhereUniqueInput>;
+  orderBy?: Array<UserSubscriptionOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: UserSubscriptionWhereInput;
+};
+
+
+export type LessonSubscriptionsCountArgs = {
+  where?: UserSubscriptionWhereInput;
 };
 
 
@@ -1297,7 +1312,7 @@ export type LessonCreateInput = {
   startTime?: InputMaybe<Scalars['DateTime']['input']>;
   statusLesson?: InputMaybe<Scalars['String']['input']>;
   students?: InputMaybe<UserRelateToManyForCreateInput>;
-  subscription?: InputMaybe<UserSubscriptionRelateToOneForCreateInput>;
+  subscriptions?: InputMaybe<UserSubscriptionRelateToManyForCreateInput>;
   teachers?: InputMaybe<ManagerRelateToManyForCreateInput>;
   timeZone?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -1553,7 +1568,7 @@ export type LessonUpdateInput = {
   startTime?: InputMaybe<Scalars['DateTime']['input']>;
   statusLesson?: InputMaybe<Scalars['String']['input']>;
   students?: InputMaybe<UserRelateToManyForUpdateInput>;
-  subscription?: InputMaybe<UserSubscriptionRelateToOneForUpdateInput>;
+  subscriptions?: InputMaybe<UserSubscriptionRelateToManyForUpdateInput>;
   teachers?: InputMaybe<ManagerRelateToManyForUpdateInput>;
   timeZone?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -1576,7 +1591,7 @@ export type LessonWhereInput = {
   startTime?: InputMaybe<DateTimeFilter>;
   statusLesson?: InputMaybe<StringFilter>;
   students?: InputMaybe<UserManyRelationFilter>;
-  subscription?: InputMaybe<UserSubscriptionWhereInput>;
+  subscriptions?: InputMaybe<UserSubscriptionManyRelationFilter>;
   teachers?: InputMaybe<ManagerManyRelationFilter>;
   timeZone?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
@@ -5189,8 +5204,8 @@ export type UnavailableTimesForRecordLessonData = {
 
 export type UnavailableTimesForRecordLessonResponse = {
   __typename?: 'UnavailableTimesForRecordLessonResponse';
-  end: Scalars['String']['output'];
-  start: Scalars['String']['output'];
+  end: Scalars['DateTime']['output'];
+  start: Scalars['DateTime']['output'];
 };
 
 export type User = {
@@ -5478,17 +5493,6 @@ export type UserSubscriptionRelateToManyForUpdateInput = {
   create?: InputMaybe<Array<UserSubscriptionCreateInput>>;
   disconnect?: InputMaybe<Array<UserSubscriptionWhereUniqueInput>>;
   set?: InputMaybe<Array<UserSubscriptionWhereUniqueInput>>;
-};
-
-export type UserSubscriptionRelateToOneForCreateInput = {
-  connect?: InputMaybe<UserSubscriptionWhereUniqueInput>;
-  create?: InputMaybe<UserSubscriptionCreateInput>;
-};
-
-export type UserSubscriptionRelateToOneForUpdateInput = {
-  connect?: InputMaybe<UserSubscriptionWhereUniqueInput>;
-  create?: InputMaybe<UserSubscriptionCreateInput>;
-  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type UserSubscriptionUpdateArgs = {

@@ -71,14 +71,10 @@ export const syncLessonsWithSchedule = async (
     }
 };
 
-export const handleCreateLessons: ListHooks<Lists.LessonSchedule.TypeInfo>['afterOperation'] = async ({
-    operation,
-    context,
-    item
-}) => {
+export const handleCreateLessons: ListHooks<any>['afterOperation'] = async ({ operation, context, item }) => {
     if (
         operation !== 'delete' &&
-        item?.statusView === ViewStatus.Show &&
+        item.statusView === ViewStatus.Show &&
         checkActive(item?.endPeriod) &&
         isPast(item.startPeriod)
     ) {
@@ -89,7 +85,7 @@ export const handleCreateLessons: ListHooks<Lists.LessonSchedule.TypeInfo>['afte
         const oldLessons = await context.query.Lesson.findMany({
             where: {
                 students: {
-                    every: {
+                    some: {
                         id: {
                             in: lessonSchedule.students.map(({ id }: { id: string }) => Number(id))
                         }
