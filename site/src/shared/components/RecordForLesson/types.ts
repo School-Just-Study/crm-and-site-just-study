@@ -5,6 +5,7 @@ export interface LessonForm {
     date: Date;
     duration: number;
     startTime: Date;
+    endTime: Date;
 }
 
 export interface RecordForLessonProps {

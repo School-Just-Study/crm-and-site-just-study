@@ -105,6 +105,7 @@ jobs:
         id: deploy-coi
         uses: yc-actions/yc-coi-deploy@v1.2.0
         env:
+          NODE_ENV: production
           BACKEND_IMAGE: ${{ env.BACKEND_IMAGE }}
           SITE_IMAGE: ${{ env.SITE_IMAGE }}
           NGINX_IMAGE: ${{ env.NGINX_IMAGE }}

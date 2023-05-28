@@ -1937,20 +1937,6 @@ input NestedStringFilter {
   startsWith: String
 }
 
-input NestedStringNullableFilter {
-  contains: String
-  endsWith: String
-  equals: String
-  gt: String
-  gte: String
-  in: [String!]
-  lt: String
-  lte: String
-  not: NestedStringNullableFilter
-  notIn: [String!]
-  startsWith: String
-}
-
 scalar Object
 
 type Order {
@@ -2841,7 +2827,7 @@ input StringNullableFilter {
   in: [String!]
   lt: String
   lte: String
-  not: NestedStringNullableFilter
+  not: StringNullableFilter
   notIn: [String!]
   startsWith: String
 }
@@ -3037,12 +3023,13 @@ input TagWhereUniqueInput {
 
 input UnavailableTimesForRecordLessonData {
   date: String!
+  duration: Int
   teacherId: ID!
 }
 
 type UnavailableTimesForRecordLessonResponse {
-  endTime: String!
-  startTime: String!
+  end: String!
+  start: String!
 }
 
 """The `Upload` scalar type represents a file upload."""

@@ -3,7 +3,6 @@ import { FC, useEffect } from 'react';
 import { Alert, AlertTitle, Step, Stepper } from '@mui/material';
 import { Duration } from './Steps/Duration';
 import { DateLesson } from './Steps/Date';
-import { Time } from './Steps/TIme';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useGate, useUnit } from 'effector-react';
 import { $activeStep, ActiveStepGate } from './model/model';
@@ -20,6 +19,7 @@ import { Query, UserSubscription } from '@src/shared/lib/apollo/types';
 import { SpinnerWrapper } from '@shared/ui/SpinnerWrapper';
 import './model/init';
 import { QUERY_STUDENT_CABINET } from '@shared/components/Orders/query';
+import { Time } from './Steps/TIme';
 
 export const RecordForLesson: FC<RecordForLessonProps> = ({ handleClose }) => {
     const activeStep = useUnit($activeStep);

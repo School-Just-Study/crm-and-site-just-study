@@ -24,7 +24,7 @@ export const WidgetNextLesson: FC<{ nextStudentLesson: Lesson }> = ({ nextStuden
                 <Typography>{date}</Typography>
                 {!timeForEditIsOver ? (
                     <Stack direction="row" gap={1}>
-                        <ReschedulingButton id={nextStudentLesson.id} />
+                        {!nextStudentLesson.notAlert && <ReschedulingButton id={nextStudentLesson.id} />}
                         <ButtonCancelLesson id={nextStudentLesson.id} />
                     </Stack>
                 ) : (
