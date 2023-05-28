@@ -14,4 +14,9 @@ export const formatWithDateHourMinutes = (dayOfWeek: number, date: Date, time: s
     return zonedTimeToUtc(dateWithTime, timeZone, { locale: localeDate('ru') });
 };
 
-export const daysForRepeat = [addWeeks(new Date(), 0), addWeeks(new Date(), 1), addWeeks(new Date(), 2)];
+export const daysForRepeat = [
+    addWeeks(new Date(), 0),
+    addWeeks(new Date(), 1),
+    addWeeks(new Date(), 2),
+    addWeeks(new Date(), 3)
+];
