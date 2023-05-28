@@ -19,7 +19,7 @@ export const handleCheckUserSubscription: ServerConfig<any>['extendExpressApp'] 
 
         for (const subscription of subscriptions) {
             const timeIsOver = isAfter(new Date(), new Date(subscription.endDate));
-            const lessonsIsOver = subscription.lastCount === 0;
+            const lessonsIsOver = subscription.lastCount <= 0;
             if (timeIsOver || lessonsIsOver) {
                 await context.query.UserSubscription.updateOne({
                     where: { id: subscription.id },
