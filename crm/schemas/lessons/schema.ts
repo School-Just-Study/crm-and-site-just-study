@@ -43,11 +43,13 @@ export const Lesson = list({
             defaultValue: false
         }),
         students: relationship({ ref: 'User', many: true, label: 'Клиент' }),
-        subscription: relationship({
+        subscriptions: relationship({
             ref: 'UserSubscription.lessons',
-            label: 'Абонемент',
+            many: true,
+            label: 'Абонементы',
             ui: {
-                description: 'Не обязательно указывать, установится автоматически при наличии активного абонемента'
+                description:
+                    'Не обязательно указывать, установится автоматически при наличии активного абонемента у ученика'
             }
         }),
         teachers: relationship({ ref: 'Manager', many: true, label: 'Учителя' }),

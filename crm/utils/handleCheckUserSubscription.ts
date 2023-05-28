@@ -1,6 +1,6 @@
 import { ServerConfig } from '@keystone-6/core/types';
-import { isAfter } from 'date-fns';
 import { Statuses } from '../enums/statuses.enum';
+import { isAfter } from 'date-fns';
 
 /**
  * Проверка даты действия абонемента
@@ -13,7 +13,7 @@ export const handleCheckUserSubscription: ServerConfig<any>['extendExpressApp'] 
         console.info(new Date(), 'check subscription');
 
         const subscriptions = await context.query.UserSubscription.findMany({
-            where: { status: { in: [Statuses.Active] } },
+            where: { status: { equals: Statuses.Active } },
             query: `id endDate lastCount`
         });
 
