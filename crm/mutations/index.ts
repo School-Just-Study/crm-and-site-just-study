@@ -42,10 +42,11 @@ export const extendGraphqlSchema: ExtendGraphqlSchema = (schema) =>
             input UnavailableTimesForRecordLessonData {
                 date: String!
                 teacherId: ID!
+                duration: Int
             }
             type UnavailableTimesForRecordLessonResponse {
-                startTime: String!
-                endTime: String!
+                start: DateTime!
+                end: DateTime!
             }
 
             input GetTeacherScheduleData {

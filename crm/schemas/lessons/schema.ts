@@ -26,10 +26,12 @@ export const Lesson = list({
         description: text({ label: 'Описание' }),
         startTime: timestamp({
             validation: { isRequired: true },
+            ui: { description: '‼️ Записывать по своему местному времени' },
             label: 'Начало урока'
         }),
         endTime: timestamp({
             validation: { isRequired: true },
+            ui: { description: '‼️ Записывать по своему местному времени' },
             label: 'Окончание урока'
         }),
         trial: checkbox({

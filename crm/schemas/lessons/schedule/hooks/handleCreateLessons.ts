@@ -77,7 +77,7 @@ export const handleCreateLessons: ListHooks<Lists.LessonSchedule.TypeInfo>['afte
 }) => {
     if (
         operation !== 'delete' &&
-        item.statusView === ViewStatus.Show &&
+        item?.statusView === ViewStatus.Show &&
         checkActive(item?.endPeriod) &&
         isPast(item.startPeriod)
     ) {

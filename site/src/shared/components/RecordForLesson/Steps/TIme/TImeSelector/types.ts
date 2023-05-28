@@ -3,9 +3,3 @@ import { UnavailableTimesForRecordLessonResponse } from '@src/shared/lib/apollo/
 export interface UnavailableTimesRes {
     unavailableTimesForRecordLesson?: UnavailableTimesForRecordLessonResponse[];
 }
-
-export interface TimeSelectorProps extends UnavailableTimesRes {
-    startTime: string;
-    endTime: string;
-    noFilter?: boolean;
-}

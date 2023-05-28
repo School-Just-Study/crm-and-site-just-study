@@ -15,7 +15,8 @@ const checkAvailableTime = async (
     const lessons = (await context.query.Lesson.findMany({
         where: {
             ...(itemId && { id: { not: { equals: `${itemId}` } } }),
-            statusLesson: { equals: LessonStatus.Created }
+            statusLesson: { equals: LessonStatus.Created },
+            teachers: { some: { id: { in: teachersId } } }
         },
         query: `startTime endTime`
     })) as Lesson[];

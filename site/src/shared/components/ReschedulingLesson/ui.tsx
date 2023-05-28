@@ -19,7 +19,7 @@ import { useSnackbar } from 'notistack';
 import { againGetScheduleParams } from '@src/pages/Profile/TeacherCabinet/Schedule/model/model';
 import { QUERY_STUDENT_CABINET } from '@shared/components/Orders/query';
 
-export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClose, noFilter }) => {
+export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClose }) => {
     const activeStep = useUnit($activeStep);
     const methods = useForm<ReschedulingLessonForm>();
     const { handleSubmit } = methods;
@@ -57,7 +57,7 @@ export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClos
                         <DateLesson />
                     </Step>
                     <Step>
-                        <Time noFilter={noFilter} />
+                        <Time />
                     </Step>
                     <Step>
                         <Final loading={loading} />
