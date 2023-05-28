@@ -4,6 +4,7 @@ import { checkActive, daysForRepeat, formatWithDateHourMinutes } from '../utils'
 import { isAfter, isPast } from 'date-fns';
 import { PrepareDateForLessonsType } from '../types';
 import { ViewStatus } from '../../../../enums/view-status.enum';
+import { LessonStatus } from '../../enum';
 
 export const syncLessonsWithSchedule = async (
     context: KeystoneContextFromListTypeInfo<Lists.LessonSchedule.TypeInfo>,
@@ -81,6 +82,26 @@ export const handleCreateLessons: ListHooks<Lists.LessonSchedule.TypeInfo>['afte
         checkActive(item?.endPeriod) &&
         isPast(item.startPeriod)
     ) {
+        const lessonSchedule = await context.query.LessonSchedule.findOne({
+            where: { id: `${item.id}` },
+            query: `students { id }`
+        });
+        const oldLessons = await context.query.Lesson.findMany({
+            where: {
+                students: {
+                    every: {
+                        id: {
+                            in: lessonSchedule.students.map(({ id }: { id: string }) => Number(id))
+                        }
+                    }
+                },
+                statusLesson: { equals: LessonStatus.Created },
+                notAlert: { equals: true }
+            }
+        });
+        await context.query.Lesson.deleteMany({
+            where: oldLessons
+        });
         await syncLessonsWithSchedule(context, item);
     }
 };
