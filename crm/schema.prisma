@@ -270,7 +270,7 @@ model UserSubscription {
   beginDate                DateTime? @default(now())
   endDate                  DateTime?
   customVisited            Int?      @default(0)
-  lessons                  Lesson[]  @relation("Lesson_subscription")
+  lessons                  Lesson[]  @relation("Lesson_subscriptions")
   trial                    Boolean   @default(false)
   durationLessons          Json      @default("[60]")
   manager                  User?     @relation("UserSubscription_manager", fields: [managerId], references: [id])
@@ -521,26 +521,23 @@ model Currency {
 }
 
 model Lesson {
-  id               Int               @id @default(autoincrement())
-  statusLesson     String            @default("created")
-  title            String            @default("")
-  description      String            @default("")
+  id               Int                @id @default(autoincrement())
+  statusLesson     String             @default("created")
+  title            String             @default("")
+  description      String             @default("")
   startTime        DateTime
   endTime          DateTime
-  trial            Boolean           @default(false)
-  burned           Boolean           @default(false)
-  students         User[]            @relation("Lesson_students")
-  subscription     UserSubscription? @relation("Lesson_subscription", fields: [subscriptionId], references: [id])
-  subscriptionId   Int?              @map("subscription")
-  teachers         Manager[]         @relation("Lesson_teachers")
-  comment          String            @default("") @mysql.VarChar(10000)
-  timeZone         String            @default("Europe/Moscow")
-  notified         Boolean           @default(false)
-  notAlert         Boolean           @default(false)
-  createdAt        DateTime          @default(now())
-  lastModification DateTime          @default(now()) @updatedAt
-
-  @@index([subscriptionId])
+  trial            Boolean            @default(false)
+  burned           Boolean            @default(false)
+  students         User[]             @relation("Lesson_students")
+  subscriptions    UserSubscription[] @relation("Lesson_subscriptions")
+  teachers         Manager[]          @relation("Lesson_teachers")
+  comment          String             @default("") @mysql.VarChar(10000)
+  timeZone         String             @default("Europe/Moscow")
+  notified         Boolean            @default(false)
+  notAlert         Boolean            @default(false)
+  createdAt        DateTime           @default(now())
+  lastModification DateTime           @default(now()) @updatedAt
 }
 
 model LessonSchedule {

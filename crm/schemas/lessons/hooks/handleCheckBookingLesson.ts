@@ -90,16 +90,30 @@ export const handleCheckBookingLesson: ListHooks<Lists.Lesson.TypeInfo>['validat
     /**
      * Проверяем наличие абонемента для завершения урока
      */
-
-    if (resolvedData.statusLesson === LessonStatus.Completed && !item?.subscriptionId)
-        addValidationError('The student does not have an active subscription');
-
-    if (resolvedData.statusLesson === LessonStatus.Completed && item?.subscriptionId) {
-        const lastLessonsOfSub = await context.query.UserSubscription.findOne({
-            where: { id: `${item.subscriptionId}` },
-            query: `lastCount`
+    if (operation === 'update') {
+        const details = await context.query.Lesson.findOne({
+            where: { id: `${item.id}` },
+            query: `subscriptions { id } students { id }`
         });
-        if (lastLessonsOfSub.lastCount === 0)
-            addValidationError("The student's subscription has run out of available lessons");
+
+        if (resolvedData.statusLesson === LessonStatus.Completed && !details.subscriptions?.length)
+            addValidationError('The student`s does not have an active subscription');
+
+        if (
+            resolvedData.statusLesson === LessonStatus.Completed &&
+            details.subscriptions?.length !== details.students?.length
+        )
+            addValidationError('Some students does not have an active subscription');
+
+        if (resolvedData.statusLesson === LessonStatus.Completed && details?.subscriptions?.length) {
+            for (const { id } of details.subscriptions) {
+                const lastLessonsOfSub = await context.query.UserSubscription.findOne({
+                    where: { id },
+                    query: `lastCount`
+                });
+                if (lastLessonsOfSub.lastCount === 0)
+                    addValidationError("The student's subscription has run out of available lessons");
+            }
+        }
     }
 };

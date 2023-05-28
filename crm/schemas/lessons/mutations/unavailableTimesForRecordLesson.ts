@@ -74,7 +74,7 @@ export const unavailableTimesForRecordLesson = async (
         };
     });
 
-    const filterBlockSlots = generateTimeSlots
+    return generateTimeSlots
         .filter((slot) => {
             return !allBlockTimes.some((blockSlot) =>
                 areIntervalsOverlapping(
@@ -87,9 +87,4 @@ export const unavailableTimesForRecordLesson = async (
             );
         })
         .filter((slot) => !isAfter(new Date(slot.end), workTime.end));
-
-    // TODO: удалить перед мержем
-    console.log('workTimeTeacher', workTimeTeacher, workTime, generateIntervals, generateTimeSlots, filterBlockSlots);
-
-    return filterBlockSlots;
 };

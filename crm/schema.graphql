@@ -2788,7 +2788,8 @@ type Lesson {
   burned: Boolean
   students(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   studentsCount(where: UserWhereInput! = {}): Int
-  subscription: UserSubscription
+  subscriptions(where: UserSubscriptionWhereInput! = {}, orderBy: [UserSubscriptionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserSubscriptionWhereUniqueInput): [UserSubscription!]
+  subscriptionsCount(where: UserSubscriptionWhereInput! = {}): Int
   teachers(where: ManagerWhereInput! = {}, orderBy: [ManagerOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ManagerWhereUniqueInput): [Manager!]
   teachersCount(where: ManagerWhereInput! = {}): Int
   comment: String
@@ -2816,7 +2817,7 @@ input LessonWhereInput {
   trial: BooleanFilter
   burned: BooleanFilter
   students: UserManyRelationFilter
-  subscription: UserSubscriptionWhereInput
+  subscriptions: UserSubscriptionManyRelationFilter
   teachers: ManagerManyRelationFilter
   comment: StringFilter
   timeZone: StringFilter
@@ -2852,7 +2853,7 @@ input LessonUpdateInput {
   trial: Boolean
   burned: Boolean
   students: UserRelateToManyForUpdateInput
-  subscription: UserSubscriptionRelateToOneForUpdateInput
+  subscriptions: UserSubscriptionRelateToManyForUpdateInput
   teachers: ManagerRelateToManyForUpdateInput
   comment: String
   timeZone: String
@@ -2860,12 +2861,6 @@ input LessonUpdateInput {
   notAlert: Boolean
   createdAt: DateTime
   lastModification: DateTime
-}
-
-input UserSubscriptionRelateToOneForUpdateInput {
-  create: UserSubscriptionCreateInput
-  connect: UserSubscriptionWhereUniqueInput
-  disconnect: Boolean
 }
 
 input LessonUpdateArgs {
@@ -2882,7 +2877,7 @@ input LessonCreateInput {
   trial: Boolean
   burned: Boolean
   students: UserRelateToManyForCreateInput
-  subscription: UserSubscriptionRelateToOneForCreateInput
+  subscriptions: UserSubscriptionRelateToManyForCreateInput
   teachers: ManagerRelateToManyForCreateInput
   comment: String
   timeZone: String
@@ -2890,11 +2885,6 @@ input LessonCreateInput {
   notAlert: Boolean
   createdAt: DateTime
   lastModification: DateTime
-}
-
-input UserSubscriptionRelateToOneForCreateInput {
-  create: UserSubscriptionCreateInput
-  connect: UserSubscriptionWhereUniqueInput
 }
 
 type LessonSchedule {

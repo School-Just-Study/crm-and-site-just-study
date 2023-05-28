@@ -16,7 +16,7 @@ export const formatDataCreateLesson = (
         endTime: data.endTime,
         teachers: { connect: [{ id: data.teacher.id }] },
         students: { connect: [{ id: user.id }] },
-        subscription: { connect: { id: lastSubscription?.id } },
+        subscriptions: { connect: [{ id: lastSubscription?.id }] },
         timeZone: jstz.determine().name()
     };
 };

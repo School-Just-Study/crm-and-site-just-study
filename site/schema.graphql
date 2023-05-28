@@ -1092,7 +1092,8 @@ type Lesson {
   statusLesson: String
   students(cursor: UserWhereUniqueInput, orderBy: [UserOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserWhereInput! = {}): [User!]
   studentsCount(where: UserWhereInput! = {}): Int
-  subscription: UserSubscription
+  subscriptions(cursor: UserSubscriptionWhereUniqueInput, orderBy: [UserSubscriptionOrderByInput!]! = [], skip: Int! = 0, take: Int, where: UserSubscriptionWhereInput! = {}): [UserSubscription!]
+  subscriptionsCount(where: UserSubscriptionWhereInput! = {}): Int
   teachers(cursor: ManagerWhereUniqueInput, orderBy: [ManagerOrderByInput!]! = [], skip: Int! = 0, take: Int, where: ManagerWhereInput! = {}): [Manager!]
   teachersCount(where: ManagerWhereInput! = {}): Int
   timeZone: String
@@ -1112,7 +1113,7 @@ input LessonCreateInput {
   startTime: DateTime
   statusLesson: String
   students: UserRelateToManyForCreateInput
-  subscription: UserSubscriptionRelateToOneForCreateInput
+  subscriptions: UserSubscriptionRelateToManyForCreateInput
   teachers: ManagerRelateToManyForCreateInput
   timeZone: String
   title: String
@@ -1324,7 +1325,7 @@ input LessonUpdateInput {
   startTime: DateTime
   statusLesson: String
   students: UserRelateToManyForUpdateInput
-  subscription: UserSubscriptionRelateToOneForUpdateInput
+  subscriptions: UserSubscriptionRelateToManyForUpdateInput
   teachers: ManagerRelateToManyForUpdateInput
   timeZone: String
   title: String
@@ -1347,7 +1348,7 @@ input LessonWhereInput {
   startTime: DateTimeFilter
   statusLesson: StringFilter
   students: UserManyRelationFilter
-  subscription: UserSubscriptionWhereInput
+  subscriptions: UserSubscriptionManyRelationFilter
   teachers: ManagerManyRelationFilter
   timeZone: StringFilter
   title: StringFilter
@@ -3028,8 +3029,8 @@ input UnavailableTimesForRecordLessonData {
 }
 
 type UnavailableTimesForRecordLessonResponse {
-  end: String!
-  start: String!
+  end: DateTime!
+  start: DateTime!
 }
 
 """The `Upload` scalar type represents a file upload."""
@@ -3301,17 +3302,6 @@ input UserSubscriptionRelateToManyForUpdateInput {
   create: [UserSubscriptionCreateInput!]
   disconnect: [UserSubscriptionWhereUniqueInput!]
   set: [UserSubscriptionWhereUniqueInput!]
-}
-
-input UserSubscriptionRelateToOneForCreateInput {
-  connect: UserSubscriptionWhereUniqueInput
-  create: UserSubscriptionCreateInput
-}
-
-input UserSubscriptionRelateToOneForUpdateInput {
-  connect: UserSubscriptionWhereUniqueInput
-  create: UserSubscriptionCreateInput
-  disconnect: Boolean
 }
 
 input UserSubscriptionUpdateArgs {

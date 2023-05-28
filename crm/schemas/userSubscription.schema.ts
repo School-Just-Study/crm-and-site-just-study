@@ -15,12 +15,12 @@ import { Statuses } from '../enums/statuses.enum';
 import { Lists } from '.keystone/types';
 import { createdAt } from '../fields/createdAt';
 import { lastModification } from '../fields/lastModification';
-import { LessonStatus } from './lessons/enum';
 import { FRONTEND_URL } from '../config';
 import { EditOnlyAdminForUi } from '../validation';
 import { durationLessonsOptionConst } from '../consts/duration-lessons-option.const';
 import { DurationLessons } from '../enums/duration-lessons.enum';
 import { handleCreateUserSubscriptionsAfterOrderPayments } from '../lib/handleUpdateClientStatusAfterActiveSubscription';
+import { LessonStatus } from './lessons/enum';
 
 export const UserSubscription = list({
     ui: {
@@ -98,7 +98,7 @@ export const UserSubscription = list({
                         const lessons = await ctx.query.Lesson.findMany({
                             where: {
                                 statusLesson: { equals: LessonStatus.Completed },
-                                subscription: { id: { equals: item.id } }
+                                subscriptions: { some: { id: { equals: item.id } } }
                             }
                         });
                         return lessons.length;
@@ -118,6 +118,7 @@ export const UserSubscription = list({
             field: graphql.field({
                 type: graphql.Int,
                 async resolve(item: Lists.UserSubscription.Item, arg, ctx) {
+                    if (item.unlimited) return 9999;
                     if (item.visitCount) {
                         const lesson = await ctx.query.UserSubscription.findOne({
                             where: {
@@ -133,7 +134,7 @@ export const UserSubscription = list({
             })
         }),
         lessons: relationship({
-            ref: 'Lesson.subscription',
+            ref: 'Lesson.subscriptions',
             many: true,
             label: 'Уроки'
         }),
