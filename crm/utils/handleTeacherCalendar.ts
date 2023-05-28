@@ -14,7 +14,7 @@ export const handleTeacherCalendar: ServerConfig<any>['extendExpressApp'] = (app
                 teachers: { some: { id: { equals: teacherId } } },
                 statusLesson: { in: [LessonStatus.Created, LessonStatus.Completed] }
             },
-            query: `id statusLesson startTime endTime teachers { id email name language linkOnlineLesson timeZone } students { id name email } timeZone subscription { name }`
+            query: `id statusLesson startTime endTime teachers { id email name language linkOnlineLesson timeZone } students { id name email } timeZone`
         });
 
         lessons.forEach((lesson) => {
