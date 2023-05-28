@@ -5,10 +5,6 @@ import { Buttons } from '@shared/components/RecordForLesson/Buttons';
 import { useFormContext } from 'react-hook-form';
 import { LessonForm } from '@shared/components/RecordForLesson/types';
 import { setActiveStep } from '@shared/components/RecordForLesson';
-import {
-    DEFAULT_MAX_TIME_RECORD,
-    setMaxTimeForRecord
-} from '@shared/components/RecordForLesson/Steps/TIme/TImeSelector/model';
 
 const durationsOptions = [30, 60, 90];
 
@@ -29,7 +25,6 @@ export const Duration: FC<{ duration?: number[] }> = ({ duration = durationsOpti
 
     const handleChange = (duration: number) => {
         setValue('duration', duration);
-        setMaxTimeForRecord(DEFAULT_MAX_TIME_RECORD - duration);
     };
 
     return (

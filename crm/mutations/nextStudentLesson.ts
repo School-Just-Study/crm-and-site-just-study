@@ -18,7 +18,7 @@ export const nextStudentLesson = async (
             students: { some: { id: { equals: studentId } } }
         },
         orderBy: { startTime: 'asc' },
-        query: `id startTime endTime trial teachers { linkOnlineLesson }`
+        query: `id startTime endTime trial teachers { linkOnlineLesson } notAlert`
     });
 
     const withOutPast = lessons.filter((lesson) => !isPast(new Date(lesson.endTime)));

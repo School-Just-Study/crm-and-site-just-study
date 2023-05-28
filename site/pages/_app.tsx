@@ -19,7 +19,6 @@ import { Provider } from 'effector-react/scope';
 import { Analytics } from '@src/shared/lib/Analytics';
 import { CheckAuthGate, setEmailAuth } from '@shared/storage/user';
 import '@src/styles.css';
-import '@shared/components/RecordForLesson/datePicker.css';
 import 'shared/storage/user/init';
 import { MyAppProps } from '@shared/types';
 

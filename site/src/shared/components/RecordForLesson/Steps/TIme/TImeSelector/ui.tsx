@@ -1,82 +1,54 @@
 import * as React from 'react';
-import { FC, useEffect, useState } from 'react';
-import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
+import { FC, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { LessonForm } from '@shared/components/RecordForLesson/types';
-import { useRouter } from 'next/router';
-import { localeDate } from '@src/shared/lib/localeDate';
-import { getExcludeTimes } from '../utils';
-import { Alert } from '@mui/material';
-import { BoxTimeSelector } from './styles';
-import { TimeSelectorProps } from './types';
-import { TimeZone } from '@shared/components/RecordForLesson/TimeZone';
-import { addMinutes } from 'date-fns';
-import { filterTime } from '@shared/components/RecordForLesson/Steps/TIme/TImeSelector/utils';
-import { useUnit } from 'effector-react';
-import { $maxTimeForRecord } from './model';
+import { Alert, Button } from '@mui/material';
+import { UnavailableTimesRes } from './types';
+import { format } from 'date-fns';
+import { useQuery } from '@apollo/client';
+import { QUERY_GET_UNAVAILABLE_TIMES } from './query';
+import { SpinnerWrapper } from '@shared/ui/SpinnerWrapper';
+import { UnavailableTimesForRecordLessonResponse } from '@shared/lib/apollo/types';
+import { setActiveStep } from '@shared/components/RecordForLesson';
+import { formatTimes } from './utils';
 
-export const TimeSelector: FC<TimeSelectorProps> = ({
-    startTime,
-    endTime,
-    unavailableTimesForRecordLesson,
-    noFilter
-}) => {
+export const TimeSelector: FC = () => {
     const { setValue, watch } = useFormContext<LessonForm>();
-    const [excludeTimes, setExcludeTimes] = useState<Date[] | undefined>(undefined);
-    const [countTimeVariant, setCountTimeVariant] = useState(0);
     watch();
-    const [selected, setSelected] = useState(watch('date'));
-    const maxTimeRecord = useUnit($maxTimeForRecord);
+    const dateWithoutTime = format(watch('date'), 'yyyy-MM-dd');
+    const variables = { data: { date: dateWithoutTime, teacherId: watch('teacher')?.id, duration: watch('duration') } };
+    const { loading, data, error, refetch } = useQuery<UnavailableTimesRes>(QUERY_GET_UNAVAILABLE_TIMES, {
+        variables
+    });
 
     useEffect(() => {
-        if (unavailableTimesForRecordLesson) {
-            const cutoff = getExcludeTimes(unavailableTimesForRecordLesson, watch('date'));
-            setExcludeTimes(cutoff);
-        }
-    }, [unavailableTimesForRecordLesson]);
-
-    useEffect(() => {
-        setCountTimeVariant(
-            document.querySelectorAll(
-                '.react-datepicker__time-list-item:not(.react-datepicker__time-list-item--disabled)'
-            ).length
-        );
+        refetch(variables);
     }, [watch()]);
 
-    const { locale } = useRouter();
-    const localeForDate = localeDate(locale || 'en');
-
-    const onChange: ReactDatePickerProps['onChange'] = (time) => {
-        if (time) {
-            setSelected(time);
-            setValue('startTime', time);
-        }
+    const onChange = (slot: UnavailableTimesForRecordLessonResponse) => {
+        setValue('startTime', new Date(slot.start));
+        setValue('endTime', new Date(slot.end));
+        setActiveStep(4);
     };
 
     return (
         <>
-            {countTimeVariant === 0 ? (
-                <Alert severity="warning">К сожалению, свободного времени нет. Пожалуйста, выберите другую дату.</Alert>
-            ) : (
-                <TimeZone />
-            )}
-            <BoxTimeSelector>
-                <DatePicker
-                    selected={selected}
-                    onChange={onChange}
-                    locale={localeForDate}
-                    inline
-                    showTimeSelect
-                    showTimeSelectOnly
-                    calendarClassName="calendarClassName"
-                    timeIntervals={60}
-                    dateFormat="HH:mm"
-                    minTime={new Date(startTime)}
-                    maxTime={addMinutes(new Date(endTime), maxTimeRecord)}
-                    excludeTimes={excludeTimes}
-                    filterTime={noFilter ? undefined : filterTime}
-                />
-            </BoxTimeSelector>
+            {error && <Alert severity="error">Произошла ошибка при загрузке</Alert>}
+            <SpinnerWrapper loading={loading}>
+                {data && data.unavailableTimesForRecordLesson?.length === 0 ? (
+                    <Alert severity="warning">
+                        К сожалению, свободного времени нет. Пожалуйста, выберите другую дату.
+                    </Alert>
+                ) : (
+                    <>
+                        {data?.unavailableTimesForRecordLesson?.map((slot, index) => (
+                            <Button key={index} sx={{ width: 116 }} onClick={() => onChange(slot)}>
+                                {formatTimes(slot.start)} - {formatTimes(slot.end)}
+                            </Button>
+                        ))}
+                    </>
+                )}
+            </SpinnerWrapper>
         </>
     );
 };
