@@ -15,17 +15,14 @@ export const Duration: FC<{ duration?: number[] }> = ({ duration = durationsOpti
 
     const variant = (duration: number) => (duration === lessonDuration ? 'contained' : 'text');
 
-    useEffect(() => {
-        if (duration.length === 1) setValue('duration', duration[0]);
-    }, [duration]);
-
-    useEffect(() => {
-        if (lessonDuration) setActiveStep(2);
-    }, [lessonDuration]);
-
-    const handleChange = (duration: number) => {
+    const handleSetDuration = (duration: number) => {
         setValue('duration', duration);
+        setActiveStep(2);
     };
+
+    useEffect(() => {
+        if (watch('teacher')?.id && duration?.length === 1) handleSetDuration(duration[0]);
+    }, [duration, watch('teacher')]);
 
     return (
         <>
@@ -39,7 +36,7 @@ export const Duration: FC<{ duration?: number[] }> = ({ duration = durationsOpti
                             key={duration}
                             sx={{ px: 3 }}
                             variant={variant(duration)}
-                            onClick={() => handleChange(duration)}>
+                            onClick={() => handleSetDuration(duration)}>
                             {duration} мин
                         </Button>
                     ))}

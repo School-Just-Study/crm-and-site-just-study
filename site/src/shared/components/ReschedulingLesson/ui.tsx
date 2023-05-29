@@ -22,11 +22,13 @@ import { Lesson, LessonCreateInput } from '@shared/lib/apollo/types';
 
 export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClose }) => {
     const activeStep = useUnit($activeStep);
-    const methods = useForm<ReschedulingLessonForm>();
+    const dataLesson = useQuery<{ lesson: Lesson }>(QUERY_LESSON, { variables: { id } });
+    const methods = useForm<ReschedulingLessonForm>({
+        defaultValues: { teacher: { id: dataLesson.data?.lesson.teachers?.[0].id } }
+    });
     const { handleSubmit } = methods;
     const user = useUnit($user);
     const { enqueueSnackbar } = useSnackbar();
-    const dataLesson = useQuery<{ lesson: Lesson }>(QUERY_LESSON, { variables: { id } });
     const mutationForUpdate = dataLesson.data?.lesson.notAlert
         ? MUTATION_UPDATE_LESSON_FOR_PLAN
         : MUTATION_UPDATE_LESSON;
@@ -70,7 +72,7 @@ export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClos
         <FormProvider {...methods}>
             <form onSubmit={onSubmit}>
                 <Stepper activeStep={activeStep} orientation="vertical">
-                    <Step>
+                    <Step hidden>
                         <Teacher />
                     </Step>
                     <Step>

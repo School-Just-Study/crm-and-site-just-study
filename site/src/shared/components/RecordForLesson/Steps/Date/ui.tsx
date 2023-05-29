@@ -1,6 +1,5 @@
 import { StepContent, StepLabel, Typography } from '@mui/material';
 import * as React from 'react';
-import { useEffect } from 'react';
 import { Buttons } from '@shared/components/RecordForLesson/Buttons';
 import { CalendarPicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -23,16 +22,13 @@ export const DateLesson = () => {
     const schedule = getValues('teacher')?.workTime;
     const cutoffDays = schedule?.filter((day) => day.isDayOff).map((day) => day.dayOfWeek);
 
-    useEffect(() => {
-        if (date) setActiveStep(3);
-    }, [date, getValues]);
-
     const localeForDate = localeDate(locale || 'en');
     const formatDateSelect = date && format(date, 'd MMMM yyyy, (EEEE)', { locale: localeForDate });
 
     const onChange: CalendarPickerProps<Date>['onChange'] = (date) => {
         if (date) {
             setValue('date', date);
+            setActiveStep(3);
         }
     };
 

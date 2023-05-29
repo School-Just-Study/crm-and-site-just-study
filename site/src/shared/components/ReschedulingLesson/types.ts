@@ -1,3 +1,5 @@
+import { Manager } from '@shared/lib/apollo/types';
+
 export interface ReschedulingLessonProps {
     id: string;
     handleClose: () => void;
@@ -5,6 +7,7 @@ export interface ReschedulingLessonProps {
 }
 
 export interface ReschedulingLessonForm {
+    teacher: Manager;
     date: Date;
     duration: number;
     startTime: Date;
