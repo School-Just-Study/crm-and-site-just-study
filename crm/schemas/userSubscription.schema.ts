@@ -136,7 +136,12 @@ export const UserSubscription = list({
         lessons: relationship({
             ref: 'Lesson.subscriptions',
             many: true,
-            label: 'Уроки'
+            label: 'Уроки',
+            ui: {
+                displayMode: 'cards',
+                cardFields: ['statusLesson', 'startTime', 'endTime', 'teachers'],
+                inlineConnect: true
+            }
         }),
         trial: checkbox({
             defaultValue: false,
