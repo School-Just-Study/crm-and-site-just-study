@@ -1,9 +1,8 @@
 import { gql } from '@apollo/client';
-import { GetServerSideProps } from 'next';
 import client from '@src/shared/lib/apollo/apolloClient';
 import { Query } from '@src/shared/lib/apollo/types';
 import { ISitemapField } from 'next-sitemap/dist/@types/interface';
-import { FRONTEND_URL } from '../../config';
+import { FRONTEND_URL } from '../../../config';
 import routes from '@src/routes';
 import { getServerSideSitemap } from 'next-sitemap';
 
@@ -17,7 +16,7 @@ export const GET_ALL_DIRECTIONS = gql`
     }
 `;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export async function GET() {
     const { data } = await client.query<Query>({
         query: GET_ALL_DIRECTIONS,
         fetchPolicy: 'no-cache'
@@ -36,7 +35,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         });
     }
 
-    return getServerSideSitemap(ctx, fields);
-};
-
-export default function Sitemap() {}
+    return getServerSideSitemap(fields);
+}
