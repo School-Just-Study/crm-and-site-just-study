@@ -1,33 +1,33 @@
-import { GetServerSideProps } from 'next';
+import { gql } from '@apollo/client';
 import client from '@src/shared/lib/apollo/apolloClient';
 import { Query } from '@src/shared/lib/apollo/types';
 import { ISitemapField } from 'next-sitemap/dist/@types/interface';
-import { FRONTEND_URL } from '../../config';
+import { FRONTEND_URL } from '../../../config';
+import routes from '@src/routes';
 import { getServerSideSitemap } from 'next-sitemap';
-import { gql } from '@apollo/client';
 
-export const GET_ALL_PAGES = gql`
+export const GET_ALL_COURSES = gql`
     query {
-        pages(where: { statusView: { equals: "show" } }) {
-            slug
+        products(where: { statusView: { equals: "show" } }) {
+            id
             language
             lastModification
         }
     }
 `;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export async function GET() {
     const { data } = await client.query<Query>({
-        query: GET_ALL_PAGES,
+        query: GET_ALL_COURSES,
         fetchPolicy: 'no-cache'
     });
 
     const fields: ISitemapField[] = [];
 
-    if (data.pages) {
-        data.pages.map(({ language, slug, lastModification }) => {
+    if (data.products) {
+        data.products.map(({ language, id, lastModification }) => {
             fields.push({
-                loc: `${FRONTEND_URL}/${language}/p/${slug}`,
+                loc: `${FRONTEND_URL}/${language}${routes.course}${id}`,
                 lastmod: new Date(lastModification).toISOString(),
                 changefreq: 'daily',
                 priority: 0.7
@@ -35,7 +35,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         });
     }
 
-    return getServerSideSitemap(ctx, fields);
-};
-
-export default function Sitemap() {}
+    return getServerSideSitemap(fields);
+}
