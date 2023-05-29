@@ -37,6 +37,17 @@ export const CURRENT_USER_QUERY = gql`
                     phone
                     id
                     ymClientId
+                    teachers {
+                        id
+                        name
+                        timeZone
+                        workTime {
+                            dayOfWeek
+                            isDayOff
+                            startTime
+                            endTime
+                        }
+                    }
                 }
                 avatar {
                     image {

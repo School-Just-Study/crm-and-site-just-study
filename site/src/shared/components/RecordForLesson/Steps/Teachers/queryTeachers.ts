@@ -13,5 +13,15 @@ export const TEACHERS_QUERY = gql`
                 endTime
             }
         }
+        users(where: { manager: { teacher: { equals: true } } }) {
+            manager {
+                id
+            }
+            avatar {
+                image {
+                    url
+                }
+            }
+        }
     }
 `;

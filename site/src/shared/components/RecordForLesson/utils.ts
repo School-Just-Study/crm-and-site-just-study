@@ -5,18 +5,15 @@ import jstz from 'jstz';
 export const formatDataCreateLesson = (
     data: LessonForm,
     user: User,
-    subscriptions?: UserSubscription[]
+    subscription?: UserSubscription
 ): LessonCreateInput => {
-    let lastSubscription = undefined;
-    if (subscriptions) lastSubscription = subscriptions[0];
-
     return {
         statusLesson: 'created',
         startTime: data.startTime,
         endTime: data.endTime,
         teachers: { connect: [{ id: data.teacher.id }] },
         students: { connect: [{ id: user.id }] },
-        subscriptions: { connect: [{ id: lastSubscription?.id }] },
+        subscriptions: { connect: [{ id: subscription?.id }] },
         timeZone: jstz.determine().name()
     };
 };

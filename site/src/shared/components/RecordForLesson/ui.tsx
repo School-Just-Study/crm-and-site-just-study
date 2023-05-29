@@ -15,7 +15,7 @@ import { useSnackbar } from 'notistack';
 import { MUTATION_CREATE_LESSON, QUERY_SUBSCRIPTION_ACTIVE } from './query';
 import { formatDataCreateLesson } from './utils';
 import { Authorization } from '@shared/components/Authorization/ui';
-import { Query, UserSubscription } from '@src/shared/lib/apollo/types';
+import { Query } from '@src/shared/lib/apollo/types';
 import { SpinnerWrapper } from '@shared/ui/SpinnerWrapper';
 import './model/init';
 import { QUERY_STUDENT_CABINET } from '@shared/components/Orders/query';
@@ -31,6 +31,7 @@ export const RecordForLesson: FC<RecordForLessonProps> = ({ handleClose }) => {
     });
     const { enqueueSnackbar } = useSnackbar();
     const userSubscriptions = useQuery<Query>(QUERY_SUBSCRIPTION_ACTIVE, { variables: { userId: user?.id } });
+    const userSubscription = userSubscriptions?.data?.userSubscriptions?.[0];
     useGate(ActiveStepGate);
 
     useEffect(() => {
@@ -41,11 +42,7 @@ export const RecordForLesson: FC<RecordForLessonProps> = ({ handleClose }) => {
     }, [createLessonState]);
 
     const onSubmit = handleSubmit(async (data) => {
-        const formatData = formatDataCreateLesson(
-            data,
-            user!,
-            userSubscriptions.data?.userSubscriptions as UserSubscription[]
-        );
+        const formatData = formatDataCreateLesson(data, user!, userSubscription);
         await createLesson({ variables: { data: formatData } });
     });
 
@@ -80,12 +77,7 @@ export const RecordForLesson: FC<RecordForLessonProps> = ({ handleClose }) => {
                                 <Teacher />
                             </Step>
                             <Step>
-                                <Duration
-                                    duration={
-                                        (userSubscriptions?.data?.userSubscriptions?.[0]
-                                            ?.durationLessons as number[]) || undefined
-                                    }
-                                />
+                                <Duration duration={userSubscription?.durationLessons as number[]} />
                             </Step>
                             <Step>
                                 <DateLesson />
