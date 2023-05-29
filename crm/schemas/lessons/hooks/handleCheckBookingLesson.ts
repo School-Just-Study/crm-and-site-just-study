@@ -84,8 +84,10 @@ export const handleCheckBookingLesson: ListHooks<Lists.Lesson.TypeInfo>['validat
             resolvedData.teachers?.connect?.map(({ id }) => id) || lesson.teachers?.map(({ id }) => id) || [];
     }
 
-    const error = await checkAvailableTime(context, item?.id, initStartTime, initEndTime, teachersId);
-    if (error) addValidationError('Time is not available');
+    if (resolvedData.statusLesson === LessonStatus.Created) {
+        const error = await checkAvailableTime(context, item?.id, initStartTime, initEndTime, teachersId);
+        if (error) addValidationError('Time is not available');
+    }
 
     /**
      * Проверяем наличие абонемента для завершения урока
