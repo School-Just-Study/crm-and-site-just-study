@@ -1,7 +1,16 @@
 import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
 import { LessonStatus } from '../enum';
 import { ViewStatus } from '../../../enums/view-status.enum';
-import { addDays, addMinutes, areIntervalsOverlapping, eachMinuteOfInterval, getDay, isAfter } from 'date-fns';
+import {
+    addDays,
+    addHours,
+    addMinutes,
+    areIntervalsOverlapping,
+    eachMinuteOfInterval,
+    getDay,
+    isAfter,
+    isBefore
+} from 'date-fns';
 import { generateIntervalsWithCheck } from '../schedule/utils';
 
 interface Arguments {
@@ -86,5 +95,6 @@ export const unavailableTimesForRecordLesson = async (
                 )
             );
         })
-        .filter((slot) => !isAfter(new Date(slot.end), workTime.end));
+        .filter((slot) => !isAfter(new Date(slot.end), workTime.end))
+        .filter((slot) => !isBefore(new Date(slot.start), addHours(new Date(), 2)));
 };
