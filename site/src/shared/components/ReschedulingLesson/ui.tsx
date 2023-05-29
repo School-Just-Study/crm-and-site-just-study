@@ -13,11 +13,12 @@ import { Final } from '@shared/components/RecordForLesson/Steps/Final';
 import '../RecordForLesson/model/init';
 import { Teacher } from '@shared/components/RecordForLesson/Steps/Teachers';
 import { formatDataUpdateLesson } from '@shared/components/ReschedulingLesson/utils';
-import { useMutation } from '@apollo/client';
-import { MUTATION_UPDATE_LESSON } from './query';
+import { useMutation, useQuery } from '@apollo/client';
+import { MUTATION_UPDATE_LESSON, MUTATION_UPDATE_LESSON_FOR_PLAN, QUERY_LESSON } from './query';
 import { useSnackbar } from 'notistack';
 import { againGetScheduleParams } from '@src/pages/Profile/TeacherCabinet/Schedule/model/model';
 import { QUERY_STUDENT_CABINET } from '@shared/components/Orders/query';
+import { Lesson, LessonCreateInput } from '@shared/lib/apollo/types';
 
 export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClose }) => {
     const activeStep = useUnit($activeStep);
@@ -25,7 +26,12 @@ export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClos
     const { handleSubmit } = methods;
     const user = useUnit($user);
     const { enqueueSnackbar } = useSnackbar();
-    const [createLesson, { loading, error, data }] = useMutation(MUTATION_UPDATE_LESSON, {
+    const dataLesson = useQuery<{ lesson: Lesson }>(QUERY_LESSON, { variables: { id } });
+    const mutationForUpdate = dataLesson.data?.lesson.notAlert
+        ? MUTATION_UPDATE_LESSON_FOR_PLAN
+        : MUTATION_UPDATE_LESSON;
+
+    const [createLesson, { loading, error, data }] = useMutation(mutationForUpdate, {
         refetchQueries: [{ query: QUERY_STUDENT_CABINET, variables: { userId: user?.id } }]
     });
 
@@ -38,7 +44,24 @@ export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClos
 
     const onSubmit = handleSubmit(async (data) => {
         const formatData = formatDataUpdateLesson(data);
-        await createLesson({ variables: { data: formatData, id } });
+        if (dataLesson.data?.lesson.notAlert) {
+            const updatedData: LessonCreateInput = {
+                ...formatData,
+                students: {
+                    connect: dataLesson.data.lesson.students?.map(({ id }) => {
+                        return { id };
+                    })
+                },
+                teachers: {
+                    connect: dataLesson.data.lesson.teachers?.map(({ id }) => {
+                        return { id };
+                    })
+                }
+            };
+            await createLesson({ variables: { data: updatedData, id } });
+        } else {
+            await createLesson({ variables: { data: formatData, id } });
+        }
         handleClose();
         againGetScheduleParams();
     });
