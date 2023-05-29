@@ -30,24 +30,32 @@ export const SettingLesson: FC<{ id: string }> = ({ id }) => {
                     <Stack>
                         <Typography>№ {data.lesson.id}</Typography>
                         <Typography>{date}</Typography>
-                        <Typography fontWeight="bold">{data.lesson.subscription?.name}</Typography>
                     </Stack>
                     <SetStatusLesson lesson={data.lesson} />
                 </Box>
 
-                <Box
-                    p={2}
-                    borderRadius={2}
-                    display="flex"
-                    bgcolor={theme.palette.mode === 'dark' ? theme.palette.primaryDark[700] : theme.palette.grey[200]}
-                    gap={1}>
-                    <Avatar variant="rounded" src={data.lesson.subscription?.student?.avatar?.image?.url} />
-                    <Stack>
-                        <Typography fontWeight="bold">{data.lesson.subscription?.student?.name}</Typography>
-                        <Typography>{data.lesson.subscription?.student?.client?.goal}</Typography>
-                        <Typography>{data.lesson.subscription?.student?.client?.profession}</Typography>
-                    </Stack>
-                </Box>
+                {data.lesson.subscriptions?.map(({ id, student, name }) => (
+                    <Box
+                        key={id}
+                        p={2}
+                        borderRadius={2}
+                        display="flex"
+                        bgcolor={
+                            theme.palette.mode === 'dark' ? theme.palette.primaryDark[700] : theme.palette.grey[200]
+                        }
+                        gap={1}>
+                        <Avatar variant="rounded" src={student?.avatar?.image?.url} />
+                        <Stack>
+                            <Typography fontWeight="bold">{student?.name}</Typography>
+                            <Typography>{student?.client?.goal}</Typography>
+                            <Typography>{student?.client?.profession}</Typography>
+                            <Typography>
+                                Абонемент №{id}- {name}
+                            </Typography>
+                        </Stack>
+                    </Box>
+                ))}
+
                 <Stack gap={1}>
                     <Typography fontWeight="bold">Настройки</Typography>
                     <Stack gap={1}>
