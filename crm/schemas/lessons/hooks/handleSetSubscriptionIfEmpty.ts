@@ -28,10 +28,10 @@ export const handleSetSubscriptionIfEmpty: ListHooks<Lists.Lesson.TypeInfo>['res
             const userSubscriptions = await context.query.UserSubscription.findMany({
                 where: { status: { equals: Statuses.Active }, student: { id: { equals: `${user.id}` } } },
                 orderBy: { beginDate: 'asc' },
-                query: `id`
+                query: `id lastCount`
             });
 
-            if (userSubscriptions.length) {
+            if (userSubscriptions.length && userSubscriptions[0].lastCount >= 1) {
                 idsForSubs.push({ id: Number(userSubscriptions[0].id) });
             }
         }
