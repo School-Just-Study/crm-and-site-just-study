@@ -38,19 +38,37 @@ export const handleNotificationStudentLesson: ServerConfig<any>['extendExpressAp
         const checkLessonsSub = await context.query.Lesson.findMany({
             where: {
                 notAlert: { equals: true },
-                statusLesson: { equals: LessonStatus.Created }
+                statusLesson: { equals: LessonStatus.Created },
+                startTime: { gte: new Date() }
             },
-            query: `id`
+            query: `id subscriptions { id lastCount }`
         });
-        const dataForUpdate = checkLessonsSub.map(({ id }) => {
+        const dataForUpdate = checkLessonsSub.map(({ id, subscriptions }) => {
+            const checkSub = subscriptions.filter(({ lastCount }: { lastCount: number }) => lastCount <= 0);
             return {
-                where: { id: id },
-                data: { notAlert: true }
+                where: { id },
+                data: {
+                    notAlert: true,
+                    ...(checkSub.length && {
+                        subscriptions: {
+                            disconnect: checkSub.map(({ id }: { id: string }) => {
+                                return { id: id };
+                            })
+                        }
+                    })
+                }
             };
         });
-        await context.query.Lesson.updateMany({
-            data: dataForUpdate
-        });
+        for (const data of dataForUpdate) {
+            try {
+                await context.query.Lesson.updateOne({
+                    where: { id: data.where.id },
+                    data: data.data
+                });
+            } catch (e) {
+                console.error('update lesson', e);
+            }
+        }
 
         /**
          * Создание уроков из графиков уроков
