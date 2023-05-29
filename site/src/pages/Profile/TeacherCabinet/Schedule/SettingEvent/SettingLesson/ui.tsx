@@ -50,7 +50,7 @@ export const SettingLesson: FC<{ id: string }> = ({ id }) => {
                             <Typography>{student?.client?.goal}</Typography>
                             <Typography>{student?.client?.profession}</Typography>
                             <Typography>
-                                Абонемент №{id}- {name}
+                                Абонемент №{id} - {name}
                             </Typography>
                         </Stack>
                     </Box>
