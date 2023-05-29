@@ -37,7 +37,8 @@ export const handleNotificationStudentLesson: ServerConfig<any>['extendExpressAp
          */
         const checkLessonsSub = await context.query.Lesson.findMany({
             where: {
-                notAlert: { equals: true }
+                notAlert: { equals: true },
+                statusLesson: { equals: LessonStatus.Created }
             },
             query: `id`
         });
