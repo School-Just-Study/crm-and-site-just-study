@@ -14,7 +14,7 @@ export const handleNotificationStudentAndTeacherLesson: ListHooks<any>['afterOpe
         if (operation === 'update' && item.statusLesson === LessonStatus.Canceled) {
             notifyLessonCanceled(item.id, context);
         }
-        if (operation === 'update' && !item.notified && item.statusLesson === LessonStatus.Created) {
+        if (operation === 'update' && item.statusLesson === LessonStatus.Created) {
             notifyLessonUpdated(item.id, context);
         }
     }
