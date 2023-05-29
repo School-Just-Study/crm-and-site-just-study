@@ -13,7 +13,7 @@ export const MUTATION_UPDATE_LESSON_FOR_PLAN = gql`
         createLesson(data: $data) {
             id
         }
-        updateLesson(where: { id: $id }, data: { statusLesson: "canceled" }) {
+        updateLesson(where: { id: $id }, data: { statusLesson: "canceled", notAlert: false }) {
             id
         }
     }
