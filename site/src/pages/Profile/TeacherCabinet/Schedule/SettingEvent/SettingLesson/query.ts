@@ -9,7 +9,7 @@ export const QUERY_LESSON = gql`
             title
             description
             burned
-            subscription {
+            subscriptions {
                 id
                 name
                 status
