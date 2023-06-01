@@ -1,7 +1,7 @@
 import { ServerConfig } from '@keystone-6/core/types';
 import { LessonStatus } from '../enum';
 import { notifyUpcomingLessons } from './notifyUpcomingLessons';
-import { addHours, isAfter } from 'date-fns';
+import { addDays, addHours, isAfter } from 'date-fns';
 import { ViewStatus } from '../../../enums/view-status.enum';
 import { syncLessonsWithSchedule } from '../schedule/hooks';
 import { Lists } from '.keystone/types';
@@ -39,7 +39,7 @@ export const handleNotificationStudentLesson: ServerConfig<any>['extendExpressAp
             where: {
                 notAlert: { equals: true },
                 statusLesson: { equals: LessonStatus.Created },
-                startTime: { gte: new Date() }
+                startTime: { gte: addDays(new Date(), -1) }
             },
             query: `id subscriptions { id lastCount }`
         });
