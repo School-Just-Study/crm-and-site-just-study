@@ -15,7 +15,7 @@ import { useTheme } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
 import { ReschedulingButtonProps } from './types';
 
-export const ReschedulingButton: FC<ReschedulingButtonProps> = ({ id, noFilter, ...props }) => {
+export const ReschedulingButton: FC<ReschedulingButtonProps> = ({ id, ...props }) => {
     const [open, setOpen] = useState(false);
     const theme = useTheme();
 
@@ -42,7 +42,7 @@ export const ReschedulingButton: FC<ReschedulingButtonProps> = ({ id, noFilter, 
                 <DialogTitle>Перенос урока</DialogTitle>
                 <DialogContent>
                     <Box width={{ xs: '100%', sm: 400 }}>
-                        <ReschedulingLesson id={id} handleClose={handleClose} noFilter={noFilter} />
+                        <ReschedulingLesson id={id} handleClose={handleClose} />
                     </Box>
                 </DialogContent>
                 <DialogActions>
