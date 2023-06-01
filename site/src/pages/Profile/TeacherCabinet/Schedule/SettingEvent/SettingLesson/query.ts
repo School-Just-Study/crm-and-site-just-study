@@ -14,22 +14,24 @@ export const QUERY_LESSON = gql`
                 name
                 status
                 lastCount
+                unlimited
                 student {
-                    name
-                    client {
-                        goal
-                        profession
-                    }
-                    avatar {
-                        image {
-                            url
-                        }
-                    }
+                    id
                 }
             }
             statusLesson
             students {
+                id
                 name
+                client {
+                    goal
+                    profession
+                }
+                avatar {
+                    image {
+                        url
+                    }
+                }
             }
         }
     }

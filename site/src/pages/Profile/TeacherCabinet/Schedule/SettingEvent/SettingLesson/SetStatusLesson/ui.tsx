@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { LessonStatus } from '@shared/enums/lesson-status';
 import { FormControlLabel, Stack, Switch } from '@mui/material';
 import { SwitchBaseProps } from '@mui/material/internal/SwitchBase';
@@ -7,10 +7,12 @@ import { UPDATE_LESSON } from '@src/pages/Profile/TeacherCabinet/Schedule/Settin
 import { againGetScheduleParams } from '@src/pages/Profile/TeacherCabinet/Schedule/model/model';
 import { Lesson } from '@src/shared/lib/apollo/types';
 import { QUERY_LESSON } from '@src/pages/Profile/TeacherCabinet/Schedule/SettingEvent/SettingLesson/query';
+import { useSnackbar } from 'notistack';
 
 export const SetStatusLesson: FC<{ lesson: Lesson }> = ({ lesson }) => {
+    const { enqueueSnackbar } = useSnackbar();
     const { id, statusLesson, burned } = lesson;
-    const [updateLesson, { loading }] = useMutation(UPDATE_LESSON, {
+    const [updateLesson, { loading, error }] = useMutation(UPDATE_LESSON, {
         refetchQueries: [{ query: QUERY_LESSON, variables: { id } }]
     });
 
@@ -28,6 +30,13 @@ export const SetStatusLesson: FC<{ lesson: Lesson }> = ({ lesson }) => {
         }
         againGetScheduleParams();
     };
+
+    useEffect(() => {
+        if (error)
+            enqueueSnackbar(`Произошла ошибка: ${error}`, {
+                variant: 'error'
+            });
+    }, [error]);
 
     return (
         <Stack gap={1}>

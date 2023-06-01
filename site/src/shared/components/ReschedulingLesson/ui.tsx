@@ -1,5 +1,5 @@
 import { useGate, useUnit } from 'effector-react';
-import { $activeStep, ActiveStepGate } from '@shared/components/RecordForLesson';
+import { $activeStep, ActiveStepGate, setActiveStep } from '@shared/components/RecordForLesson';
 import { FormProvider, useForm } from 'react-hook-form';
 import { $user } from '@shared/storage/user';
 import * as React from 'react';
@@ -23,9 +23,7 @@ import { Lesson, LessonCreateInput } from '@shared/lib/apollo/types';
 export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClose }) => {
     const activeStep = useUnit($activeStep);
     const dataLesson = useQuery<{ lesson: Lesson }>(QUERY_LESSON, { variables: { id } });
-    const methods = useForm<ReschedulingLessonForm>({
-        defaultValues: { teacher: { id: dataLesson.data?.lesson.teachers?.[0].id } }
-    });
+    const methods = useForm<ReschedulingLessonForm>();
     const { handleSubmit } = methods;
     const user = useUnit($user);
     const { enqueueSnackbar } = useSnackbar();
@@ -36,6 +34,18 @@ export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClos
     const [createLesson, { loading, error, data }] = useMutation(mutationForUpdate, {
         refetchQueries: [{ query: QUERY_STUDENT_CABINET, variables: { userId: user?.id } }]
     });
+
+    useEffect(() => {
+        if (dataLesson.data?.lesson.teachers) {
+            methods.setValue('teacher', dataLesson.data?.lesson.teachers?.[0]);
+            setActiveStep(2);
+        } else {
+            if (dataLesson.error?.message)
+                enqueueSnackbar(`Произошла ошибка при загрузке данных ${dataLesson.error?.message}`, {
+                    variant: 'error'
+                });
+        }
+    }, [dataLesson.data]);
 
     useGate(ActiveStepGate);
 
@@ -75,11 +85,11 @@ export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClos
                     <Step hidden>
                         <Teacher />
                     </Step>
-                    <Step>
+                    <Step hidden>
                         <Duration />
                     </Step>
                     <Step>
-                        <DateLesson />
+                        <DateLesson hideBackButton />
                     </Step>
                     <Step>
                         <Time />

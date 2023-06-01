@@ -1,5 +1,6 @@
 import { StepContent, StepLabel, Typography } from '@mui/material';
 import * as React from 'react';
+import { FC } from 'react';
 import { Buttons } from '@shared/components/RecordForLesson/Buttons';
 import { CalendarPicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -13,7 +14,7 @@ import { CalendarPickerProps } from '@mui/x-date-pickers/CalendarPicker/Calendar
 import { addDays, format } from 'date-fns';
 import { setActiveStep } from '@shared/components/RecordForLesson';
 
-export const DateLesson = () => {
+export const DateLesson: FC<{ hideBackButton?: boolean }> = ({ hideBackButton }) => {
     const { getValues, setValue } = useFormContext<LessonForm>();
     // @ts-ignore
     const date = getValues('date');
@@ -48,7 +49,7 @@ export const DateLesson = () => {
                         maxDate={addDays(new Date(), 14)}
                     />
                 </LocalizationProvider>
-                <Buttons disableNext={!date} />
+                <Buttons disableNext={!date} disablePrevious={hideBackButton} />
             </StepContent>
         </>
     );

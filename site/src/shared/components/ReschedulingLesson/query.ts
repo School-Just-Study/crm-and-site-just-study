@@ -29,6 +29,14 @@ export const QUERY_LESSON = gql`
             }
             teachers {
                 id
+                name
+                timeZone
+                workTime {
+                    dayOfWeek
+                    isDayOff
+                    startTime
+                    endTime
+                }
             }
         }
     }

@@ -23,6 +23,8 @@ export const SettingLesson: FC<{ id: string }> = ({ id }) => {
         new Date(data.lesson.endTime)
     )}`;
 
+    const notEnoughSubs = data.lesson.subscriptions?.length !== data.lesson.students?.length;
+
     return (
         <SpinnerWrapper loading={loading}>
             <Stack gap={2}>
@@ -33,33 +35,44 @@ export const SettingLesson: FC<{ id: string }> = ({ id }) => {
                     </Stack>
                     <SetStatusLesson lesson={data.lesson} />
                 </Box>
+                {notEnoughSubs && <Alert color="warning">Не все ученики имеют активный абонемент</Alert>}
 
-                {data.lesson.subscriptions?.map(({ id, student, name }) => (
-                    <Box
-                        key={id}
-                        p={2}
-                        borderRadius={2}
-                        display="flex"
-                        bgcolor={
-                            theme.palette.mode === 'dark' ? theme.palette.primaryDark[700] : theme.palette.grey[200]
-                        }
-                        gap={1}>
-                        <Avatar variant="rounded" src={student?.avatar?.image?.url} />
-                        <Stack>
-                            <Typography fontWeight="bold">{student?.name}</Typography>
-                            <Typography>{student?.client?.goal}</Typography>
-                            <Typography>{student?.client?.profession}</Typography>
-                            <Typography>
-                                Абонемент №{id} - {name}
-                            </Typography>
-                        </Stack>
-                    </Box>
-                ))}
+                {data.lesson.students?.map(({ id, avatar, name, client }) => {
+                    const sub = data?.lesson.subscriptions?.find(({ student }) => student?.id === id);
+                    return (
+                        <Box
+                            key={id}
+                            p={2}
+                            borderRadius={2}
+                            display="flex"
+                            bgcolor={
+                                theme.palette.mode === 'dark' ? theme.palette.primaryDark[700] : theme.palette.grey[200]
+                            }
+                            gap={1}>
+                            <Avatar variant="rounded" src={avatar?.image?.url} />
+                            <Stack>
+                                <Typography fontWeight="bold">{name}</Typography>
+                                <Typography>{client?.goal}</Typography>
+                                <Typography>{client?.profession}</Typography>
+                                {sub ? (
+                                    <>
+                                        <Typography fontWeight="bold">
+                                            Абонемент №{sub.id} - {sub.name}
+                                        </Typography>
+                                        <Typography>Осталось уроков {sub.unlimited ? '∞' : sub.lastCount}</Typography>
+                                    </>
+                                ) : (
+                                    <Alert color="warning">Отсутствует активный абонемент</Alert>
+                                )}
+                            </Stack>
+                        </Box>
+                    );
+                })}
 
                 <Stack gap={1}>
                     <Typography fontWeight="bold">Настройки</Typography>
                     <Stack gap={1}>
-                        <ReschedulingButton id={id} variant="outlined" noFilter />
+                        <ReschedulingButton id={id} variant="outlined" />
                         <ButtonCancelLesson id={id} variant="outlined" />
                     </Stack>
                 </Stack>
