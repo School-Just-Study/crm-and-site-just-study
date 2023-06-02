@@ -30,6 +30,7 @@ export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClos
     const mutationForUpdate = dataLesson.data?.lesson.notAlert
         ? MUTATION_UPDATE_LESSON_FOR_PLAN
         : MUTATION_UPDATE_LESSON;
+    const userSubscription = dataLesson?.data?.lesson.subscriptions?.[0];
 
     const [createLesson, { loading, error, data }] = useMutation(mutationForUpdate, {
         refetchQueries: [{ query: QUERY_STUDENT_CABINET, variables: { userId: user?.id } }]
@@ -38,7 +39,7 @@ export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClos
     useEffect(() => {
         if (dataLesson.data?.lesson.teachers) {
             methods.setValue('teacher', dataLesson.data?.lesson.teachers?.[0]);
-            setActiveStep(2);
+            setActiveStep(1);
         } else {
             if (dataLesson.error?.message)
                 enqueueSnackbar(`Произошла ошибка при загрузке данных ${dataLesson.error?.message}`, {
@@ -85,11 +86,11 @@ export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClos
                     <Step hidden>
                         <Teacher />
                     </Step>
-                    <Step hidden>
-                        <Duration />
+                    <Step>
+                        <Duration hideBackButton duration={userSubscription?.durationLessons as number[]} />
                     </Step>
                     <Step>
-                        <DateLesson hideBackButton />
+                        <DateLesson />
                     </Step>
                     <Step>
                         <Time />

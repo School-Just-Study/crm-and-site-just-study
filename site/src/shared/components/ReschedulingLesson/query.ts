@@ -27,6 +27,9 @@ export const QUERY_LESSON = gql`
             students {
                 id
             }
+            subscriptions {
+                durationLessons
+            }
             teachers {
                 id
                 name
