@@ -8,7 +8,10 @@ import { setActiveStep } from '@shared/components/RecordForLesson';
 
 const durationsOptions = [30, 60, 90];
 
-export const Duration: FC<{ duration?: number[] }> = ({ duration = durationsOptions }) => {
+export const Duration: FC<{ duration?: number[]; hideBackButton?: boolean }> = ({
+    duration = durationsOptions,
+    hideBackButton
+}) => {
     const { watch, setValue } = useFormContext<LessonForm>();
     // @ts-ignore
     const lessonDuration = watch('duration');
@@ -41,7 +44,7 @@ export const Duration: FC<{ duration?: number[] }> = ({ duration = durationsOpti
                         </Button>
                     ))}
                 </ButtonGroup>
-                <Buttons disableNext={!lessonDuration} />
+                <Buttons disableNext={!lessonDuration} disablePrevious={hideBackButton} />
             </StepContent>
         </>
     );
