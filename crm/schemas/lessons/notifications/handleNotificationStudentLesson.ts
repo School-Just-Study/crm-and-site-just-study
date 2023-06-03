@@ -37,7 +37,6 @@ export const handleNotificationStudentLesson: ServerConfig<any>['extendExpressAp
          */
         const checkLessonsSub = await context.query.Lesson.findMany({
             where: {
-                notAlert: { equals: true },
                 statusLesson: { equals: LessonStatus.Created },
                 startTime: { gte: addDays(new Date(), -1) }
             },
@@ -48,7 +47,6 @@ export const handleNotificationStudentLesson: ServerConfig<any>['extendExpressAp
             return {
                 where: { id },
                 data: {
-                    notAlert: true,
                     ...(checkSub.length && {
                         subscriptions: {
                             disconnect: checkSub.map(({ id }: { id: string }) => {
