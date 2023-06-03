@@ -1,8 +1,8 @@
-import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
 import { Lists } from '.keystone/types';
 import { formatInTimeZone } from 'date-fns-tz';
 import { localeDate } from '../../../lib/localeDate';
 import { sendMessage } from '../../../notifications';
+import { KeystoneContextFromListTypeInfo } from '@keystone-6/core/types';
 
 const infoForTeacher = (lesson: any, teacher: Lists.Manager.Item) => {
     const dateFormatStart = formatInTimeZone(new Date(lesson.startTime), teacher.timeZone, 'd MMMM yyyy HH:mm zzz', {
@@ -30,7 +30,10 @@ const infoForTeacher = (lesson: any, teacher: Lists.Manager.Item) => {
  * @param lessonId
  * @param ctx
  */
-export const notifyLessonUpdated = async (lessonId: Lists.Lesson.Item['id'], ctx: KeystoneContext) => {
+export const notifyLessonUpdated = async (
+    lessonId: Lists.Lesson.Item['id'],
+    ctx: KeystoneContextFromListTypeInfo<any>
+) => {
     const lesson = await ctx.query.Lesson.findOne({
         where: { id: `${lessonId}` },
         query: `id statusLesson startTime endTime teachers { id email name language timeZone } students { id name email }`

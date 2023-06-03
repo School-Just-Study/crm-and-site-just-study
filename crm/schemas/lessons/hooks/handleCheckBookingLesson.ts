@@ -4,6 +4,7 @@ import { LessonStatus } from '../enum';
 import { areIntervalsOverlapping } from 'date-fns';
 import { Lesson, WorkTimeCutoff } from '@src/src/shared/lib/apollo/types';
 import { ViewStatus } from '../../../enums/view-status.enum';
+import { notifyLessonUpdated } from '../notifications';
 
 const checkAvailableTime = async (
     context: KeystoneContextFromListTypeInfo<Lists.Lesson.TypeInfo>,
@@ -117,5 +118,14 @@ export const handleCheckBookingLesson: ListHooks<Lists.Lesson.TypeInfo>['validat
                     addValidationError("The student's subscription has run out of available lessons");
             }
         }
+    }
+
+    if (
+        (resolvedData.startTime || resolvedData.endTime) &&
+        operation === 'update' &&
+        item.statusLesson === LessonStatus.Created &&
+        !item.notAlert
+    ) {
+        await notifyLessonUpdated(item.id, context);
     }
 };
