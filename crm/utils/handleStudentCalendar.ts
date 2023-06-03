@@ -2,6 +2,7 @@ import { ServerConfig } from '@keystone-6/core/dist/declarations/src/types/confi
 import ical, { ICalAlarmType } from 'ical-generator';
 import { LessonStatus } from '../schemas/lessons/enum';
 import { UserSubscription } from '@src/src/shared/lib/apollo/types';
+import { Lists } from '.keystone/types';
 
 export const handleStudentCalendar: ServerConfig<any>['extendExpressApp'] = (app, context) => {
     app.get('/api/student/:id/lessons.ical', async (req, res) => {
@@ -20,12 +21,13 @@ export const handleStudentCalendar: ServerConfig<any>['extendExpressApp'] = (app
 
         lessons.forEach((lesson) => {
             const subName = lesson.subscriptions?.find((sub: UserSubscription) => sub?.student?.id === studentId)?.name;
+            const teachersName = lesson.teachers.map((teacher: Lists.Manager.Item) => teacher.name);
 
             calendar.createEvent({
                 start: new Date(lesson.startTime),
                 end: new Date(lesson.endTime),
                 summary: 'Онлайн-урок в школе Just Study',
-                description: `Обучение по программе: ${subName}, Преподаватель ${lesson.teachers[0]?.name}`,
+                description: `Обучение по программе: ${subName}, Преподаватель ${teachersName.join(', ')}`,
                 url: lesson.teachers[0]?.linkOnlineLesson,
                 alarms: [{ type: ICalAlarmType.audio, triggerBefore: 3600 }]
             });

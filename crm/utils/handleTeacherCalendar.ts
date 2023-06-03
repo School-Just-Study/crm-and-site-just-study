@@ -1,6 +1,7 @@
 import { ServerConfig } from '@keystone-6/core/dist/declarations/src/types/config';
 import ical, { ICalAlarmType } from 'ical-generator';
 import { LessonStatus } from '../schemas/lessons/enum';
+import { Lists } from '.keystone/types';
 
 export const handleTeacherCalendar: ServerConfig<any>['extendExpressApp'] = (app, context) => {
     app.get('/api/teacher/:id/lessons.ical', async (req, res) => {
@@ -18,10 +19,12 @@ export const handleTeacherCalendar: ServerConfig<any>['extendExpressApp'] = (app
         });
 
         lessons.forEach((lesson) => {
+            const studentsName = lesson.students.map((student: Lists.User.Item) => student.name);
+
             calendar.createEvent({
                 start: new Date(lesson.startTime),
                 end: new Date(lesson.endTime),
-                summary: `${lesson.students[0].name} - урок`,
+                summary: `${studentsName.join(', ')} - урок`,
                 url: lesson.teachers[0]?.linkOnlineLesson,
                 alarms: [{ type: ICalAlarmType.audio, triggerBefore: 3600 }]
             });
