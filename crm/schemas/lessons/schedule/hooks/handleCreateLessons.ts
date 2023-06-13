@@ -1,7 +1,7 @@
 import { KeystoneContextFromListTypeInfo, ListHooks } from '@keystone-6/core/types';
 import { Lists } from '.keystone/types';
-import { checkActive, daysForRepeat, formatWithDateHourMinutes } from '../utils';
-import { isAfter, isPast } from 'date-fns';
+import { daysForRepeat, formatWithDateHourMinutes } from '../utils';
+import { isAfter } from 'date-fns';
 import { PrepareDateForLessonsType } from '../types';
 import { ViewStatus } from '../../../../enums/view-status.enum';
 import { LessonStatus } from '../../enum';
@@ -51,33 +51,32 @@ export const syncLessonsWithSchedule = async (
             });
 
             if (!findCreatedLessons.length) {
-                await context.sudo().query.Lesson.createOne({
-                    data: {
-                        students: {
-                            connect: lessonSchedule.students
-                        },
-                        teachers: {
-                            connect: lessonSchedule.teachers
-                        },
-                        startTime: start,
-                        endTime: end,
-                        comment: `Создано из графика занятий №${item.id}`,
-                        timeZone: item.timeZone,
-                        notAlert: true
-                    }
-                });
+                try {
+                    await context.sudo().query.Lesson.createOne({
+                        data: {
+                            students: {
+                                connect: lessonSchedule.students
+                            },
+                            teachers: {
+                                connect: lessonSchedule.teachers
+                            },
+                            startTime: start,
+                            endTime: end,
+                            comment: `Создано из графика занятий №${item.id}`,
+                            timeZone: item.timeZone,
+                            notAlert: true
+                        }
+                    });
+                } catch (e) {
+                    console.error('error', e);
+                }
             }
         }
     }
 };
 
 export const handleCreateLessons: ListHooks<any>['afterOperation'] = async ({ operation, context, item }) => {
-    if (
-        operation !== 'delete' &&
-        item.statusView === ViewStatus.Show &&
-        checkActive(item?.endPeriod) &&
-        isPast(item.startPeriod)
-    ) {
+    if (operation !== 'delete' && item.statusView === ViewStatus.Show) {
         const lessonSchedule = await context.query.LessonSchedule.findOne({
             where: { id: `${item.id}` },
             query: `students { id }`
