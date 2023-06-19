@@ -126,6 +126,6 @@ export const handleCheckBookingLesson: ListHooks<Lists.Lesson.TypeInfo>['validat
         item.statusLesson === LessonStatus.Created &&
         !item.notAlert
     ) {
-        await notifyLessonUpdated(item.id, context);
+        await notifyLessonUpdated(item.id, context, resolvedData.startTime, resolvedData.endTime);
     }
 };
