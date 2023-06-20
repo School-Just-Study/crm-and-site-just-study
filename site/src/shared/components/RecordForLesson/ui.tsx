@@ -67,6 +67,8 @@ export const RecordForLesson: FC<RecordForLessonProps> = ({ handleClose }) => {
         );
     }
 
+    const duration = userSubscription?.durationLessons?.length ? userSubscription?.durationLessons : undefined;
+
     return (
         <Authorization>
             <SpinnerWrapper loading={userSubscriptions.loading}>
@@ -77,7 +79,7 @@ export const RecordForLesson: FC<RecordForLessonProps> = ({ handleClose }) => {
                                 <Teacher />
                             </Step>
                             <Step>
-                                <Duration duration={userSubscription?.durationLessons as number[]} />
+                                <Duration duration={duration} />
                             </Step>
                             <Step>
                                 <DateLesson />
