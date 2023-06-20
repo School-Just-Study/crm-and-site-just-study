@@ -79,6 +79,8 @@ export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClos
         againGetScheduleParams();
     });
 
+    const duration = userSubscription?.durationLessons?.length ? userSubscription?.durationLessons : undefined;
+
     return (
         <FormProvider {...methods}>
             <form onSubmit={onSubmit}>
@@ -87,7 +89,7 @@ export const ReschedulingLesson: FC<ReschedulingLessonProps> = ({ id, handleClos
                         <Teacher />
                     </Step>
                     <Step>
-                        <Duration hideBackButton duration={userSubscription?.durationLessons as number[]} />
+                        <Duration hideBackButton duration={duration} />
                     </Step>
                     <Step>
                         <DateLesson />
