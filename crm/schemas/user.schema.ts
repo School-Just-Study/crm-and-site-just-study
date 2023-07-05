@@ -54,10 +54,7 @@ export const User = list({
         }),
         password: password({
             label: 'Пароль',
-            validation: { length: { min: 4 } },
-            ui: {
-                itemView: { fieldMode: EditOnlyAdminForUi }
-            }
+            validation: { length: { min: 4 } }
         }),
         role: select({
             label: 'Роль',
