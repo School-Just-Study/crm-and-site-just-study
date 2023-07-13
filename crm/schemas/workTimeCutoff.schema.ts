@@ -5,6 +5,7 @@ import { lastModification } from '../fields/lastModification';
 import { statusView } from '../fields/statusView';
 import { Lists } from '.keystone/types';
 import format from 'date-fns/format';
+import { createOnlyAdminForUi } from 'crm/validation';
 
 export const WorkTimeCutoff = list({
     ui: {
@@ -31,7 +32,12 @@ export const WorkTimeCutoff = list({
             })
         }),
         statusView,
-        title: text(),
+        title: text({
+            ui: {
+                itemView: { fieldMode: createOnlyAdminForUi },
+                createView: { fieldMode: createOnlyAdminForUi }
+            }
+        }),
         uid: text({
             isFilterable: true,
             validation: { isRequired: true },
