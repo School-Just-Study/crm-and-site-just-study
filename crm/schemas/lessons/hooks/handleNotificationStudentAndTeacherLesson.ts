@@ -11,6 +11,8 @@ export const handleNotificationStudentAndTeacherLesson: ListHooks<any>['afterOpe
         if (operation === 'create' && item.statusLesson === LessonStatus.Created) {
             await notifyNewLesson(item.id, context);
         }
+    }
+    if (operation !== 'delete') {
         if (operation === 'update' && item.statusLesson === LessonStatus.Canceled) {
             await notifyLessonCanceled(item.id, context);
         }
