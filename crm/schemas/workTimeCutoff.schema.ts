@@ -5,7 +5,7 @@ import { lastModification } from '../fields/lastModification';
 import { statusView } from '../fields/statusView';
 import { Lists } from '.keystone/types';
 import format from 'date-fns/format';
-import { createOnlyAdminForUi } from 'crm/validation';
+import { createOnlyAdminForUi } from '../validation';
 
 export const WorkTimeCutoff = list({
     ui: {
