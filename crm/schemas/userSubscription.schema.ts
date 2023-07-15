@@ -110,6 +110,7 @@ export const UserSubscription = list({
         }),
         customVisited: integer({
             defaultValue: 0,
+            label: 'Ручное списание',
             ui: { description: 'Вручную указать сколько занятий было посещено' }
         }),
         lastCount: virtual({
