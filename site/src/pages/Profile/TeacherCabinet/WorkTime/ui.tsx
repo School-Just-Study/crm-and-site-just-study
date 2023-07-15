@@ -74,7 +74,11 @@ export const WorkTime = () => {
         <SpinnerWrapper loading={loadingSchedule}>
             <FormProvider {...methods}>
                 <form onSubmit={onSubmit}>
-                    <Alert>Время указано по местному часовому поясу {timeZoneLocal}</Alert>
+                    {viewEdit ? (
+                        <Alert>Время указано по часовому поясу {data?.manager?.timeZone}</Alert>
+                    ) : (
+                        <Alert>Время указано по местному часовому поясу {timeZoneLocal}</Alert>
+                    )}
                     <TableContainer>
                         <Table>
                             <TableHead>
