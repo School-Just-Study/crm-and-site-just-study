@@ -5,7 +5,7 @@ import { LessonStatus } from '@shared/enums/lesson-status';
 import { EventType, ScheduleData } from '@src/pages/Profile/TeacherCabinet/Schedule/types';
 import { formatTimeWithTimeZoneToDate } from '@shared/dateTime/formatTimeWithTimeZoneToDate';
 
-const formatDateForString = (time: string, timeZone: string) => {
+export const formatDateForString = (time: string, timeZone: string) => {
     const dateWithTimeZone = formatTimeWithTimeZoneToDate(time, timeZone);
     return formatDateToTimeString(dateWithTimeZone);
 };
@@ -56,10 +56,10 @@ export const formatSchedule = (data: ScheduleData): EventSourceInput => {
     });
     events.push(...(lessons as EventInput[]));
 
-    const cutoff = data.cutoff?.map(({ id, startTime, endTime, title }) => {
+    const cutoff = data.cutoff?.map(({ id, startTime, endTime }) => {
         return {
             id,
-            title: title || 'Перерыв',
+            title: 'Перерыв',
             start: startTime,
             end: endTime,
             color: '#A0AAB4',
