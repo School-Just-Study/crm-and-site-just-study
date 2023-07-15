@@ -2,6 +2,9 @@ import { gql } from '@apollo/client';
 
 export const GET_WORK_TIME = gql`
     query ($id: ID!) {
+        manager(where: { id: $id }) {
+            timeZone
+        }
         workTimes(where: { manager: { id: { equals: $id } } }, orderBy: { dayOfWeek: asc }) {
             id
             dayOfWeek

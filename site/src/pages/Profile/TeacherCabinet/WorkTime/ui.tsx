@@ -1,4 +1,15 @@
-import { Box, Button, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+    Alert,
+    Box,
+    Button,
+    Stack,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
+} from '@mui/material';
 import { columns, defaultWorkTime } from './const';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
@@ -57,11 +68,13 @@ export const WorkTime = () => {
     });
 
     const loading = createWorkTimeState.loading || updateWorkTimeState.loading;
+    const timeZoneLocal = jstz.determine().name();
 
     return (
         <SpinnerWrapper loading={loadingSchedule}>
             <FormProvider {...methods}>
                 <form onSubmit={onSubmit}>
+                    <Alert>Время указано по местному часовому поясу {timeZoneLocal}</Alert>
                     <TableContainer>
                         <Table>
                             <TableHead>

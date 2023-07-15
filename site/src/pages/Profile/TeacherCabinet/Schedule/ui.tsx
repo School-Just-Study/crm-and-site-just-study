@@ -66,6 +66,7 @@ export const Schedule = () => {
                     Войти на урок
                 </Button>
             </Stack>
+            {otherTimeZone && <NotifyOtherTimeZone timeZone={user?.manager?.timeZone as string} />}
             <FullCalendar
                 plugins={[timeGridPlugin, interactionPlugin]}
                 initialView={initialView}
@@ -86,11 +87,6 @@ export const Schedule = () => {
                 }}
             />
             <SettingEvent />
-            <NotifyOtherTimeZone
-                open={otherTimeZone}
-                timeZone={user?.manager?.timeZone as string}
-                onClose={() => setOtherTimeZone(false)}
-            />
         </Box>
     );
 };
