@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export const QUERY_STUDENT_CABINET = gql`
     query ($userId: ID!) {
-        orders(where: { status: { not: { equals: finished } }, student: { id: { equals: $userId } } }) {
+        orders(where: { status: { notIn: [finished, frozen] }, student: { id: { equals: $userId } } }) {
             id
             label
             amount
