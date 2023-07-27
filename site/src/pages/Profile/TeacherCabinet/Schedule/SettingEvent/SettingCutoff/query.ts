@@ -7,6 +7,7 @@ export const QUERY_CUTOFF = gql`
             startTime
             endTime
             statusView
+            uid
         }
     }
 `;

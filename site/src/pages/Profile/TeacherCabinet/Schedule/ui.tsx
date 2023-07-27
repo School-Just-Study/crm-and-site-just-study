@@ -43,8 +43,10 @@ export const Schedule = () => {
     }, [queryTeacher.data]);
 
     useEffect(() => {
-        const formatEvents = formatSchedule(schedule as ScheduleData);
-        setEvents(formatEvents);
+        if (schedule) {
+            const formatEvents = formatSchedule(schedule as ScheduleData);
+            setEvents(formatEvents);
+        }
     }, [schedule]);
 
     const initialView = window.innerWidth < 700 ? 'timeGridDay' : 'timeGridWeek';

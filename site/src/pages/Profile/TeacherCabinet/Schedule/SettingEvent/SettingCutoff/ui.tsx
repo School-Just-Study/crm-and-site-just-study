@@ -34,14 +34,19 @@ export const SettingCutoff: FC<{ id: string }> = ({ id }) => {
         <SpinnerWrapper loading={loading}>
             <Stack gap={2}>
                 <Box display="flex" justifyContent="space-between">
-                    <Stack>
+                    <Stack gap={2}>
                         <Typography>№ {data.workTimeCutoff.id}</Typography>
                         <Typography>{date}</Typography>
+                        <Typography>
+                            {data.workTimeCutoff.uid === 'manual'
+                                ? 'Создан вручную'
+                                : 'Создан автоматически из календаря учителя'}
+                        </Typography>
                     </Stack>
                     <LoadingButton
                         color="error"
                         loading={updateCutoffState.loading}
-                        disabled={updateCutoffState.loading}
+                        disabled={updateCutoffState.loading || data.workTimeCutoff.uid !== 'manual'}
                         onClick={handleCancel}>
                         Удалить
                     </LoadingButton>
