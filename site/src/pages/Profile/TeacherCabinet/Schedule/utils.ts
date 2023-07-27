@@ -1,5 +1,5 @@
 import { WorkTime } from '@src/shared/lib/apollo/types';
-import { BusinessHoursInput, EventInput, EventSourceInput } from '@fullcalendar/react';
+import { BusinessHoursInput, EventInput, EventSourceInput } from '@fullcalendar/core';
 import { formatDateToTimeString } from '@shared/dateTime';
 import { LessonStatus } from '@shared/enums/lesson-status';
 import { EventType, ScheduleData } from '@src/pages/Profile/TeacherCabinet/Schedule/types';
@@ -52,19 +52,19 @@ export const formatSchedule = (data: ScheduleData): EventSourceInput => {
             color: colorEvent(statusLesson as LessonStatus),
             type: EventType.Lesson,
             borderColor: burned ? '#cd242f' : undefined
-        };
+        } as EventSourceInput;
     });
     events.push(...(lessons as EventInput[]));
 
-    const cutoff = data.cutoff?.map(({ id, startTime, endTime }) => {
+    const cutoff = data.cutoff?.map(({ id, startTime, endTime, uid }) => {
         return {
             id,
-            title: 'Перерыв',
+            title: uid === 'manual' ? 'Перерыв (ручной)' : 'Перерыв (из календаря)',
             start: startTime,
             end: endTime,
-            color: '#A0AAB4',
+            color: uid === 'manual' ? '#2f2f31' : '#A0AAB4',
             type: EventType.Cutoff
-        };
+        } as EventSourceInput;
     });
     events.push(...(cutoff as EventInput[]));
 

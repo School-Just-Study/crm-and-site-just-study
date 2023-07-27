@@ -26,7 +26,8 @@ export const AddCutoff = () => {
     const handleClose = () => setOpen(false);
 
     const onSubmit = handleSubmit(async (data) => {
-        await addCutoff({ variables: { data: { ...data, manager: { connect: { id: user?.manager?.id } } } } });
+        const updateData = { ...data, manager: { connect: { id: user?.manager?.id } } };
+        await addCutoff({ variables: { data: updateData } });
         setOpen(false);
         againGetScheduleParams();
         resetSettingsEvent();
