@@ -77,11 +77,11 @@ const MarketingPage: NextPage<{ data: IQueryMarketingPage }> = ({ data }) => {
                     )
                 }
             />
-            <FormForLeads title={'Запишись и получи бонусы!'} />
+            <FormForLeads title="Запишись и получи бонусы!" />
             {marketing.aboutGeorge && <AboutGeorge />}
             {marketing.advantages && <Advantages />}
             {marketing.reviews && <Reviews />}
-            <FormForLeads />
+            <FormForLeads title="Запишись и получи бонусы!" />
         </>
     );
 };
