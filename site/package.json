@@ -12,7 +12,7 @@
         "generate": "graphql-codegen"
     },
     "dependencies": {
-        "@apollo/client": "3.7.15",
+        "@apollo/client": "3.8.1",
         "@egjs/react-flicking": "4.10.9",
         "@emotion/cache": "11.11.0",
         "@emotion/react": "11.11.1",
@@ -34,10 +34,10 @@
         "effector-next": "1.3.3",
         "effector-react": "22.5.3",
         "effector-storage": "6.0.1",
-        "graphql": "16.6.0",
+        "graphql": "16.7.1",
         "jstz": "^2.1.1",
         "lodash": "4.17.21",
-        "next": "13.4.6",
+        "next": "13.4.13",
         "next-http-proxy-middleware": "1.2.5",
         "next-sitemap": "4.1.3",
         "nextjs-progressbar": "0.0.16",
@@ -64,7 +64,7 @@
         "@types/react-dom": "18.2.6",
         "@types/react-gtm-module": "2.0.1",
         "@types/react-slick": "0.23.10",
-        "typescript": "5.1.3"
+        "typescript": "5.1.6"
     },
     "engines": {
         "node": ">= 16.x",
