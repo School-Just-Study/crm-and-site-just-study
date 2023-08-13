@@ -8,7 +8,6 @@ import { ILanguages } from '@src/shared/modules/constants';
 import { NextPageWithLayout } from '@shared/types/page';
 import { MainLayout } from '@src/layouts/MainLayout';
 import { successPage } from '@translations/successPage';
-import { FirstLesson } from '@shared/components/FirstLesson/FirstLesson';
 
 const SuccessPage: NextPageWithLayout = () => {
     const theme = useTheme();
@@ -27,7 +26,7 @@ const SuccessPage: NextPageWithLayout = () => {
                         {t.formLead.desc}
                     </Typography>
                 </Stack>
-                <FirstLesson />
+                {/*<FirstLesson />*/}
             </Box>
         </>
     );
