@@ -14,12 +14,6 @@ services:
     depends_on:
       - backend
       - site
-#      - fluentbit
-#    logging:
-#      driver: fluentd
-#      options:
-#        fluentd-address: localhost:24224
-#        tag: nginx.logs
 
   site:
     container_name: site
@@ -75,3 +69,24 @@ services:
     volumes:
       - /etc/fluentbit/fluentbit.conf:/fluent-bit/etc/fluent-bit.conf
       - /etc/fluentbit/parsers.conf:/fluent-bit/etc/parsers.conf
+
+  mysql:
+    image: mariadb:11
+    restart: always
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: {{ env.MYSQL_PASSWORD }}
+      MYSQL_DATABASE: mysql
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: {{ env.PHPADMIN_USER }}
+      PMA_PASSWORD: {{ env.PHPADMIN_PASSWORD }}
