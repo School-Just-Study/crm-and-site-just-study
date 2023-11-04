@@ -127,6 +127,9 @@ jobs:
           NGINX_CERT: ${{ secrets.NGINX_CERT }}
           NGINX_CERT_KEY: ${{ secrets.NGINX_CERT_KEY }}
           YC_GROUP_ID: ${{ secrets.YC_GROUP_ID }}
+          MYSQL_PASSWORD: ${{ env.MYSQL_PASSWORD }}
+          PHPADMIN_USER: ${{ env.PHPADMIN_USER }}
+          PHPADMIN_PASSWORD: ${{ env.PHPADMIN_PASSWORD }}
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
           folder-id: b1g4s4k8tj83buc1hdoq
