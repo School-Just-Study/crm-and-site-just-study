@@ -8,7 +8,7 @@ export const handleCreateUserSubscriptionsAfterOrderPayments: ListHooks<Lists.Or
         if (operation !== 'delete') {
             const order = await context.query.Order.findOne({
                 where: { id: `${item.id}` },
-                query: `payed subscriptions { id status }`
+                query: `payed subscriptions { id status period }`
             });
 
             if (order.payed !== 0) {
@@ -19,7 +19,11 @@ export const handleCreateUserSubscriptionsAfterOrderPayments: ListHooks<Lists.Or
                 for (const subscription of sub) {
                     await context.query.UserSubscription.updateOne({
                         where: { id: `${subscription.id}` },
-                        data: { status: Statuses.Active, beginDate: new Date(), endDate: addDays(new Date(), 45) }
+                        data: {
+                            status: Statuses.Active,
+                            beginDate: new Date(),
+                            endDate: addDays(new Date(), subscription.period)
+                        }
                     });
                 }
             }
