@@ -14,17 +14,21 @@ services:
     depends_on:
       - backend
       - site
+    networks:
+      - internet
 
   site:
     container_name: site
     image: {{ env.SITE_IMAGE }}
     restart: always
     depends_on:
-     - fluentbit
+      - fluentbit
     logging:
       driver: fluentd
       options:
         fluentd-address: localhost:24224
+    networks:
+      - internet
 
   backend:
     container_name: backend
@@ -52,10 +56,14 @@ services:
       TEST_EMAIL: {{ env.TEST_EMAIL }}
     depends_on:
       - fluentbit
+      - mysql
     logging:
       driver: fluentd
       options:
         fluentd-address: localhost:24224
+    networks:
+      - no-internet
+      - internet
 
   fluentbit:
     container_name: fluentbit
@@ -69,15 +77,20 @@ services:
     volumes:
       - /etc/fluentbit/fluentbit.conf:/fluent-bit/etc/fluent-bit.conf
       - /etc/fluentbit/parsers.conf:/fluent-bit/etc/parsers.conf
+    networks:
+      - internet
 
   mysql:
-    image: mariadb:11
+    image: mysql:8.2.0
     restart: always
-    ports:
-      - "3308:3306"
+    expose:
+      - 3306
+    volumes:
+      - /etc/mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: {{ env.MYSQL_PASSWORD }}
-      MYSQL_DATABASE: mysql
+    networks:
+      - no-internet
 
   phpmyadmin:
     image: phpmyadmin
@@ -86,7 +99,15 @@ services:
       - "8080:80"
     environment:
       PMA_ARBITRARY: 1
-      PMA_HOST: mysql
-      PMA_PORT: 3306
-      PMA_USER: {{ env.PHPADMIN_USER }}
-      PMA_PASSWORD: {{ env.PHPADMIN_PASSWORD }}
+    depends_on:
+      - mysql
+    networks:
+      - no-internet
+      - internet
+
+networks:
+  no-internet:
+    driver: bridge
+    internal: true
+  internet:
+    driver: bridge
