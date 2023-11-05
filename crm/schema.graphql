@@ -1401,6 +1401,7 @@ type UserSubscription {
   student: User
   beginDate: DateTime
   endDate: DateTime
+  period: Int
   totalVisited: Int
   customVisited: Int
   lastCount: Int
@@ -1431,6 +1432,7 @@ input UserSubscriptionWhereInput {
   student: UserWhereInput
   beginDate: DateTimeNullableFilter
   endDate: DateTimeNullableFilter
+  period: IntNullableFilter
   customVisited: IntNullableFilter
   lessons: LessonManyRelationFilter
   trial: BooleanFilter
@@ -1455,6 +1457,7 @@ input UserSubscriptionOrderByInput {
   status: OrderDirection
   beginDate: OrderDirection
   endDate: OrderDirection
+  period: OrderDirection
   customVisited: OrderDirection
   trial: OrderDirection
   createdAt: OrderDirection
@@ -1471,6 +1474,7 @@ input UserSubscriptionUpdateInput {
   student: UserRelateToOneForUpdateInput
   beginDate: DateTime
   endDate: DateTime
+  period: Int
   customVisited: Int
   lessons: LessonRelateToManyForUpdateInput
   trial: Boolean
@@ -1502,6 +1506,7 @@ input UserSubscriptionCreateInput {
   student: UserRelateToOneForCreateInput
   beginDate: DateTime
   endDate: DateTime
+  period: Int
   customVisited: Int
   lessons: LessonRelateToManyForCreateInput
   trial: Boolean
