@@ -269,6 +269,7 @@ model UserSubscription {
   studentId                Int?      @map("student")
   beginDate                DateTime? @default(now())
   endDate                  DateTime?
+  period                   Int?      @default(45)
   customVisited            Int?      @default(0)
   lessons                  Lesson[]  @relation("Lesson_subscriptions")
   trial                    Boolean   @default(false)

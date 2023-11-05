@@ -88,6 +88,14 @@ export const UserSubscription = list({
             label: 'Дата начала'
         }),
         endDate: timestamp({ label: 'Дата окончания' }),
+        period: integer({
+            defaultValue: 45,
+            label: 'Длительность в днях',
+            ui: {
+                itemView: { fieldMode: 'read' },
+                createView: { fieldMode: 'hidden' }
+            }
+        }),
         totalVisited: virtual({
             label: 'Посещено занятий',
             // @ts-ignore

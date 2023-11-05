@@ -1,6 +1,5 @@
 import { KeystoneContext } from '@keystone-6/core/dist/declarations/src/types';
 import { gql } from './index';
-import { addDays } from 'date-fns';
 
 interface Arguments {
     userId: string;
@@ -67,19 +66,17 @@ export const checkout = async (root: any, { userId, currency }: Arguments, conte
                 query: `name visitCount price period trial unlimited durationLessons`
             });
 
-            const endDate = addDays(new Date(), subscriptionTemplate.period);
-
             const userSubscription = await context.query.UserSubscription.createOne({
                 data: {
                     name: subscriptionTemplate.name,
                     visitCount: subscriptionTemplate.visitCount,
                     originalPrice: subscriptionTemplate.price,
                     price,
-                    endDate,
                     durationLessons: subscriptionTemplate.durationLessons,
                     trial: subscriptionTemplate.trial,
                     unlimited: subscriptionTemplate.unlimited,
-                    student: { connect: { id: userId } }
+                    student: { connect: { id: userId } },
+                    period: subscriptionTemplate.period
                 },
                 query: `id`
             });
