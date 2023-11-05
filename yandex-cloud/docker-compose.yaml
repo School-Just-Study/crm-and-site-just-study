@@ -87,8 +87,6 @@ services:
       - 3306
     volumes:
       - /etc/mysql:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: {{ env.MYSQL_PASSWORD }}
     networks:
       - no-internet
 
