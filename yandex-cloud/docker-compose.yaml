@@ -11,9 +11,6 @@ services:
     environment:
       NGINX_CERT: {{ env.NGINX_CERT }}
       NGINX_CERT_KEY: {{ env.NGINX_CERT_KEY }}
-    depends_on:
-      - backend
-      - site
     networks:
       - internet
 
@@ -81,6 +78,7 @@ services:
       - internet
 
   mysql:
+    container_name: mysql
     image: mysql:8.2.0
     restart: always
     expose:
@@ -91,6 +89,7 @@ services:
       - no-internet
 
   phpmyadmin:
+    container_name: phpmyadmin
     image: phpmyadmin
     restart: always
     ports:
