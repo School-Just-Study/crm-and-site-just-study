@@ -9,7 +9,7 @@ env:
   CR_REGISTRY: crpt6ftcvvm3ts7j581s
   BACKEND_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/crm-back:${{ github.sha }}
   SITE_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/site:${{ github.sha }}
-  NGINX_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/nginx:${{ github.sha }}
+  CADDY_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/caddy:${{ github.sha }}
   DOCKER_BUILDKIT: 1
 
 jobs:
@@ -69,11 +69,11 @@ jobs:
           docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
 
-  build-nginx:
+  build-caddy:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: nginx
+        working-directory: caddy
 
     steps:
       - uses: actions/checkout@v3
@@ -86,14 +86,14 @@ jobs:
 
       - name: Build, tag, and push image to Yandex Cloud Container Registry
         env:
-          CR_REPOSITORY: nginx
+          CR_REPOSITORY: caddy
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
 
   update-coi:
-    needs: [ build-backend, build-site, build-nginx ]
+    needs: [ build-backend, build-site, build-caddy ]
     runs-on: ubuntu-latest
     environment:
       name: prod
@@ -109,7 +109,7 @@ jobs:
           NODE_ENV: production
           BACKEND_IMAGE: ${{ env.BACKEND_IMAGE }}
           SITE_IMAGE: ${{ env.SITE_IMAGE }}
-          NGINX_IMAGE: ${{ env.NGINX_IMAGE }}
+          CADDY_IMAGE: ${{ env.CADDY_IMAGE }}
           SSH_KEY: ${{ secrets.SSH_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
@@ -125,8 +125,6 @@ jobs:
           YOOKASSA_SECRET: ${{ secrets.YOOKASSA_SECRET }}
           SERVICE_KEY_ID: ${{ vars.SERVICE_KEY_ID }}
           SERVICE_KEY_SECRET: ${{ secrets.SERVICE_KEY_SECRET }}
-          NGINX_CERT: ${{ secrets.NGINX_CERT }}
-          NGINX_CERT_KEY: ${{ secrets.NGINX_CERT_KEY }}
           YC_GROUP_ID: ${{ secrets.YC_GROUP_ID }}
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
@@ -136,7 +134,7 @@ jobs:
           vm-cores: 2
           vm-memory: 2GB
           vm-disk-size: 30Gb
-          vm-core-fraction: 50
+          vm-core-fraction: 100
           vm-zone-id: ru-central1-a
           vm-subnet-id: e9b0mid7cobe4c9paohd
           docker-compose-path: './yandex-cloud/docker-compose.yaml'

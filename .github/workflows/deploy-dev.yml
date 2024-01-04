@@ -4,17 +4,74 @@ on: [workflow_dispatch]
 
 env:
   CR_REGISTRY: crpt6ftcvvm3ts7j581s
-  BACKEND_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/crm-back:${{ github.sha }}
-  SITE_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/site:${{ github.sha }}
-  NGINX_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/nginx:${{ github.sha }}
+  BACKEND_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/crm-back:13b35242b7904f0fb874a6438eb7f6770efe86ce
+  SITE_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/site:13b35242b7904f0fb874a6438eb7f6770efe86ce
+  CADDY_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/caddy:${{ github.sha }}
   DOCKER_BUILDKIT: 1
 
 jobs:
-  build-backend:
+#  build-backend:
+#    runs-on: ubuntu-latest
+#    defaults:
+#      run:
+#        working-directory: crm
+#    environment:
+#      name: dev
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#
+#      - name: Login to Yandex Cloud Container Registry
+#        id: login-cr
+#        uses: yc-actions/yc-cr-login@v1
+#        with:
+#          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+#
+#      - name: Build, tag, and push image to Yandex Cloud Container Registry
+#        env:
+#          CR_REPOSITORY: crm-back
+#          IMAGE_TAG: ${{ github.sha }}
+#        run: |
+#          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
+#          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
+#
+#  build-site:
+#    runs-on: ubuntu-latest
+#    defaults:
+#      run:
+#        working-directory: site
+#    environment:
+#      name: dev
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#
+#      - name: Create env file
+#        run: |
+#          touch .env
+#          echo FRONTEND_URL=${{vars.FRONTEND_URL}} >> .env
+#          echo NEXT_PUBLIC_FRONTEND_URL=${{vars.FRONTEND_URL}} >> .env
+#          cat .env
+#
+#      - name: Login to Yandex Cloud Container Registry
+#        id: login-cr
+#        uses: yc-actions/yc-cr-login@v1
+#        with:
+#          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+#
+#      - name: Build, tag, and push image to Yandex Cloud Container Registry
+#        env:
+#          CR_REPOSITORY: site
+#          IMAGE_TAG: ${{ github.sha }}
+#        run: |
+#          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
+#          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
+
+  build-caddy:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: crm
+        working-directory: caddy
     environment:
       name: dev
 
@@ -29,71 +86,14 @@ jobs:
 
       - name: Build, tag, and push image to Yandex Cloud Container Registry
         env:
-          CR_REPOSITORY: crm-back
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
-          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
-
-  build-site:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: site
-    environment:
-      name: dev
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Create env file
-        run: |
-          touch .env
-          echo FRONTEND_URL=${{vars.FRONTEND_URL}} >> .env
-          echo NEXT_PUBLIC_FRONTEND_URL=${{vars.FRONTEND_URL}} >> .env
-          cat .env
-
-      - name: Login to Yandex Cloud Container Registry
-        id: login-cr
-        uses: yc-actions/yc-cr-login@v1
-        with:
-          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
-
-      - name: Build, tag, and push image to Yandex Cloud Container Registry
-        env:
-          CR_REPOSITORY: site
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
-          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
-
-  build-nginx:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: nginx
-    environment:
-      name: dev
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Login to Yandex Cloud Container Registry
-        id: login-cr
-        uses: yc-actions/yc-cr-login@v1
-        with:
-          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
-
-      - name: Build, tag, and push image to Yandex Cloud Container Registry
-        env:
-          CR_REPOSITORY: nginx
+          CR_REPOSITORY: caddy
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
 
   update-coi:
-    needs: [ build-backend, build-site, build-nginx ]
+    needs: [ build-caddy ]
     runs-on: ubuntu-latest
     environment:
       name: dev
@@ -107,7 +107,7 @@ jobs:
         env:
           BACKEND_IMAGE: ${{ env.BACKEND_IMAGE }}
           SITE_IMAGE: ${{ env.SITE_IMAGE }}
-          NGINX_IMAGE: ${{ env.NGINX_IMAGE }}
+          CADDY_IMAGE: ${{ env.CADDY_IMAGE }}
           SSH_KEY: ${{ secrets.SSH_KEY }}
           NODE_ENV: production
           SKIP_NALOG: true
@@ -116,8 +116,6 @@ jobs:
           FRONTEND_URL: ${{ vars.FRONTEND_URL }}
           SERVICE_KEY_ID: ${{ vars.SERVICE_KEY_ID }}
           SERVICE_KEY_SECRET: ${{ vars.SERVICE_KEY_SECRET }}
-          NGINX_CERT: ${{ secrets.NGINX_CERT }}
-          NGINX_CERT_KEY: ${{ secrets.NGINX_CERT_KEY }}
           YC_GROUP_ID: ${{ vars.YC_GROUP_ID }}
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
@@ -125,9 +123,9 @@ jobs:
           vm-name: just-study-dev
           vm-service-account-id: aje38cdteqcfo55pe02h
           vm-cores: 2
-          vm-memory: 1GB
+          vm-memory: 2GB
           vm-disk-size: 30Gb
-          vm-core-fraction: 20
+          vm-core-fraction: 100
           vm-zone-id: ru-central1-a
           vm-subnet-id: e9b0mid7cobe4c9paohd
           docker-compose-path: './yandex-cloud/docker-compose.yaml'

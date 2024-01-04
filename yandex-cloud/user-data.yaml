@@ -6,7 +6,6 @@ write_files:
           Log_File      /var/log/fluentbit.log
           Log_Level     error
           Daemon        off
-#          Parsers_File  /fluent-bit/etc/parsers.conf
 
       [INPUT]
           Name              forward
@@ -43,13 +42,6 @@ write_files:
           default_level   INFO
           authorization   instance-service-account
     path: /etc/fluentbit/fluentbit.conf
-#  - content: |
-#      [PARSER]
-#          Name   nginx_parser
-#          Format regex
-#          Regex  ^access_log (?<remote_address>[^ ]*) "(?<method>\S+)(?: +(?<path>[^\"]*?)(?: +\S*)?)?" (?<status>[^ ]*) "(?<http_user_agent>[^\"]*)"$
-#          Types  status:integer
-#    path: /etc/fluentbit/parsers.conf
 
 users:
   - name: juststudy

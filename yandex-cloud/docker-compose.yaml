@@ -1,19 +1,16 @@
 version: '3.7'
 
 services:
-  nginx:
-    container_name: nginx
-    image: {{ env.NGINX_IMAGE }}
+  caddy:
+    container_name: caddy
+    image: {{ env.CADDY_IMAGE }}
+    restart: unless-stopped
     ports:
-      - '80:80'
-      - '443:443'
-    restart: always
-    environment:
-      NGINX_CERT: {{ env.NGINX_CERT }}
-      NGINX_CERT_KEY: {{ env.NGINX_CERT_KEY }}
-    depends_on:
-      - backend
-      - site
+      - "80:80"
+      - "443:443"
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
     networks:
       - internet
 
@@ -21,8 +18,6 @@ services:
     container_name: site
     image: {{ env.SITE_IMAGE }}
     restart: always
-    depends_on:
-      - fluentbit
     logging:
       driver: fluentd
       options:
@@ -55,7 +50,6 @@ services:
       SKIP_NALOG: {{ env.SKIP_NALOG }}
       TEST_EMAIL: {{ env.TEST_EMAIL }}
     depends_on:
-      - fluentbit
       - mysql
     logging:
       driver: fluentd
@@ -81,6 +75,7 @@ services:
       - internet
 
   mysql:
+    container_name: mysql
     image: mysql:8.2.0
     restart: always
     expose:
@@ -91,12 +86,13 @@ services:
       - no-internet
 
   phpmyadmin:
+    container_name: phpmyadmin
     image: phpmyadmin
     restart: always
     ports:
       - "8080:80"
     environment:
-      PMA_ARBITRARY: 1
+      PMA_HOST: mysql
     depends_on:
       - mysql
     networks:
@@ -109,3 +105,7 @@ networks:
     internal: true
   internet:
     driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config:
