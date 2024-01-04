@@ -2,10 +2,6 @@
     email help@juststudy.online
 }
 
-juststudy.online {
-    redir https://www.{host}{uri}
-}
-
 www.juststudy.online {
     encode zstd gzip
     reverse_proxy /api/* backend:80
