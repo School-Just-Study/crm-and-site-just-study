@@ -6,7 +6,7 @@ env:
   CR_REGISTRY: crpt6ftcvvm3ts7j581s
   BACKEND_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/crm-back:${{ github.sha }}
   SITE_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/site:${{ github.sha }}
-  NGINX_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/nginx:${{ github.sha }}
+  NGINX_IMAGE: cr.yandex/crpt6ftcvvm3ts7j581s/caddy:${{ github.sha }}
   DOCKER_BUILDKIT: 1
 
 jobs:
@@ -92,6 +92,31 @@ jobs:
           docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
 
+  build-caddy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: caddy
+    environment:
+      name: dev
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to Yandex Cloud Container Registry
+        id: login-cr
+        uses: yc-actions/yc-cr-login@v1
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+
+      - name: Build, tag, and push image to Yandex Cloud Container Registry
+        env:
+          CR_REPOSITORY: caddy
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
+          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
+
   update-coi:
     needs: [ build-backend, build-site, build-nginx ]
     runs-on: ubuntu-latest
@@ -108,6 +133,7 @@ jobs:
           BACKEND_IMAGE: ${{ env.BACKEND_IMAGE }}
           SITE_IMAGE: ${{ env.SITE_IMAGE }}
           NGINX_IMAGE: ${{ env.NGINX_IMAGE }}
+          CADDY_IMAGE: ${{ env.CADDY_IMAGE }}
           SSH_KEY: ${{ secrets.SSH_KEY }}
           NODE_ENV: production
           SKIP_NALOG: true
@@ -125,7 +151,7 @@ jobs:
           vm-name: just-study-dev
           vm-service-account-id: aje38cdteqcfo55pe02h
           vm-cores: 2
-          vm-memory: 1GB
+          vm-memory: 2GB
           vm-disk-size: 30Gb
           vm-core-fraction: 20
           vm-zone-id: ru-central1-a
