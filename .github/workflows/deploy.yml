@@ -134,7 +134,7 @@ jobs:
           vm-cores: 2
           vm-memory: 2GB
           vm-disk-size: 30Gb
-          vm-core-fraction: 20
+          vm-core-fraction: 100
           vm-zone-id: ru-central1-a
           vm-subnet-id: e9b0mid7cobe4c9paohd
           docker-compose-path: './yandex-cloud/docker-compose.yaml'

@@ -1,9 +1,9 @@
 {
-    email: help@juststudy.online
+    email help@juststudy.online
 }
 
 juststudy.online {
-	redir https://www.juststudy.online{uri}
+	redir https://www.{host}{uri}
 }
 
 www.juststudy.online {
