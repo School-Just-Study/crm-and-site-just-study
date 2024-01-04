@@ -2,6 +2,12 @@
     email help@juststudy.online
 }
 
+www-test-new.juststudy.online {
+    encode zstd gzip
+	reverse_proxy /api/* backend:80
+	reverse_proxy site:80
+}
+
 www-test.juststudy.online {
     encode zstd gzip
 	reverse_proxy /api/* backend:80
