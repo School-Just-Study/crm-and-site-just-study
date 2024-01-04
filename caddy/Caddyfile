@@ -3,16 +3,16 @@
 }
 
 juststudy.online {
- 	redir https://www.{host}{uri}
+    redir https://www.{host}{uri}
 }
 
 www.juststudy.online {
     encode zstd gzip
-	reverse_proxy /api/* backend:80
-	reverse_proxy site:80
+    reverse_proxy /api/* backend:80
+    reverse_proxy site:80
 }
 
 crm.juststudy.online {
     encode zstd gzip
-	reverse_proxy backend:80
+    reverse_proxy backend:80
 }
