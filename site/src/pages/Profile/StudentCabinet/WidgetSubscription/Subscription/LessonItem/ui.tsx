@@ -12,7 +12,7 @@ export const LessonItem: FC<{ lesson: Lesson }> = ({ lesson }) => {
     const title = lesson.title || 'Урок';
     const date = dateFormatWithTimeToString(new Date(lesson.startTime));
     const teachersString = lesson.teachers?.map(({ name }) => name)?.join(', ');
-    const timeForEditIsOver = isAfter(new Date(), addMinutes(new Date(lesson.startTime), -60));
+    const timeForEditIsOver = isAfter(new Date(), addMinutes(new Date(lesson.startTime), -240));
 
     return (
         <>
