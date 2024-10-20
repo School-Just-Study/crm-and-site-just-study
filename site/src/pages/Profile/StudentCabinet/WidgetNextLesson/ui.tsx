@@ -9,7 +9,7 @@ import { addMinutes, isAfter } from 'date-fns';
 
 export const WidgetNextLesson: FC<{ nextStudentLesson: Lesson }> = ({ nextStudentLesson }) => {
     const date = dateFormatWithTimeToString(new Date(nextStudentLesson.startTime));
-    const timeForEditIsOver = isAfter(new Date(), addMinutes(new Date(nextStudentLesson.startTime), -60));
+    const timeForEditIsOver = isAfter(new Date(), addMinutes(new Date(nextStudentLesson.startTime), -240));
 
     const handleCLick = () => {
         if (nextStudentLesson?.teachers?.[0]?.linkOnlineLesson) {
