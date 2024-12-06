@@ -577,12 +577,12 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@cfcs/core@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@cfcs/core/-/core-0.0.4.tgz#5c1e89c2c170dfa9ba69450376ed0d894e19e2a1"
-  integrity sha512-Y/BD2l+XpGtx2LT/ehdqUyvJ6OpI3F6yAQMNKj1t57WhzQX1AS6uEQRLmgPWd75fzsyV7u4Aia/+5KeCqgHuNg==
+"@cfcs/core@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@cfcs/core/-/core-0.1.0.tgz#64346f7634b46de6e9b1d4c195743b9b8e603162"
+  integrity sha512-kvYX0RpL45XTHJ5sW7teNbKeAa7pK3nNqaJPoFfZDPTIBJOkTtRD3QhkBG+O3Hu69a8xeMoPvF6y/RtJ6JUOdA==
   dependencies:
-    "@egjs/component" "^3.0.2"
+    "@egjs/component" "^3.0.4"
 
 "@corex/deepmerge@^4.0.43":
   version "4.0.43"
@@ -627,12 +627,12 @@
   resolved "https://registry.npmjs.org/@egjs/agent/-/agent-2.4.2.tgz"
   integrity sha512-UZQzdpPl0g0M1wDAiq4EY2vUzUI6P5SKGOAPkf0yxSnlcwrU8/zuoyUWbYj11ROFeHV8iW0IetGsmia83z1Hbw==
 
-"@egjs/axes@^3.8.3":
-  version "3.8.3"
-  resolved "https://registry.yarnpkg.com/@egjs/axes/-/axes-3.8.3.tgz#0c959682ffdb4a239d4b1289cf061aeb44f3e4ba"
-  integrity sha512-T0+71+glVCxSRnJim7smdGLrmsGmEuoJ62RXBMy7lpsePbXlKmtnFFKgr1tkJJyghJXW3zZNHefCC4nrzEjfEg==
+"@egjs/axes@^3.9.1":
+  version "3.9.1"
+  resolved "https://registry.yarnpkg.com/@egjs/axes/-/axes-3.9.1.tgz#d7fef01768b2d23c3163dc601f062f7d4feeeecd"
+  integrity sha512-vaqUe/boRDk/A4TjiPtMv+lf7c4Q2jTER/Hw4I61NiJUyPftlZjaP4cteBCQejFyZmzimmA2W0cLmYZHTjBY8A==
   dependencies:
-    "@cfcs/core" "^0.0.4"
+    "@cfcs/core" "^0.1.0"
     "@egjs/agent" "^2.2.1"
     "@egjs/component" "^3.0.1"
 
@@ -641,12 +641,17 @@
   resolved "https://registry.npmjs.org/@egjs/component/-/component-3.0.2.tgz"
   integrity sha512-Mze3mwEE19+dERrimg0JVLtpOHG4AC+LOuKqvF4qGZjn0k23ZbNI7b/gy1LFR63LigC2b8k70aDjy8xoT+WNPA==
 
-"@egjs/flicking@~4.10.7":
-  version "4.10.7"
-  resolved "https://registry.yarnpkg.com/@egjs/flicking/-/flicking-4.10.7.tgz#4b85f5fd7f6fbf30f2c72c6ce120c2807059f52f"
-  integrity sha512-70Uf11TocsxU/UXPvB9g1IVVgYtXkNihMjTw3kl2WkKlnIvT4Akbr56IbAKhvS0Eqh3ScWp2ETxwo0wayPZBhQ==
+"@egjs/component@^3.0.4":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@egjs/component/-/component-3.0.5.tgz#2dc86e835d5dc5055cdf46c7cd794eb45330e1b6"
+  integrity sha512-cLcGizTrrUNA2EYE3MBmEDt2tQv1joVP1Q3oDisZ5nw0MZDx2kcgEXM+/kZpfa/PAkFvYVhRUZwytIQWoN3V/w==
+
+"@egjs/flicking@~4.12.0":
+  version "4.12.0"
+  resolved "https://registry.yarnpkg.com/@egjs/flicking/-/flicking-4.12.0.tgz#88d64b2496332a123f9048e58e729964b9c42518"
+  integrity sha512-HSducaQozc24HAxR5RfI2pRSqxZI1GxudAL52I7yoUj2yYCmY76Vhld9QzrTSWHFLfj7muv+XXB7Lv85HwZahg==
   dependencies:
-    "@egjs/axes" "^3.8.3"
+    "@egjs/axes" "^3.9.1"
     "@egjs/component" "^3.0.1"
     "@egjs/imready" "^1.3.1"
     "@egjs/list-differ" "^1.0.1"
@@ -663,13 +668,13 @@
   resolved "https://registry.yarnpkg.com/@egjs/list-differ/-/list-differ-1.0.1.tgz#5772b0f8b87973bb67827f6c7d7df8d7f64a22eb"
   integrity sha512-OTFTDQcWS+1ZREOdCWuk5hCBgYO4OsD30lXcOCyVOAjXMhgL5rBRDnt/otb6Nz8CzU0L/igdcaQBDLWc4t9gvg==
 
-"@egjs/react-flicking@4.10.9":
-  version "4.10.9"
-  resolved "https://registry.yarnpkg.com/@egjs/react-flicking/-/react-flicking-4.10.9.tgz#4f9713a67caec3c0a5402c08b1675c303982c658"
-  integrity sha512-v8wq1T5VG9YEQsKQo+X/714fCqIHKZQGhXzKOVa5A448dIomMu5pio78rsr5mt3lctyDXqVF/Mzxs29t2IWX2g==
+"@egjs/react-flicking@4.12.0":
+  version "4.12.0"
+  resolved "https://registry.yarnpkg.com/@egjs/react-flicking/-/react-flicking-4.12.0.tgz#a97394ff05ed2bb903c332faef050adca144bda0"
+  integrity sha512-GyyzG/YOQ39r4fAy3MP2qHcshBipnWdIEbnGV50dVrmdtiy2ZADx9MhyIqlx6093lrK4Q35R0Qix+CNdGwV5GQ==
   dependencies:
     "@egjs/component" "^3.0.2"
-    "@egjs/flicking" "~4.10.7"
+    "@egjs/flicking" "~4.12.0"
     "@egjs/list-differ" "^1.0.1"
 
 "@emotion/babel-plugin@^11.11.0":
