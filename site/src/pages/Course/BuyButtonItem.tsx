@@ -23,7 +23,7 @@ export const BuyButtonItem: FC<{ subscription: Subscription }> = ({ subscription
         );
     }, [cartItems, id, user?.cart?.items]);
 
-    const price = trial ? 499 : undefined;
+    const price = trial ? 1000 : undefined;
 
     const handleAddProduct = async () => {
         setCartItem({ subscriptionId: id, price });
