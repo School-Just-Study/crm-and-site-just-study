@@ -37,7 +37,7 @@ export const AboutCourse: FC<{ product: Product }> = ({ product }) => {
                                         <>
                                             <CurrencyAmount
                                                 amount={price!}
-                                                discount={499}
+                                                discount={1000}
                                                 amountUSD={20}
                                                 discountUSD={9}
                                             />
