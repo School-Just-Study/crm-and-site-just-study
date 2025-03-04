@@ -47,7 +47,7 @@ export const FirstLesson: FC = () => {
                                 <Typography variant="h2" borderBottom="3px solid #2750C5" textAlign="left">
                                     Первый урок
                                 </Typography>
-                                <CurrencyAmount amount={price!} discount={499} amountUSD={priceUSD!} discountUSD={9} />
+                                <CurrencyAmount amount={price!} discount={1000} amountUSD={priceUSD!} discountUSD={9} />
                                 <Stack direction="row" alignItems="center" gap={1}>
                                     <Typography color={theme.palette.grey.A700}>Почему первый урок платный?</Typography>
                                     <InfoPopover />
