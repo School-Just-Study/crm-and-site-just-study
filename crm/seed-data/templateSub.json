@@ -24,8 +24,8 @@
     {
         "id": 61270,
         "name": "Пробный урок",
-        "yield": 499,
-        "price": 499,
+        "yield": 1000,
+        "price": 1000,
         "period": null,
         "courses": [],
         "classes": [],
@@ -178,8 +178,8 @@
     {
         "id": 64491,
         "name": "Тест ICAO",
-        "yield": 499,
-        "price": 499,
+        "yield": 1000,
+        "price": 1000,
         "period": null,
         "courses": [],
         "classes": [],
