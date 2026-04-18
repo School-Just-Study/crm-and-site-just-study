@@ -24,7 +24,10 @@ const CMSPage: NextPageWithLayout<{ data: Page }> = ({ data }) => {
     const { title, content, description, language } = data;
 
     return (
-        <>
+        <> 
+            <div style={{ padding: '20px', background: '#fff', color: 'black' }}>
+  ЗАГРУЗКА
+</div>
             <SEO
                 title={title as string}
                 description={description as string}
