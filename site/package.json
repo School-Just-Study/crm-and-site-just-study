@@ -23,7 +23,7 @@
         "@fullcalendar/interaction": "^6.1.6",
         "@fullcalendar/react": "^6.1.6",
         "@fullcalendar/timegrid": "^6.1.6",
-        "@keystone-6/document-renderer": "1.1.2",
+        "@keystone-6/document-renderer": "1.2.0",
         "@mui/icons-material": "5.11.16",
         "@mui/lab": "5.0.0-alpha.134",
         "@mui/material": "5.13.5",
